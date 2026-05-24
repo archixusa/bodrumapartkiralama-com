@@ -1,17 +1,19 @@
 "use server";
 
-export interface BookingFormState {
+export type ServiceType = "boat" | "car" | "transfer" | "tour" | "general";
+
+export interface InquiryFormState {
   status: "idle" | "success" | "error";
   message?: string;
 }
 
-export interface BookingPayload {
-  apartmentSlug: string;
-  apartmentTitle: string;
-  checkin: string;
-  checkout: string;
-  adults: number;
-  children: number;
+export interface InquiryPayload {
+  service: ServiceType;
+  subjectLine: string;
+  date?: string;
+  people?: number;
+  pickup?: string;
+  dropoff?: string;
   name: string;
   phone: string;
   email: string;
@@ -25,9 +27,9 @@ const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const NOTIFY_EMAIL = process.env.NOTIFY_EMAIL || "info@bodrumapartkiralama.com";
 const FROM_EMAIL = process.env.FROM_EMAIL || "no-reply@bodrumapartkiralama.com";
 
-export async function submitBooking(
-  payload: BookingPayload
-): Promise<BookingFormState> {
+export async function submitInquiry(
+  payload: InquiryPayload
+): Promise<InquiryFormState> {
   if (payload.honeypot && payload.honeypot.trim() !== "") {
     return { status: "success" };
   }
@@ -36,25 +38,18 @@ export async function submitBooking(
     return { status: "error", message: "kvkk-required" };
   }
 
-  if (
-    !payload.apartmentSlug ||
-    !payload.checkin ||
-    !payload.checkout ||
-    !payload.name ||
-    !payload.phone ||
-    !payload.email
-  ) {
+  if (!payload.name || !payload.phone || !payload.email) {
     return { status: "error", message: "missing-fields" };
   }
 
-  const subject = `[Rezervasyon Talebi] ${payload.apartmentTitle}`;
-  const text = `Yeni rezervasyon talebi alındı.
+  const subject = `[Talep] ${payload.subjectLine}`;
+  const text = `Yeni hizmet talebi alındı.
 
-Apart: ${payload.apartmentTitle} (${payload.apartmentSlug})
-Giriş: ${payload.checkin}
-Çıkış: ${payload.checkout}
-Yetişkin: ${payload.adults}
-Çocuk: ${payload.children}
+Hizmet: ${payload.service}
+${payload.date ? `Tarih: ${payload.date}` : ""}
+${payload.people ? `Kişi: ${payload.people}` : ""}
+${payload.pickup ? `Alış: ${payload.pickup}` : ""}
+${payload.dropoff ? `Bırakış: ${payload.dropoff}` : ""}
 
 Ad Soyad: ${payload.name}
 Telefon: ${payload.phone}
@@ -65,7 +60,7 @@ Not:
 ${payload.note || "—"}`;
 
   if (!RESEND_API_KEY) {
-    console.log("\n=== BOOKING REQUEST (no RESEND_API_KEY, console-only) ===");
+    console.log("\n=== INQUIRY (no RESEND_API_KEY, console-only) ===");
     console.log(text);
     console.log("=== END ===\n");
     return { status: "success" };
@@ -93,7 +88,7 @@ ${payload.note || "—"}`;
     }
     return { status: "success" };
   } catch (err) {
-    console.error("Booking submit error", err);
+    console.error("Inquiry submit error", err);
     return { status: "error", message: "send-failed" };
   }
 }

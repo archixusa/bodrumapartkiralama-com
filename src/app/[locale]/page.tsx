@@ -23,6 +23,7 @@ import {
 import { districts } from "@/data/districts";
 import { services } from "@/data/services";
 import { reviews } from "@/data/reviews";
+import { posts } from "@/data/posts";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://bodrumapartkiralama.com";
@@ -277,8 +278,45 @@ export default async function HomePage({
         </div>
       </section>
 
-      {/* FAQ */}
+      {/* BLOG */}
       <section className="section">
+        <div className="container-page">
+          <div className="flex items-end justify-between">
+            <div>
+              <h2>{t("blogTitle")}</h2>
+              <p className="mt-2 text-muted">{t("blogDesc")}</p>
+            </div>
+            <Link href="/blog" className="hidden text-sm font-semibold text-navy-600 hover:underline md:inline">
+              {c("viewAll")} <ArrowRight className="ml-1 inline h-4 w-4" />
+            </Link>
+          </div>
+          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {posts.slice(0, 3).map((p) => (
+              <Link key={p.slug} href={`/blog/${p.slug}`} className="card group flex flex-col overflow-hidden">
+                <div className="relative aspect-[16/10] overflow-hidden">
+                  <Image
+                    src={p.hero}
+                    alt={isTr ? p.titleTr : p.titleEn}
+                    fill
+                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    className="object-cover transition group-hover:scale-105"
+                  />
+                  <span className="absolute left-3 top-3 chip-accent">
+                    {isTr ? p.category.tr : p.category.en}
+                  </span>
+                </div>
+                <div className="flex flex-col gap-2 p-5">
+                  <h3 className="text-base leading-snug">{isTr ? p.titleTr : p.titleEn}</h3>
+                  <p className="line-clamp-2 text-sm text-muted">{isTr ? p.excerptTr : p.excerptEn}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="section section-soft">
         <div className="container-page max-w-4xl">
           <SectionHeader title={t("faqTitle")} />
           <div className="mt-8">

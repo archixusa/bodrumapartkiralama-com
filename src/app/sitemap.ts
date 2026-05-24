@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { apartments } from "@/data/apartments";
 import { districts } from "@/data/districts";
+import { posts } from "@/data/posts";
 import { routing } from "@/i18n/routing";
 
 const SITE_URL =
@@ -68,6 +69,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: now,
       changeFrequency: "weekly",
       priority: 0.85,
+      alternates: {
+        languages: Object.fromEntries(
+          routing.locales.map((l) => [l, urlFor(path, l)])
+        ),
+      },
+    });
+  }
+
+  for (const p of posts) {
+    const path = `/blog/${p.slug}`;
+    entries.push({
+      url: urlFor(path, routing.defaultLocale),
+      lastModified: new Date(p.date),
+      changeFrequency: "monthly",
+      priority: 0.6,
       alternates: {
         languages: Object.fromEntries(
           routing.locales.map((l) => [l, urlFor(path, l)])

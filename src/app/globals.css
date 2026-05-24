@@ -86,3 +86,19 @@ body {
   .text-balance { text-wrap: balance; }
   .text-pretty  { text-wrap: pretty; }
 }
+
+.prose-legal h2 {
+  @apply mt-10 text-2xl;
+}
+.prose-legal h3 {
+  @apply mt-6 text-lg;
+}
+.prose-legal ul {
+  @apply ml-5 list-disc space-y-1;
+}
+.prose-legal ol {
+  @apply ml-5 list-decimal space-y-1;
+}
+.prose-legal a {
+  @apply text-navy-600 underline-offset-2 hover:underline;
+}

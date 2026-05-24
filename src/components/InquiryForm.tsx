@@ -2,49 +2,51 @@
 
 import { useState, useTransition, FormEvent } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { MessageCircle, CheckCircle2, AlertCircle } from "lucide-react";
+import { CheckCircle2, AlertCircle, MessageCircle } from "lucide-react";
 import {
-  submitBooking,
-  type BookingFormState,
-} from "@/app/actions/bookingAction";
-import { formatTRY } from "@/lib/format";
+  submitInquiry,
+  type InquiryFormState,
+  type ServiceType,
+} from "@/app/actions/inquiryAction";
 import { Link } from "@/i18n/routing";
 import { trackLead } from "@/lib/analytics";
 
-interface Props {
-  apartmentSlug: string;
-  apartmentTitle: string;
-  capacity: number;
-  highSeasonPrice: number;
-  lowSeasonPrice: number;
+export interface InquiryFormProps {
+  service: ServiceType;
+  subjectLine: string;
+  fields: {
+    date?: boolean;
+    people?: boolean;
+    pickup?: boolean;
+    dropoff?: boolean;
+  };
   whatsappNumber: string;
+  whatsappTemplate?: string;
 }
 
-export function BookingForm({
-  apartmentSlug,
-  apartmentTitle,
-  capacity,
-  highSeasonPrice,
-  lowSeasonPrice,
+export function InquiryForm({
+  service,
+  subjectLine,
+  fields,
   whatsappNumber,
-}: Props) {
-  const t = useTranslations("apartDetail");
-  const inq = useTranslations("inquiry");
+  whatsappTemplate,
+}: InquiryFormProps) {
+  const t = useTranslations("inquiry");
   const ft = useTranslations("footer");
-  const locale = useLocale();
   const today = new Date().toISOString().slice(0, 10);
+  const locale = useLocale();
 
-  const [checkin, setCheckin] = useState("");
-  const [checkout, setCheckout] = useState("");
-  const [adults, setAdults] = useState(2);
-  const [children, setChildren] = useState(0);
+  const [date, setDate] = useState("");
+  const [people, setPeople] = useState<number>(2);
+  const [pickup, setPickup] = useState("");
+  const [dropoff, setDropoff] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [note, setNote] = useState("");
   const [kvkk, setKvkk] = useState(false);
   const [honeypot, setHoneypot] = useState("");
-  const [state, setState] = useState<BookingFormState>({ status: "idle" });
+  const [state, setState] = useState<InquiryFormState>({ status: "idle" });
   const [pending, startTransition] = useTransition();
 
   const onSubmit = (e: FormEvent) => {
@@ -54,13 +56,13 @@ export function BookingForm({
       return;
     }
     startTransition(async () => {
-      const result = await submitBooking({
-        apartmentSlug,
-        apartmentTitle,
-        checkin,
-        checkout,
-        adults,
-        children,
+      const result = await submitInquiry({
+        service,
+        subjectLine,
+        date: fields.date ? date : undefined,
+        people: fields.people ? people : undefined,
+        pickup: fields.pickup ? pickup : undefined,
+        dropoff: fields.dropoff ? dropoff : undefined,
         name,
         phone,
         email,
@@ -71,13 +73,17 @@ export function BookingForm({
       });
       setState(result);
       if (result.status === "success") {
-        trackLead({ kind: "booking", subject: apartmentTitle });
+        trackLead({
+          kind: service === "general" ? "general" : service,
+          subject: subjectLine,
+        });
       }
     });
   };
 
   const waMessage = encodeURIComponent(
-    `Merhaba, ${apartmentTitle} için rezervasyon yapmak istiyorum.\nGiriş: ${checkin || "—"}\nÇıkış: ${checkout || "—"}\nKişi: ${adults}+${children}\nAd: ${name || "—"}`
+    whatsappTemplate ??
+      `Merhaba, ${subjectLine} hakkında bilgi almak istiyorum.`
   );
 
   if (state.status === "success") {
@@ -102,73 +108,71 @@ export function BookingForm({
   return (
     <form onSubmit={onSubmit} className="card flex flex-col gap-4 p-5">
       <div>
-        <h3 className="text-xl">{t("bookTitle")}</h3>
-        <p className="mt-1 text-xs text-muted">{t("bookSubtitle")}</p>
+        <h3 className="text-xl">{t("title")}</h3>
+        <p className="mt-1 text-xs text-muted">{t("subtitle")}</p>
       </div>
 
-      <div className="grid grid-cols-2 gap-3 rounded-md bg-navy-50 p-3 text-xs">
-        <div>
-          <p className="text-muted">{t("highSeason")}</p>
-          <p className="text-sm font-bold text-navy-900">{formatTRY(highSeasonPrice)}</p>
+      {(fields.date || fields.people) && (
+        <div className="grid grid-cols-2 gap-3">
+          {fields.date && (
+            <label className="block">
+              <span className="label-base">{t("date")}</span>
+              <input
+                type="date"
+                min={today}
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                className="input-base"
+              />
+            </label>
+          )}
+          {fields.people && (
+            <label className="block">
+              <span className="label-base">{t("people")}</span>
+              <select
+                value={people}
+                onChange={(e) => setPeople(Number(e.target.value))}
+                className="input-base"
+              >
+                {Array.from({ length: 15 }).map((_, i) => (
+                  <option key={i + 1} value={i + 1}>
+                    {i + 1}
+                  </option>
+                ))}
+              </select>
+            </label>
+          )}
         </div>
-        <div>
-          <p className="text-muted">{t("lowSeason")}</p>
-          <p className="text-sm font-bold text-navy-900">{formatTRY(lowSeasonPrice)}</p>
-        </div>
-      </div>
+      )}
 
-      <div className="grid grid-cols-2 gap-3">
-        <label className="block">
-          <span className="label-base">{t("checkin")} *</span>
-          <input
-            type="date"
-            required
-            min={today}
-            value={checkin}
-            onChange={(e) => setCheckin(e.target.value)}
-            className="input-base"
-          />
-        </label>
-        <label className="block">
-          <span className="label-base">{t("checkout")} *</span>
-          <input
-            type="date"
-            required
-            min={checkin || today}
-            value={checkout}
-            onChange={(e) => setCheckout(e.target.value)}
-            className="input-base"
-          />
-        </label>
-        <label className="block">
-          <span className="label-base">{t("adults")}</span>
-          <select
-            value={adults}
-            onChange={(e) => setAdults(Number(e.target.value))}
-            className="input-base"
-          >
-            {Array.from({ length: capacity }).map((_, i) => (
-              <option key={i + 1} value={i + 1}>
-                {i + 1}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label className="block">
-          <span className="label-base">{t("children")}</span>
-          <select
-            value={children}
-            onChange={(e) => setChildren(Number(e.target.value))}
-            className="input-base"
-          >
-            {Array.from({ length: 5 }).map((_, i) => (
-              <option key={i} value={i}>
-                {i}
-              </option>
-            ))}
-          </select>
-        </label>
-      </div>
+      {(fields.pickup || fields.dropoff) && (
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          {fields.pickup && (
+            <label className="block">
+              <span className="label-base">{t("pickup")}</span>
+              <input
+                type="text"
+                value={pickup}
+                onChange={(e) => setPickup(e.target.value)}
+                className="input-base"
+                placeholder={t("pickupPlaceholder")}
+              />
+            </label>
+          )}
+          {fields.dropoff && (
+            <label className="block">
+              <span className="label-base">{t("dropoff")}</span>
+              <input
+                type="text"
+                value={dropoff}
+                onChange={(e) => setDropoff(e.target.value)}
+                className="input-base"
+                placeholder={t("dropoffPlaceholder")}
+              />
+            </label>
+          )}
+        </div>
+      )}
 
       <label className="block">
         <span className="label-base">{t("name")} *</span>
@@ -195,7 +199,7 @@ export function BookingForm({
           />
         </label>
         <label className="block">
-          <span className="label-base">{t("emailField")} *</span>
+          <span className="label-base">{t("email")} *</span>
           <input
             type="email"
             required
@@ -226,11 +230,11 @@ export function BookingForm({
           className="mt-0.5 h-4 w-4 rounded border-[var(--color-border)] text-navy-900 focus:ring-navy-600"
         />
         <span>
-          {inq("kvkkPrefix")}{" "}
+          {t("kvkkPrefix")} {" "}
           <Link href="/kvkk" className="font-semibold text-navy-600 hover:underline">
             {ft("kvkk")}
           </Link>{" "}
-          {inq("kvkkSuffix")}
+          {t("kvkkSuffix")}
         </span>
       </label>
 
@@ -252,7 +256,7 @@ export function BookingForm({
             <p className="font-semibold">{t("errorTitle")}</p>
             <p>
               {state.message === "kvkk-required"
-                ? inq("kvkkRequired")
+                ? t("kvkkRequired")
                 : t("errorDesc")}
             </p>
           </div>
