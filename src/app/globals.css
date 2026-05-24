@@ -3,25 +3,86 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-primary: #042c53;
+  --color-primary-light: #185fa5;
+  --color-primary-lighter: #378add;
+  --color-accent: #ef9f27;
+  --color-accent-dark: #ba7517;
+  --color-bg: #ffffff;
+  --color-bg-soft: #f1efe8;
+  --color-bg-blue: #e6f1fb;
+  --color-text: #1a2434;
+  --color-text-muted: #5f6b7a;
+  --color-border: #e2e8f0;
+  --color-success: #0f6e56;
+  --color-warning: #ba7517;
+  --color-danger: #a32d2d;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html,
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-feature-settings: "ss01", "ss02", "cv11";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+@layer base {
+  h1, h2, h3, h4 {
+    @apply font-display tracking-tight text-navy-900;
+    text-wrap: balance;
+  }
+  h1 { @apply text-4xl md:text-5xl font-bold; }
+  h2 { @apply text-2xl md:text-3xl font-bold; }
+  h3 { @apply text-xl md:text-2xl font-semibold; }
+  h4 { @apply text-lg md:text-xl font-semibold; }
+  p  { @apply leading-relaxed; }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8;
+  }
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-md bg-accent-400 px-5 py-3 text-sm font-semibold text-navy-900 shadow-card transition hover:bg-accent-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-accent-400 focus:ring-offset-2;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-md border border-navy-900 bg-white px-5 py-3 text-sm font-semibold text-navy-900 transition hover:bg-navy-50;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium text-navy-900 transition hover:bg-navy-50;
+  }
+  .card {
+    @apply overflow-hidden rounded-xl border border-[var(--color-border)] bg-white shadow-card transition hover:shadow-cardHover;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-full bg-navy-50 px-3 py-1 text-xs font-medium text-navy-900;
+  }
+  .chip-accent {
+    @apply inline-flex items-center gap-1 rounded-full bg-accent-400 px-3 py-1 text-xs font-semibold text-navy-900;
+  }
+  .section {
+    @apply py-12 md:py-16 lg:py-20;
+  }
+  .section-soft {
+    @apply bg-sand-50;
+  }
+  .section-blue {
+    @apply bg-navy-50;
+  }
+  .input-base {
+    @apply w-full rounded-md border border-[var(--color-border)] bg-white px-3 py-2.5 text-sm text-ink placeholder:text-muted focus:border-navy-600 focus:outline-none focus:ring-2 focus:ring-navy-200;
+  }
+  .label-base {
+    @apply mb-1 block text-xs font-semibold uppercase tracking-wide text-muted;
+  }
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+  .text-balance { text-wrap: balance; }
+  .text-pretty  { text-wrap: pretty; }
 }

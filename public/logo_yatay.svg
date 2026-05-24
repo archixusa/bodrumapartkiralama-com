@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 48" width="240" height="48" role="img" aria-label="Bodrum Apart Kiralama">
+  <g transform="translate(4, 8)">
+    <path d="M0 24 Q 8 18, 16 24 T 32 24" stroke="#EF9F27" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <path d="M6 14 L 16 4 L 26 14 L 26 22 L 6 22 Z" fill="#042C53"/>
+    <rect x="14" y="14" width="4" height="6" fill="#E6F1FB"/>
+  </g>
+  <text x="46" y="22" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="17" font-weight="700" fill="#042C53" letter-spacing="-0.3">Bodrum<tspan fill="#185FA5">Apart</tspan></text>
+  <text x="46" y="37" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="9" font-weight="500" fill="#185FA5" letter-spacing="2">KIRALAMA</text>
+</svg>
