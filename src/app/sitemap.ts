@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { apartments } from "@/data/apartments";
 import { districts } from "@/data/districts";
 import { posts } from "@/data/posts";
+import { getMdxPosts } from "@/lib/mdx-blog";
 import { routing } from "@/i18n/routing";
 
 const SITE_URL =
@@ -22,6 +23,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/vip-transfer",
     "/turlar",
     "/blog",
+    "/yazar/furkan-sahin",
     "/hakkimizda",
     "/iletisim",
     "/sss",
@@ -82,6 +84,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
     entries.push({
       url: urlFor(path, routing.defaultLocale),
       lastModified: new Date(p.date),
+      changeFrequency: "monthly",
+      priority: 0.6,
+      alternates: {
+        languages: Object.fromEntries(
+          routing.locales.map((l) => [l, urlFor(path, l)])
+        ),
+      },
+    });
+  }
+
+  // MDX-sourced (AI-generated) blog posts
+  const mdxSlugs = new Set(posts.map((p) => p.slug));
+  for (const m of getMdxPosts()) {
+    if (mdxSlugs.has(m.slug)) continue; // skip if already in legacy
+    const path = `/blog/${m.slug}`;
+    entries.push({
+      url: urlFor(path, routing.defaultLocale),
+      lastModified: new Date(m.published_at),
       changeFrequency: "monthly",
       priority: 0.6,
       alternates: {

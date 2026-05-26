@@ -5,9 +5,54 @@ import { Clock, ArrowRight } from "lucide-react";
 import { PageHero } from "@/components/PageHero";
 import { Link } from "@/i18n/routing";
 import { posts } from "@/data/posts";
+import { getMdxPosts } from "@/lib/mdx-blog";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://bodrumapartkiralama.com";
+
+const FALLBACK_HERO =
+  "https://images.unsplash.com/photo-1519677100203-a0e668c92439?auto=format&fit=crop&w=2000&q=80";
+
+interface UnifiedPost {
+  source: "legacy" | "mdx";
+  slug: string;
+  date: string;
+  readingTime: number;
+  hero: string;
+  category: { tr: string; en: string };
+  titleTr: string;
+  titleEn: string;
+  excerptTr: string;
+  excerptEn: string;
+}
+
+function unifyAll(): UnifiedPost[] {
+  const legacy: UnifiedPost[] = posts.map((p) => ({
+    source: "legacy",
+    slug: p.slug,
+    date: p.date,
+    readingTime: p.readingTime,
+    hero: p.hero,
+    category: p.category,
+    titleTr: p.titleTr,
+    titleEn: p.titleEn,
+    excerptTr: p.excerptTr,
+    excerptEn: p.excerptEn,
+  }));
+  const mdx: UnifiedPost[] = getMdxPosts().map((p) => ({
+    source: "mdx",
+    slug: p.slug,
+    date: p.published_at,
+    readingTime: p.reading_time_min,
+    hero: p.hero_image ?? FALLBACK_HERO,
+    category: p.category,
+    titleTr: p.title,
+    titleEn: p.title,
+    excerptTr: p.excerpt,
+    excerptEn: p.excerpt,
+  }));
+  return [...legacy, ...mdx].sort((a, b) => (a.date < b.date ? 1 : -1));
+}
 
 export async function generateMetadata({
   params,
@@ -34,7 +79,7 @@ export default async function Page({
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "blog" });
   const isTr = locale === "tr";
-  const sorted = [...posts].sort((a, b) => (a.date < b.date ? 1 : -1));
+  const sorted = unifyAll();
 
   return (
     <>
