@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import { Gallery } from "@/components/Gallery";
-import { BookingForm } from "@/components/BookingForm";
+import { ReservationForm } from "@/lib/reservation-form";
 import { ApartCard } from "@/components/ApartCard";
 import { JsonLd } from "@/components/JsonLd";
 import { FAQ } from "@/components/FAQ";
@@ -260,13 +260,11 @@ export default async function ApartDetailPage({
           </div>
 
           <aside className="lg:sticky lg:top-20 lg:self-start">
-            <BookingForm
-              apartmentSlug={apt.slug}
-              apartmentTitle={title}
-              capacity={apt.capacity}
-              highSeasonPrice={apt.highSeasonPrice}
-              lowSeasonPrice={apt.lowSeasonPrice}
+            <ReservationForm
+              siteName="bodrumapartkiralama"
+              propertySlug={apt.slug}
               whatsappNumber={c("whatsappNumber")}
+              kvkkUrl="/kvkk"
             />
           </aside>
         </div>
