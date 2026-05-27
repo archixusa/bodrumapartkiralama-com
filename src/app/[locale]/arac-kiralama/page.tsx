@@ -5,6 +5,7 @@ import { PageHero } from "@/components/PageHero";
 import { InquiryForm } from "@/components/InquiryForm";
 import { FAQ } from "@/components/FAQ";
 import { JsonLd } from "@/components/JsonLd";
+import { PartnerServiceBanner } from "@/components/PartnerServiceBanner";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://bodrumapartkiralama.com";
@@ -108,9 +109,67 @@ export default async function Page({
       <PageHero
         title={t("h1")}
         subtitle={t("subtitle")}
-        badge="Bodrum 2026"
+        badge={isTr ? "Partner Hizmet · Bodrum 2026" : "Partner Service · Bodrum 2026"}
         image="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=2000&q=80"
         crumbs={[{ href: "/", label: isTr ? "Ana Sayfa" : "Home" }, { label: t("h1") }]}
+      />
+
+      <PartnerServiceBanner
+        isTr={isTr}
+        serviceLabel={isTr ? "Partner Hizmet" : "Partner Service"}
+        description={
+          isTr
+            ? "Araç kiralama, Bodrum yarımadasında çalışan anlaşmalı rent-a-car ortaklarımızdan sağlanır. Aracın teslim alımı, sigorta ve iade işlemleri operatörle yapılır. Biz uygun aracı bulup sizi operatörle buluşturuyoruz."
+            : "Cars are supplied by our partner rent-a-car operators based in Bodrum. Vehicle pickup, insurance and return are handled by the operator. We help you find the right car and connect you to the operator."
+        }
+        whatsappNumber={c("whatsappNumber")}
+        whatsappTemplate={
+          isTr
+            ? "Merhaba, Bodrum'da araç kiralamak istiyorum. Tarih ve teslim noktası için partner operatörünüzle eşleştirir misiniz?"
+            : "Hello, I'd like to rent a car in Bodrum. Could you match me with your partner operator for dates and pickup location?"
+        }
+        whatsappCtaLabel={isTr ? "WhatsApp ile sor" : "Ask on WhatsApp"}
+        steps={[
+          {
+            num: "1",
+            title: isTr ? "İhtiyaç ve tarihi paylaşın" : "Share dates and needs",
+            desc: isTr
+              ? "Kaç kişi, kaç gün, hangi sınıf araç, teslim ve iade noktası."
+              : "Number of passengers, days, vehicle class, pickup and drop-off.",
+          },
+          {
+            num: "2",
+            title: isTr ? "Uygun aracı bulalım" : "We find a suitable car",
+            desc: isTr
+              ? "Anlaşmalı filolardan müsait ve bütçenize uygun aracı seçeneklerini iletiriz."
+              : "We suggest available cars from partner fleets matching your budget.",
+          },
+          {
+            num: "3",
+            title: isTr ? "Teslim operatörle" : "Pickup with the operator",
+            desc: isTr
+              ? "Araç teslim, sözleşme imzası ve ödeme operatör ile yapılır; biz süreci kolaylaştırırız."
+              : "Vehicle handover, contract and payment are done with the operator; we facilitate the process.",
+          },
+        ]}
+        coverageTitle={isTr ? "Partner Hizmet Kapsamı" : "Partner Service Scope"}
+        coverage={
+          isTr
+            ? [
+                "Milas-Bodrum Havalimanı, Bodrum merkez, Yalıkavak, Turgutreis, Bitez teslim",
+                "Ekonomi, kompakt, SUV ve premium segment araçlar",
+                "Tam sigorta ve sınırsız km opsiyonları operatör politikasına göre değişir",
+                "Otele teslim çoğu noktada ücretsiz; iade noktası farklı olabilir",
+                "Sözleşme, kasko ve fatura operatör tarafından düzenlenir",
+              ]
+            : [
+                "Pickup at Milas-Bodrum Airport, Bodrum centre, Yalıkavak, Turgutreis, Bitez",
+                "Economy, compact, SUV and premium-class vehicles",
+                "Full insurance and unlimited mileage options vary by operator policy",
+                "Hotel delivery often free; return point can differ from pickup",
+                "Contract, insurance and invoicing handled by the operator",
+              ]
+        }
       />
 
       <section className="section">

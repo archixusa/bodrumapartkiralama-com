@@ -6,6 +6,7 @@ import { PageHero } from "@/components/PageHero";
 import { InquiryForm } from "@/components/InquiryForm";
 import { FAQ } from "@/components/FAQ";
 import { JsonLd } from "@/components/JsonLd";
+import { PartnerServiceBanner } from "@/components/PartnerServiceBanner";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://bodrumapartkiralama.com";
@@ -135,9 +136,67 @@ export default async function Page({
       <PageHero
         title={t("h1")}
         subtitle={t("subtitle")}
-        badge="Bodrum 2026"
+        badge={isTr ? "Partner Hizmet · Bodrum 2026" : "Partner Service · Bodrum 2026"}
         image="https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=2000&q=80"
         crumbs={[{ href: "/", label: isTr ? "Ana Sayfa" : "Home" }, { label: t("h1") }]}
+      />
+
+      <PartnerServiceBanner
+        isTr={isTr}
+        serviceLabel={isTr ? "Partner Hizmet" : "Partner Service"}
+        description={
+          isTr
+            ? "Bodrum turları (mavi tur, dalış, jeep safari, antik kent) anlaşmalı tur operatörlerimiz tarafından yürütülür. Rehber, ulaşım, öğle yemeği ve sigorta operatörün paket kapsamındadır. Biz uygun turu seçmenize yardımcı oluyoruz."
+            : "Bodrum tours (blue cruise, diving, jeep safari, ancient cities) are run by our partner tour operators. Guide, transport, lunch and insurance are inside the operator's package. We help you pick the right tour."
+        }
+        whatsappNumber={c("whatsappNumber")}
+        whatsappTemplate={
+          isTr
+            ? "Merhaba, Bodrum turları hakkında bilgi almak istiyorum. Tarih ve katılımcı sayısını söyleyince partner operatörünüze yönlendirir misiniz?"
+            : "Hello, I'd like info about Bodrum tours. Once I share date and group size, could you connect me with your partner operator?"
+        }
+        whatsappCtaLabel={isTr ? "WhatsApp ile sor" : "Ask on WhatsApp"}
+        steps={[
+          {
+            num: "1",
+            title: isTr ? "Hangi tur, kaç kişi" : "Which tour, how many people",
+            desc: isTr
+              ? "Mavi tur, dalış, jeep safari ya da antik kent — tercihinizi ve katılımcı sayısını yazın."
+              : "Blue cruise, diving, jeep safari or ancient-city tour — share your pick and group size.",
+          },
+          {
+            num: "2",
+            title: isTr ? "Müsait tarih ve operatör" : "Available dates and operator",
+            desc: isTr
+              ? "Tarihinize müsait operatörü ve fiyatı paylaşırız."
+              : "We share an operator available on your date and the price.",
+          },
+          {
+            num: "3",
+            title: isTr ? "Rezervasyon ve katılım" : "Booking and meeting point",
+            desc: isTr
+              ? "Operatör buluşma noktasını size iletir; rehber kendisi karşılar."
+              : "The operator sends the meeting point; the guide receives you on the day.",
+          },
+        ]}
+        coverageTitle={isTr ? "Partner Hizmet Kapsamı" : "Partner Service Scope"}
+        coverage={
+          isTr
+            ? [
+                "Mavi tur, dalış, jeep safari, antik kent ve şehir turları",
+                "Sertifikalı yerel rehberler ve lisanslı operatörler",
+                "Öğle yemeği, ulaşım ve sigorta paket içinde (turca göre değişir)",
+                "Bireysel veya özel tur (kendi grubunuza özel)",
+                "Sözleşme ve ödeme operatör üzerinden yapılır",
+              ]
+            : [
+                "Blue cruise, diving, jeep safari, ancient-city and city tours",
+                "Certified local guides and licensed operators",
+                "Lunch, transport and insurance included (varies by tour)",
+                "Individual or private group tours",
+                "Contract and payment handled by the operator",
+              ]
+        }
       />
 
       <section className="section">

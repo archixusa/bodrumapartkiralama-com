@@ -5,6 +5,7 @@ import { PageHero } from "@/components/PageHero";
 import { InquiryForm } from "@/components/InquiryForm";
 import { FAQ } from "@/components/FAQ";
 import { JsonLd } from "@/components/JsonLd";
+import { PartnerServiceBanner } from "@/components/PartnerServiceBanner";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://bodrumapartkiralama.com";
@@ -108,9 +109,67 @@ export default async function Page({
       <PageHero
         title={t("h1")}
         subtitle={t("subtitle")}
-        badge="Bodrum 2026"
+        badge={isTr ? "Partner Hizmet · Bodrum 2026" : "Partner Service · Bodrum 2026"}
         image="https://images.unsplash.com/photo-1500627964684-141351970a7f?auto=format&fit=crop&w=2000&q=80"
         crumbs={[{ href: "/", label: isTr ? "Ana Sayfa" : "Home" }, { label: t("h1") }]}
+      />
+
+      <PartnerServiceBanner
+        isTr={isTr}
+        serviceLabel={isTr ? "Partner Hizmet" : "Partner Service"}
+        description={
+          isTr
+            ? "Tekne kiralama operasyonu, Bodrum'da yıllardır çalışan lisanslı yerel kaptan ve charter ortaklarımız tarafından yürütülür. Talebinizi alıyor, mevcut uygun teknelerle eşleştiriyor ve sizi doğrudan operatöre yönlendiriyoruz. Sözleşme ve ödeme operatörle yapılır."
+            : "Boat rentals are operated by our licensed local captain and charter partners in Bodrum. We collect your request, match you with available boats and connect you directly with the operator. Contract and payment are with the operator."
+        }
+        whatsappNumber={c("whatsappNumber")}
+        whatsappTemplate={
+          isTr
+            ? "Merhaba, Bodrum'da tekne kiralamak istiyorum. Tarih ve kişi sayısı için partner operatörünüze yönlendirir misiniz?"
+            : "Hello, I'd like to rent a boat in Bodrum. Could you connect me with your partner operator with dates and group size?"
+        }
+        whatsappCtaLabel={isTr ? "WhatsApp ile sor" : "Ask on WhatsApp"}
+        steps={[
+          {
+            num: "1",
+            title: isTr ? "Tarihi ve kişi sayısını yazın" : "Share dates and group size",
+            desc: isTr
+              ? "Sağdaki formu doldurun ya da WhatsApp'tan kısa bir mesaj atın."
+              : "Use the form on the right or send a short WhatsApp message.",
+          },
+          {
+            num: "2",
+            title: isTr ? "Müsait teknelerle eşleştirelim" : "We match available boats",
+            desc: isTr
+              ? "Bütçe ve tarih için uygun gulet, tur teknesi veya motoryat seçeneklerini iletelim."
+              : "We send you suitable gulet, day-tour or motoryacht options for your dates.",
+          },
+          {
+            num: "3",
+            title: isTr ? "Operatörle doğrudan rezervasyon" : "Book directly with the operator",
+            desc: isTr
+              ? "Beğendiğiniz tekne için operatörle iletişim kuruyoruz; sözleşme ve ödeme onlarla yapılır."
+              : "We introduce you to the operator; contract and payment happen directly with them.",
+          },
+        ]}
+        coverageTitle={isTr ? "Partner Hizmet Kapsamı" : "Partner Service Scope"}
+        coverage={
+          isTr
+            ? [
+                "Bodrum, Yalıkavak ve Turgutreis kalkışlı turlar",
+                "Günlük tekne, mavi tur gulet ve özel motoryat",
+                "Kaptanlı kiralama (bareboat dahil değil)",
+                "Sigorta ve denetimleri güncel lisanslı operatörler",
+                "Ödeme, fatura ve sözleşme operatör tarafından yapılır",
+              ]
+            : [
+                "Tours starting from Bodrum, Yalıkavak and Turgutreis",
+                "Day-tour boats, blue-cruise gulets and private motoryachts",
+                "Skippered rentals (bareboat not included)",
+                "Licensed operators with current insurance and inspections",
+                "Payment, invoicing and contracts handled by the operator",
+              ]
+        }
       />
 
       <section className="section">
