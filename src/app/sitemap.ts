@@ -30,6 +30,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/kvkk",
     "/kullanim-sartlari",
     "/iptal-iade-politikasi",
+    "/evinizi-kiraya-verin",
   ];
 
   const entries: MetadataRoute.Sitemap = [];
