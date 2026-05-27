@@ -54,8 +54,8 @@ export default async function ApartlarPage({
         benefits: [
           {
             icon: Wallet,
-            title: "Şeffaf komisyon yapısı",
-            desc: "Mülk sahipleriyle çalışma şartlarımız açıktır; gizli ek ücret yoktur.",
+            title: "Şeffaf çalışma yapısı",
+            desc: "Mülk sahipleri ve misafirlerle iletişim açıktır; ek ücretler önceden paylaşılır.",
           },
           {
             icon: Phone,
@@ -69,8 +69,8 @@ export default async function ApartlarPage({
           },
           {
             icon: Sparkles,
-            title: "Profesyonel temizlik ve karşılama",
-            desc: "Her giriş öncesi standart bir temizlik ve karşılama protokolü uygulanır.",
+            title: "Temizlik ve karşılama",
+            desc: "Mülk sahipleri her konaklama arası temizlik düzenler. Karşılama uygulaması mülk bazında değişkenlik gösterebilir.",
           },
         ],
         newsletterTitle: "Yeni mülkler eklendiğinde haberdar olun",
@@ -91,8 +91,8 @@ export default async function ApartlarPage({
         benefits: [
           {
             icon: Wallet,
-            title: "Transparent commission",
-            desc: "Our working terms with owners are clearly defined; no hidden fees.",
+            title: "Transparent way of working",
+            desc: "Communication with owners and guests is open; any extra fees are shared up front.",
           },
           {
             icon: Phone,
@@ -106,8 +106,8 @@ export default async function ApartlarPage({
           },
           {
             icon: Sparkles,
-            title: "Professional cleaning and welcome",
-            desc: "A standard cleaning and welcome protocol is applied before every check-in.",
+            title: "Cleaning and welcome",
+            desc: "Owners arrange cleaning between stays. Welcome practices vary by property.",
           },
         ],
         newsletterTitle: "Get notified when properties are added",

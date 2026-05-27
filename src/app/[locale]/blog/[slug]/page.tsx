@@ -446,9 +446,9 @@ function AuthorBio() {
       <div>
         <h3 className="text-base font-bold">Bodrumapartkiralama Editör Ekibi</h3>
         <p className="mt-1 text-sm leading-relaxed text-muted">
-          2013'ten bu yana Bodrum yarımadasında apart kiralama yönetimi yapan
-          ekibimiz; Yalıkavak, Gümbet, Turgutreis başta olmak üzere bölgedeki
-          konaklama dinamiklerini ilk elden takip ediyor.
+          Bodrum yarımadasında apart kiralama yönetimi yapan ekibimiz; Yalıkavak,
+          Gümbet, Turgutreis başta olmak üzere bölgedeki konaklama dinamiklerini
+          yerinden takip ediyor.
         </p>
       </div>
     </div>

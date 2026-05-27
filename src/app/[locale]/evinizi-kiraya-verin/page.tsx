@@ -16,7 +16,7 @@ const SITE_URL =
 export const metadata: Metadata = {
   title: "Evinizi Kiraya Verin — Bodrum Apart Yönetimi",
   description:
-    "Bodrum'daki mülkünüz için yönetim, pazarlama ve misafir iletişimini birlikte planlayalım. Şeffaf komisyon yapısı, doğrudan mülk sahibi iletişimi.",
+    "Bodrum'daki mülkünüz için yönetim, pazarlama ve misafir iletişimini birlikte planlayalım. Şeffaf çalışma yapısı, doğrudan mülk sahibi iletişimi.",
   alternates: { canonical: `${SITE_URL}/evinizi-kiraya-verin` },
   openGraph: {
     title: "Evinizi Kiraya Verin — Bodrumapartkiralama.com",
