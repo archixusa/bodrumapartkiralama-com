@@ -6,12 +6,11 @@ const SITE_URL =
 /**
  * Robots.txt — served at /robots.txt by Next.js Metadata Files API.
  *
- * Output:
- *   User-agent: *
- *   Allow: /
- *   Disallow: /api/
- *   Sitemap: <SITE_URL>/sitemap.xml
- *   Host:    <SITE_URL>
+ * Disallowed paths:
+ *   - /api/                 server-only routes
+ *   - /yorum/               token-gated review pages
+ *   - /unsubscribe          confirmation flow, not useful in search
+ *   - /newsletter-onayla    confirmation flow, not useful in search
  */
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -19,7 +18,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/api/", "/yorum/", "/unsubscribe"],
+        disallow: ["/api/", "/yorum/", "/unsubscribe", "/newsletter-onayla"],
       },
     ],
     sitemap: `${SITE_URL}/sitemap.xml`,
