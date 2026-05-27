@@ -10,6 +10,8 @@ import { Footer } from "@/components/Footer";
 import { WhatsAppFab } from "@/components/WhatsAppFab";
 import { AnalyticsScripts, GtmNoScript } from "@/components/Analytics";
 import { CookieConsent } from "@/components/CookieConsent";
+import { JsonLd } from "@/components/JsonLd";
+import { districts } from "@/data/districts";
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin", "latin-ext"],
@@ -112,9 +114,45 @@ export default async function LocaleLayout({
   setRequestLocale(locale);
   const messages = await getMessages();
 
+  const localBusinessLd = {
+    "@context": "https://schema.org",
+    "@type": ["LocalBusiness", "LodgingBusiness"],
+    "@id": `${SITE_URL}/#organization`,
+    name: "Bodrumapartkiralama.com",
+    url: SITE_URL,
+    logo: `${SITE_URL}/logo_kare.svg`,
+    image: `${SITE_URL}/og-default.svg`,
+    description:
+      "Bodrum yarımadasında apart kiralama hizmeti veren yerel platform.",
+    telephone: "+905385124088",
+    email: "info@bodrumapartkiralama.com",
+    priceRange: "₺₺",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Bodrum",
+      addressRegion: "Muğla",
+      addressCountry: "TR",
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: 37.0344,
+      longitude: 27.4305,
+    },
+    areaServed: ["Bodrum", ...districts.map((d) => d.name)],
+    openingHoursSpecification: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        opens: "09:00",
+        closes: "19:00",
+      },
+    ],
+  };
+
   return (
     <html lang={locale} className={jakarta.variable}>
       <body className="bg-white font-sans text-ink antialiased">
+        <JsonLd data={localBusinessLd} />
         <GtmNoScript />
         <NextIntlClientProvider locale={locale} messages={messages}>
           <a

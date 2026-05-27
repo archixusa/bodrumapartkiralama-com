@@ -8,6 +8,8 @@ import { ApartCard } from "@/components/ApartCard";
 import { FAQ } from "@/components/FAQ";
 import { JsonLd } from "@/components/JsonLd";
 import { districts, getDistrict } from "@/data/districts";
+import { districtGuides } from "@/data/districtGuides";
+import { DistrictGuide } from "@/components/DistrictGuide";
 import { getApartmentsByDistrict } from "@/data/apartments";
 
 const SITE_URL =
@@ -67,6 +69,7 @@ export default async function DistrictPage({
   const nearby = d.nearby
     .map((slug) => districts.find((x) => x.slug === slug))
     .filter(Boolean);
+  const guide = isTr ? districtGuides[d.slug] : undefined;
 
   const districtFaq = [
     {
@@ -104,6 +107,8 @@ export default async function DistrictPage({
     },
   ];
 
+  const combinedFaq = [...districtFaq, ...(guide?.faqs ?? [])];
+
   const jsonLd = [
     {
       "@context": "https://schema.org",
@@ -120,6 +125,23 @@ export default async function DistrictPage({
     },
     {
       "@context": "https://schema.org",
+      "@type": "Place",
+      name: `${districtName}, Bodrum`,
+      description: guide?.lead ?? longDesc,
+      url: `${SITE_URL}/bodrum/${d.urlSlug}`,
+      containedInPlace: {
+        "@type": "AdministrativeArea",
+        name: "Bodrum, Muğla, TR",
+      },
+      geo: {
+        "@type": "GeoCoordinates",
+        latitude: d.lat,
+        longitude: d.lng,
+      },
+      image: d.heroImage,
+    },
+    {
+      "@context": "https://schema.org",
       "@type": "BreadcrumbList",
       itemListElement: [
         { "@type": "ListItem", position: 1, name: isTr ? "Ana Sayfa" : "Home", item: SITE_URL },
@@ -130,7 +152,7 @@ export default async function DistrictPage({
     {
       "@context": "https://schema.org",
       "@type": "FAQPage",
-      mainEntity: districtFaq.map((it) => ({
+      mainEntity: combinedFaq.map((it) => ({
         "@type": "Question",
         name: it.q,
         acceptedAnswer: { "@type": "Answer", text: it.a },
@@ -190,6 +212,8 @@ export default async function DistrictPage({
           </aside>
         </div>
       </section>
+
+      {guide && <DistrictGuide guide={guide} districtName={districtName} />}
 
       <section className="section section-soft">
         <div className="container-page">
