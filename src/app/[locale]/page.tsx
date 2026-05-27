@@ -8,21 +8,17 @@ import {
   Headphones,
   RefreshCw,
   ArrowRight,
-  Star,
+  MessageCircle,
+  Calendar,
+  KeyRound,
+  Home as HomeIcon,
 } from "lucide-react";
 import { Link } from "@/i18n/routing";
-import { SearchBar } from "@/components/SearchBar";
-import { ApartCard } from "@/components/ApartCard";
 import { DistrictCard } from "@/components/DistrictCard";
 import { FAQ } from "@/components/FAQ";
 import { JsonLd } from "@/components/JsonLd";
-import {
-  apartments,
-  getFeaturedApartments,
-} from "@/data/apartments";
 import { districts } from "@/data/districts";
 import { services } from "@/data/services";
-import { reviews } from "@/data/reviews";
 import { posts } from "@/data/posts";
 
 const SITE_URL =
@@ -69,12 +65,100 @@ export default async function HomePage({
   const f = await getTranslations({ locale, namespace: "faq" });
   const isTr = locale === "tr";
 
-  const featured = getFeaturedApartments(6);
-
   const faqItems = [1, 2, 3, 4, 5, 6].map((i) => ({
     q: f(`q${i}`),
     a: f(`a${i}`),
   }));
+
+  const heroCopy = isTr
+    ? {
+        chip: "Bodrum 2026",
+        h1: "Bodrum'un Premier Kiralama Platformu",
+        sub: "Doğrudan mülk sahibiyle, aracısız apart kiralama.",
+        lead:
+          "Aile bütçesini düşünen, pratik bilgi arayan tatilciler için: Bodrum'un farklı bölgelerinde değerlendirilmiş mülklerle çalışıyoruz. Mülk kataloğumuz açıldıkça apartları buradan paylaşacağız. Şimdilik talebinizi alıp size uygun seçenekleri sunabiliriz.",
+        ctaReserve: "Rezervasyon Talebi",
+        ctaOwner: "Evinizi Kiraya Verin",
+      }
+    : {
+        chip: "Bodrum 2026",
+        h1: "Bodrum's Premier Rental Platform",
+        sub: "Apartment rentals directly with the owner — no middlemen.",
+        lead:
+          "For travellers who care about value and want practical guidance: we work with properties across Bodrum's neighbourhoods. As our catalogue opens up, apartments will be listed here. For now, share your dates and we'll match you to suitable options.",
+        ctaReserve: "Send a Reservation Request",
+        ctaOwner: "List Your Property",
+      };
+
+  const howCopy = isTr
+    ? {
+        title: "Nasıl Çalışıyoruz",
+        sub: "Üç adımda, sade ve şeffaf.",
+        steps: [
+          {
+            icon: MessageCircle,
+            num: "01",
+            title: "Talep",
+            desc:
+              "WhatsApp veya formdan tarih, kişi sayısı ve tercih ettiğiniz bölgeyi iletin.",
+          },
+          {
+            icon: Calendar,
+            num: "02",
+            title: "Görüşme",
+            desc:
+              "Uygun mülkleri seçenek olarak paylaşırız; mülk sahibiyle iletişim kurmanıza aracılık ederiz.",
+          },
+          {
+            icon: KeyRound,
+            num: "03",
+            title: "Konaklama",
+            desc:
+              "Anahtarınız hazır olur, karşılama yapılır. Konaklama boyunca size ulaşabileceğiniz bir kişi vardır.",
+          },
+        ],
+      }
+    : {
+        title: "How It Works",
+        sub: "Three simple, transparent steps.",
+        steps: [
+          {
+            icon: MessageCircle,
+            num: "01",
+            title: "Request",
+            desc:
+              "Share your dates, group size and preferred neighbourhood via WhatsApp or the form.",
+          },
+          {
+            icon: Calendar,
+            num: "02",
+            title: "Match",
+            desc:
+              "We send you suitable options and bridge contact with the owner.",
+          },
+          {
+            icon: KeyRound,
+            num: "03",
+            title: "Stay",
+            desc:
+              "Your keys are ready, a welcome is arranged, and someone is reachable throughout your stay.",
+          },
+        ],
+      };
+
+  const ownerCopy = isTr
+    ? {
+        title: "Mülk Sahibi misiniz?",
+        desc:
+          "Mülkünüzü Bodrum'un farklı bölgelerinde değerlendiriyoruz. Komisyon yapımız net, mülk sahibiyle iletişim doğrudan. Mülkünüzün size kazandırabileceğini değerlendirelim.",
+        cta: "Başvuru Formunu Doldurun",
+      }
+    : {
+        title: "Property Owner?",
+        desc:
+          "We work with owners across Bodrum's neighbourhoods. Our commission terms are clear and contact stays direct. Let's see how your property could perform.",
+        cta: "Open the Application Form",
+      };
 
   const jsonLd = [
     {
@@ -92,11 +176,6 @@ export default async function HomePage({
         addressCountry: "TR",
       },
       areaServed: districts.map((d) => d.name),
-      aggregateRating: {
-        "@type": "AggregateRating",
-        ratingValue: 4.8,
-        reviewCount: apartments.reduce((s, a) => s + a.reviewCount, 0),
-      },
     },
     {
       "@context": "https://schema.org",
@@ -137,19 +216,29 @@ export default async function HomePage({
         <div className="absolute inset-0 bg-gradient-to-b from-navy-900/80 via-navy-900/55 to-navy-900/85" />
         <div className="container-page relative py-16 md:py-24 lg:py-28">
           <div className="mx-auto max-w-3xl text-center">
-            <span className="chip-accent">Bodrum 2026</span>
-            <h1 className="mt-4 text-4xl font-bold leading-tight md:text-5xl lg:text-6xl text-white">
-              {t("h1")}
+            <span className="chip-accent">{heroCopy.chip}</span>
+            <h1 className="mt-4 text-balance leading-tight text-white md:text-5xl lg:text-6xl">
+              {heroCopy.h1}
             </h1>
             <p className="mt-3 text-lg font-semibold text-accent-400 md:text-xl">
-              {t("heroUpper")}
+              {heroCopy.sub}
             </p>
-            <p className="mt-3 text-base text-white/85 md:text-lg">
-              {t("heroLower")}
+            <p className="mx-auto mt-4 max-w-2xl text-base text-white/85 md:text-lg">
+              {heroCopy.lead}
             </p>
-          </div>
-          <div className="mx-auto mt-8 max-w-5xl">
-            <SearchBar />
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+              <Link href="/iletisim" className="btn-primary">
+                {heroCopy.ctaReserve}
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link
+                href="/evinizi-kiraya-verin"
+                className="btn-secondary !bg-white/10 !text-white !border-white/30 hover:!bg-white/15"
+              >
+                {heroCopy.ctaOwner}
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -157,25 +246,58 @@ export default async function HomePage({
       {/* TRUST STRIP */}
       <TrustStrip />
 
-      {/* SEARCH TITLE + INTRO */}
+      {/* HOW IT WORKS */}
       <section className="section">
         <div className="container-page">
-          <h2 className="text-center text-balance">{t("searchTitle")}</h2>
-          <div className="mx-auto mt-8 grid max-w-4xl gap-5 text-[15px] leading-relaxed text-ink/90">
-            <p>{t("intro1")}</p>
-            <p>{t("intro2")}</p>
-            <p>{t("intro3")}</p>
-            <p>{t("intro4")}</p>
-            <p>{t("intro5")}</p>
-            <p className="text-center text-lg font-semibold text-navy-900">
-              {t("intro6")}
-            </p>
+          <div className="mx-auto max-w-2xl text-center">
+            <h2 className="text-balance">{howCopy.title}</h2>
+            <p className="mt-3 text-muted">{howCopy.sub}</p>
+          </div>
+          <div className="mt-10 grid gap-5 sm:grid-cols-3">
+            {howCopy.steps.map((s) => {
+              const Icon = s.icon;
+              return (
+                <div key={s.num} className="card flex flex-col gap-3 p-6">
+                  <div className="flex items-center justify-between">
+                    <span className="inline-flex h-11 w-11 items-center justify-center rounded-md bg-navy-50 text-navy-900">
+                      <Icon className="h-5 w-5" />
+                    </span>
+                    <span className="text-3xl font-bold text-accent-400">
+                      {s.num}
+                    </span>
+                  </div>
+                  <h3 className="text-lg">{s.title}</h3>
+                  <p className="text-sm text-muted">{s.desc}</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* OWNER CTA */}
+      <section className="section section-soft">
+        <div className="container-page">
+          <div className="mx-auto flex max-w-4xl flex-col items-start gap-5 rounded-xl border border-[var(--color-border)] bg-white p-6 md:flex-row md:items-center md:gap-8 md:p-8">
+            <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-md bg-accent-400/15 text-accent-500">
+              <HomeIcon className="h-6 w-6" />
+            </span>
+            <div className="flex-1">
+              <h2 className="text-2xl">{ownerCopy.title}</h2>
+              <p className="mt-2 text-sm text-muted md:text-base">
+                {ownerCopy.desc}
+              </p>
+            </div>
+            <Link href="/evinizi-kiraya-verin" className="btn-primary shrink-0">
+              {ownerCopy.cta}
+              <ArrowRight className="h-4 w-4" />
+            </Link>
           </div>
         </div>
       </section>
 
       {/* SERVICES */}
-      <section className="section section-soft">
+      <section className="section">
         <div className="container-page">
           <SectionHeader title={t("servicesTitle")} desc={t("servicesDesc")} />
           <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
@@ -206,23 +328,6 @@ export default async function HomePage({
         </div>
       </section>
 
-      {/* FEATURED APARTS */}
-      <section className="section">
-        <div className="container-page">
-          <SectionHeader title={t("featuredTitle")} desc={t("featuredDesc")} />
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {featured.map((apt) => (
-              <ApartCard key={apt.id} apt={apt} />
-            ))}
-          </div>
-          <div className="mt-8 text-center">
-            <Link href="/apartlar" className="btn-secondary">
-              {c("viewAll")} <ArrowRight className="h-4 w-4" />
-            </Link>
-          </div>
-        </div>
-      </section>
-
       {/* DISTRICTS */}
       <section className="section section-blue">
         <div className="container-page">
@@ -232,6 +337,11 @@ export default async function HomePage({
               <DistrictCard key={d.slug} district={d} />
             ))}
           </div>
+          <p className="mt-8 text-center text-sm text-muted">
+            {isTr
+              ? "Bodrum'un farklı bölgelerinde mülk sahipleriyle çalışıyoruz."
+              : "We work with owners across Bodrum's neighbourhoods."}
+          </p>
         </div>
       </section>
 
@@ -248,38 +358,8 @@ export default async function HomePage({
         </div>
       </section>
 
-      {/* REVIEWS */}
-      <section className="section section-soft">
-        <div className="container-page">
-          <SectionHeader title={t("reviewsTitle")} desc={t("reviewsDesc")} />
-          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {reviews.map((r) => (
-              <article key={r.id} className="card flex flex-col gap-3 p-5">
-                <div className="flex items-center gap-1 text-accent-400">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star
-                      key={i}
-                      className={`h-4 w-4 ${i < r.rating ? "fill-current" : "opacity-30"}`}
-                    />
-                  ))}
-                </div>
-                <p className="text-sm leading-relaxed text-ink/90">
-                  &ldquo;{isTr ? r.textTr : r.textEn}&rdquo;
-                </p>
-                <div className="mt-auto flex items-center justify-between border-t border-[var(--color-border)] pt-3 text-xs text-muted">
-                  <span>
-                    <span className="font-semibold text-navy-900">{r.author}</span> · {r.city}
-                  </span>
-                  <span className="chip">{r.source}</span>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* BLOG */}
-      <section className="section">
+      <section className="section section-soft">
         <div className="container-page">
           <div className="flex items-end justify-between">
             <div>
@@ -316,7 +396,7 @@ export default async function HomePage({
       </section>
 
       {/* FAQ */}
-      <section className="section section-soft">
+      <section className="section">
         <div className="container-page max-w-4xl">
           <SectionHeader title={t("faqTitle")} />
           <div className="mt-8">

@@ -9,6 +9,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { WhatsAppFab } from "@/components/WhatsAppFab";
 import { AnalyticsScripts, GtmNoScript } from "@/components/Analytics";
+import { CookieConsent } from "@/components/CookieConsent";
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin", "latin-ext"],
@@ -77,9 +78,6 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} className={jakarta.variable}>
-      <head>
-        <AnalyticsScripts />
-      </head>
       <body className="bg-white font-sans text-ink antialiased">
         <GtmNoScript />
         <NextIntlClientProvider locale={locale} messages={messages}>
@@ -95,6 +93,8 @@ export default async function LocaleLayout({
           </main>
           <Footer />
           <WhatsAppFab />
+          <CookieConsent />
+          <AnalyticsScripts />
         </NextIntlClientProvider>
       </body>
     </html>
