@@ -15,8 +15,7 @@ import { getMdxPosts, getMdxPost } from "@/lib/mdx-blog";
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://bodrumapartkiralama.com";
 
-const FALLBACK_HERO =
-  "https://images.unsplash.com/photo-1583425423320-eea6e5d20baf?auto=format&fit=crop&w=2000&q=80";
+const FALLBACK_HERO = "/blog/bodrum-tatil-rehberi/hero.webp";
 
 export function generateStaticParams() {
   const legacy = posts.map((p) => ({ slug: p.slug }));
