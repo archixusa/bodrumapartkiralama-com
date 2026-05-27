@@ -8,7 +8,7 @@ import {
   MessageCircle,
   Phone,
   Mail,
-  User,
+  CalendarClock,
 } from "lucide-react";
 import { PageHero } from "@/components/PageHero";
 import { JsonLd } from "@/components/JsonLd";
@@ -58,7 +58,7 @@ export default async function Page({
         h1: "Hakkımızda",
         subtitle: "Bodrum'da apart kiralama için küçük ölçekli, yerel bir platform.",
         intro:
-          "Bodrumapartkiralama, Bodrum yarımadasında apart kiralama hizmeti veren bir konaklama yönetim platformudur. Mülk sahipleri ile misafirleri doğrudan buluşturuyor, aracısız ve şeffaf bir hizmet modeli sunuyoruz.",
+          "2013'ten bu yana Bodrum yarımadasında apart kiralama hizmeti veren bir konaklama yönetim platformuyuz. Mülk sahipleri ile misafirleri doğrudan buluşturuyor, aracısız ve şeffaf bir hizmet modeli sunuyoruz.",
         approachTitle: "Yaklaşımımız",
         approachLead:
           "İşletmemizi üç temel ilke üzerine kuruyoruz:",
@@ -79,10 +79,10 @@ export default async function Page({
             desc: "Bir rezervasyon işlemi değil, bir konaklama deneyimi sunuyoruz. Check-in'den check-out'a, ihtiyaç anlarında yanınızdayız.",
           },
         ],
-        founderTitle: "Furkan Şahin",
-        founderRole: "Kurucu ve operasyon yöneticisi",
+        founderTitle: "2013'ten Beri Bodrum'da",
+        founderRole: "Yerel ekip, sürdürülebilir ortaklık",
         founderDesc:
-          "Platformun kurucusu ve operasyondan sorumlu yöneticisi. Bodrum'da konaklama yönetimi alanında çalışmakta, mülk sahipleriyle bireysel ilişki kurmayı, misafirlerle doğrudan iletişimi savunmaktadır.",
+          "Faaliyetlerimize 2013 yılında başladık. Bodrum yarımadasında konaklama yönetimi alanında çalışmakta, mülk sahipleriyle bireysel ilişki kurmayı, misafirlerle doğrudan iletişim kurmayı önceliklendiriyoruz.",
         contactTitle: "İletişim",
         contactLead:
           "Sorularınız için en hızlı kanal WhatsApp; telefon ve e-posta da açıktır.",
@@ -98,7 +98,7 @@ export default async function Page({
         subtitle:
           "A small-scale local platform for apartment rental in Bodrum.",
         intro:
-          "Bodrumapartkiralama is a property management platform offering apartment rental on the Bodrum peninsula. We bring owners and guests directly together with a no-middleman, transparent service model.",
+          "Since 2013, we have been a property management platform offering apartment rental on the Bodrum peninsula. We bring owners and guests directly together with a no-middleman, transparent service model.",
         approachTitle: "Our Approach",
         approachLead: "We build the business on three core principles:",
         principles: [
@@ -118,10 +118,10 @@ export default async function Page({
             desc: "Not just a booking transaction but a stay experience: from check-in to check-out, we stay reachable when you need us.",
           },
         ],
-        founderTitle: "Furkan Şahin",
-        founderRole: "Founder & operations lead",
+        founderTitle: "Active in Bodrum since 2013",
+        founderRole: "Local team, lasting partnership",
         founderDesc:
-          "Founder and operations lead of the platform. Working in property management on the Bodrum peninsula, with a strong preference for personal relationships with owners and direct contact with guests.",
+          "We have been operating in property management on the Bodrum peninsula since 2013, with a strong preference for personal relationships with owners and direct contact with guests.",
         contactTitle: "Contact",
         contactLead:
           "WhatsApp is the fastest channel; phone and email are also open.",
@@ -146,7 +146,7 @@ export default async function Page({
       "@type": "Organization",
       name: "Bodrumapartkiralama.com",
       url: SITE_URL,
-      founder: { "@type": "Person", name: "Furkan Şahin" },
+      foundingDate: "2013",
       areaServed: "Bodrum, Muğla, TR",
     },
   };
@@ -201,7 +201,7 @@ export default async function Page({
         <div className="container-page max-w-3xl">
           <div className="card flex flex-col gap-4 p-6 md:flex-row md:items-start md:p-8">
             <span className="inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-navy-50 text-navy-900">
-              <User className="h-6 w-6" />
+              <CalendarClock className="h-6 w-6" />
             </span>
             <div>
               <h2 className="text-2xl">{copy.founderTitle}</h2>

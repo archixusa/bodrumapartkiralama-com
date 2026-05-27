@@ -392,9 +392,7 @@ function renderMdxPost(
               </span>
               <span className="inline-flex items-center gap-1">
                 <User className="h-4 w-4" />
-                <Link href={`/yazar/${mdx.author_slug}`} className="underline hover:text-white">
-                  {mdx.author}
-                </Link>
+                Editör Ekibi
               </span>
             </div>
           </div>
@@ -442,22 +440,16 @@ function renderMdxPost(
 function AuthorBio() {
   return (
     <div className="mt-10 flex gap-4 rounded-xl border border-[var(--color-border)] bg-white p-5">
-      <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-navy-100 text-2xl font-bold text-navy-900">
-        FŞ
+      <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-navy-100 text-sm font-bold text-navy-900">
+        BAK
       </div>
       <div>
-        <h3 className="text-base font-bold">Furkan Şahin</h3>
+        <h3 className="text-base font-bold">Bodrumapartkiralama Editör Ekibi</h3>
         <p className="mt-1 text-sm leading-relaxed text-muted">
-          Bodrum'da 5 yıldır apart/villa kiralama yöneticisi olarak çalışıyor.
-          Yalıkavak, Gümbet, Turgutreis başta olmak üzere bölgedeki konaklama
-          dinamiklerini ilk elden biliyor.
+          2013'ten bu yana Bodrum yarımadasında apart kiralama yönetimi yapan
+          ekibimiz; Yalıkavak, Gümbet, Turgutreis başta olmak üzere bölgedeki
+          konaklama dinamiklerini ilk elden takip ediyor.
         </p>
-        <Link
-          href="/yazar/furkan-sahin"
-          className="mt-2 inline-flex items-center gap-1 text-xs font-semibold text-navy-700 hover:text-navy-900"
-        >
-          Profil & tüm yazıları <ArrowRight className="h-3 w-3" />
-        </Link>
       </div>
     </div>
   );
