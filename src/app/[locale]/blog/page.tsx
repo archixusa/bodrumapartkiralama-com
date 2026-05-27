@@ -11,7 +11,7 @@ const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://bodrumapartkiralama.com";
 
 const FALLBACK_HERO =
-  "https://images.unsplash.com/photo-1519677100203-a0e668c92439?auto=format&fit=crop&w=2000&q=80";
+  "https://images.unsplash.com/photo-1583425423320-eea6e5d20baf?auto=format&fit=crop&w=2000&q=80";
 
 interface UnifiedPost {
   source: "legacy" | "mdx";

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import {
   Shield,
   Clock,
@@ -228,7 +228,7 @@ export default async function HomePage({
       {/* HERO */}
       <section className="relative overflow-hidden bg-navy-900 text-white">
         <Image
-          src="https://images.unsplash.com/photo-1519677100203-a0e668c92439?auto=format&fit=crop&w=2000&q=80"
+          src="https://images.unsplash.com/photo-1583425423320-eea6e5d20baf?auto=format&fit=crop&w=2000&q=80"
           alt="Bodrum"
           fill
           priority
@@ -462,29 +462,79 @@ function WhyCard({ num, title, desc }: { num: string; title: string; desc: strin
 
 function TrustStrip() {
   const t = useTranslations("home");
-  const items = [
-    { icon: Shield, title: t("trust1Title"), desc: t("trust1Desc") },
-    { icon: Clock, title: t("trust2Title"), desc: t("trust2Desc") },
-    { icon: Headphones, title: t("trust3Title"), desc: t("trust3Desc") },
-    { icon: RefreshCw, title: t("trust4Title"), desc: t("trust4Desc") },
+  const locale = useLocale();
+  const isTr = locale === "tr";
+
+  // Warm, family-friendly trust signals for Turkish audience.
+  // Other locales fall back to the existing trust1-4 message keys.
+  const warmItems = [
+    { emoji: "🏠", title: "Yerel ekip", desc: "Bodrum'da yaşıyoruz" },
+    {
+      emoji: "💬",
+      title: "Doğrudan iletişim",
+      desc: "Mülk sahibiyle aracısız",
+    },
+    {
+      emoji: "📝",
+      title: "Şeffaf çalışma",
+      desc: "Tüm koşullar önceden net",
+    },
+    {
+      emoji: "⏰",
+      title: "7/24 destek",
+      desc: "Konaklama boyunca yanınızda",
+    },
   ];
+
   return (
     <section className="border-b border-[var(--color-border)] bg-white">
       <div className="container-page grid gap-4 py-8 sm:grid-cols-2 lg:grid-cols-4">
-        {items.map((item) => {
-          const Icon = item.icon;
-          return (
-            <div key={item.title} className="flex items-start gap-3">
-              <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-navy-50 text-navy-900">
-                <Icon className="h-5 w-5" />
-              </span>
-              <div>
-                <p className="text-sm font-semibold text-navy-900">{item.title}</p>
-                <p className="text-xs text-muted">{item.desc}</p>
+        {isTr
+          ? warmItems.map((item) => (
+              <div key={item.title} className="flex items-start gap-3">
+                <span
+                  className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-amber-50 text-xl"
+                  aria-hidden
+                >
+                  {item.emoji}
+                </span>
+                <div>
+                  <p className="text-sm font-semibold text-navy-900">
+                    {item.title}
+                  </p>
+                  <p className="text-xs text-muted">{item.desc}</p>
+                </div>
               </div>
-            </div>
-          );
-        })}
+            ))
+          : [
+              { icon: Shield, title: t("trust1Title"), desc: t("trust1Desc") },
+              { icon: Clock, title: t("trust2Title"), desc: t("trust2Desc") },
+              {
+                icon: Headphones,
+                title: t("trust3Title"),
+                desc: t("trust3Desc"),
+              },
+              {
+                icon: RefreshCw,
+                title: t("trust4Title"),
+                desc: t("trust4Desc"),
+              },
+            ].map((item) => {
+              const Icon = item.icon;
+              return (
+                <div key={item.title} className="flex items-start gap-3">
+                  <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-navy-50 text-navy-900">
+                    <Icon className="h-5 w-5" />
+                  </span>
+                  <div>
+                    <p className="text-sm font-semibold text-navy-900">
+                      {item.title}
+                    </p>
+                    <p className="text-xs text-muted">{item.desc}</p>
+                  </div>
+                </div>
+              );
+            })}
       </div>
     </section>
   );
