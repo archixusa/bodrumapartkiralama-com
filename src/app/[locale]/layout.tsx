@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
+import dynamic from "next/dynamic";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -7,19 +8,34 @@ import "../globals.css";
 import { routing } from "@/i18n/routing";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { WhatsAppFab } from "@/components/WhatsAppFab";
 import { AnalyticsScripts, GtmNoScript } from "@/components/Analytics";
-import { CookieConsent } from "@/components/CookieConsent";
-import { SeasonBanner } from "@/components/SeasonBanner";
-import { ExitIntentModal } from "@/components/ExitIntentModal";
 import { JsonLd } from "@/components/JsonLd";
 import { districts } from "@/data/districts";
+
+// Heavy below-fold client components — load lazily so they don't block LCP.
+const SeasonBanner = dynamic(
+  () => import("@/components/SeasonBanner").then((m) => m.SeasonBanner),
+  { ssr: false },
+);
+const WhatsAppFab = dynamic(
+  () => import("@/components/WhatsAppFab").then((m) => m.WhatsAppFab),
+  { ssr: false },
+);
+const ExitIntentModal = dynamic(
+  () => import("@/components/ExitIntentModal").then((m) => m.ExitIntentModal),
+  { ssr: false },
+);
+const CookieConsent = dynamic(
+  () => import("@/components/CookieConsent").then((m) => m.CookieConsent),
+  { ssr: false },
+);
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin", "latin-ext"],
   display: "swap",
   variable: "--font-sans",
   weight: ["400", "500", "600", "700", "800"],
+  preload: true,
 });
 
 const SITE_URL =
@@ -153,6 +169,19 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} className={jakarta.variable}>
+      <head>
+        {/* Warm up connections to third-party origins used on every page. */}
+        <link
+          rel="dns-prefetch"
+          href="https://ddnigdorbnvnubjejzfu.supabase.co"
+        />
+        <link
+          rel="preconnect"
+          href="https://ddnigdorbnvnubjejzfu.supabase.co"
+          crossOrigin=""
+        />
+        <link rel="dns-prefetch" href="https://images.unsplash.com" />
+      </head>
       <body className="bg-white font-sans text-ink antialiased">
         <JsonLd data={localBusinessLd} />
         <GtmNoScript />
