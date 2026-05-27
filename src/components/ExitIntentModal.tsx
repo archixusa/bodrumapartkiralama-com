@@ -97,6 +97,12 @@ export function ExitIntentModal() {
     e.preventDefault();
     const form = e.currentTarget;
     const data = new FormData(form);
+    // Honeypot tripwire — show success silently if a bot filled it.
+    const honeypotValue = String(data.get("website") || "").trim();
+    if (honeypotValue !== "") {
+      setStatus("success");
+      return;
+    }
     const consent = data.get("consent") === "on";
     if (!consent) {
       setStatus("error");
@@ -248,6 +254,16 @@ export function ExitIntentModal() {
                   style={{ fontSize: 16 }}
                 />
               </label>
+
+              {/* Honeypot — hidden from real users; bots fill it. */}
+              <input
+                type="text"
+                name="website"
+                tabIndex={-1}
+                autoComplete="off"
+                className="hidden"
+                aria-hidden="true"
+              />
 
               <label className="flex items-start gap-2 text-xs text-muted">
                 <input
