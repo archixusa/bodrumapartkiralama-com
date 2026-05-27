@@ -163,11 +163,12 @@ export default async function HomePage({
   const jsonLd = [
     {
       "@context": "https://schema.org",
-      "@type": "LodgingBusiness",
+      "@type": ["LocalBusiness", "LodgingBusiness"],
+      "@id": `${SITE_URL}/#organization`,
       name: "Bodrumapartkiralama.com",
       url: SITE_URL,
       logo: `${SITE_URL}/logo_kare.svg`,
-      image: `${SITE_URL}/logo_kare.svg`,
+      image: `${SITE_URL}/og-default.svg`,
       description: t("metaDesc"),
       address: {
         "@type": "PostalAddress",
@@ -175,7 +176,28 @@ export default async function HomePage({
         addressRegion: "Muğla",
         addressCountry: "TR",
       },
-      areaServed: districts.map((d) => d.name),
+      geo: {
+        "@type": "GeoCoordinates",
+        latitude: 37.0344,
+        longitude: 27.4305,
+      },
+      areaServed: ["Bodrum", ...districts.map((d) => d.name)],
+      telephone: "+90 538 512 40 88",
+      email: "info@bodrumapartkiralama.com",
+      openingHoursSpecification: [
+        {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+          ],
+          opens: "09:00",
+          closes: "19:00",
+        },
+      ],
     },
     {
       "@context": "https://schema.org",

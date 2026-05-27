@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
@@ -24,20 +24,36 @@ const SITE_URL =
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Bodrum Apart Kiralama 2026 | Güvenli Rezervasyon",
+    default: "Bodrum Apart Kiralama 2026",
     template: "%s | Bodrumapartkiralama.com",
   },
   description:
-    "Bodrum'da 50+ doğrulanmış apart. Gümbet, Turgutreis, Yalıkavak'ta günlük kiralık daire. Anında rezervasyon, ücretsiz iptal, 7/24 destek.",
+    "Bodrum'da aile bütçesine uygun apart kiralama. Gümbet, Turgutreis, Yalıkavak ve diğer bölgelerde günlük kiralık daire. Doğrudan mülk sahibiyle iletişim.",
+  applicationName: "Bodrumapartkiralama",
+  keywords: [
+    "Bodrum apart kiralama",
+    "Bodrum kiralık daire",
+    "Gümbet apart",
+    "Turgutreis apart",
+    "Yalıkavak apart",
+    "günlük kiralık ev Bodrum",
+  ],
   openGraph: {
     type: "website",
     siteName: "Bodrumapartkiralama.com",
     locale: "tr_TR",
-    images: ["/logo_kare.svg"],
+    images: [
+      {
+        url: "/og-default.svg",
+        width: 1200,
+        height: 630,
+        alt: "Bodrum Apart Kiralama",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    images: ["/logo_kare.svg"],
+    images: ["/og-default.svg"],
   },
   alternates: {
     canonical: SITE_URL,
@@ -49,13 +65,33 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: "/icon.svg",
-    apple: "/logo_kare.svg",
+    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
+    shortcut: "/icon.svg",
+    apple: [{ url: "/apple-touch-icon.svg", type: "image/svg+xml" }],
   },
+  manifest: "/site.webmanifest",
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
   },
+  verification: {
+    // Add Google Search Console / Bing verification codes via env when ready.
+    google: process.env.NEXT_PUBLIC_GSC_VERIFICATION || undefined,
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#042C53",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
 };
 
 export function generateStaticParams() {
