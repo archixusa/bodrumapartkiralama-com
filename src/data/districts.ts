@@ -64,7 +64,7 @@ export const districts: District[] = [
     longDescEn:
       "On the western edge of the Bodrum peninsula, Turgutreis is named after the famed Ottoman admiral and serves as a calmer, family-oriented alternative to Bodrum centre. It is known for one of Turkey's most stunning sunsets along its long seafront, a modern marina, and a Saturday open market beloved by locals and visitors alike. The Greek island of Kos is closest from here — you can reach it by ferry in about an hour. Restaurants lean toward homemade Aegean cooking and prices are gentler than in Gümbet or Yalıkavak. Shallow, safe beaches and quiet evenings make it a top pick for families with children.",
     heroImage:
-      "https://images.unsplash.com/photo-1519677100203-a0e668c92439?auto=format&fit=crop&w=1600&q=80",
+      "https://images.unsplash.com/photo-1583425423320-eea6e5d20baf?auto=format&fit=crop&w=1600&q=80",
     highlights: {
       tr: [
         "Türkiye'nin en güzel gün batımı noktalarından biri",

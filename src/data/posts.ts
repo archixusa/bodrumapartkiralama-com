@@ -34,7 +34,7 @@ export const posts: Post[] = [
     slug: "bodrum-tatil-rehberi",
     date: "2026-05-15",
     readingTime: 9,
-    hero: "https://images.unsplash.com/photo-1519677100203-a0e668c92439?auto=format&fit=crop&w=2000&q=80",
+    hero: "https://images.unsplash.com/photo-1583425423320-eea6e5d20baf?auto=format&fit=crop&w=2000&q=80",
     category: { tr: "Rehber", en: "Guide" },
     titleTr: "Bodrum Tatil Rehberi 2026: Ne Zaman, Nereye, Nasıl?",
     titleEn: "Bodrum Travel Guide 2026: When, Where, How?",

@@ -174,6 +174,25 @@ export default async function Page({
           </aside>
         </div>
       </section>
+
+      <section className="section section-soft">
+        <div className="container-page">
+          <h2 className="text-center text-2xl">
+            {isTr ? "Bodrum — Konumumuz" : "Bodrum — Our Location"}
+          </h2>
+          <div className="mt-6 overflow-hidden rounded-xl border border-[var(--color-border)]">
+            <iframe
+              title={isTr ? "Bodrum harita" : "Bodrum map"}
+              src="https://maps.google.com/maps?q=37.0344,27.4305&z=12&output=embed"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
+              style={{ border: 0 }}
+              className="block h-[400px] w-full"
+            />
+          </div>
+        </div>
+      </section>
     </>
   );
 }

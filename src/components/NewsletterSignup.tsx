@@ -26,9 +26,9 @@ export function NewsletterSignup({ sourceSite, sourcePage }: Props) {
         submitting: "Gönderiliyor...",
         consent:
           "E-posta adresimi yalnızca yeni mülk eklendiğinde haberdar olmak için kullanmanıza onay veriyorum.",
-        successTitle: "Teşekkürler!",
+        successTitle: "E-postanızı kontrol edin",
         successDesc:
-          "E-posta adresinizi kaydettik. Yeni mülkler eklendiğinde bilgilendirme yapacağız.",
+          "E-posta adresinize doğrulama linki gönderdik. Lütfen kontrol edip onaylayın.",
         errorTitle: "Bir sorun oluştu",
         errorFallback:
           "Şu an kayıt yapılamadı. Lütfen biraz sonra tekrar deneyin veya WhatsApp'tan ulaşın.",
@@ -41,9 +41,9 @@ export function NewsletterSignup({ sourceSite, sourcePage }: Props) {
         submitting: "Sending...",
         consent:
           "I consent to my email being used only to notify me when new properties are added.",
-        successTitle: "Thank you!",
+        successTitle: "Check your inbox",
         successDesc:
-          "Your email is saved. We'll notify you when new properties are added.",
+          "We sent a confirmation link to your email — please open it to confirm your subscription.",
         errorTitle: "Something went wrong",
         errorFallback:
           "Couldn't save your email right now. Please try again later or message us on WhatsApp.",
@@ -73,26 +73,25 @@ export function NewsletterSignup({ sourceSite, sourcePage }: Props) {
       if (!supabaseUrl || !supabaseKey) {
         throw new Error("Supabase env missing");
       }
+      // Double opt-in: edge function emails a confirmation link.
       const res = await fetch(
-        `${supabaseUrl}/rest/v1/newsletter_subscribers`,
+        `${supabaseUrl}/functions/v1/newsletter-subscribe`,
         {
           method: "POST",
           headers: {
             apikey: supabaseKey,
             Authorization: `Bearer ${supabaseKey}`,
             "Content-Type": "application/json",
-            Prefer: "return=minimal",
           },
           body: JSON.stringify({
             email: trimmed.toLowerCase(),
             source_site: sourceSite,
             source_page: sourcePage,
-            locale,
           }),
         }
       );
       if (!res.ok && res.status !== 409) {
-        // 409 (conflict, already subscribed) is treated as success.
+        // 409 (already subscribed/pending) — surface as success too.
         const text = await res.text().catch(() => "");
         throw new Error(text || `HTTP ${res.status}`);
       }
