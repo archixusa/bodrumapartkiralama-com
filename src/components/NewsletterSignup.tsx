@@ -18,6 +18,8 @@ export function NewsletterSignup({ sourceSite, sourcePage }: Props) {
   const [consent, setConsent] = useState(false);
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState<string>("");
+  // Honeypot — hidden field; if a bot fills it we silently treat as success.
+  const [honeypot, setHoneypot] = useState("");
 
   const t = isTr
     ? {
@@ -54,6 +56,12 @@ export function NewsletterSignup({ sourceSite, sourcePage }: Props) {
   const submit = async (e: FormEvent) => {
     e.preventDefault();
     setErrorMsg("");
+    // Honeypot tripwire — bots fill every visible field including this one.
+    // Show a success state to avoid telling them they were caught.
+    if (honeypot.trim() !== "") {
+      setStatus("success");
+      return;
+    }
     if (!consent) {
       setStatus("error");
       setErrorMsg(t.consentRequired);
@@ -142,6 +150,18 @@ export function NewsletterSignup({ sourceSite, sourcePage }: Props) {
         />
         <span>{t.consent}</span>
       </label>
+
+      {/* Honeypot field — hidden from real users; bots that fill it get a soft-fail. */}
+      <input
+        type="text"
+        name="website"
+        value={honeypot}
+        onChange={(e) => setHoneypot(e.target.value)}
+        tabIndex={-1}
+        autoComplete="off"
+        className="hidden"
+        aria-hidden="true"
+      />
 
       {status === "error" && errorMsg && (
         <div className="flex items-start gap-2 rounded-md border border-danger/30 bg-danger/5 p-3 text-sm text-danger">
