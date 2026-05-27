@@ -95,7 +95,7 @@ const FAQ_TR = [
   },
   {
     q: "Rezervasyon iptali nasıl yapılır?",
-    a: "İptal talebinizi WhatsApp veya e-posta üzerinden iletmeniz yeterlidir. Tatil tarihinize 7 gün veya daha önce yapılan iptaller için ödenen tutar iade edilir. 7 günden kısa süre kala iptaller sezon ve mülk koşullarına göre kısmi kesintiye tabi olabilir; detaylar rezervasyon onayında paylaşılır.",
+    a: "İptal talebinizi WhatsApp veya e-posta üzerinden iletmeniz yeterlidir. İptal şartları mülke göre değişir. Genel yaklaşımımız: tatil tarihinize 14+ gün önce yapılan iptaller için tam iade görüşmesi, 7-14 gün arası kısmi iade. Detaylar rezervasyon onayında ve mülk sahibiyle birlikte netleştirilir.",
   },
   {
     q: "Erken giriş / geç çıkış mümkün müdür?",

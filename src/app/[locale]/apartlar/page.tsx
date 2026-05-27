@@ -54,8 +54,8 @@ export default async function ApartlarPage({
         benefits: [
           {
             icon: Wallet,
-            title: "Şeffaf komisyon yapısı",
-            desc: "Mülk sahipleriyle çalışma şartlarımız açıktır; gizli ek ücret yoktur.",
+            title: "Şeffaf çalışma yapısı",
+            desc: "Mülk sahipleri ve misafirlerle iletişim açıktır; ek ücretler önceden paylaşılır.",
           },
           {
             icon: Phone,
@@ -69,8 +69,8 @@ export default async function ApartlarPage({
           },
           {
             icon: Sparkles,
-            title: "Profesyonel temizlik ve karşılama",
-            desc: "Her giriş öncesi standart bir temizlik ve karşılama protokolü uygulanır.",
+            title: "Temizlik ve karşılama",
+            desc: "Mülk sahipleri her konaklama arası temizlik düzenler. Karşılama uygulaması mülk bazında değişkenlik gösterebilir.",
           },
         ],
         newsletterTitle: "Yeni mülkler eklendiğinde haberdar olun",
@@ -91,8 +91,8 @@ export default async function ApartlarPage({
         benefits: [
           {
             icon: Wallet,
-            title: "Transparent commission",
-            desc: "Our working terms with owners are clearly defined; no hidden fees.",
+            title: "Transparent way of working",
+            desc: "Communication with owners and guests is open; any extra fees are shared up front.",
           },
           {
             icon: Phone,
@@ -106,8 +106,8 @@ export default async function ApartlarPage({
           },
           {
             icon: Sparkles,
-            title: "Professional cleaning and welcome",
-            desc: "A standard cleaning and welcome protocol is applied before every check-in.",
+            title: "Cleaning and welcome",
+            desc: "Owners arrange cleaning between stays. Welcome practices vary by property.",
           },
         ],
         newsletterTitle: "Get notified when properties are added",
@@ -229,6 +229,195 @@ export default async function ApartlarPage({
           </div>
         </div>
       </section>
+
+      {isTr && <ApartlarGuideTr />}
     </>
+  );
+}
+
+function ApartlarGuideTr() {
+  const faqs = [
+    {
+      q: "Bodrum'da apart kiralamak otelden ne kadar uygun?",
+      a: "4 ve üzeri kişiyle seyahat eden aileler için apart, otel oda fiyatına göre çoğu zaman %30-50 daha avantajlı. Kahvaltı/öğle yemeğini apartta hazırlamak günlük yeme-içme harcamasını da düşürür. 1-2 kişilik konaklamada otel ile apart fiyat farkı daha az olur; apart avantajı düşük sezonda artar.",
+    },
+    {
+      q: "Hangi bölgeyi seçmeliyim?",
+      a: "Bodrum'un her bölgesi farklı bir profil için uygundur. Genç gruplar için Gümbet, aileler için Turgutreis/Ortakent/Bitez, butik tatil için Yalıkavak/Gündoğan, kısa konaklama için Torba öne çıkar. Bölge sayfalarımızda her birinin detaylı rehberi mevcut.",
+    },
+    {
+      q: "Sezona göre fiyatlar nasıl değişir?",
+      a: "Bodrum apart fiyatları üç sezonda toplanır: yüksek sezon (haziran sonu – ağustos sonu) en yüksek; orta sezon (haziran başı, eylül, ekim ilk yarısı) yaklaşık %25-35 indirim; düşük sezon (kasım-nisan) %50'ye varan indirim. Bayram dönemleri (Ramazan Bayramı, Kurban Bayramı) bağımsız bir prim sezonu oluşturur.",
+    },
+    {
+      q: "Apart seçerken nelere dikkat etmeliyim?",
+      a: "Fotoğrafların güncelliği, kat ve manzara, klima (split veya merkezi), site içi olanaklar (havuz, otopark, güvenlik), market mesafesi ve apart sahibinin iletişim hızı en önemli kriterlerdir. Sahil hattındaki apartlar görsel açıdan cazip ama gece gürültü konusunda risk taşıyabilir.",
+    },
+    {
+      q: "Rezervasyon süreci nasıl ilerliyor?",
+      a: "Tarihinizi ve kişi sayınızı paylaştığınızda size uygun apart seçeneklerini iletiyoruz. Beğendiğiniz mülk için mülk sahibiyle iletişim kurmanıza aracılık ediyoruz; sözleşme ve ödeme mülk sahibiyle yapılır. Rezervasyon teyit için kapora yaygındır.",
+    },
+    {
+      q: "Depozito alıyor musunuz?",
+      a: "Mülk sahipleri genellikle apartın hasar riskine karşılık depozito ister; tutar 2.000-10.000 TL arası değişir. Çıkışta apart kontrolü sonrası iade edilir. Bu uygulama mülke göre farklılık gösterir; her durumda rezervasyon onayında size yazılı olarak bildirilir.",
+    },
+    {
+      q: "Apartta evcil hayvan kabul ediyor musunuz?",
+      a: "Bir kısım mülk sahibi küçük ırk köpek/kedi kabul eder, bazıları etmez. Evcil hayvanlı seyahat planlıyorsanız mülk sahibiyle önceden teyit ediyoruz. Bazı sitelerde site yönetim kararıyla evcil hayvan yasak olabilir.",
+    },
+    {
+      q: "Minimum konaklama süresi var mı?",
+      a: "Yüksek sezonda genelde minimum 3-7 gece uygulanır. Düşük sezonda 2 gece yeterli olabilir. Bayram dönemlerinde özel minimum gecelik uygulamaları olabilir; tarihinize göre mülk bazında değerlendiriyoruz.",
+    },
+    {
+      q: "Havuzlu apart mı, deniz manzaralı apart mı?",
+      a: "Çocuklu aileler için havuzlu site apartları çoğu zaman daha pratiktir — havuz, oyun alanı, güvenlik gibi olanakları içerir. Romantik kaçamak veya manzara odaklı tatil için deniz manzaralı yamaç apartları daha cazip. Yalıkavak ve Gündoğan deniz manzaralı stoku ağırlıklı; Turgutreis ve Ortakent site apart stoku ağırlıklı.",
+    },
+    {
+      q: "Çek-up out saatleri standart mı?",
+      a: "Tipik check-in 16:00, check-out 11:00 olur. Sezon dışında ve mülke göre erken check-in/geç check-out talep edilebilir; mülk sahibiyle önceden konuşmamız gerekir. Aynı gün arka arkaya rezervasyon olduğu durumlarda esneklik daralabilir.",
+    },
+  ];
+  return (
+    <section className="section section-soft">
+      <div className="container-page max-w-4xl">
+        <h2 className="text-balance">
+          Bodrum'da Apart Kiralama Hakkında Bilmeniz Gerekenler
+        </h2>
+        <p className="mt-5 text-[15px] leading-relaxed text-ink/90">
+          Apart kiralama Bodrum tatilinin son 10 yılda en hızlı büyüyen
+          konaklama biçimi. Ailelerin kendi mutfaklarını kullanabilmesi,
+          gruplarla seyahat edenlerin maliyeti paylaşması ve uzun konaklamada
+          otele kıyasla ciddi tasarruf sunması bu trendi besledi. Aşağıdaki
+          rehber, Bodrum'da apart kiralarken bilinmesi gereken pratik
+          bilgilerin özetidir.
+        </p>
+
+        <h3 className="mt-10 text-xl">Apart vs Otel — Karar Verirken</h3>
+        <p className="mt-3 text-[15px] leading-relaxed text-ink/90">
+          Apart, otele göre üç temel farklılık taşır: özel bir yaşam alanı,
+          mutfak imkânı ve kendi temponuza göre planlanan günler. Otelin
+          sunduğu günlük temizlik, oda servisi ve resepsiyon hizmetlerinden
+          feragat edilir; karşılığında alan genişliği, mahremiyet ve maliyet
+          avantajı kazanılır. 4 kişi ve üzeri gruplarda genelde apart, otel
+          fiyatına kıyasla %30-50 daha avantajlıdır. 1-2 kişilik kısa
+          konaklamada bu fark daralır; otel rahatlığı ön plana çıkabilir.
+        </p>
+        <p className="mt-3 text-[15px] leading-relaxed text-ink/90">
+          Yemek alışkanlıkları da kararı etkiler. Sabah kahvaltısı ve öğle
+          yemeğini evde hazırlayıp akşam dışarıda yiyen aileler için apart son
+          derece elverişlidir. Her öğünü dışarıda yemek isteyenler için otelin
+          kahvaltı dahil paketleri pratik olabilir. Çocuklu ailelerde apart
+          mutfağı bebek/çocuk yemeği hazırlamak için neredeyse vazgeçilmezdir.
+        </p>
+
+        <h3 className="mt-10 text-xl">Hangi Bölge Size Uygun?</h3>
+        <p className="mt-3 text-[15px] leading-relaxed text-ink/90">
+          Bodrum yarımadasının her bölgesi farklı bir karaktere sahip ve
+          farklı tatilci profillerine hitap eder. Genel hatlarıyla:
+        </p>
+        <ul className="mt-4 space-y-2 text-[15px] text-ink/90">
+          <li>
+            <strong>Gümbet:</strong> Genç gruplar, gece hayatı, yoğun sosyal
+            atmosfer. Aile için ağustosta zorlayıcı olabilir.
+          </li>
+          <li>
+            <strong>Turgutreis:</strong> Geniş aileler, emekliler, sakin uzun
+            konaklama. Cumartesi pazarı ve gün batımı klasik avantajları.
+          </li>
+          <li>
+            <strong>Yalıkavak:</strong> Butik tatil, premium akşam yemeği,
+            süper yat marinası deneyimi. Bütçesi geniş misafirler için ideal.
+          </li>
+          <li>
+            <strong>Bitez:</strong> Aileler için sakin sahil ve rüzgâr sörfü;
+            Gümbet'in eğlencesine yürüme mesafesi.
+          </li>
+          <li>
+            <strong>Ortakent (Yahşi):</strong> En geniş kumlu plaj, çocuklu
+            aileler için en güvenli. Köy atmosferi cabası.
+          </li>
+          <li>
+            <strong>Gündoğan:</strong> Sakin lüks, deniz manzaralı yamaç,
+            Cennet Adası kaçamağı.
+          </li>
+          <li>
+            <strong>Torba:</strong> Havalimanına en yakın koy. Kısa konaklama
+            ve resort beach club deneyimi için pratik.
+          </li>
+        </ul>
+
+        <h3 className="mt-10 text-xl">Sezon ve Fiyat Dalgalanması</h3>
+        <p className="mt-3 text-[15px] leading-relaxed text-ink/90">
+          Bodrum'da apart fiyatları üç ana sezona göre şekillenir. Yüksek
+          sezon haziran sonundan ağustos sonuna kadar uzanır; bayram günleri
+          ve okul tatili pikiyle birlikte fiyatlar en yüksek seviyeye çıkar.
+          Orta sezon (haziran ilk yarısı ve eylül) yaklaşık %25-35 indirimle
+          gelir ama hava ve deniz koşulları hâlâ mükemmeldir; deneyimli
+          tatilcilerin tercih ettiği bir dönemdir. Düşük sezon (kasım-nisan)
+          %50'ye varan indirim sunar; çoğu apart yıl boyu açık olduğu için
+          sezon dışı konaklama da mümkündür.
+        </p>
+        <p className="mt-3 text-[15px] leading-relaxed text-ink/90">
+          Bayram dönemleri (Ramazan ve Kurban Bayramı) ayrı bir prim sezonu
+          oluşturur. Bu dönemlerde minimum gecelik 5-7 olabilir ve fiyatlar
+          yüksek sezondan bile yüksek seyredebilir. Ekonomik tatil planlayanlar
+          bayram tarihlerinden bir hafta önce veya sonra rezervasyon yaparak
+          ciddi tasarruf sağlayabilir.
+        </p>
+
+        <h3 className="mt-10 text-xl">Apart Seçerken Nelere Dikkat Etmeli?</h3>
+        <p className="mt-3 text-[15px] leading-relaxed text-ink/90">
+          İlk olarak fotoğrafların güncelliğini kontrol edin. 5 yıl önce
+          çekilmiş fotoğraflar aparta vardığınızda hayal kırıklığı
+          yaratabilir. Aktif olarak yönetilen platformlarda fotoğrafların
+          güncel olması beklenir; gerekirse mülk sahibinden son kullanılan
+          tarihte çekilmiş ek görüntü isteyebilirsiniz. Kat bilgisi (1. kat,
+          5. kat) ve manzara açısı önemli bir kalite göstergesidir.
+        </p>
+        <p className="mt-3 text-[15px] leading-relaxed text-ink/90">
+          Klima tipi kontrol edilmesi gereken bir başka detay. Bodrum'da
+          temmuz-ağustos sıcaklığı 35-40°C bandına çıkabilir; tüm odalarda
+          split klima olması ideal. Sadece salonda klima olan apartlar yaz
+          uykusu için zorlayıcı olabilir. Site içi olanaklar (havuz, çocuk
+          oyun alanı, otopark, güvenlik), market ve eczaneye yürüme mesafesi,
+          plaja mesafe de kontrol edilmeli kriterler arasında.
+        </p>
+
+        <h3 className="mt-10 text-xl">Rezervasyon Süreci</h3>
+        <p className="mt-3 text-[15px] leading-relaxed text-ink/90">
+          Rezervasyon süreci kabaca şu adımlardan oluşur: tarih ve kişi
+          sayısı paylaşımı; uygun mülk seçeneklerinin sunulması; mülk sahibiyle
+          iletişim ve detay teyidi; ödeme planı ve sözleşme; rezervasyon
+          onayı. Ödeme genelde iki taksitlidir: rezervasyonu kesinleştiren
+          kapora (%25-50) ve giriş öncesi kalan tutar. Banka havalesi en yaygın
+          ödeme yöntemidir; mülk sahibine göre kredi kartı veya başka
+          yöntemler de olabilir.
+        </p>
+        <p className="mt-3 text-[15px] leading-relaxed text-ink/90">
+          Sözleşme, mülk sahibi ile misafir arasında düzenlenir. Süre, kişi
+          sayısı, ödeme planı, depozito miktarı, iptal kuralları sözleşmede
+          yer alır. Biz bu süreçte aracılık ediyoruz; tarafsız bir gözle her
+          iki tarafa da koşulları açıklıyor, anlaşmazlıkların önüne geçmeye
+          çalışıyoruz. İptal şartları mülke göre değişir — genel
+          yaklaşımımızı yukarıda paylaştık.
+        </p>
+
+        <h2 className="mt-12 text-2xl">Apart Kiralama — Sıkça Sorulanlar</h2>
+        <div className="mt-5 divide-y divide-[var(--color-border)] rounded-2xl border border-[var(--color-border)] bg-white">
+          {faqs.map((f, i) => (
+            <details key={i} className="group p-5">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-sm font-semibold text-navy-900">
+                <span>{f.q}</span>
+                <span className="text-accent-500 transition group-open:rotate-90">
+                  &rsaquo;
+                </span>
+              </summary>
+              <p className="mt-3 text-sm leading-relaxed text-muted">{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }

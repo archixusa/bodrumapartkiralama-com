@@ -128,7 +128,11 @@ export default async function Page({
       image: [post.hero],
       datePublished: post.date,
       dateModified: post.date,
-      author: { "@type": "Organization", name: "Bodrumapartkiralama.com" },
+      author: {
+        "@type": "Organization",
+        name: "Bodrumapartkiralama Editör Ekibi",
+        url: SITE_URL,
+      },
       publisher: {
         "@type": "Organization",
         name: "Bodrumapartkiralama.com",
@@ -192,6 +196,10 @@ export default async function Page({
               </span>
               <span className="inline-flex items-center gap-1">
                 <Clock className="h-4 w-4" /> {t("readingTime", { min: post.readingTime })}
+              </span>
+              <span className="inline-flex items-center gap-1">
+                <User className="h-4 w-4" />
+                {isTr ? "Bodrumapartkiralama Editör Ekibi" : "Bodrumapartkiralama Editor Team"}
               </span>
             </div>
           </div>
@@ -446,9 +454,9 @@ function AuthorBio() {
       <div>
         <h3 className="text-base font-bold">Bodrumapartkiralama Editör Ekibi</h3>
         <p className="mt-1 text-sm leading-relaxed text-muted">
-          2013'ten bu yana Bodrum yarımadasında apart kiralama yönetimi yapan
-          ekibimiz; Yalıkavak, Gümbet, Turgutreis başta olmak üzere bölgedeki
-          konaklama dinamiklerini ilk elden takip ediyor.
+          Bodrum yarımadasında apart kiralama yönetimi yapan ekibimiz; Yalıkavak,
+          Gümbet, Turgutreis başta olmak üzere bölgedeki konaklama dinamiklerini
+          yerinden takip ediyor.
         </p>
       </div>
     </div>

@@ -6,6 +6,7 @@ import { PageHero } from "@/components/PageHero";
 import { InquiryForm } from "@/components/InquiryForm";
 import { FAQ } from "@/components/FAQ";
 import { JsonLd } from "@/components/JsonLd";
+import { PartnerServiceBanner } from "@/components/PartnerServiceBanner";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://bodrumapartkiralama.com";
@@ -123,9 +124,67 @@ export default async function Page({
       <PageHero
         title={t("h1")}
         subtitle={t("subtitle")}
-        badge="Bodrum 2026"
+        badge={isTr ? "Partner Hizmet · Bodrum 2026" : "Partner Service · Bodrum 2026"}
         image="https://images.unsplash.com/photo-1503424886307-b090341d25d1?auto=format&fit=crop&w=2000&q=80"
         crumbs={[{ href: "/", label: isTr ? "Ana Sayfa" : "Home" }, { label: t("h1") }]}
+      />
+
+      <PartnerServiceBanner
+        isTr={isTr}
+        serviceLabel={isTr ? "Partner Hizmet" : "Partner Service"}
+        description={
+          isTr
+            ? "Havalimanı transferleri, Bodrum bölgesinde uçuş takibi yapabilen ve sigortalı VIP araç filosuna sahip transfer ortaklarımızla yürütülür. Misafir karşılama, araç değişikliği ve gece operasyonu operatör tarafında çalışır."
+            : "Airport transfers are operated by our partners with flight-tracking and insured VIP fleets in Bodrum. Guest meet-and-greet, vehicle changes and night operations run on the operator side."
+        }
+        whatsappNumber={c("whatsappNumber")}
+        whatsappTemplate={
+          isTr
+            ? "Merhaba, Milas-Bodrum Havalimanı transferi için partner operatörünüze yönlendirir misiniz? Tarih, saat ve kişi sayısını paylaşacağım."
+            : "Hello, could you connect me with your partner operator for a Milas-Bodrum Airport transfer? I'll share date, time and group size."
+        }
+        whatsappCtaLabel={isTr ? "WhatsApp ile sor" : "Ask on WhatsApp"}
+        steps={[
+          {
+            num: "1",
+            title: isTr ? "Uçuş ve adres bilgisi" : "Flight and address info",
+            desc: isTr
+              ? "Uçuş numarası, varış saati ve apart adresini iletin."
+              : "Share your flight number, arrival time and apartment address.",
+          },
+          {
+            num: "2",
+            title: isTr ? "Araç sınıfı ve fiyat teyidi" : "Vehicle class and price",
+            desc: isTr
+              ? "Kişi/bagaj sayısına göre sedan, minivan ya da Sprinter VIP önerelim; bölgeye göre sabit fiyat teyit edelim."
+              : "We suggest sedan, minivan or VIP Sprinter by group/luggage; confirm the fixed price for your district.",
+          },
+          {
+            num: "3",
+            title: isTr ? "Karşılama ve transfer" : "Meet & transfer",
+            desc: isTr
+              ? "Şoför uçuş takibini operatör üzerinden yapar; tabela ile sizi karşılar."
+              : "The operator's driver tracks your flight and meets you with a sign at arrivals.",
+          },
+        ]}
+        coverageTitle={isTr ? "Partner Hizmet Kapsamı" : "Partner Service Scope"}
+        coverage={
+          isTr
+            ? [
+                "Milas-Bodrum Havalimanı'ndan tüm Bodrum bölgelerine transfer",
+                "1-3 kişi sedan, 4-7 kişi Vito/Caravelle, 8-16 kişi Sprinter VIP",
+                "Uçuş takibi, bebek koltuğu ve sabit fiyat",
+                "Tek yön veya gidiş-dönüş",
+                "Şoför, sigorta, fatura ve ödeme operatör üzerinden",
+              ]
+            : [
+                "Transfer from Milas-Bodrum Airport to all Bodrum districts",
+                "1-3 pax sedan, 4-7 pax Vito/Caravelle, 8-16 pax VIP Sprinter",
+                "Flight tracking, child seat and fixed pricing",
+                "One-way or round-trip",
+                "Driver, insurance, invoicing and payment handled by the operator",
+              ]
+        }
       />
 
       <section className="section">

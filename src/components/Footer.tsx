@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
-import { Mail, Phone, Instagram, Facebook, MapPin, MessageCircle } from "lucide-react";
+import { Mail, Phone, MapPin, MessageCircle } from "lucide-react";
 import { Link } from "@/i18n/routing";
 
 export function Footer() {
@@ -60,26 +60,6 @@ export function Footer() {
             </div>
             <p className="max-w-md text-sm text-navy-100/85">{t("tagline")}</p>
           </div>
-          <div className="flex gap-2">
-            <a
-              href="https://instagram.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Instagram"
-              className="rounded-md bg-white/10 p-2 hover:bg-white/20"
-            >
-              <Instagram className="h-4 w-4" />
-            </a>
-            <a
-              href="https://facebook.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Facebook"
-              className="rounded-md bg-white/10 p-2 hover:bg-white/20"
-            >
-              <Facebook className="h-4 w-4" />
-            </a>
-          </div>
         </div>
 
         {/* Columns */}
@@ -99,10 +79,10 @@ export function Footer() {
             <FooterLink href="/evinizi-kiraya-verin">
               {colLabels.ownerCta}
             </FooterLink>
-            <FooterLink href="/tekne-kiralama">{nav("boat")}</FooterLink>
-            <FooterLink href="/arac-kiralama">{nav("car")}</FooterLink>
-            <FooterLink href="/vip-transfer">{nav("transfer")}</FooterLink>
-            <FooterLink href="/turlar">{nav("tours")}</FooterLink>
+            <FooterLink href="/tekne-kiralama">{`${nav("boat")} (${isTr ? "Partner" : "Partner"})`}</FooterLink>
+            <FooterLink href="/arac-kiralama">{`${nav("car")} (${isTr ? "Partner" : "Partner"})`}</FooterLink>
+            <FooterLink href="/vip-transfer">{`${nav("transfer")} (${isTr ? "Partner" : "Partner"})`}</FooterLink>
+            <FooterLink href="/turlar">{`${isTr ? "Bodrum Turları" : "Bodrum Tours"} (Partner)`}</FooterLink>
           </FooterColumn>
 
           <FooterColumn title={colLabels.help}>
