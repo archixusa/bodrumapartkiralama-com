@@ -1,20 +1,27 @@
 import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
-import { Shield, Users, TrendingUp, Sparkles, ChevronRight, CheckCircle2 } from "lucide-react";
+import {
+  Shield,
+  Users,
+  TrendingUp,
+  Sparkles,
+  ChevronRight,
+  CheckCircle2,
+} from "lucide-react";
 import { OwnerApplicationForm } from "@/lib/reservation-form";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://bodrumapartkiralama.com";
 
 export const metadata: Metadata = {
-  title: "Evinizi Kiraya Verin | Bodrum'un Güvenilir Apart Platformu",
+  title: "Evinizi Kiraya Verin — Bodrum Apart Yönetimi",
   description:
-    "Bodrum'daki mülkünüzü yıl boyu kazanca dönüştürelim. 3 ay doluluk garantisi, profesyonel yönetim, şeffaf %15 komisyon. Hemen başvurun.",
+    "Bodrum'daki mülkünüz için yönetim, pazarlama ve misafir iletişimini birlikte planlayalım. Şeffaf komisyon yapısı, doğrudan mülk sahibi iletişimi.",
   alternates: { canonical: `${SITE_URL}/evinizi-kiraya-verin` },
   openGraph: {
     title: "Evinizi Kiraya Verin — Bodrumapartkiralama.com",
     description:
-      "Mülk sahipleri için profesyonel kira yönetimi. Doluluk garantisi, şeffaf komisyon.",
+      "Mülk sahipleri için profesyonel kira yönetimi ve şeffaf iletişim.",
     url: `${SITE_URL}/evinizi-kiraya-verin`,
   },
 };
@@ -30,83 +37,76 @@ export default async function Page({
   const benefits = [
     {
       icon: Shield,
-      title: "3 Ay Doluluk Garantisi",
-      desc: "Sezon ortası rezervasyonsuz kalmıyorsunuz. Yüksek sezonda mülkünüz minimum 3 ay dolar; aksi halde garanti devreye girer.",
+      title: "Düzenli iletişim",
+      desc: "Mülk sahibiyle takvim, rezervasyon ve ödeme akışını periyodik olarak paylaşıyoruz. Süreçle ilgili her aşamayı önceden konuşuyoruz.",
     },
     {
       icon: Users,
-      title: "Profesyonel Yönetim",
-      desc: "Check-in/out, temizlik, misafir iletişimi, sorun çözümü, küçük tadilat — hepsi bizden. Siz sadece ay sonu raporu alırsınız.",
+      title: "Misafir karşılama ve temizlik",
+      desc: "Check-in, check-out, temizlik ve günlük misafir iletişimi anlaşmalı ekibimizle yürür. Standart bir karşılama protokolümüz vardır.",
     },
     {
       icon: TrendingUp,
-      title: "Şeffaf %15 Komisyon",
-      desc: "Aracı yok, gizli ücret yok. Her rezervasyondan %15 sabit komisyon. Detaylı aylık hesap kesim raporu.",
+      title: "Şeffaf komisyon",
+      desc: "Komisyon oranı ve hizmet kapsamı yazılı olarak paylaşılır. Gerçekleşen rezervasyonlardan komisyon tahakkuk eder; boş günler için ek ücret talep etmiyoruz.",
     },
-  ];
-
-  const stats = [
-    { value: "50+", label: "Aktif mülk" },
-    { value: "%82", label: "Ortalama doluluk" },
-    { value: "4.8", label: "Misafir puanı" },
-    { value: "15K+", label: "Aylık ziyaretçi" },
   ];
 
   const howItWorks = [
     {
       step: "01",
       title: "Form doldurun",
-      desc: "Mülkünüzü kısaca tanıtın. 5 dakika.",
+      desc: "Mülkünüzü kısaca tanıtın. Yaklaşık 5 dakika sürer.",
     },
     {
       step: "02",
-      title: "1 saatte ararız",
-      desc: "Ekibimiz başvurunuzu inceler, sizinle hemen iletişime geçer.",
+      title: "İlk görüşme",
+      desc: "Başvurunuzu değerlendiririz; uygun olduğunda WhatsApp veya telefondan dönüş yaparız.",
     },
     {
       step: "03",
-      title: "Yerinde görüşürüz",
-      desc: "Mülkünüze gelip değerlendirme yaparız. Sizin için en uygun modeli planlarız.",
+      title: "Yerinde inceleme",
+      desc: "Mülkünüze gelip değerlendirme yaparız. Birlikte uygun model üzerinde anlaşırız.",
     },
     {
       step: "04",
-      title: "Sözleşme + Yayın",
-      desc: "Anlaşma onaylanır, mülkünüz site portföyüne eklenir, fotoğraf çekimi yapılır, rezervasyonlar başlar.",
+      title: "Sözleşme ve yayın",
+      desc: "Sözleşme imzalanır, fotoğraf çekimi yapılır, mülk listeye eklenir ve rezervasyonlara açılır.",
     },
   ];
 
   const faqs = [
     {
       q: "Komisyon oranınız ne kadar?",
-      a: "Sabit %15. Gizli ücret veya aracılık masrafı yoktur. Sadece gerçekleşmiş ve ödenmiş rezervasyonlardan komisyon alırız — boşta kalan günler için ücret talep etmiyoruz.",
+      a: "Komisyon oranını mülke ve hizmet kapsamına göre netleştiriyoruz; rakamı sözleşme öncesinde yazılı olarak iletip teyit alıyoruz. Yalnızca gerçekleşmiş rezervasyonlardan komisyon tahakkuk eder; boş kalan günler için ücret talep etmiyoruz.",
     },
     {
       q: "Ödemeler nasıl yapılır?",
-      a: "Her ay başında bir önceki ayın hesap kesim raporu hazırlanır. Kapora ve kalan ödemeleri tahsil eder, %15 komisyonu düşer, kalanı 5 iş günü içinde IBAN'ınıza havale ederiz.",
+      a: "Her ay başında bir önceki ayın hesap kesim raporu hazırlanır; kapora ve kalan ödemeler tahsil edilir, komisyon düşülerek kalan tutar belirlenen iş günü içinde IBAN'ınıza havale edilir.",
     },
     {
       q: "Sözleşme süresi nedir?",
-      a: "Standart anlaşma 1 yıl. Sezon sonunda taraflar yenileyebilir. İlk 3 ayda performans memnuniyetsizliği halinde ücretsiz çıkış hakkınız var.",
+      a: "Standart anlaşma 1 yıllıktır; sezon sonunda taraflar yenileyebilir. İlk dönemde memnuniyetsizlik halinde uygulanacak çıkış koşulları sözleşmede açıkça yer alır.",
     },
     {
       q: "Kendim mülkü kullanabilir miyim?",
-      a: "Tabi ki. Sezon dışında veya rezervasyonsuz haftalarda mülkünüzü kişisel kullanım için ayırabilirsiniz. Takvimde işaretleriz, o tarihler için rezervasyon almayız.",
+      a: "Tabii. Sezon dışında veya rezervasyon olmayan haftalarda mülkünüzü kişisel kullanım için ayırabilirsiniz. Takvimde işaretler ve o tarihler için rezervasyon almayız.",
     },
     {
       q: "Hasar veya kayıp olursa?",
-      a: "Her misafirden 5.000 TL depozito alıyoruz. Hasar tespitinde önce depozitodan, yetmezse misafirden tahsil edilir; size yansımaz. Ayrıca tüm mülkler için isteğe bağlı kira sigortası tavsiye ediyoruz.",
+      a: "Misafirlerden alınan depozito ile küçük hasarları karşılarız; daha büyük durumlarda misafire fatura keseriz ve durumu sizinle paylaşırız. Talep ederseniz kira sigortası seçenekleri için de yönlendirme yapabiliriz.",
     },
     {
       q: "Temizlik ve bakım kim halleder?",
-      a: "Anlaşmalı temizlik ekibimiz her check-in öncesi mülkü hazırlar. Çarşaf-havlu rotasyonu, temizlik malzemesi, küçük bakımlar (lamba değişimi, ufak tadilat) bizden. Büyük onarımlar (kombi, beyaz eşya) mülk sahibine danışılır.",
+      a: "Anlaşmalı temizlik ekibimiz her check-in öncesi mülkü hazırlar; çarşaf-havlu rotasyonu, küçük bakımlar (ampul değişimi, ufak tadilat) günlük operasyon kapsamındadır. Beyaz eşya veya kombi gibi büyük onarımlar için sizinle iletişime geçeriz.",
     },
     {
       q: "Hangi bölgelerde çalışıyorsunuz?",
-      a: "Bodrum yarımadasının tamamı: Gümbet, Turgutreis, Yalıkavak, Bitez, Ortakent, Gündoğan, Torba, Türkbükü, Akyarlar, Gümüşlük. Bölgenize göre hedef misafir profili değişir.",
+      a: "Bodrum yarımadasında Gümbet, Turgutreis, Yalıkavak, Bitez, Ortakent, Gündoğan, Torba, Türkbükü, Akyarlar ve Gümüşlük başta olmak üzere farklı bölgelerde mülk sahipleriyle çalışıyoruz. Bölgeye göre uygun misafir profili değişebiliyor.",
     },
     {
       q: "Pazarlamayı nasıl yapıyorsunuz?",
-      a: "Kendi sitemiz aylık 15.000+ ziyaretçi alır. Buna ek olarak Booking, Airbnb senkronize edilir, Google ve Instagram reklam kampanyalarımız çalışır. Mülkünüz tek bir platformda kapanmaz — paralel kanallarda görünür.",
+      a: "Mülk, kendi sitemizde listelenir. Talep doğrultusunda Booking ve Airbnb gibi platformlara senkronizasyon ve Google/Instagram reklam kampanyaları planlanabilir. Pazarlama stratejisini mülke göre birlikte belirleriz.",
     },
   ];
 
@@ -118,7 +118,7 @@ export default async function Page({
       provider: { "@type": "LodgingBusiness", name: "Bodrumapartkiralama.com" },
       areaServed: "Bodrum, Muğla, TR",
       description:
-        "Bodrum'daki villalar, apartlar ve daireler için tam servis kira yönetimi.",
+        "Bodrum yarımadasındaki apart ve daireler için kira yönetimi, misafir iletişimi ve pazarlama.",
       url: `${SITE_URL}/evinizi-kiraya-verin`,
     },
     {
@@ -154,21 +154,19 @@ export default async function Page({
           <div className="mx-auto max-w-3xl text-center">
             <span className="kicker-light">Mülk Sahipleri İçin</span>
             <h1 className="mt-6 font-display text-white">
-              Evinizin Yeni Adresi: Bodrum'un Güvenilir Apart Platformu
+              Bodrum'daki Mülkünüz İçin Şeffaf Bir Kira Yönetimi
             </h1>
             <span className="mx-auto mt-6 block h-px w-16 bg-accent-400" />
             <p className="mt-6 text-base text-white/85 md:text-lg">
-              50+ mülk sahibiyle çalışıyor, evleri yıl boyu doluluk garantisiyle
-              yönetiyoruz. Şeffaf komisyon, profesyonel ekip, güçlü pazarlama.
+              Bodrum'un farklı bölgelerinde mülk sahipleriyle çalışıyoruz.
+              Komisyon ve hizmet kapsamı yazılı, iletişim doğrudan, süreç
+              şeffaf. Mülkünüzü birlikte değerlendirelim.
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <a href="#basvur" className="btn-primary">
                 Başvurumu Yap <ChevronRight className="h-4 w-4" />
               </a>
-              <a
-                href="#nasil-calisiyor"
-                className="btn-outline-light"
-              >
+              <a href="#nasil-calisiyor" className="btn-outline-light">
                 Nasıl çalışıyor?
               </a>
             </div>
@@ -180,8 +178,8 @@ export default async function Page({
       <section className="section">
         <div className="container-page">
           <div className="mx-auto max-w-2xl text-center">
-            <span className="kicker">Neden Biz</span>
-            <h2 className="mt-4">Mülk Sahipleri Bizi Tercih Ediyor</h2>
+            <span className="kicker">Yaklaşımımız</span>
+            <h2 className="mt-4">Mülk Sahipleriyle Çalışma Şeklimiz</h2>
             <span className="divider-accent mt-5 block" />
           </div>
           <div className="mt-14 grid gap-6 md:grid-cols-3">
@@ -201,47 +199,16 @@ export default async function Page({
         </div>
       </section>
 
-      {/* STATS */}
-      <section className="section section-deep relative overflow-hidden">
-        <div
-          aria-hidden
-          className="absolute inset-0 opacity-15"
-          style={{
-            backgroundImage:
-              "radial-gradient(circle at 30% 40%, #3FB2C2 0%, transparent 50%)",
-          }}
-        />
-        <div className="container-page relative">
-          <div className="mx-auto max-w-2xl text-center">
-            <span className="kicker-light">Sayılarla Biz</span>
-            <h2 className="mt-4 text-white">
-              <span className="font-display italic">Rakamlar</span> Bizi Anlatıyor
-            </h2>
-          </div>
-          <div className="mt-14 grid grid-cols-2 gap-6 md:grid-cols-4">
-            {stats.map((s) => (
-              <div key={s.label} className="text-center">
-                <p className="font-display text-5xl font-bold text-accent-400">
-                  {s.value}
-                </p>
-                <p className="mt-2 text-sm uppercase tracking-kicker text-white/70">
-                  {s.label}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* HOW IT WORKS */}
-      <section id="nasil-calisiyor" className="section">
+      <section id="nasil-calisiyor" className="section section-soft">
         <div className="container-page">
           <div className="mx-auto max-w-2xl text-center">
             <span className="kicker">Süreç</span>
             <h2 className="mt-4">Nasıl Çalışıyor?</h2>
             <span className="divider-accent mt-5 block" />
             <p className="mt-5 text-muted">
-              4 adımda mülkünüzü yayına çıkarıyoruz. Toplam süre ortalama 7 gün.
+              Mülkün durumuna göre değişmekle birlikte, sözleşme sonrası
+              yayına çıkış genellikle birkaç iş günü içinde tamamlanır.
             </p>
           </div>
           <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
@@ -259,49 +226,50 @@ export default async function Page({
       </section>
 
       {/* TRANSPARENCY */}
-      <section className="section section-soft">
+      <section className="section">
         <div className="container-page grid gap-10 lg:grid-cols-2 lg:items-center">
           <div>
             <span className="kicker">Komisyon Modeli</span>
-            <h2 className="mt-4">Hiçbir Sürpriz Yok</h2>
+            <h2 className="mt-4">Şeffaf ve Yazılı</h2>
             <p className="mt-5 text-muted">
-              Pek çok mülk sahibi, kira yönetimi şirketleriyle çalıştıktan sonra
-              "ben mi yanlış hesaplıyorum?" diye sorgular. Çünkü piyasada sabit
-              olmayan komisyonlar, ek hizmet ücretleri, anlaşılmaz "platform
-              ücretleri" yaygın.
+              Komisyon oranı, hizmet kapsamı ve hesap kesim sıklığı yazılı
+              olarak paylaşılır. Pazarlama, fotoğraf çekimi ve listeleme gibi
+              kalemlerden hangileri sözleşme kapsamında, hangileri opsiyonel —
+              hepsi önceden konuşulur.
             </p>
             <p className="mt-3 text-muted">
-              Biz tersini yapıyoruz: <strong>tek oran, %15.</strong> Bu, mülkünüzün
-              kazandığı brüt cironun %15'idir. Pazarlama ücreti, fotoğraf çekim
-              ücreti, listeleme ücreti yok. Misafir gelmediğinde ücret yok.
+              Yalnızca gerçekleşmiş rezervasyonlardan komisyon tahakkuk eder.
+              Mülkünüze özel oran ve detayları görüşmemizde paylaşıyoruz.
             </p>
           </div>
           <div className="card p-7">
-            <h3 className="text-lg">Örnek hesaplama</h3>
-            <dl className="mt-4 space-y-2 text-sm">
-              <div className="flex justify-between border-b border-[var(--color-border)] pb-2">
-                <dt className="text-muted">10 günlük rezervasyon</dt>
-                <dd className="font-semibold">₺ 32.000</dd>
-              </div>
-              <div className="flex justify-between border-b border-[var(--color-border)] pb-2">
-                <dt className="text-muted">%15 komisyon (bizden düşer)</dt>
-                <dd className="font-semibold text-accent-500">- ₺ 4.800</dd>
-              </div>
-              <div className="flex justify-between border-b border-[var(--color-border)] pb-2">
-                <dt className="text-muted">Temizlik (misafirden alınır)</dt>
-                <dd className="font-semibold">₺ 0</dd>
-              </div>
-              <div className="flex justify-between pt-2 text-lg">
-                <dt className="font-bold">Size yansıyacak</dt>
-                <dd className="font-bold text-success">₺ 27.200</dd>
-              </div>
-            </dl>
+            <h3 className="text-lg">Örnek tabloyu birlikte hazırlayalım</h3>
+            <p className="mt-3 text-sm text-muted">
+              Mülkün bölge ve tipine göre fiyat aralığı, hedef misafir profili
+              ve sezonluk doluluk tahmini önemli ölçüde değişebiliyor. Görüşme
+              sırasında size özel bir tahmini gelir tablosu hazırlıyor ve
+              sözleşmeyle birlikte paylaşıyoruz.
+            </p>
+            <ul className="mt-4 space-y-2 text-sm text-muted">
+              <li className="flex items-start gap-2">
+                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-success" />
+                Yüksek/düşük sezon fiyat aralığı önerisi
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-success" />
+                Komisyon ve hizmet kalemlerinin yazılı dökümü
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-success" />
+                Aylık hesap kesim takvimi
+              </li>
+            </ul>
           </div>
         </div>
       </section>
 
       {/* FAQ */}
-      <section className="section">
+      <section className="section section-soft">
         <div className="container-page max-w-3xl">
           <div className="text-center">
             <span className="kicker">FAQ</span>
@@ -336,16 +304,17 @@ export default async function Page({
           <div>
             <span className="kicker-light">Başvuru</span>
             <h2 className="mt-4 text-white">
-              Hemen <span className="font-display italic text-accent-400">başlayın</span>
+              Başlamak için <span className="font-display italic text-accent-400">birkaç dakika</span> yeterli
             </h2>
             <p className="mt-5 text-white/85">
-              Form 3 dakika sürer. Bilgileriniz size özel, kimseyle paylaşılmaz.
-              Ekibimiz 1-2 saat içinde size dönüş yapar.
+              Form yaklaşık 3 dakika sürer. Paylaştığınız bilgiler yalnızca
+              başvurunuzu değerlendirmek için kullanılır. Ekibimiz uygun
+              gördüğümüz takdirde size dönüş yapar.
             </p>
             <ul className="mt-8 space-y-3 text-sm text-white/85">
               {[
                 "Mülkünüzü görmek için randevu",
-                "Şeffaf komisyon anlaşması",
+                "Yazılı komisyon anlaşması",
                 "Profesyonel fotoğraf çekimi",
                 "Yayın öncesi son onay sizde",
               ].map((it) => (
@@ -358,7 +327,7 @@ export default async function Page({
             <div className="mt-10 flex items-center gap-3">
               <Sparkles className="h-5 w-5 text-accent-400" />
               <p className="text-sm text-white/85">
-                Referansla gelenler için ek <strong>%2 indirim</strong>
+                Referansla gelen mülk sahipleri için özel koşullar
               </p>
             </div>
           </div>
