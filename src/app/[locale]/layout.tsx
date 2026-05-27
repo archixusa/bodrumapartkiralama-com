@@ -29,7 +29,6 @@ export const metadata: Metadata = {
   description:
     "Bodrum'da aile bütçesine uygun apart kiralama. Gümbet, Turgutreis, Yalıkavak ve diğer bölgelerde günlük kiralık daire. Doğrudan mülk sahibiyle iletişim.",
   applicationName: "Bodrumapartkiralama",
-  authors: [{ name: "Furkan Şahin" }],
   keywords: [
     "Bodrum apart kiralama",
     "Bodrum kiralık daire",

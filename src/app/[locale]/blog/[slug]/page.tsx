@@ -446,14 +446,14 @@ function AuthorBio() {
         FŞ
       </div>
       <div>
-        <h3 className="text-base font-bold">Furkan Şahin</h3>
+        <h3 className="text-base font-bold">Bodrumapartkiralama Editör Ekibi</h3>
         <p className="mt-1 text-sm leading-relaxed text-muted">
           Bodrum'da 5 yıldır apart/villa kiralama yöneticisi olarak çalışıyor.
           Yalıkavak, Gümbet, Turgutreis başta olmak üzere bölgedeki konaklama
           dinamiklerini ilk elden biliyor.
         </p>
         <Link
-          href="/yazar/furkan-sahin"
+          href="/blog"
           className="mt-2 inline-flex items-center gap-1 text-xs font-semibold text-navy-700 hover:text-navy-900"
         >
           Profil & tüm yazıları <ArrowRight className="h-3 w-3" />
