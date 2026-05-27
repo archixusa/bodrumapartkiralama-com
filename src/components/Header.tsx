@@ -24,12 +24,10 @@ export function Header() {
   const [langOpen, setLangOpen] = useState(false);
 
   const navLinks = [
+    { href: "/", label: locale === "tr" ? "Anasayfa" : "Home" },
     { href: "/apartlar", label: t("apartments") },
-    { href: "/tekne-kiralama", label: t("boat") },
-    { href: "/arac-kiralama", label: t("car") },
-    { href: "/vip-transfer", label: t("transfer") },
-    { href: "/turlar", label: t("tours") },
-    { href: "/blog", label: t("blog") },
+    { href: "/hakkimizda", label: t("about") },
+    { href: "/iletisim", label: t("contact") },
   ];
 
   return (
@@ -95,9 +93,9 @@ export function Header() {
           </div>
           <Link
             href="/evinizi-kiraya-verin"
-            className="hidden xl:inline-flex items-center gap-1.5 rounded-md border border-accent-500/40 px-3 py-2 text-xs font-semibold uppercase tracking-wide text-accent-600 transition hover:bg-accent-500 hover:text-white"
+            className="inline-flex items-center gap-1.5 rounded-md border border-accent-500/40 px-3 py-2 text-xs font-semibold uppercase tracking-wide text-accent-600 transition hover:bg-accent-500 hover:text-white"
           >
-            Evinizi Kiraya Verin
+            {locale === "tr" ? "Evinizi Kiraya Verin" : "List Your Property"}
           </Link>
           <a
             href={`https://wa.me/${c("whatsappNumber")}`}

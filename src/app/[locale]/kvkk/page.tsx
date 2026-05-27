@@ -102,30 +102,55 @@ function KvkkTr({ email }: { email: string }) {
         boyunca tutulur. Pazarlama amaçlı veriler ise rızanızı geri çekene kadar saklanır.
       </p>
 
-      <h2>7. Haklarınız (KVKK m.11)</h2>
+      <h2>7. Veri Sahibinin Hakları (KVKK m.11)</h2>
       <ul>
         <li>Kişisel verilerinizin işlenip işlenmediğini öğrenme.</li>
         <li>İşlenmişse buna ilişkin bilgi talep etme.</li>
-        <li>Verilerinizin düzeltilmesini veya silinmesini isteme.</li>
-        <li>Verilerin yurt içi/yurt dışı aktarıldığı 3. kişileri öğrenme.</li>
+        <li>İşlenme amacını ve amacına uygun kullanılıp kullanılmadığını öğrenme.</li>
+        <li>Verilerin yurt içi/yurt dışı aktarıldığı 3. kişileri bilme.</li>
+        <li>Eksik veya yanlış işlenmiş verilerin düzeltilmesini isteme.</li>
+        <li>Verilerinizin KVKK m.7 çerçevesinde silinmesini veya yok edilmesini isteme.</li>
         <li>İşlemenin yalnızca otomatik sistemlerle yapılması nedeniyle çıkan sonuca itiraz etme.</li>
-        <li>Zarara uğramanız hâlinde tazminat talep etme.</li>
+        <li>Kanuna aykırı işleme sebebiyle uğranılan zararın giderilmesini talep etme.</li>
+      </ul>
+
+      <h2>8. Başvuru Yöntemleri</h2>
+      <p>
+        KVKK m.13 ve Veri Sorumlusuna Başvuru Usul ve Esasları Hakkında Tebliğ
+        uyarınca başvurularınızı aşağıdaki yöntemlerden biriyle iletebilirsiniz:
+      </p>
+      <ul>
+        <li>
+          <strong>E-posta:</strong>{" "}
+          <a href={`mailto:${email}`}>{email}</a> adresine, daha önce
+          sistemimizde kayıtlı e-posta adresinizden başvuru göndererek.
+        </li>
+        <li>
+          <strong>Yazılı başvuru:</strong> Islak imzalı dilekçenizi kimlik
+          fotokopisi ile birlikte posta yoluyla iletebilirsiniz.
+        </li>
+        <li>
+          <strong>KEP:</strong> Kayıtlı Elektronik Posta üzerinden — adres
+          talep halinde paylaşılır.
+        </li>
       </ul>
       <p>
-        Bu haklarınızı kullanmak için talebinizi yazılı olarak{" "}
-        <a href={`mailto:${email}`}>{email}</a> adresine iletebilirsiniz. Talebinize en
-        geç 30 gün içinde dönüş yapılacaktır.
+        Başvurunuza en geç 30 gün içinde yazılı veya elektronik ortamda dönüş
+        yapılır. KVKK Kurulu&apos;nun belirlediği usul ve esaslar dahilinde
+        ücret talep edilebilir.
       </p>
 
-      <h2>8. Çerez (Cookie) Politikası</h2>
+      <h2>9. Çerez (Cookie) Politikası</h2>
       <p>
-        Sitemiz; performans, analitik ve pazarlama amacıyla çerez kullanır. Tarayıcı
-        ayarlarınızdan çerez tercihinizi her zaman değiştirebilirsiniz.
+        Sitemiz; performans, analitik ve pazarlama amacıyla çerez kullanır.
+        Detaylar ve tercih değiştirme adımları için{" "}
+        <a href="/cerez-politikasi">Çerez Politikası</a> sayfamıza
+        bakabilirsiniz.
       </p>
 
       <p className="text-xs text-muted">
-        Bu metin örnek niteliğindedir. Yayına girmeden önce mutlaka bir avukat veya
-        veri koruma uzmanına gözden geçirtin.
+        Bu metin son olarak 27 Mayıs 2026 tarihinde güncellenmiştir. Detaylı
+        hukuki revizyon için uzman görüşü alınacaktır.
       </p>
     </>
   );
