@@ -128,7 +128,11 @@ export default async function Page({
       image: [post.hero],
       datePublished: post.date,
       dateModified: post.date,
-      author: { "@type": "Organization", name: "Bodrumapartkiralama.com" },
+      author: {
+        "@type": "Organization",
+        name: "Bodrumapartkiralama Editör Ekibi",
+        url: SITE_URL,
+      },
       publisher: {
         "@type": "Organization",
         name: "Bodrumapartkiralama.com",
@@ -192,6 +196,10 @@ export default async function Page({
               </span>
               <span className="inline-flex items-center gap-1">
                 <Clock className="h-4 w-4" /> {t("readingTime", { min: post.readingTime })}
+              </span>
+              <span className="inline-flex items-center gap-1">
+                <User className="h-4 w-4" />
+                {isTr ? "Bodrumapartkiralama Editör Ekibi" : "Bodrumapartkiralama Editor Team"}
               </span>
             </div>
           </div>
