@@ -26,6 +26,7 @@ export function Header() {
   const navLinks = [
     { href: "/", label: locale === "tr" ? "Anasayfa" : "Home" },
     { href: "/apartlar", label: t("apartments") },
+    { href: "/blog", label: "Blog" },
     { href: "/hakkimizda", label: t("about") },
     { href: "/iletisim", label: t("contact") },
   ];
