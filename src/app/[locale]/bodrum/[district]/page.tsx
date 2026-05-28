@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { MapPin, Check, ArrowRight } from "lucide-react";
+import { MapPin, Check, ArrowRight, MessageCircle } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import { ApartCard } from "@/components/ApartCard";
 import { FAQ } from "@/components/FAQ";
@@ -63,6 +63,7 @@ export default async function DistrictPage({
   const t = await getTranslations({ locale, namespace: "district" });
   const dt = await getTranslations({ locale, namespace: "districts" });
   const fl = await getTranslations({ locale, namespace: "apartList" });
+  const c = await getTranslations({ locale, namespace: "common" });
   const isTr = locale === "tr";
   const districtName = dt(d.slug);
   const longDesc = loc(locale, {
@@ -73,6 +74,44 @@ export default async function DistrictPage({
   });
   const highlights = locArr(locale, d.highlights);
   const apts = getApartmentsByDistrict(d.slug);
+
+  const availabilityByLocale = {
+    tr: {
+      title: `${districtName} bölgesinde uygun apart arıyorsanız`,
+      desc: `Kataloğumuz büyürken ${districtName} için elimizdeki seçenekleri WhatsApp'tan hızlıca paylaşabiliriz. Tarih ve kişi sayınızı yazın, size uygun apartları sunalım.`,
+      whatsapp: "WhatsApp ile Müsaitlik Sorun",
+      contact: "İletişim formunu doldurun",
+      wa: `Merhaba, ${districtName} bölgesinde uygun apart arıyorum.`,
+    },
+    en: {
+      title: `Looking for an apartment in ${districtName}?`,
+      desc: `While our catalogue grows, we can quickly share what we have in ${districtName} over WhatsApp. Send your dates and group size and we'll match you to suitable apartments.`,
+      whatsapp: "Request Availability on WhatsApp",
+      contact: "Fill in the contact form",
+      wa: `Hello, I'm looking for a suitable apartment in ${districtName}.`,
+    },
+    de: {
+      title: `Suchen Sie eine Ferienwohnung in ${districtName}?`,
+      desc: `Während unser Katalog wächst, teilen wir Ihnen gern per WhatsApp mit, was wir in ${districtName} verfügbar haben. Senden Sie uns Ihre Reisedaten und Personenzahl, und wir finden passende Apartments.`,
+      whatsapp: "Verfügbarkeit per WhatsApp anfragen",
+      contact: "Kontaktformular ausfüllen",
+      wa: `Hallo, ich suche eine passende Ferienwohnung in ${districtName}.`,
+    },
+    ru: {
+      title: `Ищете апартаменты в районе ${districtName}?`,
+      desc: `Пока наш каталог пополняется, мы можем быстро прислать в WhatsApp то, что есть в ${districtName}. Напишите ваши даты и количество гостей — подберём подходящие апартаменты.`,
+      whatsapp: "Узнать наличие в WhatsApp",
+      contact: "Заполнить форму обратной связи",
+      wa: `Здравствуйте, ищу подходящие апартаменты в районе ${districtName}.`,
+    },
+  } as const;
+  const availabilityCopy =
+    availabilityByLocale[locale as "tr" | "en" | "de" | "ru"] ??
+    availabilityByLocale.en;
+  const availabilityWaHref = `https://wa.me/${c(
+    "whatsappNumber"
+  )}?text=${encodeURIComponent(availabilityCopy.wa)}`;
+
   const nearby = d.nearby
     .map((slug) => districts.find((x) => x.slug === slug))
     .filter(Boolean);
@@ -155,12 +194,12 @@ export default async function DistrictPage({
               : `How do I book in ${districtName}?`,
       a:
         locale === "tr"
-          ? `Beğendiğiniz apartı seçin ve rezervasyon formunu doldurun. Bir saat içinde WhatsApp veya telefondan dönüş yapıyoruz.`
+          ? `Beğendiğiniz apartı seçin ve rezervasyon formunu doldurun. En geç 24 saat içinde WhatsApp veya telefondan dönüş yapıyoruz.`
           : locale === "de"
-            ? `Wählen Sie ein Apartment, das Ihnen gefällt, und füllen Sie das Buchungsformular aus. Wir melden uns innerhalb einer Stunde per WhatsApp oder Telefon.`
+            ? `Wählen Sie ein Apartment, das Ihnen gefällt, und füllen Sie das Buchungsformular aus. Wir melden uns innerhalb von 24 Stunden per WhatsApp oder Telefon.`
             : locale === "ru"
-              ? `Выберите понравившиеся апартаменты и заполните форму бронирования. Мы свяжемся с вами в течение часа через WhatsApp или по телефону.`
-              : `Pick an apartment you like and fill in the booking form. We respond within an hour via WhatsApp or phone.`,
+              ? `Выберите понравившиеся апартаменты и заполните форму бронирования. Мы свяжемся с вами в течение 24 часов через WhatsApp или по телефону.`
+              : `Pick an apartment you like and fill in the booking form. We respond within 24 hours via WhatsApp or phone.`,
     },
   ];
 
@@ -286,9 +325,36 @@ export default async function DistrictPage({
             </Link>
           </div>
           {apts.length === 0 ? (
-            <p className="mt-6 rounded-xl border border-dashed border-[var(--color-border)] bg-white p-8 text-center text-muted">
-              {t("noAparts")}
-            </p>
+            <div className="mt-6 flex flex-col items-start gap-5 rounded-xl border border-[var(--color-border)] bg-white p-6 md:flex-row md:items-center md:gap-8 md:p-8">
+              <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-md bg-accent-400/15 text-accent-500">
+                <MessageCircle className="h-6 w-6" />
+              </span>
+              <div className="flex-1">
+                <h3 className="text-xl">{availabilityCopy.title}</h3>
+                <p className="mt-2 text-sm text-muted md:text-base">
+                  {availabilityCopy.desc}
+                </p>
+              </div>
+              <div className="flex shrink-0 flex-col items-stretch gap-2 sm:flex-row sm:items-center">
+                <a
+                  href={availabilityWaHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-lead="district-whatsapp"
+                  className="btn-primary"
+                >
+                  <MessageCircle className="h-4 w-4" />
+                  {availabilityCopy.whatsapp}
+                </a>
+                <Link
+                  href="/iletisim"
+                  className="btn-secondary"
+                >
+                  {availabilityCopy.contact}
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
+            </div>
           ) : (
             <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {apts.map((apt) => (

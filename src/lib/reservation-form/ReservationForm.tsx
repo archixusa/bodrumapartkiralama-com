@@ -138,7 +138,7 @@ export function ReservationForm({
       <div className={`rf-card rf-success ${className}`}>
         <div className="rf-success-icon" aria-hidden>✓</div>
         <h3>Talebiniz alındı</h3>
-        <p>1 saat içinde sizinle iletişime geçeceğiz. Aceleniz varsa WhatsApp'tan da yazabilirsiniz.</p>
+        <p>En geç 24 saat içinde sizinle iletişime geçeceğiz. Aceleniz varsa WhatsApp'tan da yazabilirsiniz.</p>
         {whatsappNumber && (
           <a
             href={`https://wa.me/${whatsappNumber}?text=${waText}`}
@@ -158,7 +158,7 @@ export function ReservationForm({
     <form onSubmit={onSubmit} noValidate className={`rf-card ${className}`}>
       <h3 className="rf-title">Rezervasyon Talebi</h3>
       <p className="rf-sub">
-        Formu doldurun, 1 saat içinde dönüş yapalım.
+        Formu doldurun, en geç 24 saat içinde dönüş yapalım.
       </p>
 
       <div className="rf-row">
