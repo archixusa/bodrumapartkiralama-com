@@ -17,6 +17,7 @@ import { Link } from "@/i18n/routing";
 import { DistrictCard } from "@/components/DistrictCard";
 import { FAQ } from "@/components/FAQ";
 import { JsonLd } from "@/components/JsonLd";
+import { Testimonials } from "@/components/Testimonials";
 import { districts } from "@/data/districts";
 import { services } from "@/data/services";
 import { posts } from "@/data/posts";
@@ -513,6 +514,9 @@ export default async function HomePage({
           </div>
         </div>
       </section>
+
+      {/* TESTIMONIALS */}
+      <Testimonials max={3} />
 
       {/* FAQ */}
       <section className="section">
