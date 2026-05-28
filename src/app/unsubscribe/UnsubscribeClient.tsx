@@ -1,31 +1,17 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import { useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 
 export function UnsubscribeClient() {
-  const params = useSearchParams();
-  const targetId = params.get("t") ?? "";
+  // SECURITY: we intentionally do NOT auto-load the email from a ?t= target id.
+  // Reading outreach_targets.email by an attacker-controlled id with the anon
+  // key would be a B2B email-enumeration vector if RLS ever allowed anon SELECT
+  // on that table. The visitor simply types the address they want suppressed —
+  // the suppression insert below does not depend on knowing their target id.
   const [emailInput, setEmailInput] = useState("");
   const [status, setStatus] = useState<"idle" | "saving" | "done" | "error">("idle");
   const [error, setError] = useState<string | null>(null);
-
-  // If we have a targetId, try to auto-load the email
-  useEffect(() => {
-    if (!targetId) return;
-    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-    if (!url || !key) return;
-    const c = createClient(url, key, { auth: { persistSession: false } });
-    c.from("outreach_targets")
-      .select("email")
-      .eq("id", targetId)
-      .maybeSingle()
-      .then(({ data }) => {
-        if (data?.email) setEmailInput(data.email);
-      });
-  }, [targetId]);
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
