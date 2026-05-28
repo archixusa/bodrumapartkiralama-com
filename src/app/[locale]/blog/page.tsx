@@ -6,6 +6,7 @@ import { PageHero } from "@/components/PageHero";
 import { Link } from "@/i18n/routing";
 import { posts } from "@/data/posts";
 import { getMdxPosts } from "@/lib/mdx-blog";
+import { loc } from "@/lib/i18n-data";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://bodrumapartkiralama.com";
@@ -18,11 +19,15 @@ interface UnifiedPost {
   date: string;
   readingTime: number;
   hero: string;
-  category: { tr: string; en: string };
+  category: { tr: string; en: string; de?: string; ru?: string };
   titleTr: string;
   titleEn: string;
+  titleDe?: string;
+  titleRu?: string;
   excerptTr: string;
   excerptEn: string;
+  excerptDe?: string;
+  excerptRu?: string;
 }
 
 function unifyAll(): UnifiedPost[] {
@@ -35,8 +40,12 @@ function unifyAll(): UnifiedPost[] {
     category: p.category,
     titleTr: p.titleTr,
     titleEn: p.titleEn,
+    titleDe: p.titleDe,
+    titleRu: p.titleRu,
     excerptTr: p.excerptTr,
     excerptEn: p.excerptEn,
+    excerptDe: p.excerptDe,
+    excerptRu: p.excerptRu,
   }));
   const mdx: UnifiedPost[] = getMdxPosts().map((p) => ({
     source: "mdx",
@@ -95,13 +104,13 @@ export default async function Page({
                 <Link href={`/blog/${p.slug}`} className="relative block aspect-[16/10] overflow-hidden">
                   <Image
                     src={p.hero}
-                    alt={isTr ? p.titleTr : p.titleEn}
+                    alt={loc(locale, { tr: p.titleTr, en: p.titleEn, de: p.titleDe, ru: p.titleRu })}
                     fill
                     sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                     className="object-cover transition duration-500 group-hover:scale-105"
                   />
                   <span className="absolute left-3 top-3 chip-accent">
-                    {isTr ? p.category.tr : p.category.en}
+                    {loc(locale, p.category)}
                   </span>
                 </Link>
                 <div className="flex flex-1 flex-col gap-3 p-5">
@@ -113,11 +122,11 @@ export default async function Page({
                   </div>
                   <h3 className="text-lg leading-snug">
                     <Link href={`/blog/${p.slug}`} className="hover:text-navy-600">
-                      {isTr ? p.titleTr : p.titleEn}
+                      {loc(locale, { tr: p.titleTr, en: p.titleEn, de: p.titleDe, ru: p.titleRu })}
                     </Link>
                   </h3>
                   <p className="line-clamp-3 text-sm text-muted">
-                    {isTr ? p.excerptTr : p.excerptEn}
+                    {loc(locale, { tr: p.excerptTr, en: p.excerptEn, de: p.excerptDe, ru: p.excerptRu })}
                   </p>
                   <Link href={`/blog/${p.slug}`} className="mt-auto inline-flex items-center gap-1 text-sm font-semibold text-navy-600">
                     {t("readMore")} <ArrowRight className="h-3 w-3" />
