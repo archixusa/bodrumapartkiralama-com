@@ -14,15 +14,24 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const isTr = locale === "tr";
   const url =
     locale === "tr" ? `${SITE_URL}/apartlar` : `${SITE_URL}/${locale}/apartlar`;
-  const title = isTr
-    ? "Bodrum'un Seçkin Apart Koleksiyonu — Yakında"
-    : "Bodrum's Curated Apartment Collection — Coming Soon";
-  const description = isTr
-    ? "Bodrum'da titizlikle değerlendirilmiş apart kiralama seçeneklerimiz çok yakında sizinle. Mülk sahibi başvuruları halen değerlendirilmektedir."
-    : "Our carefully curated apartment rental options in Bodrum will be available shortly. Owner applications are still being reviewed.";
+  const title =
+    locale === "tr"
+      ? "Bodrum'un Seçkin Apart Koleksiyonu — Yakında"
+      : locale === "de"
+        ? "Bodrums ausgewählte Apartmentkollektion — Demnächst"
+        : locale === "ru"
+          ? "Эксклюзивная коллекция апартаментов в Бодруме — Скоро"
+          : "Bodrum's Curated Apartment Collection — Coming Soon";
+  const description =
+    locale === "tr"
+      ? "Bodrum'da titizlikle değerlendirilmiş apart kiralama seçeneklerimiz çok yakında sizinle. Mülk sahibi başvuruları halen değerlendirilmektedir."
+      : locale === "de"
+        ? "Unsere sorgfältig ausgewählten Apartments zur Miete in Bodrum sind in Kürze für Sie verfügbar. Bewerbungen von Eigentümern werden derzeit noch geprüft."
+        : locale === "ru"
+          ? "Наши тщательно отобранные апартаменты для аренды в Бодруме скоро будут доступны. Заявки от владельцев недвижимости всё ещё рассматриваются."
+          : "Our carefully curated apartment rental options in Bodrum will be available shortly. Owner applications are still being reviewed.";
   return {
     title,
     description,
@@ -41,81 +50,139 @@ export default async function ApartlarPage({
   const isTr = locale === "tr";
   const c = await getTranslations({ locale, namespace: "common" });
 
-  const copy = isTr
-    ? {
-        chip: "Yakında",
-        h1: "Bodrum'un Seçkin Apart Koleksiyonu",
-        sub: "Yakında",
-        lead:
-          "Bodrum'da titizlikle değerlendirilmiş apart kiralama seçeneklerimiz çok yakında sizinle. Mülk sahibi başvuruları halen değerlendirilmektedir.",
-        ctaReserve: "Rezervasyon Talebi Oluştur",
-        ctaList: "Mülkümü Listele",
-        benefitsTitle: "Platformumuzun Yaklaşımı",
-        benefits: [
-          {
-            icon: Wallet,
-            title: "Şeffaf çalışma yapısı",
-            desc: "Mülk sahipleri ve misafirlerle iletişim açıktır; ek ücretler önceden paylaşılır.",
-          },
-          {
-            icon: Phone,
-            title: "Doğrudan mülk sahibi iletişimi",
-            desc: "Misafirin sorusunu doğrudan mülk sahibine ileten kısa bir köprü kuruyoruz.",
-          },
-          {
-            icon: Headphones,
-            title: "7/24 misafir desteği",
-            desc: "Konaklama süresince WhatsApp ve telefon üzerinden ulaşılabilir bir ekibimiz var.",
-          },
-          {
-            icon: Sparkles,
-            title: "Temizlik ve karşılama",
-            desc: "Mülk sahipleri her konaklama arası temizlik düzenler. Karşılama uygulaması mülk bazında değişkenlik gösterebilir.",
-          },
-        ],
-        newsletterTitle: "Yeni mülkler eklendiğinde haberdar olun",
-        newsletterDesc:
-          "Apart listemiz açıldığında ve uygun sezon fırsatları olduğunda e-posta ile bilgilendiririz. İstediğiniz an çıkabilirsiniz.",
-        whatsappCta: "WhatsApp ile yazın",
-        whatsappDesc: "Sorularınızı doğrudan yöneticimize iletmek için en hızlı yol.",
-      }
-    : {
-        chip: "Coming soon",
-        h1: "Bodrum's Curated Apartment Collection",
-        sub: "Coming soon",
-        lead:
-          "Our carefully curated apartment rental options in Bodrum will be available shortly. Owner applications are still being reviewed.",
-        ctaReserve: "Send a Reservation Request",
-        ctaList: "List My Property",
-        benefitsTitle: "How our platform works",
-        benefits: [
-          {
-            icon: Wallet,
-            title: "Transparent way of working",
-            desc: "Communication with owners and guests is open; any extra fees are shared up front.",
-          },
-          {
-            icon: Phone,
-            title: "Direct owner contact",
-            desc: "We bridge guest questions directly to the property owner.",
-          },
-          {
-            icon: Headphones,
-            title: "24/7 guest support",
-            desc: "A small team you can reach by WhatsApp and phone throughout the stay.",
-          },
-          {
-            icon: Sparkles,
-            title: "Cleaning and welcome",
-            desc: "Owners arrange cleaning between stays. Welcome practices vary by property.",
-          },
-        ],
-        newsletterTitle: "Get notified when properties are added",
-        newsletterDesc:
-          "When our apartment list goes live or seasonal offers come up, we'll send a short email. You can unsubscribe any time.",
-        whatsappCta: "Write on WhatsApp",
-        whatsappDesc: "The fastest way to reach our manager directly.",
-      };
+  const pick = <T,>(o: { tr: T; en: T; de: T; ru: T }): T =>
+    o[locale as "tr" | "en" | "de" | "ru"] ?? o.en;
+
+  const copy = {
+    chip: pick({
+      tr: "Yakında",
+      en: "Coming soon",
+      de: "Demnächst",
+      ru: "Скоро",
+    }),
+    h1: pick({
+      tr: "Bodrum'un Seçkin Apart Koleksiyonu",
+      en: "Bodrum's Curated Apartment Collection",
+      de: "Bodrums ausgewählte Apartmentkollektion",
+      ru: "Эксклюзивная коллекция апартаментов в Бодруме",
+    }),
+    sub: pick({
+      tr: "Yakında",
+      en: "Coming soon",
+      de: "Demnächst",
+      ru: "Скоро",
+    }),
+    lead: pick({
+      tr: "Bodrum'da titizlikle değerlendirilmiş apart kiralama seçeneklerimiz çok yakında sizinle. Mülk sahibi başvuruları halen değerlendirilmektedir.",
+      en: "Our carefully curated apartment rental options in Bodrum will be available shortly. Owner applications are still being reviewed.",
+      de: "Unsere sorgfältig ausgewählten Apartments zur Miete in Bodrum sind in Kürze für Sie verfügbar. Bewerbungen von Eigentümern werden derzeit noch geprüft.",
+      ru: "Наши тщательно отобранные апартаменты для аренды в Бодруме скоро будут доступны. Заявки от владельцев недвижимости всё ещё рассматриваются.",
+    }),
+    ctaReserve: pick({
+      tr: "Rezervasyon Talebi Oluştur",
+      en: "Send a Reservation Request",
+      de: "Reservierungsanfrage senden",
+      ru: "Отправить запрос на бронирование",
+    }),
+    ctaList: pick({
+      tr: "Mülkümü Listele",
+      en: "List My Property",
+      de: "Meine Immobilie inserieren",
+      ru: "Разместить мою недвижимость",
+    }),
+    benefitsTitle: pick({
+      tr: "Platformumuzun Yaklaşımı",
+      en: "How our platform works",
+      de: "So funktioniert unsere Plattform",
+      ru: "Как работает наша платформа",
+    }),
+    benefits: [
+      {
+        icon: Wallet,
+        title: pick({
+          tr: "Şeffaf çalışma yapısı",
+          en: "Transparent way of working",
+          de: "Transparente Arbeitsweise",
+          ru: "Прозрачный принцип работы",
+        }),
+        desc: pick({
+          tr: "Mülk sahipleri ve misafirlerle iletişim açıktır; ek ücretler önceden paylaşılır.",
+          en: "Communication with owners and guests is open; any extra fees are shared up front.",
+          de: "Die Kommunikation mit Eigentümern und Gästen ist offen; etwaige Zusatzkosten werden im Voraus mitgeteilt.",
+          ru: "Общение с владельцами и гостями открытое; все дополнительные сборы сообщаются заранее.",
+        }),
+      },
+      {
+        icon: Phone,
+        title: pick({
+          tr: "Doğrudan mülk sahibi iletişimi",
+          en: "Direct owner contact",
+          de: "Direkter Kontakt zum Eigentümer",
+          ru: "Прямая связь с владельцем",
+        }),
+        desc: pick({
+          tr: "Misafirin sorusunu doğrudan mülk sahibine ileten kısa bir köprü kuruyoruz.",
+          en: "We bridge guest questions directly to the property owner.",
+          de: "Wir leiten die Fragen der Gäste direkt an den Eigentümer weiter.",
+          ru: "Мы напрямую передаём вопросы гостей владельцу недвижимости.",
+        }),
+      },
+      {
+        icon: Headphones,
+        title: pick({
+          tr: "7/24 misafir desteği",
+          en: "24/7 guest support",
+          de: "Gästebetreuung rund um die Uhr",
+          ru: "Поддержка гостей 24/7",
+        }),
+        desc: pick({
+          tr: "Konaklama süresince WhatsApp ve telefon üzerinden ulaşılabilir bir ekibimiz var.",
+          en: "A small team you can reach by WhatsApp and phone throughout the stay.",
+          de: "Ein kleines Team, das Sie während Ihres Aufenthalts per WhatsApp und Telefon erreichen können.",
+          ru: "Небольшая команда, с которой вы можете связаться по WhatsApp и телефону на протяжении всего пребывания.",
+        }),
+      },
+      {
+        icon: Sparkles,
+        title: pick({
+          tr: "Temizlik ve karşılama",
+          en: "Cleaning and welcome",
+          de: "Reinigung und Empfang",
+          ru: "Уборка и встреча",
+        }),
+        desc: pick({
+          tr: "Mülk sahipleri her konaklama arası temizlik düzenler. Karşılama uygulaması mülk bazında değişkenlik gösterebilir.",
+          en: "Owners arrange cleaning between stays. Welcome practices vary by property.",
+          de: "Die Eigentümer sorgen zwischen den Aufenthalten für die Reinigung. Die Empfangsgestaltung variiert je nach Immobilie.",
+          ru: "Владельцы организуют уборку между заездами. Порядок встречи гостей зависит от объекта.",
+        }),
+      },
+    ],
+    newsletterTitle: pick({
+      tr: "Yeni mülkler eklendiğinde haberdar olun",
+      en: "Get notified when properties are added",
+      de: "Werden Sie benachrichtigt, wenn neue Immobilien hinzugefügt werden",
+      ru: "Узнавайте о появлении новых объектов",
+    }),
+    newsletterDesc: pick({
+      tr: "Apart listemiz açıldığında ve uygun sezon fırsatları olduğunda e-posta ile bilgilendiririz. İstediğiniz an çıkabilirsiniz.",
+      en: "When our apartment list goes live or seasonal offers come up, we'll send a short email. You can unsubscribe any time.",
+      de: "Sobald unsere Apartmentliste online geht oder es saisonale Angebote gibt, senden wir Ihnen eine kurze E-Mail. Sie können sich jederzeit abmelden.",
+      ru: "Когда наш список апартаментов станет доступен или появятся сезонные предложения, мы отправим короткое письмо. Вы можете отписаться в любое время.",
+    }),
+    whatsappCta: pick({
+      tr: "WhatsApp ile yazın",
+      en: "Write on WhatsApp",
+      de: "Schreiben Sie uns auf WhatsApp",
+      ru: "Напишите нам в WhatsApp",
+    }),
+    whatsappDesc: pick({
+      tr: "Sorularınızı doğrudan yöneticimize iletmek için en hızlı yol.",
+      en: "The fastest way to reach our manager directly.",
+      de: "Der schnellste Weg, um unseren Manager direkt zu erreichen.",
+      ru: "Самый быстрый способ напрямую связаться с нашим менеджером.",
+    }),
+  };
 
   const breadcrumb = {
     "@context": "https://schema.org",
@@ -124,7 +191,7 @@ export default async function ApartlarPage({
       {
         "@type": "ListItem",
         position: 1,
-        name: isTr ? "Ana Sayfa" : "Home",
+        name: pick({ tr: "Ana Sayfa", en: "Home", de: "Startseite", ru: "Главная" }),
         item: SITE_URL,
       },
       {
