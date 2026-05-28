@@ -9,6 +9,7 @@ import { routing } from "@/i18n/routing";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { AnalyticsScripts, GtmNoScript } from "@/components/Analytics";
+import { LeadTracking } from "@/components/LeadTracking";
 import { JsonLd } from "@/components/JsonLd";
 import { districts } from "@/data/districts";
 
@@ -185,6 +186,7 @@ export default async function LocaleLayout({
       <body className="bg-white font-sans text-ink antialiased">
         <JsonLd data={localBusinessLd} />
         <GtmNoScript />
+        <LeadTracking />
         <NextIntlClientProvider locale={locale} messages={messages}>
           <a
             href="#main"

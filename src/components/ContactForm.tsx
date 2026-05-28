@@ -3,6 +3,7 @@
 import { FormEvent, useState } from "react";
 import { useLocale } from "next-intl";
 import { Loader2, Check, AlertCircle } from "lucide-react";
+import { trackLead } from "@/lib/analytics";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -120,6 +121,7 @@ export function ContactForm({ sourceSite }: Props) {
         const text = await res.text().catch(() => "");
         throw new Error(text || `HTTP ${res.status}`);
       }
+      trackLead({ kind: "contact", subject: payload.subject });
       setStatus("success");
       form.reset();
     } catch (err) {

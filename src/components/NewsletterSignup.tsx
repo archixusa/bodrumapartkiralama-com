@@ -3,6 +3,7 @@
 import { FormEvent, useState } from "react";
 import { useLocale } from "next-intl";
 import { Mail, Check, AlertCircle, Loader2 } from "lucide-react";
+import { trackLead } from "@/lib/analytics";
 
 interface Props {
   sourceSite: string;
@@ -103,6 +104,7 @@ export function NewsletterSignup({ sourceSite, sourcePage }: Props) {
         const text = await res.text().catch(() => "");
         throw new Error(text || `HTTP ${res.status}`);
       }
+      trackLead({ kind: "newsletter" });
       setStatus("success");
       setEmail("");
       setConsent(false);
