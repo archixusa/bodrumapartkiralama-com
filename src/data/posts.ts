@@ -38,7 +38,7 @@ export const posts: Post[] = [
     category: { tr: "Rehber", en: "Guide" },
     titleTr: "Bodrum Tatil Rehberi 2026: Ne Zaman, Nereye, Nasıl?",
     titleEn: "Bodrum Travel Guide 2026: When, Where, How?",
-    excerptTr: "Bodrum yarımadası için 2026 sezonunun tüm bilmen gerekenleri: en doğru tarih, doğru bölge ve doğru bütçe.",
+    excerptTr: "Bodrum yarımadası, 2026 sezonu için bilmeniz gereken her şey: en doğru tarih, doğru bölge ve doğru bütçe.",
     excerptEn: "Everything you need for the 2026 Bodrum season: the right dates, the right district and the right budget.",
     metaTitleTr: "Bodrum Tatil Rehberi 2026 | Nereye, Ne Zaman, Bütçe",
     metaTitleEn: "Bodrum Travel Guide 2026 | Where, When, Budget",

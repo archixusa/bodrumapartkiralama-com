@@ -148,10 +148,10 @@ export default async function HomePage({
 
   const ownerCopy = isTr
     ? {
-        title: "Mülk Sahibi misiniz?",
+        title: "Mülkünüzü kiraya mı vermek istiyorsunuz?",
         desc:
           "Mülkünüzü Bodrum'un farklı bölgelerinde değerlendiriyoruz. Komisyon yapımız net, mülk sahibiyle iletişim doğrudan. Mülkünüzün size kazandırabileceğini değerlendirelim.",
-        cta: "Başvuru Formunu Doldurun",
+        cta: "Mülkünüzü Değerlendirelim",
       }
     : {
         title: "Property Owner?",

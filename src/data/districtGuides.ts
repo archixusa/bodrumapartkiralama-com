@@ -32,7 +32,7 @@ export const districtGuides: Record<DistrictSlug, DistrictGuide> = {
       "Gece hayatına yakın kalmak isteyen çiftler",
       "Plajda gün geçirmeyi seven, sosyal bir tatil arayanlar",
       "Bodrum merkezine yürüme/dolmuş mesafesinde kalmak isteyenler",
-      "Su sporları (jet ski, parasailing) deneyimi isteyenler",
+      "Su sporları (jet ski, parasailing) yapmak isteyenler",
     ],
     notSuitedFor: [
       "Bebek/küçük çocukla seyahat eden, sessiz uyku rutinine ihtiyaç duyan aileler",
@@ -131,7 +131,7 @@ export const districtGuides: Record<DistrictSlug, DistrictGuide> = {
     notSuitedFor: [
       "Yoğun gece hayatı arayan genç gruplar (Gümbet daha uygun)",
       "Bodrum merkezinde olan etkinliklere sık katılmak isteyenler (her gün 30+ dakika yol)",
-      "Sadece premium butik/lüks konaklama hedefleyenler (Yalıkavak öneririz)",
+      "Yalnızca lüks butik konaklama isteyenler (Yalıkavak öneririz)",
     ],
     sections: [
       {
@@ -214,10 +214,10 @@ export const districtGuides: Record<DistrictSlug, DistrictGuide> = {
   },
   yalikavak: {
     subHeading: "Yalıkavak Apart Kiralama — Butik Marina ve Şık Tatil 2026",
-    lead: "Yalıkavak, son on yılda Bodrum yarımadasının imajını değiştiren bölge. Süper yat marinası, Hermes ve Louis Vuitton butikleri, dünyaca ünlü şef restoranları ve beyaz badanalı geleneksel sokak dokusuyla butik bir tatil destinasyonu. 2026 sezonunda Yalıkavak, apart segmentinde de geniş bir spektrum sunar — site apartlarından deniz manzaralı yamaç dairelerine kadar.",
+    lead: "Yalıkavak, son on yılda Bodrum yarımadasının imajını değiştiren bölge. Süper yat marinası, Hermes ve Louis Vuitton butikleri, dünyaca ünlü şef restoranları ve beyaz badanalı geleneksel sokak dokusuyla butik bir tatil destinasyonu. 2026 sezonunda Yalıkavak, apart tarafında da geniş bir spektrum sunar — site apartlarından deniz manzaralı yamaç dairelerine kadar.",
     suitedFor: [
       "Şık akşam yemeği ve butik alışveriş seven misafirler",
-      "Bütçesi orta-üst seviyede çiftler ve aileler",
+      "Konfora biraz daha bütçe ayıran çiftler ve aileler",
       "Süper yat marinasında gün geçirmek isteyenler",
       "Sakin koylarda yüzmek ve marinaya yürümek isteyenler",
       "Yalıkavak çevresindeki gizli koyları (Tilkicik, Kudur) keşfetmek isteyenler",
@@ -260,8 +260,8 @@ export const districtGuides: Record<DistrictSlug, DistrictGuide> = {
       {
         h2: "Apart Özellikleri ve Fiyat Aralıkları",
         body: [
-          "Yalıkavak apart stoku, butik segmente uyumlu şekillenmiş. Marina çevresinde modern, dekorasyonu özenli, deniz manzaralı küçük apartlar; eski kasaba sokaklarında geleneksel taş ev şeklinde dönüştürülmüş butik daireler; tepe yamaçlarında ise geniş, havuzlu site apartları bulunur. Çoğu apart sahibi mülkünü dikkatle döşemiş; tasarım kalitesi yarımadanın diğer bölgelerine göre genelde bir adım önde.",
-          "Yüksek sezonda günlük kira aralığı 2.000 TL ile 8.000 TL arasında geniş bir spektrum gösterir; lüks villa-apart segmentinde 15.000 TL üstüne çıkabilir. Apart segmentinde 2+1 standart bir daire için ortalama 3.000-5.000 TL/gece bandı yaygın. Düşük sezonda %30-40 indirim mümkün, ancak Yalıkavak diğer bölgelerden daha az sezonsal fiyat dalgalanması gösterir.",
+          "Yalıkavak apart stoku, butik tatil anlayışına göre şekillenmiş. Marina çevresinde modern, dekorasyonu özenli, deniz manzaralı küçük apartlar; eski kasaba sokaklarında geleneksel taş ev şeklinde dönüştürülmüş butik daireler; tepe yamaçlarında ise geniş, havuzlu site apartları bulunur. Çoğu apart sahibi mülkünü dikkatle döşemiş; tasarım kalitesi yarımadanın diğer bölgelerine göre genelde bir adım önde.",
+          "Yüksek sezonda günlük kira aralığı 2.000 TL ile 8.000 TL arasında geniş bir spektrum gösterir; lüks villa ve apartlarda 15.000 TL'yi aşabiliyor. Apart fiyatlarında 2+1 standart bir daire için ortalama 3.000-5.000 TL/gece bandı yaygın. Düşük sezonda %30-40 indirim mümkün, ancak Yalıkavak diğer bölgelerden daha az sezonsal fiyat dalgalanması gösterir.",
         ],
       },
       {
@@ -275,12 +275,12 @@ export const districtGuides: Record<DistrictSlug, DistrictGuide> = {
     priceBand: {
       from: "2.000 TL/gece",
       to: "8.000 TL/gece",
-      note: "2026 yüksek sezon — apart segmenti, 2+1 ortalama bandı",
+      note: "2026 yüksek sezon — apart tarafı, 2+1 ortalama bandı",
     },
     faqs: [
       {
         q: "Yalıkavak çok mu pahalı?",
-        a: "Konaklama ve yemek anlamında yarımadanın daha üst segmentinde. Apart kirasında %30-50 prim olabiliyor, restoranlarda da benzer fark var. Yalıkavak ekonomisini dengelemek için kahvaltı ve öğle yemeğini apartta yapıp akşam yemeği için marinaya gitmek pratik bir yöntem.",
+        a: "Konaklama ve yemek anlamında yarımadanın pahalı tarafında. Apart kirasında %30-50 prim olabiliyor, restoranlarda da benzer fark var. Yalıkavak ekonomisini dengelemek için kahvaltı ve öğle yemeğini apartta yapıp akşam yemeği için marinaya gitmek pratik bir yöntem.",
       },
       {
         q: "Marinaya giriş ücretli mi?",
@@ -318,7 +318,7 @@ export const districtGuides: Record<DistrictSlug, DistrictGuide> = {
     ],
     notSuitedFor: [
       "Gece kulübü ve yoğun gece hayatı arayanlar (Gümbet 5 dk)",
-      "Şık marina ve premium butik tatil isteyenler (Yalıkavak)",
+      "Şık marina ve butik bir tatil isteyenler (Yalıkavak)",
       "Geniş kumsal arayanlar (sahil çakıl-kum karışımı, dar)",
     ],
     sections: [
@@ -407,7 +407,7 @@ export const districtGuides: Record<DistrictSlug, DistrictGuide> = {
       "Çocuklu aileler için en geniş kumlu plaj arayanlar",
       "Köy atmosferi ve geleneksel taş mimari sevenler",
       "Salı pazarı, yerel zanaatkâr ve yöresel üreticileri keşfetmek isteyenler",
-      "Bütçe ile kaliteyi dengelemek isteyen orta-segment aileler",
+      "Bütçe ile kaliteyi dengelemek isteyen orta bütçeli aileler",
       "Bodrum merkezine kolay ulaşabilmek isteyenler",
     ],
     notSuitedFor: [
@@ -505,7 +505,7 @@ export const districtGuides: Record<DistrictSlug, DistrictGuide> = {
     subHeading: "Gündoğan Apart Kiralama — Sakin Koy ve Deniz Manzaralı Yamaç 2026",
     lead: "Gündoğan, Yalıkavak ile Türkbükü arasında saklı, rüzgârdan korunan ve geleneksel balıkçı köyü kimliğini hâlâ koruyan butik bir koy. Yamaçtan denize uzanan apartlar deniz manzarası sunar; sahil ise çakıllı, sakin ve sezon sonu bile yüzülebilir bir alandır. 2026 sezonunda Gündoğan, sakin lüks arayan ailelerin ve çiftlerin tercih ettiği gözde bir nokta.",
     suitedFor: [
-      "Sakin koylarda yüzmek isteyen orta-üst segment aileler",
+      "Sakin koylarda yüzmek isteyen bütçesi biraz daha geniş aileler",
       "Yamaçtan deniz manzarası ve sessiz akşam atmosferi sevenler",
       "Yalıkavak'a yakın olmak ama daha sakin kalmak isteyenler",
       "Cennet Adası ve çevre koy turlarına ilgi duyanlar",
@@ -622,7 +622,7 @@ export const districtGuides: Record<DistrictSlug, DistrictGuide> = {
         h2: "Sahil ve Su",
         body: [
           "Torba sahili yaklaşık 1.2 km uzunluğunda, ince çakıl-kum karışımı. Su girişi yumuşak ve sığ; küçük çocuklar için son derece güvenli. Sahilin doğu ucu daha sakin (resort otellerin özel plajları), batı ucu daha hareketli (halk plajı ve apart sitelerinin sahil bölgeleri).",
-          "Halk plajında ücretsiz kullanım mümkün ancak donanımsız. Resort otellere ait beach club'larda günlük ücretle (genelde 500-1.500 TL kişi başı) yüzme ve kafe-restoran kullanımı imkânı sunulur. Bu seçenek, apart konaklamak ama otel beach club deneyimi yaşamak isteyenler için pratiktir.",
+          "Halk plajında ücretsiz kullanım mümkün ancak donanımsız. Resort otellere ait beach club'larda günlük ücretle (genelde 500-1.500 TL kişi başı) yüzme ve kafe-restoran kullanımı imkânı sunulur. Bu seçenek, apart konaklamak ama otel plaj kulübü keyfini yaşamak isteyenler için pratiktir.",
           "Sahilin batı ucundan başlayan yaklaşık 4 km'lik yürüyüş hattı, kıyı boyunca devam eder ve doğa yürüyüşü için keyifli bir alternatiftir.",
         ],
       },

@@ -76,7 +76,7 @@ export default async function Page({
           {
             icon: Repeat,
             title: "Süreklilik",
-            desc: "Bir rezervasyon işlemi değil, bir konaklama deneyimi sunuyoruz. Check-in'den check-out'a, ihtiyaç anlarında yanınızdayız.",
+            desc: "Bizim için bu sadece bir rezervasyon değil; tatilinizin rahat geçmesi. Check-in'den check-out'a, ihtiyaç anlarında yanınızdayız.",
           },
         ],
         founderTitle: "2013'ten Beri Bodrum'da",

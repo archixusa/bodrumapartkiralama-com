@@ -40,7 +40,7 @@ export function ContactForm({ sourceSite }: Props) {
           "Bizden cevap için en geç 24 saat içerisinde dönüş yapacağız.",
         errorTitle: "Mesaj gönderilemedi",
         errorFallback:
-          "Şu an form üzerinden mesajınızı iletemedik. Lütfen daha sonra tekrar deneyin veya WhatsApp'tan ulaşın.",
+          "Şu an form üzerinden mesajınızı iletemedik. Lütfen daha sonra tekrar deneyin veya WhatsApp'tan yazın.",
         consentRequired: "Devam etmek için onay vermeniz gerekiyor.",
       }
     : {
