@@ -30,7 +30,7 @@ interface UnifiedPost {
   excerptRu?: string;
 }
 
-function unifyAll(): UnifiedPost[] {
+function unifyAll(locale: string): UnifiedPost[] {
   const legacy: UnifiedPost[] = posts.map((p) => ({
     source: "legacy",
     slug: p.slug,
@@ -47,7 +47,7 @@ function unifyAll(): UnifiedPost[] {
     excerptDe: p.excerptDe,
     excerptRu: p.excerptRu,
   }));
-  const mdx: UnifiedPost[] = getMdxPosts().map((p) => ({
+  const mdx: UnifiedPost[] = getMdxPosts(locale).map((p) => ({
     source: "mdx",
     slug: p.slug,
     date: p.published_at,
@@ -87,7 +87,7 @@ export default async function Page({
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "blog" });
   const isTr = locale === "tr";
-  const sorted = unifyAll();
+  const sorted = unifyAll(locale);
 
   return (
     <>
