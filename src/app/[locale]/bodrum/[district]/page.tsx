@@ -8,6 +8,7 @@ import { ApartCard } from "@/components/ApartCard";
 import { FAQ } from "@/components/FAQ";
 import { JsonLd } from "@/components/JsonLd";
 import { districts, getDistrict } from "@/data/districts";
+import { loc, locArr } from "@/lib/i18n-data";
 import { districtGuides } from "@/data/districtGuides";
 import { DistrictGuide } from "@/components/DistrictGuide";
 import { getApartmentsByDistrict } from "@/data/apartments";
@@ -63,8 +64,13 @@ export default async function DistrictPage({
   const fl = await getTranslations({ locale, namespace: "apartList" });
   const isTr = locale === "tr";
   const districtName = dt(d.slug);
-  const longDesc = isTr ? d.longDescTr : d.longDescEn;
-  const highlights = isTr ? d.highlights.tr : d.highlights.en;
+  const longDesc = loc(locale, {
+    tr: d.longDescTr,
+    en: d.longDescEn,
+    de: d.longDescDe,
+    ru: d.longDescRu,
+  });
+  const highlights = locArr(locale, d.highlights);
   const apts = getApartmentsByDistrict(d.slug);
   const nearby = d.nearby
     .map((slug) => districts.find((x) => x.slug === slug))
@@ -73,37 +79,87 @@ export default async function DistrictPage({
 
   const districtFaq = [
     {
-      q: isTr
-        ? `${districtName} hangi tarz tatilci için uygundur?`
-        : `Who is ${districtName} best suited for?`,
-      a: isTr ? d.longDescTr.split(/(?<=\.)\s/)[0] : d.longDescEn.split(/(?<=\.)\s/)[0],
+      q:
+        locale === "tr"
+          ? `${districtName} hangi tarz tatilci için uygundur?`
+          : locale === "de"
+            ? `Für welche Art von Urlaubern eignet sich ${districtName}?`
+            : locale === "ru"
+              ? `Кому лучше всего подойдёт ${districtName}?`
+              : `Who is ${districtName} best suited for?`,
+      a: longDesc.split(/(?<=\.)\s/)[0],
     },
     {
-      q: isTr ? `${districtName}'a ulaşım nasıl?` : `How do I get to ${districtName}?`,
-      a: isTr
-        ? `Milas-Bodrum Havalimanı'ndan ${districtName}'a VIP transfer hizmetimiz vardır. Ortalama transfer süresi 30-50 dakikadır; rezervasyon sırasında talep edebilirsiniz.`
-        : `We provide VIP transfer from Milas-Bodrum Airport to ${districtName}. Average transfer time is 30-50 minutes; request it during booking.`,
+      q:
+        locale === "tr"
+          ? `${districtName}'a ulaşım nasıl?`
+          : locale === "de"
+            ? `Wie komme ich nach ${districtName}?`
+            : locale === "ru"
+              ? `Как добраться до ${districtName}?`
+              : `How do I get to ${districtName}?`,
+      a:
+        locale === "tr"
+          ? `Milas-Bodrum Havalimanı'ndan ${districtName}'a VIP transfer hizmetimiz vardır. Ortalama transfer süresi 30-50 dakikadır; rezervasyon sırasında talep edebilirsiniz.`
+          : locale === "de"
+            ? `Wir bieten einen VIP-Transfer vom Flughafen Milas-Bodrum nach ${districtName}. Die durchschnittliche Fahrzeit beträgt 30-50 Minuten; Sie können ihn bei der Buchung anfragen.`
+            : locale === "ru"
+              ? `Мы предоставляем VIP-трансфер из аэропорта Милас-Бодрум до ${districtName}. Среднее время в пути — 30-50 минут; вы можете заказать его при бронировании.`
+              : `We provide VIP transfer from Milas-Bodrum Airport to ${districtName}. Average transfer time is 30-50 minutes; request it during booking.`,
     },
     {
-      q: isTr
-        ? `${districtName}'da apart kiralama fiyatları ne kadar?`
-        : `What are the apartment rental prices in ${districtName}?`,
-      a: isTr
-        ? `Yüksek sezonda (Haziran-Eylül) günlük fiyatlar 2.400 TL'den başlar, lüks segmente göre değişir. Düşük sezonda fiyatlar yaklaşık %50 düşer.`
-        : `In high season (June-September), daily prices start from around 2,400 TL and rise with the luxury tier. Off-season prices are roughly 50% lower.`,
+      q:
+        locale === "tr"
+          ? `${districtName}'da apart kiralama fiyatları ne kadar?`
+          : locale === "de"
+            ? `Wie hoch sind die Mietpreise für Apartments in ${districtName}?`
+            : locale === "ru"
+              ? `Каковы цены на аренду апартаментов в ${districtName}?`
+              : `What are the apartment rental prices in ${districtName}?`,
+      a:
+        locale === "tr"
+          ? `Yüksek sezonda (Haziran-Eylül) günlük fiyatlar 2.400 TL'den başlar, lüks segmente göre değişir. Düşük sezonda fiyatlar yaklaşık %50 düşer.`
+          : locale === "de"
+            ? `In der Hauptsaison (Juni-September) beginnen die Tagespreise bei etwa 2.400 TL und steigen je nach Luxusklasse. In der Nebensaison liegen die Preise rund 50 % niedriger.`
+            : locale === "ru"
+              ? `В высокий сезон (июнь-сентябрь) суточные цены начинаются примерно от 2 400 TL и растут в зависимости от класса люкс. В низкий сезон цены примерно на 50 % ниже.`
+              : `In high season (June-September), daily prices start from around 2,400 TL and rise with the luxury tier. Off-season prices are roughly 50% lower.`,
     },
     {
-      q: isTr ? `${districtName}'da hangi plajlar var?` : `Which beaches are in ${districtName}?`,
-      a: isTr ? `${districtName} bölgesinin öne çıkan plaj ve koyları için sayfadaki "${districtName} Hakkında" bölümüne göz atabilirsiniz.`
-        : `For the highlighted beaches and coves of ${districtName}, see the "About ${districtName}" section above.`,
+      q:
+        locale === "tr"
+          ? `${districtName}'da hangi plajlar var?`
+          : locale === "de"
+            ? `Welche Strände gibt es in ${districtName}?`
+            : locale === "ru"
+              ? `Какие пляжи есть в ${districtName}?`
+              : `Which beaches are in ${districtName}?`,
+      a:
+        locale === "tr"
+          ? `${districtName} bölgesinin öne çıkan plaj ve koyları için sayfadaki "${districtName} Hakkında" bölümüne göz atabilirsiniz.`
+          : locale === "de"
+            ? `Die schönsten Strände und Buchten von ${districtName} finden Sie oben im Abschnitt „Über ${districtName}“.`
+            : locale === "ru"
+              ? `Лучшие пляжи и бухты района ${districtName} вы найдёте выше в разделе «О районе ${districtName}».`
+              : `For the highlighted beaches and coves of ${districtName}, see the "About ${districtName}" section above.`,
     },
     {
-      q: isTr
-        ? `${districtName}'da rezervasyon nasıl yapılır?`
-        : `How do I book in ${districtName}?`,
-      a: isTr
-        ? `Beğendiğiniz apartı seçin ve rezervasyon formunu doldurun. Bir saat içinde WhatsApp veya telefondan dönüş yapıyoruz.`
-        : `Pick an apartment you like and fill in the booking form. We respond within an hour via WhatsApp or phone.`,
+      q:
+        locale === "tr"
+          ? `${districtName}'da rezervasyon nasıl yapılır?`
+          : locale === "de"
+            ? `Wie buche ich in ${districtName}?`
+            : locale === "ru"
+              ? `Как забронировать жильё в ${districtName}?`
+              : `How do I book in ${districtName}?`,
+      a:
+        locale === "tr"
+          ? `Beğendiğiniz apartı seçin ve rezervasyon formunu doldurun. Bir saat içinde WhatsApp veya telefondan dönüş yapıyoruz.`
+          : locale === "de"
+            ? `Wählen Sie ein Apartment, das Ihnen gefällt, und füllen Sie das Buchungsformular aus. Wir melden uns innerhalb einer Stunde per WhatsApp oder Telefon.`
+            : locale === "ru"
+              ? `Выберите понравившиеся апартаменты и заполните форму бронирования. Мы свяжемся с вами в течение часа через WhatsApp или по телефону.`
+              : `Pick an apartment you like and fill in the booking form. We respond within an hour via WhatsApp or phone.`,
     },
   ];
 
@@ -182,7 +238,12 @@ export default async function DistrictPage({
           </nav>
           <h1 className="text-white">{t("h1", { district: districtName })}</h1>
           <p className="mt-3 max-w-2xl text-base text-white/85 md:text-lg">
-            {isTr ? d.shortDescTr : d.shortDescEn}
+            {loc(locale, {
+              tr: d.shortDescTr,
+              en: d.shortDescEn,
+              de: d.shortDescDe,
+              ru: d.shortDescRu,
+            })}
           </p>
         </div>
       </section>
