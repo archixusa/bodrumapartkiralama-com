@@ -81,8 +81,10 @@ export default async function HomePage({
       sub: "Doğrudan mülk sahibiyle, aracısız apart kiralama.",
       lead:
         "Aile bütçesini düşünen, pratik bilgi arayan tatilciler için: Bodrum'un farklı bölgelerinde değerlendirilmiş mülklerle çalışıyoruz. Mülk kataloğumuz açıldıkça apartları buradan paylaşacağız. Şimdilik talebinizi alıp size uygun seçenekleri sunabiliriz.",
+      ctaWhatsapp: "WhatsApp ile Yazın",
       ctaReserve: "Rezervasyon Talebi",
       ctaOwner: "Evinizi Kiraya Verin",
+      waText: "Merhaba, Bodrum'da uygun apart arıyorum.",
     },
     en: {
       chip: "Bodrum 2026",
@@ -90,8 +92,10 @@ export default async function HomePage({
       sub: "Apartment rentals directly with the owner — no middlemen.",
       lead:
         "For travellers who care about value and want practical guidance: we work with properties across Bodrum's neighbourhoods. As our catalogue opens up, apartments will be listed here. For now, share your dates and we'll match you to suitable options.",
+      ctaWhatsapp: "Message us on WhatsApp",
       ctaReserve: "Send a Reservation Request",
       ctaOwner: "List Your Property",
+      waText: "Hello, I'm looking for a suitable apartment in Bodrum.",
     },
     de: {
       chip: "Bodrum 2026",
@@ -99,8 +103,10 @@ export default async function HomePage({
       sub: "Apartmentmiete direkt beim Eigentümer — ganz ohne Vermittler.",
       lead:
         "Für Reisende, die auf ihr Budget achten und praktische Tipps schätzen: Wir arbeiten mit ausgewählten Unterkünften in den schönsten Vierteln von Bodrum. Sobald unser Katalog wächst, finden Sie die Apartments hier. Teilen Sie uns vorerst einfach Ihre Reisedaten mit, und wir finden passende Optionen für Sie.",
+      ctaWhatsapp: "Per WhatsApp schreiben",
       ctaReserve: "Reservierungsanfrage senden",
       ctaOwner: "Vermieten Sie Ihre Wohnung",
+      waText: "Hallo, ich suche eine passende Ferienwohnung in Bodrum.",
     },
     ru: {
       chip: "Бодрум 2026",
@@ -108,11 +114,16 @@ export default async function HomePage({
       sub: "Аренда апартаментов напрямую у владельца — без посредников.",
       lead:
         "Для путешественников, которые ценят разумную стоимость и любят практичные советы: мы работаем с проверенными объектами в разных районах Бодрума. По мере пополнения нашего каталога апартаменты будут появляться здесь. А пока просто сообщите нам ваши даты, и мы подберём для вас подходящие варианты.",
+      ctaWhatsapp: "Написать в WhatsApp",
       ctaReserve: "Отправить запрос на бронирование",
       ctaOwner: "Сдайте своё жильё",
+      waText: "Здравствуйте, ищу подходящие апартаменты в Бодруме.",
     },
   } as const;
   const heroCopy = heroByLocale[pick] ?? heroByLocale.en;
+  const heroWaHref = `https://wa.me/${c("whatsappNumber")}?text=${encodeURIComponent(
+    heroCopy.waText
+  )}`;
 
   const howByLocale = {
     tr: {
@@ -343,15 +354,21 @@ export default async function HomePage({
               {heroCopy.lead}
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <Link href="/iletisim" className="btn-primary">
-                {heroCopy.ctaReserve}
-                <ArrowRight className="h-4 w-4" />
-              </Link>
+              <a
+                href={heroWaHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-lead="hero-whatsapp"
+                className="btn-primary"
+              >
+                <MessageCircle className="h-4 w-4" />
+                {heroCopy.ctaWhatsapp}
+              </a>
               <Link
-                href="/evinizi-kiraya-verin"
+                href="/iletisim"
                 className="btn-secondary !bg-white/10 !text-white !border-white/30 hover:!bg-white/15"
               >
-                {heroCopy.ctaOwner}
+                {heroCopy.ctaReserve}
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
