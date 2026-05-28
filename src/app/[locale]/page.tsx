@@ -493,7 +493,7 @@ function TrustStrip() {
           ? warmItems.map((item) => (
               <div key={item.title} className="flex items-start gap-3">
                 <span
-                  className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-amber-50 text-xl"
+                  className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-navy-50 text-xl"
                   aria-hidden
                 >
                   {item.emoji}

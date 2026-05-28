@@ -60,9 +60,12 @@ Not:
 ${payload.note || "—"}`;
 
   if (!RESEND_API_KEY) {
-    console.log("\n=== INQUIRY (no RESEND_API_KEY, console-only) ===");
-    console.log(text);
-    console.log("=== END ===\n");
+    // Do NOT log `text` — it contains contact PII (name/phone/email). Emit a
+    // metadata-only warning so the misconfiguration is visible without leaking
+    // personal data into server logs (KVKK).
+    console.warn(
+      "[inquiryAction] RESEND_API_KEY missing — inquiry accepted but no email sent."
+    );
     return { status: "success" };
   }
 

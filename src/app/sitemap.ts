@@ -1,5 +1,4 @@
 import type { MetadataRoute } from "next";
-import { apartments } from "@/data/apartments";
 import { districts } from "@/data/districts";
 import { posts } from "@/data/posts";
 import { getMdxPosts } from "@/lib/mdx-blog";
@@ -50,20 +49,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     });
   }
 
-  for (const apt of apartments) {
-    const path = `/apartlar/${apt.slug}`;
-    entries.push({
-      url: urlFor(path, routing.defaultLocale),
-      lastModified: now,
-      changeFrequency: "weekly",
-      priority: 0.8,
-      alternates: {
-        languages: Object.fromEntries(
-          routing.locales.map((l) => [l, urlFor(path, l)])
-        ),
-      },
-    });
-  }
+  // NOTE: /apartlar/[slug] detail pages are notFound() placeholders pre-launch
+  // (see src/app/[locale]/apartlar/[slug]/page.tsx) — do NOT emit them to the
+  // sitemap or Google will index 404s. Re-add this loop when real property
+  // detail pages ship.
 
   for (const d of districts) {
     const path = `/bodrum/${d.urlSlug}`;

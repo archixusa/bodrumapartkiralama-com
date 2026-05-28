@@ -40,11 +40,11 @@ export function PartnerServiceBanner({
   const howTitle = isTr ? "Nasıl Çalışıyor?" : "How does it work?";
 
   return (
-    <section className="border-b border-[var(--color-border)] bg-amber-50/60">
+    <section className="border-b border-[var(--color-border)] bg-navy-50/60">
       <div className="container-page py-8 md:py-10">
         <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
           <div className="max-w-2xl">
-            <span className="inline-flex items-center gap-2 rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-amber-900">
+            <span className="inline-flex items-center gap-2 rounded-full bg-navy-100 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-navy-900">
               <Handshake className="h-3.5 w-3.5" />
               {serviceLabel}
             </span>

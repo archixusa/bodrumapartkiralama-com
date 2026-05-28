@@ -361,8 +361,8 @@ function renderMdxPost(
       <JsonLd data={jsonLd} />
       <article>
         {mdx.reklam_disclosure && (
-          <div className="bg-amber-50 border-b border-amber-200">
-            <div className="container-page py-2 text-center text-xs text-amber-900">
+          <div className="bg-navy-50 border-b border-navy-100">
+            <div className="container-page py-2 text-center text-xs text-navy-900">
               <strong>#reklam</strong> · Bu yazıda işletme/marka adı geçtiği için yasal uyumluluk gereği reklam etiketi taşır.
             </div>
           </div>

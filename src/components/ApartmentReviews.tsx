@@ -60,7 +60,7 @@ function formatDate(iso: string, locale: string): string {
 
 function Stars({ value, size = 16 }: { value: number; size?: number }) {
   return (
-    <span style={{ display: "inline-flex", gap: 2, color: "#F59E0B" }} aria-label={`${value} yıldız`}>
+    <span style={{ display: "inline-flex", gap: 2, color: "#F26A1E" }} aria-label={`${value} yıldız`}>
       {[1, 2, 3, 4, 5].map((n) => (
         <svg
           key={n}

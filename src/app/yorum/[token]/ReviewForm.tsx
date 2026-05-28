@@ -114,7 +114,7 @@ export function ReviewForm({ token, brand }: Props) {
                 cursor: "pointer",
                 fontSize: 36,
                 lineHeight: 1,
-                color: n <= (hoverRating || rating) ? "#F59E0B" : "#CBD5E1",
+                color: n <= (hoverRating || rating) ? "#F26A1E" : "#CBD5E1",
                 padding: 0,
                 transition: "color 0.15s",
               }}
