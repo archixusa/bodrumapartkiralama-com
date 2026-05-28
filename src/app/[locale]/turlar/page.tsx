@@ -41,6 +41,10 @@ export default async function Page({
   const c = await getTranslations({ locale, namespace: "common" });
   const isTr = locale === "tr";
 
+  type L = "tr" | "en" | "de" | "ru";
+  const pick = locale as L;
+  const tx = <T,>(o: Record<L, T>): T => o[pick] ?? o.en;
+
   const tours = [
     {
       title: t("tour1Title"),
@@ -76,38 +80,97 @@ export default async function Page({
     },
   ];
 
-  const faqItems = [
-    {
-      q: isTr ? "Turlara nasıl katılırım?" : "How do I join a tour?",
-      a: isTr
-        ? "Sağdaki formdan veya WhatsApp'tan tarih ve kişi sayınızı paylaşın. Müsaitliği teyit edip rezervasyon onayı gönderiyoruz."
-        : "Share your date and group size via the form or WhatsApp. We confirm availability and send a booking confirmation.",
-    },
-    {
-      q: isTr ? "Otelden alış var mı?" : "Is there hotel pick-up?",
-      a: isTr
-        ? "Çoğu turda merkezi otel ve apartlardan ücretsiz transfer vardır. Apartınızın konumuna göre buluşma noktası belirleniyor."
-        : "Most tours include free pick-up from central hotels and apartments. The meeting point depends on your apartment's location.",
-    },
-    {
-      q: isTr ? "Yemek dahil mi?" : "Is lunch included?",
-      a: isTr
-        ? "Mavi tur ve jeep safari turlarında öğle yemeği dahildir. Dalış turlarında küçük ikram ve içecek sunulur."
-        : "Lunch is included in the blue cruise and jeep safari tours. Diving tours include light snacks and drinks.",
-    },
-    {
-      q: isTr ? "Çocuklar katılabilir mi?" : "Can children join?",
-      a: isTr
-        ? "Mavi tur ve antik kent turlarına her yaş katılabilir. Dalış için minimum 10 yaş, jeep safari için 7 yaş şartı vardır."
-        : "All ages can join the blue cruise and ancient city tours. Diving requires minimum age 10; jeep safari, age 7.",
-    },
-    {
-      q: isTr ? "Özel tur düzenleyebilir miyiz?" : "Can we arrange a private tour?",
-      a: isTr
-        ? "Evet. Aileye veya gruba özel tekne, jeep veya rehber kiralanabilir. Form üzerinden bütçenizi ve isteklerinizi paylaşın."
-        : "Yes. Private boat, jeep or guide can be arranged for your family or group. Share your budget and wishes via the form.",
-    },
-  ];
+  const faqByLocale = {
+    tr: [
+      {
+        q: "Turlara nasıl katılırım?",
+        a: "Sağdaki formdan veya WhatsApp'tan tarih ve kişi sayınızı paylaşın. Müsaitliği teyit edip rezervasyon onayı gönderiyoruz.",
+      },
+      {
+        q: "Otelden alış var mı?",
+        a: "Çoğu turda merkezi otel ve apartlardan ücretsiz transfer vardır. Apartınızın konumuna göre buluşma noktası belirleniyor.",
+      },
+      {
+        q: "Yemek dahil mi?",
+        a: "Mavi tur ve jeep safari turlarında öğle yemeği dahildir. Dalış turlarında küçük ikram ve içecek sunulur.",
+      },
+      {
+        q: "Çocuklar katılabilir mi?",
+        a: "Mavi tur ve antik kent turlarına her yaş katılabilir. Dalış için minimum 10 yaş, jeep safari için 7 yaş şartı vardır.",
+      },
+      {
+        q: "Özel tur düzenleyebilir miyiz?",
+        a: "Evet. Aileye veya gruba özel tekne, jeep veya rehber kiralanabilir. Form üzerinden bütçenizi ve isteklerinizi paylaşın.",
+      },
+    ],
+    en: [
+      {
+        q: "How do I join a tour?",
+        a: "Share your date and group size via the form or WhatsApp. We confirm availability and send a booking confirmation.",
+      },
+      {
+        q: "Is there hotel pick-up?",
+        a: "Most tours include free pick-up from central hotels and apartments. The meeting point depends on your apartment's location.",
+      },
+      {
+        q: "Is lunch included?",
+        a: "Lunch is included in the blue cruise and jeep safari tours. Diving tours include light snacks and drinks.",
+      },
+      {
+        q: "Can children join?",
+        a: "All ages can join the blue cruise and ancient city tours. Diving requires minimum age 10; jeep safari, age 7.",
+      },
+      {
+        q: "Can we arrange a private tour?",
+        a: "Yes. Private boat, jeep or guide can be arranged for your family or group. Share your budget and wishes via the form.",
+      },
+    ],
+    de: [
+      {
+        q: "Wie nehme ich an einer Tour teil?",
+        a: "Teilen Sie uns Datum und Personenzahl über das Formular oder WhatsApp mit. Wir bestätigen die Verfügbarkeit und senden Ihnen eine Buchungsbestätigung.",
+      },
+      {
+        q: "Gibt es eine Abholung am Hotel?",
+        a: "Die meisten Touren beinhalten eine kostenlose Abholung von zentralen Hotels und Apartments. Der Treffpunkt richtet sich nach der Lage Ihres Apartments.",
+      },
+      {
+        q: "Ist das Mittagessen inbegriffen?",
+        a: "Bei der Blauen Reise und den Jeep-Safari-Touren ist das Mittagessen inbegriffen. Bei Tauchtouren werden kleine Snacks und Getränke gereicht.",
+      },
+      {
+        q: "Können Kinder teilnehmen?",
+        a: "An der Blauen Reise und den Touren zu antiken Stätten können alle Altersgruppen teilnehmen. Für das Tauchen gilt ein Mindestalter von 10 Jahren, für die Jeep-Safari von 7 Jahren.",
+      },
+      {
+        q: "Können wir eine private Tour buchen?",
+        a: "Ja. Für Ihre Familie oder Gruppe lassen sich ein privates Boot, ein Jeep oder ein Guide buchen. Teilen Sie uns Ihr Budget und Ihre Wünsche über das Formular mit.",
+      },
+    ],
+    ru: [
+      {
+        q: "Как присоединиться к туру?",
+        a: "Сообщите дату и количество человек через форму или WhatsApp. Мы подтвердим наличие мест и пришлём подтверждение бронирования.",
+      },
+      {
+        q: "Есть ли трансфер от отеля?",
+        a: "В большинство туров входит бесплатный трансфер от центральных отелей и апартаментов. Место встречи зависит от расположения ваших апартаментов.",
+      },
+      {
+        q: "Входит ли обед?",
+        a: "В «Голубой круиз» и джип-сафари обед включён. В дайвинг-турах предлагаются лёгкие закуски и напитки.",
+      },
+      {
+        q: "Могут ли участвовать дети?",
+        a: "В «Голубой круиз» и туры по античным городам можно с любого возраста. Для дайвинга минимальный возраст 10 лет, для джип-сафари — 7 лет.",
+      },
+      {
+        q: "Можно ли организовать частный тур?",
+        a: "Да. Для вашей семьи или группы можно арендовать частную яхту, джип или гида. Сообщите ваш бюджет и пожелания через форму.",
+      },
+    ],
+  };
+  const faqItems = tx(faqByLocale);
 
   const jsonLd = [
     {
@@ -136,67 +199,155 @@ export default async function Page({
       <PageHero
         title={t("h1")}
         subtitle={t("subtitle")}
-        badge={isTr ? "Partner Hizmet · Bodrum 2026" : "Partner Service · Bodrum 2026"}
+        badge={tx({
+          tr: "Partner Hizmet · Bodrum 2026",
+          en: "Partner Service · Bodrum 2026",
+          de: "Partnerservice · Bodrum 2026",
+          ru: "Партнёрская услуга · Бодрум 2026",
+        })}
         image="https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=2000&q=80"
-        crumbs={[{ href: "/", label: isTr ? "Ana Sayfa" : "Home" }, { label: t("h1") }]}
+        crumbs={[
+          {
+            href: "/",
+            label: tx({ tr: "Ana Sayfa", en: "Home", de: "Startseite", ru: "Главная" }),
+          },
+          { label: t("h1") },
+        ]}
       />
 
       <PartnerServiceBanner
         isTr={isTr}
-        serviceLabel={isTr ? "Partner Hizmet" : "Partner Service"}
-        description={
-          isTr
-            ? "Bodrum turları (mavi tur, dalış, jeep safari, antik kent) anlaşmalı tur operatörlerimiz tarafından yürütülür. Rehber, ulaşım, öğle yemeği ve sigorta operatörün paket kapsamındadır. Biz uygun turu seçmenize yardımcı oluyoruz."
-            : "Bodrum tours (blue cruise, diving, jeep safari, ancient cities) are run by our partner tour operators. Guide, transport, lunch and insurance are inside the operator's package. We help you pick the right tour."
-        }
+        serviceLabel={tx({
+          tr: "Partner Hizmet",
+          en: "Partner Service",
+          de: "Partnerservice",
+          ru: "Партнёрская услуга",
+        })}
+        description={tx({
+          tr: "Bodrum turları (mavi tur, dalış, jeep safari, antik kent) anlaşmalı tur operatörlerimiz tarafından yürütülür. Rehber, ulaşım, öğle yemeği ve sigorta operatörün paket kapsamındadır. Biz uygun turu seçmenize yardımcı oluyoruz.",
+          en: "Bodrum tours (blue cruise, diving, jeep safari, ancient cities) are run by our partner tour operators. Guide, transport, lunch and insurance are inside the operator's package. We help you pick the right tour.",
+          de: "Die Bodrum-Touren (Blaue Reise, Tauchen, Jeep-Safari, antike Stätten) werden von unseren Partner-Tourveranstaltern durchgeführt. Guide, Transport, Mittagessen und Versicherung sind im Paket des Veranstalters enthalten. Wir helfen Ihnen, die passende Tour auszuwählen.",
+          ru: "Туры по Бодруму («Голубой круиз», дайвинг, джип-сафари, античные города) проводят наши партнёры — туроператоры. Гид, транспорт, обед и страховка входят в пакет оператора. Мы помогаем вам выбрать подходящий тур.",
+        })}
         whatsappNumber={c("whatsappNumber")}
-        whatsappTemplate={
-          isTr
-            ? "Merhaba, Bodrum turları hakkında bilgi almak istiyorum. Tarih ve katılımcı sayısını söyleyince partner operatörünüze yönlendirir misiniz?"
-            : "Hello, I'd like info about Bodrum tours. Once I share date and group size, could you connect me with your partner operator?"
-        }
-        whatsappCtaLabel={isTr ? "WhatsApp ile sor" : "Ask on WhatsApp"}
-        steps={[
-          {
-            num: "1",
-            title: isTr ? "Hangi tur, kaç kişi" : "Which tour, how many people",
-            desc: isTr
-              ? "Mavi tur, dalış, jeep safari ya da antik kent — tercihinizi ve katılımcı sayısını yazın."
-              : "Blue cruise, diving, jeep safari or ancient-city tour — share your pick and group size.",
-          },
-          {
-            num: "2",
-            title: isTr ? "Müsait tarih ve operatör" : "Available dates and operator",
-            desc: isTr
-              ? "Tarihinize müsait operatörü ve fiyatı paylaşırız."
-              : "We share an operator available on your date and the price.",
-          },
-          {
-            num: "3",
-            title: isTr ? "Rezervasyon ve katılım" : "Booking and meeting point",
-            desc: isTr
-              ? "Operatör buluşma noktasını size iletir; rehber kendisi karşılar."
-              : "The operator sends the meeting point; the guide receives you on the day.",
-          },
-        ]}
-        coverageTitle={isTr ? "Partner Hizmet Kapsamı" : "Partner Service Scope"}
-        coverage={
-          isTr
-            ? [
-                "Mavi tur, dalış, jeep safari, antik kent ve şehir turları",
-                "Sertifikalı yerel rehberler ve lisanslı operatörler",
-                "Öğle yemeği, ulaşım ve sigorta paket içinde (turca göre değişir)",
-                "Bireysel veya özel tur (kendi grubunuza özel)",
-                "Sözleşme ve ödeme operatör üzerinden yapılır",
-              ]
-            : [
-                "Blue cruise, diving, jeep safari, ancient-city and city tours",
-                "Certified local guides and licensed operators",
-                "Lunch, transport and insurance included (varies by tour)",
-                "Individual or private group tours",
-                "Contract and payment handled by the operator",
-              ]
-        }
+        whatsappTemplate={tx({
+          tr: "Merhaba, Bodrum turları hakkında bilgi almak istiyorum. Tarih ve katılımcı sayısını söyleyince partner operatörünüze yönlendirir misiniz?",
+          en: "Hello, I'd like info about Bodrum tours. Once I share date and group size, could you connect me with your partner operator?",
+          de: "Hallo, ich hätte gerne Informationen zu den Bodrum-Touren. Könnten Sie mich, sobald ich Datum und Teilnehmerzahl mitteile, an Ihren Partnerbetreiber weiterleiten?",
+          ru: "Здравствуйте, я хотел бы узнать о турах по Бодруму. Когда я сообщу дату и количество участников, не могли бы вы направить меня к вашему партнёру-оператору?",
+        })}
+        whatsappCtaLabel={tx({
+          tr: "WhatsApp ile sor",
+          en: "Ask on WhatsApp",
+          de: "Per WhatsApp anfragen",
+          ru: "Спросить в WhatsApp",
+        })}
+        steps={tx({
+          tr: [
+            {
+              num: "1",
+              title: "Hangi tur, kaç kişi",
+              desc: "Mavi tur, dalış, jeep safari ya da antik kent — tercihinizi ve katılımcı sayısını yazın.",
+            },
+            {
+              num: "2",
+              title: "Müsait tarih ve operatör",
+              desc: "Tarihinize müsait operatörü ve fiyatı paylaşırız.",
+            },
+            {
+              num: "3",
+              title: "Rezervasyon ve katılım",
+              desc: "Operatör buluşma noktasını size iletir; rehber kendisi karşılar.",
+            },
+          ],
+          en: [
+            {
+              num: "1",
+              title: "Which tour, how many people",
+              desc: "Blue cruise, diving, jeep safari or ancient-city tour — share your pick and group size.",
+            },
+            {
+              num: "2",
+              title: "Available dates and operator",
+              desc: "We share an operator available on your date and the price.",
+            },
+            {
+              num: "3",
+              title: "Booking and meeting point",
+              desc: "The operator sends the meeting point; the guide receives you on the day.",
+            },
+          ],
+          de: [
+            {
+              num: "1",
+              title: "Welche Tour, wie viele Personen",
+              desc: "Blaue Reise, Tauchen, Jeep-Safari oder Tour zu antiken Stätten — teilen Sie uns Ihre Wahl und die Teilnehmerzahl mit.",
+            },
+            {
+              num: "2",
+              title: "Verfügbare Termine und Veranstalter",
+              desc: "Wir nennen Ihnen einen an Ihrem Termin verfügbaren Veranstalter und den Preis.",
+            },
+            {
+              num: "3",
+              title: "Buchung und Treffpunkt",
+              desc: "Der Veranstalter teilt Ihnen den Treffpunkt mit; der Guide empfängt Sie am Tag der Tour.",
+            },
+          ],
+          ru: [
+            {
+              num: "1",
+              title: "Какой тур и сколько человек",
+              desc: "«Голубой круиз», дайвинг, джип-сафари или тур по античному городу — укажите ваш выбор и количество участников.",
+            },
+            {
+              num: "2",
+              title: "Доступные даты и оператор",
+              desc: "Мы сообщим оператора, доступного на вашу дату, и цену.",
+            },
+            {
+              num: "3",
+              title: "Бронирование и место встречи",
+              desc: "Оператор сообщит место встречи; гид встретит вас в день тура.",
+            },
+          ],
+        })}
+        coverageTitle={tx({
+          tr: "Partner Hizmet Kapsamı",
+          en: "Partner Service Scope",
+          de: "Umfang des Partnerservice",
+          ru: "Что входит в партнёрскую услугу",
+        })}
+        coverage={tx({
+          tr: [
+            "Mavi tur, dalış, jeep safari, antik kent ve şehir turları",
+            "Sertifikalı yerel rehberler ve lisanslı operatörler",
+            "Öğle yemeği, ulaşım ve sigorta paket içinde (turca göre değişir)",
+            "Bireysel veya özel tur (kendi grubunuza özel)",
+            "Sözleşme ve ödeme operatör üzerinden yapılır",
+          ],
+          en: [
+            "Blue cruise, diving, jeep safari, ancient-city and city tours",
+            "Certified local guides and licensed operators",
+            "Lunch, transport and insurance included (varies by tour)",
+            "Individual or private group tours",
+            "Contract and payment handled by the operator",
+          ],
+          de: [
+            "Blaue Reise, Tauchen, Jeep-Safari, Touren zu antiken Stätten und Stadttouren",
+            "Zertifizierte lokale Guides und lizenzierte Veranstalter",
+            "Mittagessen, Transport und Versicherung im Paket enthalten (je nach Tour unterschiedlich)",
+            "Einzel- oder private Gruppentouren (exklusiv für Ihre Gruppe)",
+            "Vertrag und Zahlung erfolgen über den Veranstalter",
+          ],
+          ru: [
+            "«Голубой круиз», дайвинг, джип-сафари, туры по античным городам и городские туры",
+            "Сертифицированные местные гиды и лицензированные операторы",
+            "Обед, транспорт и страховка включены в пакет (зависит от тура)",
+            "Индивидуальные или частные групповые туры (только для вашей группы)",
+            "Договор и оплата оформляются через оператора",
+          ],
+        })}
       />
 
       <section className="section">
@@ -212,7 +363,12 @@ export default async function Page({
               subjectLine={t("h1")}
               fields={{ date: true, people: true }}
               whatsappNumber={c("whatsappNumber")}
-              whatsappTemplate={isTr ? "Merhaba, Bodrum turları hakkında bilgi almak istiyorum." : "Hello, I'd like info about Bodrum tours."}
+              whatsappTemplate={tx({
+                tr: "Merhaba, Bodrum turları hakkında bilgi almak istiyorum.",
+                en: "Hello, I'd like info about Bodrum tours.",
+                de: "Hallo, ich hätte gerne Informationen zu den Bodrum-Touren.",
+                ru: "Здравствуйте, я хотел бы узнать о турах по Бодруму.",
+              })}
             />
           </aside>
         </div>
@@ -252,7 +408,14 @@ export default async function Page({
 
       <section className="section">
         <div className="container-page max-w-4xl">
-          <h2>{isTr ? "Sıkça Sorulanlar" : "Frequently Asked Questions"}</h2>
+          <h2>
+            {tx({
+              tr: "Sıkça Sorulanlar",
+              en: "Frequently Asked Questions",
+              de: "Häufig gestellte Fragen",
+              ru: "Часто задаваемые вопросы",
+            })}
+          </h2>
           <div className="mt-6">
             <FAQ items={faqItems} />
           </div>

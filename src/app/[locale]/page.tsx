@@ -70,95 +70,188 @@ export default async function HomePage({
     a: f(`a${i}`),
   }));
 
-  const heroCopy = isTr
-    ? {
-        chip: "Bodrum 2026",
-        h1: "Bodrum'un Premier Kiralama Platformu",
-        sub: "Doğrudan mülk sahibiyle, aracısız apart kiralama.",
-        lead:
-          "Aile bütçesini düşünen, pratik bilgi arayan tatilciler için: Bodrum'un farklı bölgelerinde değerlendirilmiş mülklerle çalışıyoruz. Mülk kataloğumuz açıldıkça apartları buradan paylaşacağız. Şimdilik talebinizi alıp size uygun seçenekleri sunabiliriz.",
-        ctaReserve: "Rezervasyon Talebi",
-        ctaOwner: "Evinizi Kiraya Verin",
-      }
-    : {
-        chip: "Bodrum 2026",
-        h1: "Bodrum's Premier Rental Platform",
-        sub: "Apartment rentals directly with the owner — no middlemen.",
-        lead:
-          "For travellers who care about value and want practical guidance: we work with properties across Bodrum's neighbourhoods. As our catalogue opens up, apartments will be listed here. For now, share your dates and we'll match you to suitable options.",
-        ctaReserve: "Send a Reservation Request",
-        ctaOwner: "List Your Property",
-      };
+  type L = "tr" | "en" | "de" | "ru";
+  const pick = locale as L;
 
-  const howCopy = isTr
-    ? {
-        title: "Nasıl Çalışıyoruz",
-        sub: "Üç adımda, sade ve şeffaf.",
-        steps: [
-          {
-            icon: MessageCircle,
-            num: "01",
-            title: "Talep",
-            desc:
-              "WhatsApp veya formdan tarih, kişi sayısı ve tercih ettiğiniz bölgeyi iletin.",
-          },
-          {
-            icon: Calendar,
-            num: "02",
-            title: "Görüşme",
-            desc:
-              "Uygun mülkleri seçenek olarak paylaşırız; mülk sahibiyle iletişim kurmanıza aracılık ederiz.",
-          },
-          {
-            icon: KeyRound,
-            num: "03",
-            title: "Konaklama",
-            desc:
-              "Anahtarınız hazır olur, karşılama yapılır. Konaklama boyunca size ulaşabileceğiniz bir kişi vardır.",
-          },
-        ],
-      }
-    : {
-        title: "How It Works",
-        sub: "Three simple, transparent steps.",
-        steps: [
-          {
-            icon: MessageCircle,
-            num: "01",
-            title: "Request",
-            desc:
-              "Share your dates, group size and preferred neighbourhood via WhatsApp or the form.",
-          },
-          {
-            icon: Calendar,
-            num: "02",
-            title: "Match",
-            desc:
-              "We send you suitable options and bridge contact with the owner.",
-          },
-          {
-            icon: KeyRound,
-            num: "03",
-            title: "Stay",
-            desc:
-              "Your keys are ready, a welcome is arranged, and someone is reachable throughout your stay.",
-          },
-        ],
-      };
+  const heroByLocale = {
+    tr: {
+      chip: "Bodrum 2026",
+      h1: "Bodrum'un Premier Kiralama Platformu",
+      sub: "Doğrudan mülk sahibiyle, aracısız apart kiralama.",
+      lead:
+        "Aile bütçesini düşünen, pratik bilgi arayan tatilciler için: Bodrum'un farklı bölgelerinde değerlendirilmiş mülklerle çalışıyoruz. Mülk kataloğumuz açıldıkça apartları buradan paylaşacağız. Şimdilik talebinizi alıp size uygun seçenekleri sunabiliriz.",
+      ctaReserve: "Rezervasyon Talebi",
+      ctaOwner: "Evinizi Kiraya Verin",
+    },
+    en: {
+      chip: "Bodrum 2026",
+      h1: "Bodrum's Premier Rental Platform",
+      sub: "Apartment rentals directly with the owner — no middlemen.",
+      lead:
+        "For travellers who care about value and want practical guidance: we work with properties across Bodrum's neighbourhoods. As our catalogue opens up, apartments will be listed here. For now, share your dates and we'll match you to suitable options.",
+      ctaReserve: "Send a Reservation Request",
+      ctaOwner: "List Your Property",
+    },
+    de: {
+      chip: "Bodrum 2026",
+      h1: "Bodrums erste Adresse für Ferienwohnungen",
+      sub: "Apartmentmiete direkt beim Eigentümer — ganz ohne Vermittler.",
+      lead:
+        "Für Reisende, die auf ihr Budget achten und praktische Tipps schätzen: Wir arbeiten mit ausgewählten Unterkünften in den schönsten Vierteln von Bodrum. Sobald unser Katalog wächst, finden Sie die Apartments hier. Teilen Sie uns vorerst einfach Ihre Reisedaten mit, und wir finden passende Optionen für Sie.",
+      ctaReserve: "Reservierungsanfrage senden",
+      ctaOwner: "Vermieten Sie Ihre Wohnung",
+    },
+    ru: {
+      chip: "Бодрум 2026",
+      h1: "Ведущая платформа аренды в Бодруме",
+      sub: "Аренда апартаментов напрямую у владельца — без посредников.",
+      lead:
+        "Для путешественников, которые ценят разумную стоимость и любят практичные советы: мы работаем с проверенными объектами в разных районах Бодрума. По мере пополнения нашего каталога апартаменты будут появляться здесь. А пока просто сообщите нам ваши даты, и мы подберём для вас подходящие варианты.",
+      ctaReserve: "Отправить запрос на бронирование",
+      ctaOwner: "Сдайте своё жильё",
+    },
+  } as const;
+  const heroCopy = heroByLocale[pick] ?? heroByLocale.en;
 
-  const ownerCopy = isTr
-    ? {
-        title: "Mülkünüzü kiraya mı vermek istiyorsunuz?",
-        desc:
-          "Mülkünüzü Bodrum'un farklı bölgelerinde değerlendiriyoruz. Komisyon yapımız net, mülk sahibiyle iletişim doğrudan. Mülkünüzün size kazandırabileceğini değerlendirelim.",
-        cta: "Mülkünüzü Değerlendirelim",
-      }
-    : {
-        title: "Property Owner?",
-        desc:
-          "We work with owners across Bodrum's neighbourhoods. Our commission terms are clear and contact stays direct. Let's see how your property could perform.",
-        cta: "Open the Application Form",
-      };
+  const howByLocale = {
+    tr: {
+      title: "Nasıl Çalışıyoruz",
+      sub: "Üç adımda, sade ve şeffaf.",
+      steps: [
+        {
+          icon: MessageCircle,
+          num: "01",
+          title: "Talep",
+          desc:
+            "WhatsApp veya formdan tarih, kişi sayısı ve tercih ettiğiniz bölgeyi iletin.",
+        },
+        {
+          icon: Calendar,
+          num: "02",
+          title: "Görüşme",
+          desc:
+            "Uygun mülkleri seçenek olarak paylaşırız; mülk sahibiyle iletişim kurmanıza aracılık ederiz.",
+        },
+        {
+          icon: KeyRound,
+          num: "03",
+          title: "Konaklama",
+          desc:
+            "Anahtarınız hazır olur, karşılama yapılır. Konaklama boyunca size ulaşabileceğiniz bir kişi vardır.",
+        },
+      ],
+    },
+    en: {
+      title: "How It Works",
+      sub: "Three simple, transparent steps.",
+      steps: [
+        {
+          icon: MessageCircle,
+          num: "01",
+          title: "Request",
+          desc:
+            "Share your dates, group size and preferred neighbourhood via WhatsApp or the form.",
+        },
+        {
+          icon: Calendar,
+          num: "02",
+          title: "Match",
+          desc:
+            "We send you suitable options and bridge contact with the owner.",
+        },
+        {
+          icon: KeyRound,
+          num: "03",
+          title: "Stay",
+          desc:
+            "Your keys are ready, a welcome is arranged, and someone is reachable throughout your stay.",
+        },
+      ],
+    },
+    de: {
+      title: "So arbeiten wir",
+      sub: "In drei einfachen, transparenten Schritten.",
+      steps: [
+        {
+          icon: MessageCircle,
+          num: "01",
+          title: "Anfrage",
+          desc:
+            "Teilen Sie uns Ihre Reisedaten, die Personenzahl und Ihr Wunschviertel per WhatsApp oder Formular mit.",
+        },
+        {
+          icon: Calendar,
+          num: "02",
+          title: "Auswahl",
+          desc:
+            "Wir senden Ihnen passende Optionen und stellen den direkten Kontakt zum Eigentümer her.",
+        },
+        {
+          icon: KeyRound,
+          num: "03",
+          title: "Aufenthalt",
+          desc:
+            "Ihre Schlüssel liegen bereit, der Empfang ist organisiert, und während Ihres Aufenthalts ist immer jemand für Sie erreichbar.",
+        },
+      ],
+    },
+    ru: {
+      title: "Как мы работаем",
+      sub: "Три простых и прозрачных шага.",
+      steps: [
+        {
+          icon: MessageCircle,
+          num: "01",
+          title: "Запрос",
+          desc:
+            "Сообщите нам ваши даты, количество гостей и желаемый район через WhatsApp или форму.",
+        },
+        {
+          icon: Calendar,
+          num: "02",
+          title: "Подбор",
+          desc:
+            "Мы пришлём подходящие варианты и поможем связаться с владельцем напрямую.",
+        },
+        {
+          icon: KeyRound,
+          num: "03",
+          title: "Проживание",
+          desc:
+            "Ключи будут готовы, вас встретят, а на протяжении всего отдыха с вами всегда будет кто-то на связи.",
+        },
+      ],
+    },
+  } as const;
+  const howCopy = howByLocale[pick] ?? howByLocale.en;
+
+  const ownerByLocale = {
+    tr: {
+      title: "Mülkünüzü kiraya mı vermek istiyorsunuz?",
+      desc:
+        "Mülkünüzü Bodrum'un farklı bölgelerinde değerlendiriyoruz. Komisyon yapımız net, mülk sahibiyle iletişim doğrudan. Mülkünüzün size kazandırabileceğini değerlendirelim.",
+      cta: "Mülkünüzü Değerlendirelim",
+    },
+    en: {
+      title: "Property Owner?",
+      desc:
+        "We work with owners across Bodrum's neighbourhoods. Our commission terms are clear and contact stays direct. Let's see how your property could perform.",
+      cta: "Open the Application Form",
+    },
+    de: {
+      title: "Möchten Sie Ihre Wohnung vermieten?",
+      desc:
+        "Wir vermarkten Ihre Wohnung in den verschiedenen Vierteln von Bodrum. Unsere Provisionsbedingungen sind klar und der Kontakt bleibt direkt. Lassen Sie uns gemeinsam herausfinden, was Ihre Immobilie einbringen kann.",
+      cta: "Lassen Sie uns Ihre Wohnung bewerten",
+    },
+    ru: {
+      title: "Хотите сдать своё жильё?",
+      desc:
+        "Мы продвигаем вашу недвижимость в разных районах Бодрума. Условия комиссии прозрачны, а связь с владельцем остаётся прямой. Давайте вместе оценим, что может приносить ваш объект.",
+      cta: "Давайте оценим ваше жильё",
+    },
+  } as const;
+  const ownerCopy = ownerByLocale[pick] ?? ownerByLocale.en;
 
   const jsonLd = [
     {
@@ -360,9 +453,13 @@ export default async function HomePage({
             ))}
           </div>
           <p className="mt-8 text-center text-sm text-muted">
-            {isTr
+            {locale === "tr"
               ? "Bodrum'un farklı bölgelerinde mülk sahipleriyle çalışıyoruz."
-              : "We work with owners across Bodrum's neighbourhoods."}
+              : locale === "de"
+                ? "Wir arbeiten mit Eigentümern in den verschiedenen Vierteln von Bodrum."
+                : locale === "ru"
+                  ? "Мы работаем с владельцами жилья в разных районах Бодрума."
+                  : "We work across Bodrum's neighbourhoods."}
           </p>
         </div>
       </section>
