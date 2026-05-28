@@ -40,6 +40,10 @@ export default async function Page({
   const c = await getTranslations({ locale, namespace: "common" });
   const isTr = locale === "tr";
 
+  type L = "tr" | "en" | "de" | "ru";
+  const pick = locale as L;
+  const tx = <T,>(o: Record<L, T>): T => o[pick] ?? o.en;
+
   const classes = [
     { title: t("carClass1Title"), desc: t("carClass1Desc"), price: t("carClass1Price"), icon: Car },
     { title: t("carClass2Title"), desc: t("carClass2Desc"), price: t("carClass2Price"), icon: Gauge },
@@ -49,38 +53,97 @@ export default async function Page({
 
   const included = [t("inc1"), t("inc2"), t("inc3"), t("inc4"), t("inc5"), t("inc6")];
 
-  const faqItems = [
-    {
-      q: isTr ? "Aracı havalimanında nasıl teslim alırım?" : "How do I pick up at the airport?",
-      a: isTr
-        ? "Rezervasyon onayından sonra havalimanı buluşma noktası size mesajla bildirilir. Uçuş takibi yapılır, gecikmelerde ek ücret yoktur."
-        : "After confirmation, the airport meeting point is sent to you. Flight tracking is in place, no extra fee for delays.",
-    },
-    {
-      q: isTr ? "Hangi sigortalar dahil?" : "Which insurance is included?",
-      a: isTr
-        ? "Tam kasko + zorunlu trafik sigortası fiyata dahildir. Lastik, cam ve far gibi ek korumalar düşük ek ücretle eklenebilir."
-        : "Full collision and traffic insurance are included. Additional coverage for tyres, glass and headlights is available at a small surcharge.",
-    },
-    {
-      q: isTr ? "Minimum yaş ve ehliyet süresi nedir?" : "What is the minimum age and licence period?",
-      a: isTr
-        ? "Sürücü 21 yaşında ve en az 1 yıllık ehliyete sahip olmalıdır. Premium araçlar için 25 yaş + 3 yıl ehliyet gerekir."
-        : "Drivers must be 21+ with at least 1 year of licence experience. Premium cars require 25+ with 3 years of licence.",
-    },
-    {
-      q: isTr ? "Farklı şehirde iade mümkün mü?" : "Can I return in a different city?",
-      a: isTr
-        ? "Bodrum içinde farklı noktalarda iade ücretsizdir. Bodrum dışında (örn. Marmaris, İzmir) iade için ek ücret uygulanır."
-        : "Returning at a different point within Bodrum is free. Returns outside Bodrum (e.g. Marmaris, Izmir) incur an extra fee.",
-    },
-    {
-      q: isTr ? "Yakıt politikası nedir?" : "What is the fuel policy?",
-      a: isTr
-        ? "Dolu alıp dolu teslim politikası uygulanır. Eksik teslim durumunda piyasa fiyatı üzerinden yakıt farkı tahsil edilir."
-        : "Full-to-full policy. If returned less than full, fuel is charged at market price.",
-    },
-  ];
+  const faqByLocale = {
+    tr: [
+      {
+        q: "Aracı havalimanında nasıl teslim alırım?",
+        a: "Rezervasyon onayından sonra havalimanı buluşma noktası size mesajla bildirilir. Uçuş takibi yapılır, gecikmelerde ek ücret yoktur.",
+      },
+      {
+        q: "Hangi sigortalar dahil?",
+        a: "Tam kasko + zorunlu trafik sigortası fiyata dahildir. Lastik, cam ve far gibi ek korumalar düşük ek ücretle eklenebilir.",
+      },
+      {
+        q: "Minimum yaş ve ehliyet süresi nedir?",
+        a: "Sürücü 21 yaşında ve en az 1 yıllık ehliyete sahip olmalıdır. Premium araçlar için 25 yaş + 3 yıl ehliyet gerekir.",
+      },
+      {
+        q: "Farklı şehirde iade mümkün mü?",
+        a: "Bodrum içinde farklı noktalarda iade ücretsizdir. Bodrum dışında (örn. Marmaris, İzmir) iade için ek ücret uygulanır.",
+      },
+      {
+        q: "Yakıt politikası nedir?",
+        a: "Dolu alıp dolu teslim politikası uygulanır. Eksik teslim durumunda piyasa fiyatı üzerinden yakıt farkı tahsil edilir.",
+      },
+    ],
+    en: [
+      {
+        q: "How do I pick up at the airport?",
+        a: "After confirmation, the airport meeting point is sent to you. Flight tracking is in place, no extra fee for delays.",
+      },
+      {
+        q: "Which insurance is included?",
+        a: "Full collision and traffic insurance are included. Additional coverage for tyres, glass and headlights is available at a small surcharge.",
+      },
+      {
+        q: "What is the minimum age and licence period?",
+        a: "Drivers must be 21+ with at least 1 year of licence experience. Premium cars require 25+ with 3 years of licence.",
+      },
+      {
+        q: "Can I return in a different city?",
+        a: "Returning at a different point within Bodrum is free. Returns outside Bodrum (e.g. Marmaris, Izmir) incur an extra fee.",
+      },
+      {
+        q: "What is the fuel policy?",
+        a: "Full-to-full policy. If returned less than full, fuel is charged at market price.",
+      },
+    ],
+    de: [
+      {
+        q: "Wie übernehme ich den Wagen am Flughafen?",
+        a: "Nach der Bestätigung erhalten Sie den Treffpunkt am Flughafen per Nachricht. Ihr Flug wird verfolgt, bei Verspätungen fällt keine zusätzliche Gebühr an.",
+      },
+      {
+        q: "Welche Versicherungen sind inbegriffen?",
+        a: "Vollkasko- und gesetzliche Haftpflichtversicherung sind im Preis enthalten. Zusatzschutz für Reifen, Glas und Scheinwerfer ist gegen einen geringen Aufpreis möglich.",
+      },
+      {
+        q: "Welches Mindestalter und welche Führerscheindauer gelten?",
+        a: "Fahrer müssen mindestens 21 Jahre alt sein und seit mindestens 1 Jahr einen Führerschein besitzen. Für Premium-Fahrzeuge gelten 25 Jahre und 3 Jahre Führerschein.",
+      },
+      {
+        q: "Ist eine Rückgabe in einer anderen Stadt möglich?",
+        a: "Die Rückgabe an einem anderen Standort innerhalb von Bodrum ist kostenlos. Für Rückgaben außerhalb von Bodrum (z. B. Marmaris, Izmir) fällt eine zusätzliche Gebühr an.",
+      },
+      {
+        q: "Wie lautet die Tankregelung?",
+        a: "Es gilt die Regelung „voll übernehmen, voll zurückgeben“. Wird das Fahrzeug nicht vollgetankt zurückgegeben, wird der Kraftstoff zum Marktpreis berechnet.",
+      },
+    ],
+    ru: [
+      {
+        q: "Как забрать автомобиль в аэропорту?",
+        a: "После подтверждения бронирования мы пришлём вам место встречи в аэропорту. Рейс отслеживается, за задержки доплаты нет.",
+      },
+      {
+        q: "Какие страховки включены?",
+        a: "Полное КАСКО и обязательная страховка ответственности включены в цену. Дополнительную защиту шин, стёкол и фар можно добавить за небольшую доплату.",
+      },
+      {
+        q: "Каков минимальный возраст и стаж вождения?",
+        a: "Водителю должно быть не менее 21 года и иметь права не менее 1 года. Для премиальных автомобилей требуется возраст от 25 лет и стаж 3 года.",
+      },
+      {
+        q: "Можно ли вернуть автомобиль в другом городе?",
+        a: "Возврат в другой точке в пределах Бодрума бесплатный. За возврат за пределами Бодрума (например, в Мармарисе, Измире) взимается дополнительная плата.",
+      },
+      {
+        q: "Какова политика по топливу?",
+        a: "Действует правило «получить полный — вернуть полный бак». При возврате с неполным баком топливо оплачивается по рыночной цене.",
+      },
+    ],
+  };
+  const faqItems = tx(faqByLocale);
 
   const jsonLd = [
     {
@@ -109,67 +172,155 @@ export default async function Page({
       <PageHero
         title={t("h1")}
         subtitle={t("subtitle")}
-        badge={isTr ? "Partner Hizmet · Bodrum 2026" : "Partner Service · Bodrum 2026"}
+        badge={tx({
+          tr: "Partner Hizmet · Bodrum 2026",
+          en: "Partner Service · Bodrum 2026",
+          de: "Partnerservice · Bodrum 2026",
+          ru: "Партнёрская услуга · Бодрум 2026",
+        })}
         image="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=2000&q=80"
-        crumbs={[{ href: "/", label: isTr ? "Ana Sayfa" : "Home" }, { label: t("h1") }]}
+        crumbs={[
+          {
+            href: "/",
+            label: tx({ tr: "Ana Sayfa", en: "Home", de: "Startseite", ru: "Главная" }),
+          },
+          { label: t("h1") },
+        ]}
       />
 
       <PartnerServiceBanner
         isTr={isTr}
-        serviceLabel={isTr ? "Partner Hizmet" : "Partner Service"}
-        description={
-          isTr
-            ? "Araç kiralama, Bodrum yarımadasında çalışan anlaşmalı rent-a-car ortaklarımızdan sağlanır. Aracın teslim alımı, sigorta ve iade işlemleri operatörle yapılır. Biz uygun aracı bulup sizi operatörle buluşturuyoruz."
-            : "Cars are supplied by our partner rent-a-car operators based in Bodrum. Vehicle pickup, insurance and return are handled by the operator. We help you find the right car and connect you to the operator."
-        }
+        serviceLabel={tx({
+          tr: "Partner Hizmet",
+          en: "Partner Service",
+          de: "Partnerservice",
+          ru: "Партнёрская услуга",
+        })}
+        description={tx({
+          tr: "Araç kiralama, Bodrum yarımadasında çalışan anlaşmalı rent-a-car ortaklarımızdan sağlanır. Aracın teslim alımı, sigorta ve iade işlemleri operatörle yapılır. Biz uygun aracı bulup sizi operatörle buluşturuyoruz.",
+          en: "Cars are supplied by our partner rent-a-car operators based in Bodrum. Vehicle pickup, insurance and return are handled by the operator. We help you find the right car and connect you to the operator.",
+          de: "Mietwagen werden von unseren Partner-Autovermietungen auf der Halbinsel Bodrum bereitgestellt. Fahrzeugübernahme, Versicherung und Rückgabe werden vom Betreiber abgewickelt. Wir helfen Ihnen, das passende Fahrzeug zu finden, und bringen Sie mit dem Betreiber zusammen.",
+          ru: "Автомобили предоставляют наши партнёры — компании по аренде на полуострове Бодрум. Получение, страховку и возврат автомобиля оформляет оператор. Мы помогаем подобрать подходящую машину и связываем вас с оператором.",
+        })}
         whatsappNumber={c("whatsappNumber")}
-        whatsappTemplate={
-          isTr
-            ? "Merhaba, Bodrum'da araç kiralamak istiyorum. Tarih ve teslim noktası için partner operatörünüzle eşleştirir misiniz?"
-            : "Hello, I'd like to rent a car in Bodrum. Could you match me with your partner operator for dates and pickup location?"
-        }
-        whatsappCtaLabel={isTr ? "WhatsApp ile sor" : "Ask on WhatsApp"}
-        steps={[
-          {
-            num: "1",
-            title: isTr ? "İhtiyaç ve tarihi paylaşın" : "Share dates and needs",
-            desc: isTr
-              ? "Kaç kişi, kaç gün, hangi sınıf araç, teslim ve iade noktası."
-              : "Number of passengers, days, vehicle class, pickup and drop-off.",
-          },
-          {
-            num: "2",
-            title: isTr ? "Uygun aracı bulalım" : "We find a suitable car",
-            desc: isTr
-              ? "Anlaşmalı filolardan müsait ve bütçenize uygun aracı seçeneklerini iletiriz."
-              : "We suggest available cars from partner fleets matching your budget.",
-          },
-          {
-            num: "3",
-            title: isTr ? "Teslim operatörle" : "Pickup with the operator",
-            desc: isTr
-              ? "Araç teslim, sözleşme imzası ve ödeme operatör ile yapılır; biz süreci kolaylaştırırız."
-              : "Vehicle handover, contract and payment are done with the operator; we facilitate the process.",
-          },
-        ]}
-        coverageTitle={isTr ? "Partner Hizmet Kapsamı" : "Partner Service Scope"}
-        coverage={
-          isTr
-            ? [
-                "Milas-Bodrum Havalimanı, Bodrum merkez, Yalıkavak, Turgutreis, Bitez teslim",
-                "Ekonomiden lükse, her bütçeye araç",
-                "Tam sigorta ve sınırsız km opsiyonları operatör politikasına göre değişir",
-                "Otele teslim çoğu noktada ücretsiz; iade noktası farklı olabilir",
-                "Sözleşme, kasko ve fatura operatör tarafından düzenlenir",
-              ]
-            : [
-                "Pickup at Milas-Bodrum Airport, Bodrum centre, Yalıkavak, Turgutreis, Bitez",
-                "Economy, compact, SUV and premium-class vehicles",
-                "Full insurance and unlimited mileage options vary by operator policy",
-                "Hotel delivery often free; return point can differ from pickup",
-                "Contract, insurance and invoicing handled by the operator",
-              ]
-        }
+        whatsappTemplate={tx({
+          tr: "Merhaba, Bodrum'da araç kiralamak istiyorum. Tarih ve teslim noktası için partner operatörünüzle eşleştirir misiniz?",
+          en: "Hello, I'd like to rent a car in Bodrum. Could you match me with your partner operator for dates and pickup location?",
+          de: "Hallo, ich möchte in Bodrum einen Mietwagen buchen. Könnten Sie mich für Datum und Abholort an Ihren Partnerbetreiber vermitteln?",
+          ru: "Здравствуйте, я хочу арендовать автомобиль в Бодруме. Не могли бы вы подобрать мне вашего партнёра-оператора по датам и месту получения?",
+        })}
+        whatsappCtaLabel={tx({
+          tr: "WhatsApp ile sor",
+          en: "Ask on WhatsApp",
+          de: "Per WhatsApp anfragen",
+          ru: "Спросить в WhatsApp",
+        })}
+        steps={tx({
+          tr: [
+            {
+              num: "1",
+              title: "İhtiyaç ve tarihi paylaşın",
+              desc: "Kaç kişi, kaç gün, hangi sınıf araç, teslim ve iade noktası.",
+            },
+            {
+              num: "2",
+              title: "Uygun aracı bulalım",
+              desc: "Anlaşmalı filolardan müsait ve bütçenize uygun aracı seçeneklerini iletiriz.",
+            },
+            {
+              num: "3",
+              title: "Teslim operatörle",
+              desc: "Araç teslim, sözleşme imzası ve ödeme operatör ile yapılır; biz süreci kolaylaştırırız.",
+            },
+          ],
+          en: [
+            {
+              num: "1",
+              title: "Share dates and needs",
+              desc: "Number of passengers, days, vehicle class, pickup and drop-off.",
+            },
+            {
+              num: "2",
+              title: "We find a suitable car",
+              desc: "We suggest available cars from partner fleets matching your budget.",
+            },
+            {
+              num: "3",
+              title: "Pickup with the operator",
+              desc: "Vehicle handover, contract and payment are done with the operator; we facilitate the process.",
+            },
+          ],
+          de: [
+            {
+              num: "1",
+              title: "Bedarf und Daten mitteilen",
+              desc: "Personenzahl, Anzahl der Tage, Fahrzeugklasse sowie Abhol- und Rückgabeort.",
+            },
+            {
+              num: "2",
+              title: "Wir finden das passende Fahrzeug",
+              desc: "Wir schlagen Ihnen verfügbare Fahrzeuge aus den Partnerflotten vor, die zu Ihrem Budget passen.",
+            },
+            {
+              num: "3",
+              title: "Übernahme beim Betreiber",
+              desc: "Fahrzeugübergabe, Vertrag und Zahlung erfolgen beim Betreiber; wir begleiten den Ablauf.",
+            },
+          ],
+          ru: [
+            {
+              num: "1",
+              title: "Сообщите даты и пожелания",
+              desc: "Количество человек, дней, класс автомобиля, место получения и возврата.",
+            },
+            {
+              num: "2",
+              title: "Мы подберём подходящий автомобиль",
+              desc: "Предложим доступные машины из партнёрских автопарков под ваш бюджет.",
+            },
+            {
+              num: "3",
+              title: "Получение у оператора",
+              desc: "Передача автомобиля, договор и оплата оформляются у оператора; мы сопровождаем процесс.",
+            },
+          ],
+        })}
+        coverageTitle={tx({
+          tr: "Partner Hizmet Kapsamı",
+          en: "Partner Service Scope",
+          de: "Umfang des Partnerservice",
+          ru: "Что входит в партнёрскую услугу",
+        })}
+        coverage={tx({
+          tr: [
+            "Milas-Bodrum Havalimanı, Bodrum merkez, Yalıkavak, Turgutreis, Bitez teslim",
+            "Ekonomiden lükse, her bütçeye araç",
+            "Tam sigorta ve sınırsız km opsiyonları operatör politikasına göre değişir",
+            "Otele teslim çoğu noktada ücretsiz; iade noktası farklı olabilir",
+            "Sözleşme, kasko ve fatura operatör tarafından düzenlenir",
+          ],
+          en: [
+            "Pickup at Milas-Bodrum Airport, Bodrum centre, Yalıkavak, Turgutreis, Bitez",
+            "Economy, compact, SUV and premium-class vehicles",
+            "Full insurance and unlimited mileage options vary by operator policy",
+            "Hotel delivery often free; return point can differ from pickup",
+            "Contract, insurance and invoicing handled by the operator",
+          ],
+          de: [
+            "Übernahme am Flughafen Milas-Bodrum, im Zentrum von Bodrum, in Yalıkavak, Turgutreis und Bitez",
+            "Fahrzeuge für jedes Budget — von der Economy-Klasse bis zur Luxusklasse",
+            "Vollversicherung und Optionen mit unbegrenzten Kilometern je nach Betreiberrichtlinie",
+            "Lieferung zum Hotel an den meisten Orten kostenlos; der Rückgabeort kann abweichen",
+            "Vertrag, Kaskoversicherung und Rechnung werden vom Betreiber ausgestellt",
+          ],
+          ru: [
+            "Получение в аэропорту Милас-Бодрум, центре Бодрума, Ялыкаваке, Тургутрейсе и Битезе",
+            "Автомобили на любой бюджет — от эконома до люкса",
+            "Полная страховка и опции с безлимитным пробегом зависят от политики оператора",
+            "Доставка в отель в большинстве мест бесплатна; место возврата может отличаться",
+            "Договор, КАСКО и счёт оформляет оператор",
+          ],
+        })}
       />
 
       <section className="section">
@@ -185,7 +336,12 @@ export default async function Page({
               subjectLine={t("h1")}
               fields={{ date: true, pickup: true, dropoff: true }}
               whatsappNumber={c("whatsappNumber")}
-              whatsappTemplate={isTr ? "Merhaba, Bodrum'da araç kiralamak istiyorum." : "Hello, I'd like to rent a car in Bodrum."}
+              whatsappTemplate={tx({
+                tr: "Merhaba, Bodrum'da araç kiralamak istiyorum.",
+                en: "Hello, I'd like to rent a car in Bodrum.",
+                de: "Hallo, ich möchte in Bodrum einen Mietwagen buchen.",
+                ru: "Здравствуйте, я хочу арендовать автомобиль в Бодруме.",
+              })}
             />
           </aside>
         </div>
@@ -228,7 +384,14 @@ export default async function Page({
 
       <section className="section section-soft">
         <div className="container-page max-w-4xl">
-          <h2>{isTr ? "Sıkça Sorulanlar" : "Frequently Asked Questions"}</h2>
+          <h2>
+            {tx({
+              tr: "Sıkça Sorulanlar",
+              en: "Frequently Asked Questions",
+              de: "Häufig gestellte Fragen",
+              ru: "Часто задаваемые вопросы",
+            })}
+          </h2>
           <div className="mt-6">
             <FAQ items={faqItems} />
           </div>

@@ -41,6 +41,10 @@ export default async function Page({
   const c = await getTranslations({ locale, namespace: "common" });
   const isTr = locale === "tr";
 
+  type L = "tr" | "en" | "de" | "ru";
+  const pick = locale as L;
+  const tx = <T,>(o: Record<L, T>): T => o[pick] ?? o.en;
+
   const vehicles = [
     {
       title: t("vehicle1Title"),
@@ -64,38 +68,97 @@ export default async function Page({
 
   const included = [t("inc1"), t("inc2"), t("inc3"), t("inc4"), t("inc5"), t("inc6")];
 
-  const faqItems = [
-    {
-      q: isTr ? "Fiyat nasıl belirleniyor?" : "How is the price set?",
-      a: isTr
-        ? "Fiyat; kişi sayısı, varış bölgesi, araç tipi ve gidiş-dönüş tercihine göre belirlenir. Form gönderdiğinizde size sabit, KDV dahil net teklif sunuyoruz."
-        : "Price is set by group size, destination, vehicle type and one-way/round-trip choice. When you submit the form, we send a fixed quote (taxes included).",
-    },
-    {
-      q: isTr ? "Uçuş gecikirse ek ücret var mı?" : "Is there a surcharge for flight delays?",
-      a: isTr
-        ? "Hayır. Şoförümüz uçuş takibi yapar ve gerektiği kadar bekler. Gece geç saat veya tatil dönemlerinde de ek ücret almıyoruz."
-        : "No. Our driver tracks your flight and waits as needed. We don't charge surcharges at night or during peak season.",
-    },
-    {
-      q: isTr ? "Bebek koltuğu var mı?" : "Are baby seats available?",
-      a: isTr
-        ? "Evet. Bebek (0-1 yaş), çocuk (1-4 yaş) ve büyütücü (4-12 yaş) koltuk talep üzerine ücretsiz sağlanır. Lütfen formda belirtin."
-        : "Yes. Infant (0-1), toddler (1-4) and booster (4-12) seats are provided free on request — please note it in the form.",
-    },
-    {
-      q: isTr ? "Tek yön veya gidiş-dönüş, hangisi daha mantıklı?" : "Should I book one-way or round-trip?",
-      a: isTr
-        ? "Gidiş-dönüş seçtiğinizde %10 indirim uygulanıyor. Dönüş tarihinizden emin değilseniz dönüşü sonra da rezerve edebilirsiniz."
-        : "Round-trip gets a 10% discount. If you're not sure about your return date, you can book the return later.",
-    },
-    {
-      q: isTr ? "Hangi bölgelere transfer sağlıyorsunuz?" : "Which areas do you serve?",
-      a: isTr
-        ? "Milas-Bodrum Havalimanı'ndan tüm Bodrum yarımadasına: Gümbet, Turgutreis, Yalıkavak, Bitez, Ortakent, Gündoğan, Torba ve Bodrum merkez."
-        : "From Milas-Bodrum Airport to the entire Bodrum peninsula: Gümbet, Turgutreis, Yalıkavak, Bitez, Ortakent, Gündoğan, Torba and Bodrum centre.",
-    },
-  ];
+  const faqByLocale = {
+    tr: [
+      {
+        q: "Fiyat nasıl belirleniyor?",
+        a: "Fiyat; kişi sayısı, varış bölgesi, araç tipi ve gidiş-dönüş tercihine göre belirlenir. Form gönderdiğinizde size sabit, KDV dahil net teklif sunuyoruz.",
+      },
+      {
+        q: "Uçuş gecikirse ek ücret var mı?",
+        a: "Hayır. Şoförümüz uçuş takibi yapar ve gerektiği kadar bekler. Gece geç saat veya tatil dönemlerinde de ek ücret almıyoruz.",
+      },
+      {
+        q: "Bebek koltuğu var mı?",
+        a: "Evet. Bebek (0-1 yaş), çocuk (1-4 yaş) ve büyütücü (4-12 yaş) koltuk talep üzerine ücretsiz sağlanır. Lütfen formda belirtin.",
+      },
+      {
+        q: "Tek yön veya gidiş-dönüş, hangisi daha mantıklı?",
+        a: "Gidiş-dönüş seçtiğinizde %10 indirim uygulanıyor. Dönüş tarihinizden emin değilseniz dönüşü sonra da rezerve edebilirsiniz.",
+      },
+      {
+        q: "Hangi bölgelere transfer sağlıyorsunuz?",
+        a: "Milas-Bodrum Havalimanı'ndan tüm Bodrum yarımadasına: Gümbet, Turgutreis, Yalıkavak, Bitez, Ortakent, Gündoğan, Torba ve Bodrum merkez.",
+      },
+    ],
+    en: [
+      {
+        q: "How is the price set?",
+        a: "Price is set by group size, destination, vehicle type and one-way/round-trip choice. When you submit the form, we send a fixed quote (taxes included).",
+      },
+      {
+        q: "Is there a surcharge for flight delays?",
+        a: "No. Our driver tracks your flight and waits as needed. We don't charge surcharges at night or during peak season.",
+      },
+      {
+        q: "Are baby seats available?",
+        a: "Yes. Infant (0-1), toddler (1-4) and booster (4-12) seats are provided free on request — please note it in the form.",
+      },
+      {
+        q: "Should I book one-way or round-trip?",
+        a: "Round-trip gets a 10% discount. If you're not sure about your return date, you can book the return later.",
+      },
+      {
+        q: "Which areas do you serve?",
+        a: "From Milas-Bodrum Airport to the entire Bodrum peninsula: Gümbet, Turgutreis, Yalıkavak, Bitez, Ortakent, Gündoğan, Torba and Bodrum centre.",
+      },
+    ],
+    de: [
+      {
+        q: "Wie wird der Preis festgelegt?",
+        a: "Der Preis richtet sich nach Personenzahl, Zielort, Fahrzeugtyp und der Wahl zwischen Einzelfahrt und Hin- und Rückfahrt. Sobald Sie das Formular absenden, senden wir Ihnen ein verbindliches Angebot (inklusive Steuern).",
+      },
+      {
+        q: "Fällt bei Flugverspätungen ein Aufpreis an?",
+        a: "Nein. Unser Fahrer verfolgt Ihren Flug und wartet so lange wie nötig. Auch nachts oder in der Hochsaison berechnen wir keine Aufschläge.",
+      },
+      {
+        q: "Sind Kindersitze verfügbar?",
+        a: "Ja. Babyschalen (0-1 Jahr), Kindersitze (1-4 Jahre) und Sitzerhöhungen (4-12 Jahre) stellen wir Ihnen auf Wunsch kostenlos bereit — bitte vermerken Sie dies im Formular.",
+      },
+      {
+        q: "Lohnt sich eine Einzelfahrt oder Hin- und Rückfahrt?",
+        a: "Bei einer Hin- und Rückfahrt gewähren wir 10 % Rabatt. Wenn Sie Ihr Rückreisedatum noch nicht kennen, können Sie die Rückfahrt auch später buchen.",
+      },
+      {
+        q: "Welche Gebiete bedienen Sie?",
+        a: "Vom Flughafen Milas-Bodrum auf die gesamte Halbinsel Bodrum: Gümbet, Turgutreis, Yalıkavak, Bitez, Ortakent, Gündoğan, Torba und das Zentrum von Bodrum.",
+      },
+    ],
+    ru: [
+      {
+        q: "Как формируется цена?",
+        a: "Цена зависит от количества пассажиров, района прибытия, типа автомобиля и выбора между поездкой в одну сторону и туда-обратно. После отправки формы мы пришлём вам фиксированное предложение (с учётом налогов).",
+      },
+      {
+        q: "Есть ли доплата за задержку рейса?",
+        a: "Нет. Наш водитель отслеживает ваш рейс и ждёт столько, сколько нужно. Мы не берём доплат ни ночью, ни в высокий сезон.",
+      },
+      {
+        q: "Есть ли детские кресла?",
+        a: "Да. Кресла для младенцев (0-1 год), детей (1-4 года) и бустеры (4-12 лет) предоставляются бесплатно по запросу — пожалуйста, укажите это в форме.",
+      },
+      {
+        q: "Что выгоднее: в одну сторону или туда-обратно?",
+        a: "При выборе поездки туда-обратно действует скидка 10 %. Если вы ещё не уверены в дате обратной поездки, её можно забронировать позже.",
+      },
+      {
+        q: "В какие районы вы осуществляете трансфер?",
+        a: "Из аэропорта Милас-Бодрум по всему полуострову Бодрум: Гюмбет, Тургутрейс, Ялыкавак, Битез, Ортакент, Гюндоган, Торба и центр Бодрума.",
+      },
+    ],
+  };
+  const faqItems = tx(faqByLocale);
 
   const jsonLd = [
     {
@@ -124,67 +187,155 @@ export default async function Page({
       <PageHero
         title={t("h1")}
         subtitle={t("subtitle")}
-        badge={isTr ? "Partner Hizmet · Bodrum 2026" : "Partner Service · Bodrum 2026"}
+        badge={tx({
+          tr: "Partner Hizmet · Bodrum 2026",
+          en: "Partner Service · Bodrum 2026",
+          de: "Partnerservice · Bodrum 2026",
+          ru: "Партнёрская услуга · Бодрум 2026",
+        })}
         image="https://images.unsplash.com/photo-1503424886307-b090341d25d1?auto=format&fit=crop&w=2000&q=80"
-        crumbs={[{ href: "/", label: isTr ? "Ana Sayfa" : "Home" }, { label: t("h1") }]}
+        crumbs={[
+          {
+            href: "/",
+            label: tx({ tr: "Ana Sayfa", en: "Home", de: "Startseite", ru: "Главная" }),
+          },
+          { label: t("h1") },
+        ]}
       />
 
       <PartnerServiceBanner
         isTr={isTr}
-        serviceLabel={isTr ? "Partner Hizmet" : "Partner Service"}
-        description={
-          isTr
-            ? "Havalimanı transferleri, Bodrum bölgesinde uçuş takibi yapabilen ve sigortalı VIP araç filosuna sahip transfer ortaklarımızla yürütülür. Misafir karşılama, araç değişikliği ve gece operasyonu operatör tarafında çalışır."
-            : "Airport transfers are operated by our partners with flight-tracking and insured VIP fleets in Bodrum. Guest meet-and-greet, vehicle changes and night operations run on the operator side."
-        }
+        serviceLabel={tx({
+          tr: "Partner Hizmet",
+          en: "Partner Service",
+          de: "Partnerservice",
+          ru: "Партнёрская услуга",
+        })}
+        description={tx({
+          tr: "Havalimanı transferleri, Bodrum bölgesinde uçuş takibi yapabilen ve sigortalı VIP araç filosuna sahip transfer ortaklarımızla yürütülür. Misafir karşılama, araç değişikliği ve gece operasyonu operatör tarafında çalışır.",
+          en: "Airport transfers are operated by our partners with flight-tracking and insured VIP fleets in Bodrum. Guest meet-and-greet, vehicle changes and night operations run on the operator side.",
+          de: "Flughafentransfers werden von unseren Partnern in der Region Bodrum durchgeführt, die Flüge verfolgen und über eine versicherte Privattransfer-Flotte verfügen. Empfang der Gäste, Fahrzeugwechsel und Nachtbetrieb laufen auf der Seite des Betreibers.",
+          ru: "Трансферы из аэропорта выполняют наши партнёры в регионе Бодрум, отслеживающие рейсы и располагающие застрахованным автопарком для индивидуальных трансферов. Встреча гостей, замена автомобиля и ночные перевозки обеспечиваются со стороны оператора.",
+        })}
         whatsappNumber={c("whatsappNumber")}
-        whatsappTemplate={
-          isTr
-            ? "Merhaba, Milas-Bodrum Havalimanı transferi için partner operatörünüze yönlendirir misiniz? Tarih, saat ve kişi sayısını paylaşacağım."
-            : "Hello, could you connect me with your partner operator for a Milas-Bodrum Airport transfer? I'll share date, time and group size."
-        }
-        whatsappCtaLabel={isTr ? "WhatsApp ile sor" : "Ask on WhatsApp"}
-        steps={[
-          {
-            num: "1",
-            title: isTr ? "Uçuş ve adres bilgisi" : "Flight and address info",
-            desc: isTr
-              ? "Uçuş numarası, varış saati ve apart adresini iletin."
-              : "Share your flight number, arrival time and apartment address.",
-          },
-          {
-            num: "2",
-            title: isTr ? "Araç sınıfı ve fiyat teyidi" : "Vehicle class and price",
-            desc: isTr
-              ? "Kişi/bagaj sayısına göre sedan, minivan ya da Sprinter VIP önerelim; bölgeye göre sabit fiyat teyit edelim."
-              : "We suggest sedan, minivan or VIP Sprinter by group/luggage; confirm the fixed price for your district.",
-          },
-          {
-            num: "3",
-            title: isTr ? "Karşılama ve transfer" : "Meet & transfer",
-            desc: isTr
-              ? "Şoför uçuş takibini operatör üzerinden yapar; tabela ile sizi karşılar."
-              : "The operator's driver tracks your flight and meets you with a sign at arrivals.",
-          },
-        ]}
-        coverageTitle={isTr ? "Partner Hizmet Kapsamı" : "Partner Service Scope"}
-        coverage={
-          isTr
-            ? [
-                "Milas-Bodrum Havalimanı'ndan tüm Bodrum bölgelerine transfer",
-                "1-3 kişi sedan, 4-7 kişi Vito/Caravelle, 8-16 kişi Sprinter VIP",
-                "Uçuş takibi, bebek koltuğu ve sabit fiyat",
-                "Tek yön veya gidiş-dönüş",
-                "Şoför, sigorta, fatura ve ödeme operatör üzerinden",
-              ]
-            : [
-                "Transfer from Milas-Bodrum Airport to all Bodrum districts",
-                "1-3 pax sedan, 4-7 pax Vito/Caravelle, 8-16 pax VIP Sprinter",
-                "Flight tracking, child seat and fixed pricing",
-                "One-way or round-trip",
-                "Driver, insurance, invoicing and payment handled by the operator",
-              ]
-        }
+        whatsappTemplate={tx({
+          tr: "Merhaba, Milas-Bodrum Havalimanı transferi için partner operatörünüze yönlendirir misiniz? Tarih, saat ve kişi sayısını paylaşacağım.",
+          en: "Hello, could you connect me with your partner operator for a Milas-Bodrum Airport transfer? I'll share date, time and group size.",
+          de: "Hallo, könnten Sie mich für einen Transfer ab dem Flughafen Milas-Bodrum an Ihren Partnerbetreiber weiterleiten? Ich teile Datum, Uhrzeit und Personenzahl mit.",
+          ru: "Здравствуйте, не могли бы вы направить меня к вашему партнёру-оператору для трансфера из аэропорта Милас-Бодрум? Я сообщу дату, время и количество человек.",
+        })}
+        whatsappCtaLabel={tx({
+          tr: "WhatsApp ile sor",
+          en: "Ask on WhatsApp",
+          de: "Per WhatsApp anfragen",
+          ru: "Спросить в WhatsApp",
+        })}
+        steps={tx({
+          tr: [
+            {
+              num: "1",
+              title: "Uçuş ve adres bilgisi",
+              desc: "Uçuş numarası, varış saati ve apart adresini iletin.",
+            },
+            {
+              num: "2",
+              title: "Araç sınıfı ve fiyat teyidi",
+              desc: "Kişi/bagaj sayısına göre sedan, minivan ya da Sprinter VIP önerelim; bölgeye göre sabit fiyat teyit edelim.",
+            },
+            {
+              num: "3",
+              title: "Karşılama ve transfer",
+              desc: "Şoför uçuş takibini operatör üzerinden yapar; tabela ile sizi karşılar.",
+            },
+          ],
+          en: [
+            {
+              num: "1",
+              title: "Flight and address info",
+              desc: "Share your flight number, arrival time and apartment address.",
+            },
+            {
+              num: "2",
+              title: "Vehicle class and price",
+              desc: "We suggest sedan, minivan or VIP Sprinter by group/luggage; confirm the fixed price for your district.",
+            },
+            {
+              num: "3",
+              title: "Meet & transfer",
+              desc: "The operator's driver tracks your flight and meets you with a sign at arrivals.",
+            },
+          ],
+          de: [
+            {
+              num: "1",
+              title: "Flug- und Adressdaten",
+              desc: "Teilen Sie uns Ihre Flugnummer, die Ankunftszeit und die Adresse des Apartments mit.",
+            },
+            {
+              num: "2",
+              title: "Fahrzeugklasse und Preis",
+              desc: "Je nach Personen- und Gepäckzahl empfehlen wir Limousine, Minivan oder Privat-Sprinter und bestätigen den Festpreis für Ihren Zielort.",
+            },
+            {
+              num: "3",
+              title: "Empfang & Transfer",
+              desc: "Der Fahrer verfolgt Ihren Flug über den Betreiber und empfängt Sie mit einem Namensschild am Ankunftsbereich.",
+            },
+          ],
+          ru: [
+            {
+              num: "1",
+              title: "Данные о рейсе и адресе",
+              desc: "Сообщите номер рейса, время прибытия и адрес апартаментов.",
+            },
+            {
+              num: "2",
+              title: "Класс автомобиля и цена",
+              desc: "В зависимости от числа пассажиров и багажа предложим седан, минивэн или Sprinter для индивидуального трансфера и подтвердим фиксированную цену для вашего района.",
+            },
+            {
+              num: "3",
+              title: "Встреча и трансфер",
+              desc: "Водитель отслеживает ваш рейс через оператора и встречает вас с табличкой в зоне прилёта.",
+            },
+          ],
+        })}
+        coverageTitle={tx({
+          tr: "Partner Hizmet Kapsamı",
+          en: "Partner Service Scope",
+          de: "Umfang des Partnerservice",
+          ru: "Что входит в партнёрскую услугу",
+        })}
+        coverage={tx({
+          tr: [
+            "Milas-Bodrum Havalimanı'ndan tüm Bodrum bölgelerine transfer",
+            "1-3 kişi sedan, 4-7 kişi Vito/Caravelle, 8-16 kişi Sprinter VIP",
+            "Uçuş takibi, bebek koltuğu ve sabit fiyat",
+            "Tek yön veya gidiş-dönüş",
+            "Şoför, sigorta, fatura ve ödeme operatör üzerinden",
+          ],
+          en: [
+            "Transfer from Milas-Bodrum Airport to all Bodrum districts",
+            "1-3 pax sedan, 4-7 pax Vito/Caravelle, 8-16 pax VIP Sprinter",
+            "Flight tracking, child seat and fixed pricing",
+            "One-way or round-trip",
+            "Driver, insurance, invoicing and payment handled by the operator",
+          ],
+          de: [
+            "Transfer vom Flughafen Milas-Bodrum in alle Bezirke von Bodrum",
+            "1-3 Personen Limousine, 4-7 Personen Vito/Caravelle, 8-16 Personen Sprinter",
+            "Flugverfolgung, Kindersitz und Festpreis",
+            "Einzelfahrt oder Hin- und Rückfahrt",
+            "Fahrer, Versicherung, Rechnung und Zahlung über den Betreiber",
+          ],
+          ru: [
+            "Трансфер из аэропорта Милас-Бодрум во все районы Бодрума",
+            "1-3 человека — седан, 4-7 — Vito/Caravelle, 8-16 — Sprinter",
+            "Отслеживание рейса, детское кресло и фиксированная цена",
+            "В одну сторону или туда-обратно",
+            "Водитель, страховка, счёт и оплата — через оператора",
+          ],
+        })}
       />
 
       <section className="section">
@@ -200,11 +351,12 @@ export default async function Page({
               subjectLine={t("h1")}
               fields={{ date: true, people: true, pickup: true, dropoff: true }}
               whatsappNumber={c("whatsappNumber")}
-              whatsappTemplate={
-                isTr
-                  ? "Merhaba, Milas-Bodrum Havalimanı transferi için bilgi almak istiyorum."
-                  : "Hello, I'd like info about Milas-Bodrum Airport transfer."
-              }
+              whatsappTemplate={tx({
+                tr: "Merhaba, Milas-Bodrum Havalimanı transferi için bilgi almak istiyorum.",
+                en: "Hello, I'd like info about Milas-Bodrum Airport transfer.",
+                de: "Hallo, ich hätte gerne Informationen zum Transfer ab dem Flughafen Milas-Bodrum.",
+                ru: "Здравствуйте, я хотел бы узнать о трансфере из аэропорта Милас-Бодрум.",
+              })}
             />
           </aside>
         </div>
@@ -251,7 +403,14 @@ export default async function Page({
 
       <section className="section section-soft">
         <div className="container-page max-w-4xl">
-          <h2>{isTr ? "Sıkça Sorulanlar" : "Frequently Asked Questions"}</h2>
+          <h2>
+            {tx({
+              tr: "Sıkça Sorulanlar",
+              en: "Frequently Asked Questions",
+              de: "Häufig gestellte Fragen",
+              ru: "Часто задаваемые вопросы",
+            })}
+          </h2>
           <div className="mt-6">
             <FAQ items={faqItems} />
           </div>
