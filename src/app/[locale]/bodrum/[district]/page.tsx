@@ -12,6 +12,7 @@ import { loc, locArr } from "@/lib/i18n-data";
 import { districtGuides } from "@/data/districtGuides";
 import { DistrictGuide } from "@/components/DistrictGuide";
 import { getApartmentsByDistrict } from "@/data/apartments";
+import { Testimonials } from "@/components/Testimonials";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://bodrumapartkiralama.com";
@@ -297,6 +298,8 @@ export default async function DistrictPage({
           )}
         </div>
       </section>
+
+      <Testimonials district={d.name} max={3} />
 
       <section className="section">
         <div className="container-page max-w-4xl">
