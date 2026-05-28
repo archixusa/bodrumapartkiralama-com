@@ -13,17 +13,26 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const isTr = locale === "tr";
   const url =
     locale === "tr"
       ? `${SITE_URL}/iletisim`
       : `${SITE_URL}/${locale}/iletisim`;
-  const title = isTr
-    ? "İletişim — Bodrum Apart Kiralama"
-    : "Contact — Bodrum Apartment Rental";
-  const description = isTr
-    ? "Sorularınız için iletişim kanallarımız: WhatsApp, telefon, e-posta. Mesajınızı 24 saat içinde yanıtlıyoruz."
-    : "Reach us by WhatsApp, phone, or email. We reply to messages within 24 hours.";
+  const title =
+    locale === "tr"
+      ? "İletişim — Bodrum Apart Kiralama"
+      : locale === "de"
+        ? "Kontakt — Bodrum Apartmentvermietung"
+        : locale === "ru"
+          ? "Контакты — Аренда апартаментов в Бодруме"
+          : "Contact — Bodrum Apartment Rental";
+  const description =
+    locale === "tr"
+      ? "Sorularınız için iletişim kanallarımız: WhatsApp, telefon, e-posta. Mesajınızı 24 saat içinde yanıtlıyoruz."
+      : locale === "de"
+        ? "Erreichen Sie uns per WhatsApp, Telefon oder E-Mail. Wir beantworten Ihre Nachricht innerhalb von 24 Stunden."
+        : locale === "ru"
+          ? "Свяжитесь с нами через WhatsApp, по телефону или электронной почте. Мы отвечаем на сообщения в течение 24 часов."
+          : "Reach us by WhatsApp, phone, or email. We reply to messages within 24 hours.";
   return {
     title,
     description,
@@ -41,33 +50,61 @@ export default async function Page({
   setRequestLocale(locale);
   const nav = await getTranslations({ locale, namespace: "nav" });
   const c = await getTranslations({ locale, namespace: "common" });
-  const isTr = locale === "tr";
 
-  const copy = isTr
-    ? {
-        h1: nav("contact"),
-        intro:
-          "Soru, talep veya bilgi paylaşımı için aşağıdaki formu kullanabilir, ya da WhatsApp/telefon kanalından doğrudan ulaşabilirsiniz.",
-        sideTitle: "Doğrudan iletişim",
-        sideLead: "WhatsApp en hızlı yanıt aldığımız kanaldır.",
-        hoursTitle: "Çalışma saatleri",
-        hoursDesc: "Hafta içi 09:00–19:00 (Türkiye saati)",
-        addressTitle: "Adres",
-        addressDesc: "Bodrum, Muğla / Türkiye",
-        formTitle: "Mesaj gönderin",
-      }
-    : {
-        h1: nav("contact"),
-        intro:
-          "Use the form below for questions, requests or information sharing — or reach us directly via WhatsApp or phone.",
-        sideTitle: "Direct contact",
-        sideLead: "WhatsApp is where we respond fastest.",
-        hoursTitle: "Working hours",
-        hoursDesc: "Mon–Fri 09:00–19:00 (Türkiye time)",
-        addressTitle: "Address",
-        addressDesc: "Bodrum, Muğla / Türkiye",
-        formTitle: "Send a message",
-      };
+  const pick = <T,>(o: { tr: T; en: T; de: T; ru: T }): T =>
+    o[locale as "tr" | "en" | "de" | "ru"] ?? o.en;
+
+  const copy = {
+    h1: nav("contact"),
+    intro: pick({
+      tr: "Soru, talep veya bilgi paylaşımı için aşağıdaki formu kullanabilir, ya da WhatsApp/telefon kanalından doğrudan ulaşabilirsiniz.",
+      en: "Use the form below for questions, requests or information sharing — or reach us directly via WhatsApp or phone.",
+      de: "Nutzen Sie das untenstehende Formular für Fragen, Anliegen oder zum Austausch von Informationen — oder erreichen Sie uns direkt über WhatsApp oder telefonisch.",
+      ru: "Воспользуйтесь формой ниже для вопросов, запросов или обмена информацией — или свяжитесь с нами напрямую через WhatsApp или по телефону.",
+    }),
+    sideTitle: pick({
+      tr: "Doğrudan iletişim",
+      en: "Direct contact",
+      de: "Direkter Kontakt",
+      ru: "Прямая связь",
+    }),
+    sideLead: pick({
+      tr: "WhatsApp en hızlı yanıt aldığımız kanaldır.",
+      en: "WhatsApp is where we respond fastest.",
+      de: "Über WhatsApp antworten wir am schnellsten.",
+      ru: "Быстрее всего мы отвечаем в WhatsApp.",
+    }),
+    hoursTitle: pick({
+      tr: "Çalışma saatleri",
+      en: "Working hours",
+      de: "Öffnungszeiten",
+      ru: "Часы работы",
+    }),
+    hoursDesc: pick({
+      tr: "Hafta içi 09:00–19:00 (Türkiye saati)",
+      en: "Mon–Fri 09:00–19:00 (Türkiye time)",
+      de: "Mo–Fr 09:00–19:00 (Türkei-Zeit)",
+      ru: "Пн–Пт 09:00–19:00 (по турецкому времени)",
+    }),
+    addressTitle: pick({
+      tr: "Adres",
+      en: "Address",
+      de: "Adresse",
+      ru: "Адрес",
+    }),
+    addressDesc: pick({
+      tr: "Bodrum, Muğla / Türkiye",
+      en: "Bodrum, Muğla / Türkiye",
+      de: "Bodrum, Muğla / Türkei",
+      ru: "Бодрум, Мугла / Турция",
+    }),
+    formTitle: pick({
+      tr: "Mesaj gönderin",
+      en: "Send a message",
+      de: "Nachricht senden",
+      ru: "Отправить сообщение",
+    }),
+  };
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -94,7 +131,7 @@ export default async function Page({
           telephone: c("phoneDisplay"),
           email: c("email"),
           areaServed: "TR",
-          availableLanguage: ["Turkish", "English"],
+          availableLanguage: ["Turkish", "English", "German", "Russian"],
         },
       ],
     },
@@ -178,11 +215,25 @@ export default async function Page({
       <section className="section section-soft">
         <div className="container-page">
           <h2 className="text-center text-2xl">
-            {isTr ? "Bodrum — Konumumuz" : "Bodrum — Our Location"}
+            {locale === "tr"
+              ? "Bodrum — Konumumuz"
+              : locale === "de"
+                ? "Bodrum — Unser Standort"
+                : locale === "ru"
+                  ? "Бодрум — наше расположение"
+                  : "Bodrum — Our Location"}
           </h2>
           <div className="mt-6 overflow-hidden rounded-xl border border-[var(--color-border)]">
             <iframe
-              title={isTr ? "Bodrum harita" : "Bodrum map"}
+              title={
+                locale === "tr"
+                  ? "Bodrum harita"
+                  : locale === "de"
+                    ? "Bodrum Karte"
+                    : locale === "ru"
+                      ? "Карта Бодрума"
+                      : "Bodrum map"
+              }
               src="https://maps.google.com/maps?q=37.0344,27.4305&z=12&output=embed"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
