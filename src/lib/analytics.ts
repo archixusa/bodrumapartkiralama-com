@@ -1,4 +1,15 @@
-type LeadKind = "booking" | "boat" | "car" | "transfer" | "tour" | "general";
+type LeadKind =
+  | "booking"
+  | "boat"
+  | "car"
+  | "transfer"
+  | "tour"
+  | "general"
+  | "whatsapp"
+  | "call"
+  | "contact"
+  | "exit_intent"
+  | "newsletter";
 
 interface LeadEvent {
   kind: LeadKind;

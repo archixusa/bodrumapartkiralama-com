@@ -3,6 +3,7 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { useLocale } from "next-intl";
 import { X, Loader2, Check, AlertCircle, Calendar, Users, Phone } from "lucide-react";
+import { trackLead } from "@/lib/analytics";
 
 const SESSION_KEY = "bak-exit-intent-shown-v1";
 
@@ -151,6 +152,7 @@ export function ExitIntentModal() {
         const text = await res.text().catch(() => "");
         throw new Error(text || `HTTP ${res.status}`);
       }
+      trackLead({ kind: "exit_intent" });
       setStatus("success");
     } catch (err) {
       console.error("[ExitIntentModal]", err);
