@@ -73,6 +73,12 @@ export function ContactForm({ sourceSite }: Props) {
     e.preventDefault();
     const form = e.currentTarget;
     const data = new FormData(form);
+    // Honeypot — hidden from real users; bots that fill it get a soft success.
+    if (String(data.get("website") || "").trim() !== "") {
+      setStatus("success");
+      form.reset();
+      return;
+    }
     const consent = data.get("consent") === "on";
     if (!consent) {
       setStatus("error");
@@ -162,6 +168,16 @@ export function ContactForm({ sourceSite }: Props) {
           className="input-base resize-y"
         />
       </label>
+
+      {/* Honeypot field — hidden from real users; bots that fill it get a soft-fail. */}
+      <input
+        type="text"
+        name="website"
+        tabIndex={-1}
+        autoComplete="off"
+        className="hidden"
+        aria-hidden="true"
+      />
 
       <label className="flex items-start gap-2 text-sm text-muted">
         <input
