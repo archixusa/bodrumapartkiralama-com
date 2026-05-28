@@ -157,7 +157,7 @@ export default async function Page({
           isTr
             ? [
                 "Milas-Bodrum Havalimanı, Bodrum merkez, Yalıkavak, Turgutreis, Bitez teslim",
-                "Ekonomi, kompakt, SUV ve premium segment araçlar",
+                "Ekonomiden lükse, her bütçeye araç",
                 "Tam sigorta ve sınırsız km opsiyonları operatör politikasına göre değişir",
                 "Otele teslim çoğu noktada ücretsiz; iade noktası farklı olabilir",
                 "Sözleşme, kasko ve fatura operatör tarafından düzenlenir",

@@ -164,7 +164,7 @@ export default async function Page({
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <a href="#basvur" className="btn-primary">
-                Başvurumu Yap <ChevronRight className="h-4 w-4" />
+                Başvuru Yap <ChevronRight className="h-4 w-4" />
               </a>
               <a href="#nasil-calisiyor" className="btn-outline-light">
                 Nasıl çalışıyor?

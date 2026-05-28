@@ -327,7 +327,7 @@ function ApartlarGuideTr() {
           </li>
           <li>
             <strong>Yalıkavak:</strong> Butik tatil, premium akşam yemeği,
-            süper yat marinası deneyimi. Bütçesi geniş misafirler için ideal.
+            süper yat marinası. Bütçesi geniş misafirler için ideal.
           </li>
           <li>
             <strong>Bitez:</strong> Aileler için sakin sahil ve rüzgâr sörfü;
@@ -343,7 +343,7 @@ function ApartlarGuideTr() {
           </li>
           <li>
             <strong>Torba:</strong> Havalimanına en yakın koy. Kısa konaklama
-            ve resort beach club deneyimi için pratik.
+            ve resort plaj kulüpleri için pratik.
           </li>
         </ul>
 

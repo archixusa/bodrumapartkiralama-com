@@ -33,7 +33,7 @@ export function NewsletterSignup({ sourceSite, sourcePage }: Props) {
           "E-posta adresinize doğrulama linki gönderdik. Lütfen kontrol edip onaylayın.",
         errorTitle: "Bir sorun oluştu",
         errorFallback:
-          "Şu an kayıt yapılamadı. Lütfen biraz sonra tekrar deneyin veya WhatsApp'tan ulaşın.",
+          "Şu an kayıt yapılamadı. Lütfen biraz sonra tekrar deneyin veya WhatsApp'tan yazın.",
         consentRequired: "Devam etmek için onay vermeniz gerekiyor.",
         invalidEmail: "Lütfen geçerli bir e-posta adresi girin.",
       }

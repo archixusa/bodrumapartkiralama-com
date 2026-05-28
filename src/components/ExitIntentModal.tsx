@@ -314,7 +314,7 @@ export function ExitIntentModal() {
                     {isTr ? "Gönderiliyor..." : "Sending..."}
                   </>
                 ) : isTr ? (
-                  "Seçenekleri İlet"
+                  "Bana Uygun Apartları İste"
                 ) : (
                   "Send Options"
                 )}

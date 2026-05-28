@@ -49,7 +49,7 @@ export function SeasonBanner() {
   if (!visible) return null;
 
   const message = isTr
-    ? "🌊 2026 Sezonu Açıldı — Haziran-Eylül rezervasyon talepleri için iletişime geçin"
+    ? "🌊 2026 yazı için yerlerimizi ayırmaya başladık — tarihinizi paylaşın"
     : "🌊 2026 Season Is Open — Reach out for June–September booking requests";
   const closeLabel = isTr ? "Kapat" : "Close";
 
