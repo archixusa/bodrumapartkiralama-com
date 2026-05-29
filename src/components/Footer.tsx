@@ -137,7 +137,7 @@ export function Footer() {
           <p>
             © {year} Bodrumapartkiralama.com — {t("rights")}
           </p>
-          <p>Made with care in Bodrum</p>
+          <p>{t("madeWith")}</p>
         </div>
       </div>
     </footer>
