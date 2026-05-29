@@ -333,7 +333,7 @@ export default async function HomePage({
       {/* HERO */}
       <section className="relative overflow-hidden bg-navy-900 text-white">
         <Image
-          src="https://images.unsplash.com/photo-1583425423320-eea6e5d20baf?auto=format&fit=crop&w=2000&q=80"
+          src="https://images.unsplash.com/photo-1583061386694?auto=format&fit=crop&w=2000&q=80"
           alt="Bodrum"
           fill
           priority

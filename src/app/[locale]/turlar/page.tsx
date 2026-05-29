@@ -52,7 +52,7 @@ export default async function Page({
       price: t("tour1Price"),
       icon: Anchor,
       image:
-        "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?auto=format&fit=crop&w=1200&q=80",
+        "https://images.unsplash.com/photo-1727713682954?auto=format&fit=crop&w=1200&q=80",
     },
     {
       title: t("tour2Title"),
@@ -60,7 +60,7 @@ export default async function Page({
       price: t("tour2Price"),
       icon: Waves,
       image:
-        "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80",
+        "https://images.unsplash.com/photo-1566084091852?auto=format&fit=crop&w=1200&q=80",
     },
     {
       title: t("tour3Title"),
@@ -68,7 +68,7 @@ export default async function Page({
       price: t("tour3Price"),
       icon: Mountain,
       image:
-        "https://images.unsplash.com/photo-1533740566848-5f7d3e04e3d7?auto=format&fit=crop&w=1200&q=80",
+        "https://images.unsplash.com/photo-1598114570969?auto=format&fit=crop&w=1200&q=80",
     },
     {
       title: t("tour4Title"),
@@ -76,7 +76,7 @@ export default async function Page({
       price: t("tour4Price"),
       icon: Landmark,
       image:
-        "https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=1200&q=80",
+        "https://images.unsplash.com/photo-1734723042943?auto=format&fit=crop&w=1200&q=80",
     },
   ];
 
@@ -205,7 +205,7 @@ export default async function Page({
           de: "Partnerservice · Bodrum 2026",
           ru: "Партнёрская услуга · Бодрум 2026",
         })}
-        image="https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=2000&q=80"
+        image="https://images.unsplash.com/photo-1591078314870?auto=format&fit=crop&w=2000&q=80"
         crumbs={[
           {
             href: "/",
