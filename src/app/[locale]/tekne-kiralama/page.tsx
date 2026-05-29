@@ -178,7 +178,7 @@ export default async function Page({
           de: "Partnerservice · Bodrum 2026",
           ru: "Партнёрская услуга · Бодрум 2026",
         })}
-        image="https://images.unsplash.com/photo-1500627964684-141351970a7f?auto=format&fit=crop&w=2000&q=80"
+        image="https://images.unsplash.com/photo-1564166489229?auto=format&fit=crop&w=2000&q=80"
         crumbs={[
           {
             href: "/",

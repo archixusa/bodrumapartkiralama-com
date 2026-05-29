@@ -247,7 +247,7 @@ export default async function Page({
         title={copy.h1}
         subtitle={copy.subtitle}
         badge={c("brand")}
-        image="https://images.unsplash.com/photo-1583425423320-eea6e5d20baf?auto=format&fit=crop&w=2000&q=80"
+        image="https://images.unsplash.com/photo-1684858504602?auto=format&fit=crop&w=2000&q=80"
         crumbs={[
           { href: "/", label: copy.breadcrumbHome },
           { label: nav("about") },
