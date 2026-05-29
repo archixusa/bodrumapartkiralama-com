@@ -8,6 +8,7 @@ import { PostBody } from "@/components/PostBody";
 import { FAQ } from "@/components/FAQ";
 import { JsonLd } from "@/components/JsonLd";
 import { MdxBody } from "@/components/MdxBody";
+import { BlogCta } from "@/components/BlogCta";
 import { posts, getPost } from "@/data/posts";
 import { districts } from "@/data/districts";
 import { getMdxPosts, getMdxPost } from "@/lib/mdx-blog";
@@ -232,6 +233,7 @@ export default async function Page({
                   </div>
                 </>
               )}
+              <BlogCta locale={locale} />
             </div>
             <aside className="lg:sticky lg:top-20 lg:self-start">
               {tocItems.length > 0 && (
@@ -441,18 +443,7 @@ function renderMdxPost(
 
             <AuthorBio />
 
-            <div className="mt-10 rounded-xl border border-accent-500/30 bg-accent-500/5 p-6">
-              <h3 className="text-lg font-bold">Bodrum'da Aile İçin Apart Arıyor musun?</h3>
-              <p className="mt-2 text-sm text-muted">
-                Yalıkavak'tan Turgutreis'e, doğrulanmış apart seçeneklerimize göz at — anahtar teslim, garanti fiyat.
-              </p>
-              <Link
-                href="/apartlar"
-                className="mt-4 inline-flex items-center gap-2 rounded-md bg-navy-900 px-5 py-2.5 text-sm font-semibold text-white hover:bg-navy-800"
-              >
-                Apartları Gör <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
+            <BlogCta locale={locale} />
           </div>
         </section>
       </article>
