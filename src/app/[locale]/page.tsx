@@ -31,10 +31,16 @@ const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://bodrumapartkiralama.com";
 
 // ── DB-backed content: section keys + shapes ─────────────────────────────────
-// section_key "home.hero": Record<locale, { h1, sub, trust: string[], activity }>
-// section_key "home.offer": Record<locale, { title, desc, offerCta, waCta, waText }>
-// Both fall back to the in-code defaults below when the DB has no published row,
+// section_key "home.hero":        Record<locale, { h1, sub, trust: string[], activity }>
+// section_key "home.offer":       Record<locale, { title, desc, offerCta, waCta, waText }>
+// section_key "home.regions":     Record<locale, { title, sub }>
+// section_key "home.howitworks":  Record<locale, { title, steps: { title, desc }[] }>
+// section_key "home.whyus":       Record<locale, { title, items: { title, desc }[] }>
+// section_key "home.owner":       Record<locale, { title, desc, cta }>
+// All fall back to the in-code defaults below when the DB has no published row,
 // so rendering is byte-identical for normal visitors when the table is empty.
+// NOTE: howitworks/whyus icons stay in code (not serialisable) and are zipped in
+// by index; the DB only carries the editable text in the same fixed order.
 
 type HeroLocaleCopy = {
   h1: string;
@@ -48,6 +54,23 @@ type OfferLocaleCopy = {
   offerCta: string;
   waCta: string;
   waText: string;
+};
+type RegionsLocaleCopy = {
+  title: string;
+  sub: string;
+};
+type HowItWorksLocaleCopy = {
+  title: string;
+  steps: { title: string; desc: string }[];
+};
+type WhyUsLocaleCopy = {
+  title: string;
+  items: { title: string; desc: string }[];
+};
+type OwnerLocaleCopy = {
+  title: string;
+  desc: string;
+  cta: string;
 };
 type ByLocale<T> = Record<"tr" | "en" | "de" | "ru", T>;
 
@@ -106,6 +129,110 @@ const HOME_OFFER_DEFAULT: ByLocale<OfferLocaleCopy> = {
     offerCta: "Получить предложение",
     waCta: "Написать в WhatsApp",
     waText: "Здравствуйте, ищу подходящие апартаменты в Бодруме.",
+  },
+};
+
+const HOME_REGIONS_DEFAULT: ByLocale<RegionsLocaleCopy> = {
+  tr: { title: "Bodrum'un Bölgeleri", sub: "Size en uygun koyu seçin." },
+  en: { title: "Bodrum's Neighbourhoods", sub: "Pick the bay that suits you best." },
+  de: { title: "Die Viertel von Bodrum", sub: "Wählen Sie die Bucht, die am besten zu Ihnen passt." },
+  ru: { title: "Районы Бодрума", sub: "Выберите бухту, которая подходит именно вам." },
+};
+
+const HOME_HOWITWORKS_DEFAULT: ByLocale<HowItWorksLocaleCopy> = {
+  tr: {
+    title: "Nasıl Çalışıyoruz",
+    steps: [
+      { title: "Talep", desc: "Tarih, kişi sayısı ve bölge tercihinizi iletin." },
+      { title: "Seçenekler", desc: "Size uygun mülkleri seçenek olarak paylaşalım." },
+      { title: "Konaklama", desc: "Anahtar hazır, karşılama yapılır, destek yanınızda." },
+    ],
+  },
+  en: {
+    title: "How It Works",
+    steps: [
+      { title: "Request", desc: "Share your dates, group size and preferred area." },
+      { title: "Options", desc: "We send you the properties that fit your request." },
+      { title: "Stay", desc: "Keys ready, a welcome arranged, support throughout." },
+    ],
+  },
+  de: {
+    title: "So arbeiten wir",
+    steps: [
+      { title: "Anfrage", desc: "Teilen Sie uns Reisedaten, Personenzahl und Wunschgebiet mit." },
+      { title: "Optionen", desc: "Wir senden Ihnen die passenden Unterkünfte zu Ihrer Anfrage." },
+      { title: "Aufenthalt", desc: "Schlüssel bereit, Empfang organisiert, Support inklusive." },
+    ],
+  },
+  ru: {
+    title: "Как мы работаем",
+    steps: [
+      { title: "Запрос", desc: "Сообщите даты, число гостей и желаемый район." },
+      { title: "Варианты", desc: "Пришлём объекты, подходящие под ваш запрос." },
+      { title: "Проживание", desc: "Ключи готовы, встреча организована, поддержка рядом." },
+    ],
+  },
+};
+
+const HOME_WHYUS_DEFAULT: ByLocale<WhyUsLocaleCopy> = {
+  tr: {
+    title: "Neden Biz?",
+    items: [
+      { title: "Yerel ekip", desc: "Bodrum'da yaşıyor, bölgeyi birinci elden biliyoruz." },
+      { title: "Gerçek bilgi", desc: "Abartısız, dürüst ve güncel bilgi paylaşırız." },
+      { title: "Esnek iptal", desc: "Net koşullar; planınız değişirse esnek davranırız." },
+      { title: "Şeffaf iletişim", desc: "Tüm süreç boyunca doğrudan ve açık iletişim." },
+    ],
+  },
+  en: {
+    title: "Why Us?",
+    items: [
+      { title: "Local team", desc: "We live in Bodrum and know the area first-hand." },
+      { title: "Honest info", desc: "Straight, accurate and up-to-date — no hype." },
+      { title: "Flexible cancellation", desc: "Clear terms; if plans change, we stay flexible." },
+      { title: "Transparent contact", desc: "Direct, open communication throughout." },
+    ],
+  },
+  de: {
+    title: "Warum wir?",
+    items: [
+      { title: "Lokales Team", desc: "Wir leben in Bodrum und kennen die Region aus erster Hand." },
+      { title: "Ehrliche Infos", desc: "Geradlinig, korrekt und aktuell — ohne Übertreibung." },
+      { title: "Flexible Stornierung", desc: "Klare Bedingungen; bei Planänderungen bleiben wir flexibel." },
+      { title: "Transparenter Kontakt", desc: "Durchgehend direkte, offene Kommunikation." },
+    ],
+  },
+  ru: {
+    title: "Почему мы?",
+    items: [
+      { title: "Местная команда", desc: "Мы живём в Бодруме и знаем район из первых рук." },
+      { title: "Честная информация", desc: "Прямо, точно и актуально — без прикрас." },
+      { title: "Гибкая отмена", desc: "Чёткие условия; если планы меняются — мы гибки." },
+      { title: "Прозрачное общение", desc: "Прямая и открытая связь на всех этапах." },
+    ],
+  },
+};
+
+const HOME_OWNER_DEFAULT: ByLocale<OwnerLocaleCopy> = {
+  tr: {
+    title: "Mülkünüzü kiraya mı vermek istiyorsunuz?",
+    desc: "Koşulları ve oranı mülkünüze özel belirliyor, değerlendirme sonrası sizinle paylaşıyoruz. İletişim doğrudan; mülkünüzün kazandırabileceğini birlikte değerlendirelim.",
+    cta: "Mülkünüzü Değerlendirelim",
+  },
+  en: {
+    title: "Property Owner?",
+    desc: "We set the terms and rate individually for your property and share them after a personal assessment. Contact stays direct — let's see how your property could perform.",
+    cta: "Open the Application Form",
+  },
+  de: {
+    title: "Möchten Sie Ihre Wohnung vermieten?",
+    desc: "Konditionen und Satz legen wir individuell für Ihre Immobilie fest und teilen sie nach einer persönlichen Einschätzung mit. Der Kontakt bleibt direkt — finden wir gemeinsam heraus, was Ihre Immobilie einbringen kann.",
+    cta: "Lassen Sie uns Ihre Wohnung bewerten",
+  },
+  ru: {
+    title: "Хотите сдать своё жильё?",
+    desc: "Условия и ставку мы определяем индивидуально для вашего объекта и сообщаем их после личной оценки. Связь остаётся прямой — давайте вместе оценим, что может приносить ваш объект.",
+    cta: "Давайте оценим ваше жильё",
   },
 };
 
@@ -226,54 +353,21 @@ export default async function HomePage({
     HOME_OFFER_DEFAULT;
   const offerCopy = offer[pick] ?? offer.en;
 
-  // ── REGIONS ──────────────────────────────────────────────────────────────────
-  const regionsByLocale = {
-    tr: { title: "Bodrum'un Bölgeleri", sub: "Size en uygun koyu seçin." },
-    en: { title: "Bodrum's Neighbourhoods", sub: "Pick the bay that suits you best." },
-    de: { title: "Die Viertel von Bodrum", sub: "Wählen Sie die Bucht, die am besten zu Ihnen passt." },
-    ru: { title: "Районы Бодрума", sub: "Выберите бухту, которая подходит именно вам." },
-  } as const;
-  const regionsCopy = regionsByLocale[pick] ?? regionsByLocale.en;
+  // ── REGIONS (DB-backed; falls back to in-code defaults) ─────────────────────
+  const regions =
+    (await getSiteContent<ByLocale<RegionsLocaleCopy>>("home.regions")) ??
+    HOME_REGIONS_DEFAULT;
+  const regionsCopy = regions[pick] ?? regions.en;
   const regionCards = HOMEPAGE_REGION_SLUGS.map((slug) =>
     districts.find((d) => d.slug === slug)!
   );
 
-  // ── HOW IT WORKS (simplified, one sentence each) ──────────────────────────────
-  const howByLocale = {
-    tr: {
-      title: "Nasıl Çalışıyoruz",
-      steps: [
-        { icon: MessageCircle, title: "Talep", desc: "Tarih, kişi sayısı ve bölge tercihinizi iletin." },
-        { icon: Calendar, title: "Seçenekler", desc: "Size uygun mülkleri seçenek olarak paylaşalım." },
-        { icon: KeyRound, title: "Konaklama", desc: "Anahtar hazır, karşılama yapılır, destek yanınızda." },
-      ],
-    },
-    en: {
-      title: "How It Works",
-      steps: [
-        { icon: MessageCircle, title: "Request", desc: "Share your dates, group size and preferred area." },
-        { icon: Calendar, title: "Options", desc: "We send you the properties that fit your request." },
-        { icon: KeyRound, title: "Stay", desc: "Keys ready, a welcome arranged, support throughout." },
-      ],
-    },
-    de: {
-      title: "So arbeiten wir",
-      steps: [
-        { icon: MessageCircle, title: "Anfrage", desc: "Teilen Sie uns Reisedaten, Personenzahl und Wunschgebiet mit." },
-        { icon: Calendar, title: "Optionen", desc: "Wir senden Ihnen die passenden Unterkünfte zu Ihrer Anfrage." },
-        { icon: KeyRound, title: "Aufenthalt", desc: "Schlüssel bereit, Empfang organisiert, Support inklusive." },
-      ],
-    },
-    ru: {
-      title: "Как мы работаем",
-      steps: [
-        { icon: MessageCircle, title: "Запрос", desc: "Сообщите даты, число гостей и желаемый район." },
-        { icon: Calendar, title: "Варианты", desc: "Пришлём объекты, подходящие под ваш запрос." },
-        { icon: KeyRound, title: "Проживание", desc: "Ключи готовы, встреча организована, поддержка рядом." },
-      ],
-    },
-  } as const;
-  const howCopy = howByLocale[pick] ?? howByLocale.en;
+  // ── HOW IT WORKS (DB-backed text; icons stay in code, zipped by index) ──────
+  const HOW_ICONS = [MessageCircle, Calendar, KeyRound] as const;
+  const how =
+    (await getSiteContent<ByLocale<HowItWorksLocaleCopy>>("home.howitworks")) ??
+    HOME_HOWITWORKS_DEFAULT;
+  const howCopy = how[pick] ?? how.en;
 
   // ── LIFESTYLE GALLERY ─────────────────────────────────────────────────────────
   const lifestyleByLocale = {
@@ -328,71 +422,18 @@ export default async function HomePage({
   } as const;
   const lifestyleCopy = lifestyleByLocale[pick] ?? lifestyleByLocale.en;
 
-  // ── WHY US ──────────────────────────────────────────────────────────────────
-  const whyByLocale = {
-    tr: {
-      title: "Neden Biz?",
-      items: [
-        { icon: HomeIcon, title: "Yerel ekip", desc: "Bodrum'da yaşıyor, bölgeyi birinci elden biliyoruz." },
-        { icon: BadgeCheck, title: "Gerçek bilgi", desc: "Abartısız, dürüst ve güncel bilgi paylaşırız." },
-        { icon: Sparkles, title: "Esnek iptal", desc: "Net koşullar; planınız değişirse esnek davranırız." },
-        { icon: HeartHandshake, title: "Şeffaf iletişim", desc: "Tüm süreç boyunca doğrudan ve açık iletişim." },
-      ],
-    },
-    en: {
-      title: "Why Us?",
-      items: [
-        { icon: HomeIcon, title: "Local team", desc: "We live in Bodrum and know the area first-hand." },
-        { icon: BadgeCheck, title: "Honest info", desc: "Straight, accurate and up-to-date — no hype." },
-        { icon: Sparkles, title: "Flexible cancellation", desc: "Clear terms; if plans change, we stay flexible." },
-        { icon: HeartHandshake, title: "Transparent contact", desc: "Direct, open communication throughout." },
-      ],
-    },
-    de: {
-      title: "Warum wir?",
-      items: [
-        { icon: HomeIcon, title: "Lokales Team", desc: "Wir leben in Bodrum und kennen die Region aus erster Hand." },
-        { icon: BadgeCheck, title: "Ehrliche Infos", desc: "Geradlinig, korrekt und aktuell — ohne Übertreibung." },
-        { icon: Sparkles, title: "Flexible Stornierung", desc: "Klare Bedingungen; bei Planänderungen bleiben wir flexibel." },
-        { icon: HeartHandshake, title: "Transparenter Kontakt", desc: "Durchgehend direkte, offene Kommunikation." },
-      ],
-    },
-    ru: {
-      title: "Почему мы?",
-      items: [
-        { icon: HomeIcon, title: "Местная команда", desc: "Мы живём в Бодруме и знаем район из первых рук." },
-        { icon: BadgeCheck, title: "Честная информация", desc: "Прямо, точно и актуально — без прикрас." },
-        { icon: Sparkles, title: "Гибкая отмена", desc: "Чёткие условия; если планы меняются — мы гибки." },
-        { icon: HeartHandshake, title: "Прозрачное общение", desc: "Прямая и открытая связь на всех этапах." },
-      ],
-    },
-  } as const;
-  const whyCopy = whyByLocale[pick] ?? whyByLocale.en;
+  // ── WHY US (DB-backed text; icons stay in code, zipped by index) ────────────
+  const WHY_ICONS = [HomeIcon, BadgeCheck, Sparkles, HeartHandshake] as const;
+  const why =
+    (await getSiteContent<ByLocale<WhyUsLocaleCopy>>("home.whyus")) ??
+    HOME_WHYUS_DEFAULT;
+  const whyCopy = why[pick] ?? why.en;
 
-  // ── OWNER CTA ─────────────────────────────────────────────────────────────────
-  const ownerByLocale = {
-    tr: {
-      title: "Mülkünüzü kiraya mı vermek istiyorsunuz?",
-      desc: "Koşulları ve oranı mülkünüze özel belirliyor, değerlendirme sonrası sizinle paylaşıyoruz. İletişim doğrudan; mülkünüzün kazandırabileceğini birlikte değerlendirelim.",
-      cta: "Mülkünüzü Değerlendirelim",
-    },
-    en: {
-      title: "Property Owner?",
-      desc: "We set the terms and rate individually for your property and share them after a personal assessment. Contact stays direct — let's see how your property could perform.",
-      cta: "Open the Application Form",
-    },
-    de: {
-      title: "Möchten Sie Ihre Wohnung vermieten?",
-      desc: "Konditionen und Satz legen wir individuell für Ihre Immobilie fest und teilen sie nach einer persönlichen Einschätzung mit. Der Kontakt bleibt direkt — finden wir gemeinsam heraus, was Ihre Immobilie einbringen kann.",
-      cta: "Lassen Sie uns Ihre Wohnung bewerten",
-    },
-    ru: {
-      title: "Хотите сдать своё жильё?",
-      desc: "Условия и ставку мы определяем индивидуально для вашего объекта и сообщаем их после личной оценки. Связь остаётся прямой — давайте вместе оценим, что может приносить ваш объект.",
-      cta: "Давайте оценим ваше жильё",
-    },
-  } as const;
-  const ownerCopy = ownerByLocale[pick] ?? ownerByLocale.en;
+  // ── OWNER CTA (DB-backed; falls back to in-code defaults) ────────────────────
+  const owner =
+    (await getSiteContent<ByLocale<OwnerLocaleCopy>>("home.owner")) ??
+    HOME_OWNER_DEFAULT;
+  const ownerCopy = owner[pick] ?? owner.en;
 
   const jsonLd = [
     {
@@ -588,7 +629,7 @@ export default async function HomePage({
           </div>
           <div className="mt-10 grid gap-5 sm:grid-cols-3">
             {howCopy.steps.map((s, i) => {
-              const Icon = s.icon;
+              const Icon = HOW_ICONS[i] ?? HOW_ICONS[0];
               return (
                 <div key={s.title} className="card flex flex-col gap-3 p-6">
                   <div className="flex items-center justify-between">
@@ -650,8 +691,8 @@ export default async function HomePage({
             </h2>
           </div>
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {whyCopy.items.map((item) => {
-              const Icon = item.icon;
+            {whyCopy.items.map((item, i) => {
+              const Icon = WHY_ICONS[i] ?? WHY_ICONS[0];
               return (
                 <div key={item.title} className="card flex flex-col gap-3 p-6">
                   <span className="inline-flex h-12 w-12 items-center justify-center rounded-md bg-accent-400/15 text-accent-500">
