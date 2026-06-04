@@ -1,5 +1,9 @@
 import { revalidatePath, revalidateTag } from "next/cache";
 import { NextResponse, type NextRequest } from "next/server";
+import { submitToIndexNow } from "@/lib/indexnow";
+
+/** Canonical host for the site — always the www subdomain. */
+const CANONICAL_HOST = "www.bodrumapartkiralama.com";
 
 /**
  * On-publish revalidation hook (lets the admin panel push a publish live in seconds).
@@ -39,6 +43,21 @@ export async function POST(request: NextRequest) {
   }
   for (const tag of tags) {
     if (typeof tag === "string" && tag.length > 0) revalidateTag(tag);
+  }
+
+  // Fire-and-forget: ping IndexNow (Bing/Yandex) for the revalidated paths so a
+  // freshly published page gets re-crawled fast. Only `paths` map to URLs; tags
+  // are skipped. submitToIndexNow already swallows its own errors, and we don't
+  // await it, so this never affects the revalidate response on the happy path.
+  const indexNowUrls = Array.from(
+    new Set(
+      paths
+        .filter((p) => typeof p === "string" && p.startsWith("/"))
+        .map((p) => `https://${CANONICAL_HOST}${p}`)
+    )
+  );
+  if (indexNowUrls.length > 0) {
+    void submitToIndexNow(indexNowUrls, CANONICAL_HOST);
   }
 
   return NextResponse.json({
