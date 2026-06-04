@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import { Plus_Jakarta_Sans, Cormorant_Garamond } from "next/font/google";
 import dynamic from "next/dynamic";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
@@ -36,6 +36,15 @@ const jakarta = Plus_Jakarta_Sans({
   display: "swap",
   variable: "--font-sans",
   weight: ["400", "500", "600", "700", "800"],
+  preload: true,
+});
+
+// Warm/family serif headline voice. Mapped to --font-display and used by h1/h2.
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin", "latin-ext"],
+  display: "swap",
+  variable: "--font-display",
+  weight: ["500", "600", "700"],
   preload: true,
 });
 
@@ -169,7 +178,7 @@ export default async function LocaleLayout({
   };
 
   return (
-    <html lang={locale} className={jakarta.variable}>
+    <html lang={locale} className={`${jakarta.variable} ${cormorant.variable}`}>
       <head>
         {/* Warm up connections to third-party origins used on every page. */}
         <link

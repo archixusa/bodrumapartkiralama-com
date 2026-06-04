@@ -32,12 +32,20 @@ body {
 }
 
 @layer base {
-  h1, h2, h3, h4 {
+  /* h1/h2 carry the serif display voice (Cormorant Garamond → --font-display). */
+  h1, h2 {
     @apply font-display tracking-tight text-navy-900;
     text-wrap: balance;
   }
-  h1 { @apply text-4xl md:text-5xl font-bold; }
-  h2 { @apply text-2xl md:text-3xl font-bold; }
+  /* h3/h4 stay on the sans body for legibility at small sizes. */
+  h3, h4 {
+    @apply font-sans tracking-tight text-navy-900;
+    text-wrap: balance;
+  }
+  /* Cormorant renders smaller/lighter than a sans at the same px, so display
+     headings get a touch more size + weight to keep visual hierarchy. */
+  h1 { @apply text-5xl md:text-6xl font-bold; }
+  h2 { @apply text-3xl md:text-4xl font-bold; }
   h3 { @apply text-xl md:text-2xl font-semibold; }
   h4 { @apply text-lg md:text-xl font-semibold; }
   p  { @apply leading-relaxed; }
@@ -57,7 +65,7 @@ body {
     @apply inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium text-navy-900 transition hover:bg-navy-50;
   }
   .card {
-    @apply overflow-hidden rounded-xl border border-[var(--color-border)] bg-white shadow-card transition hover:shadow-cardHover;
+    @apply overflow-hidden rounded-xl border border-[var(--color-border)] bg-white shadow-card outline-none transition hover:shadow-cardHover focus-visible:ring-2 focus-visible:ring-accent-400 focus-visible:ring-offset-2;
   }
   .chip {
     @apply inline-flex items-center gap-1 rounded-full bg-navy-50 px-3 py-1 text-xs font-medium text-navy-900;

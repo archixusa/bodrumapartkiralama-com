@@ -153,9 +153,11 @@ function FooterColumn({
 }) {
   return (
     <div>
-      <h4 className="mb-3 text-xs font-semibold uppercase tracking-wide text-white/90">
+      {/* Styled label, not a heading — keeps the page heading order clean
+          (no <h4> following section <h2>s with no intervening <h3>). */}
+      <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-white/90">
         {title}
-      </h4>
+      </p>
       <ul className="space-y-2 text-sm">{children}</ul>
     </div>
   );

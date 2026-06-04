@@ -75,7 +75,7 @@ export default async function Page({
         {
           icon: ShieldCheck,
           title: "Şeffaflık",
-          desc: "Komisyon yapımız net, mülk sahipleriyle iletişimimiz doğrudan, misafirlerimizle iletişimimiz açıktır.",
+          desc: "Oranı ve koşulları her mülke özel belirleyip önceden paylaşırız; mülk sahipleriyle iletişimimiz doğrudan, misafirlerimizle iletişimimiz açıktır.",
         },
         {
           icon: Compass,
@@ -113,7 +113,7 @@ export default async function Page({
         {
           icon: ShieldCheck,
           title: "Transparency",
-          desc: "Our commission terms are clear, owner contact is direct, and guest communication is open.",
+          desc: "We set the rate and terms individually for each property and share them upfront; owner contact is direct, and guest communication is open.",
         },
         {
           icon: Compass,
@@ -152,7 +152,7 @@ export default async function Page({
         {
           icon: ShieldCheck,
           title: "Transparenz",
-          desc: "Unsere Provisionsbedingungen sind klar, der Kontakt zu den Eigentümern ist direkt und die Kommunikation mit unseren Gästen ist offen.",
+          desc: "Satz und Konditionen legen wir für jede Immobilie individuell fest und teilen sie vorab mit; der Kontakt zu den Eigentümern ist direkt und die Kommunikation mit unseren Gästen ist offen.",
         },
         {
           icon: Compass,
@@ -191,7 +191,7 @@ export default async function Page({
         {
           icon: ShieldCheck,
           title: "Прозрачность",
-          desc: "Условия комиссии прозрачны, связь с владельцами прямая, а общение с гостями открытое.",
+          desc: "Ставку и условия мы определяем индивидуально для каждого объекта и сообщаем их заранее; связь с владельцами прямая, а общение с гостями открытое.",
         },
         {
           icon: Compass,
