@@ -1,8 +1,15 @@
 "use client";
 
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import { MessageCircle, MapPin, Calendar, Users } from "lucide-react";
-import { RequestModal } from "@/components/RequestModal";
+
+// Lazy-load the heavy client-only modal so it stays out of the initial
+// homepage bundle — it only renders after the search button is clicked.
+const RequestModal = dynamic(
+  () => import("@/components/RequestModal").then((m) => m.RequestModal),
+  { ssr: false },
+);
 
 export interface HeroSearchLabels {
   region: string;

@@ -2,10 +2,18 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import { BedDouble, Users, MapPin, ArrowRight } from "lucide-react";
-import { RequestModal, type RequestModalPrefill } from "@/components/RequestModal";
+import type { RequestModalPrefill } from "@/components/RequestModal";
 import { sampleProperties } from "@/lib/sample-properties";
 import { loc } from "@/lib/i18n-data";
+
+// Lazy-load the heavy client-only modal so it stays out of the initial
+// homepage bundle — it only renders after a card's quote button is clicked.
+const RequestModal = dynamic(
+  () => import("@/components/RequestModal").then((m) => m.RequestModal),
+  { ssr: false },
+);
 
 export interface SamplePropertyGridLabels {
   /** Badge marking the card as a representative sample. */

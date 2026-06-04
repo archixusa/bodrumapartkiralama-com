@@ -40,11 +40,14 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 // Warm/family serif headline voice. Mapped to --font-display and used by h1/h2.
+// Only 600 (font-semibold) and 700 (font-bold) are actually used by headings;
+// 500 was dead weight in the homepage bundle. latin-ext kept for TR glyphs
+// (ş/ğ/ı/İ live in latin-ext).
 const cormorant = Cormorant_Garamond({
   subsets: ["latin", "latin-ext"],
   display: "swap",
   variable: "--font-display",
-  weight: ["500", "600", "700"],
+  weight: ["600", "700"],
   preload: true,
 });
 
