@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { draftMode } from "next/headers";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { useTranslations } from "next-intl";
 import {
@@ -24,9 +25,89 @@ import { districts } from "@/data/districts";
 import { services } from "@/data/services";
 import { posts } from "@/data/posts";
 import { loc } from "@/lib/i18n-data";
+import { getSiteContent } from "@/lib/content";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://bodrumapartkiralama.com";
+
+// ── DB-backed content: section keys + shapes ─────────────────────────────────
+// section_key "home.hero": Record<locale, { h1, sub, trust: string[], activity }>
+// section_key "home.offer": Record<locale, { title, desc, offerCta, waCta, waText }>
+// Both fall back to the in-code defaults below when the DB has no published row,
+// so rendering is byte-identical for normal visitors when the table is empty.
+
+type HeroLocaleCopy = {
+  h1: string;
+  sub: string;
+  trust: string[];
+  activity: string;
+};
+type OfferLocaleCopy = {
+  title: string;
+  desc: string;
+  offerCta: string;
+  waCta: string;
+  waText: string;
+};
+type ByLocale<T> = Record<"tr" | "en" | "de" | "ru", T>;
+
+const HOME_HERO_DEFAULT: ByLocale<HeroLocaleCopy> = {
+  tr: {
+    h1: "Bodrum'da apart kiralayın",
+    sub: "Tarihlerinizi söyleyin, size uygun seçenekleri biz bulalım.",
+    trust: ["Doğrudan mülk sahibiyle", "Aracısız & şeffaf", "7/24 yerel destek"],
+    activity: "Bu sezon yoğun ilgi var",
+  },
+  en: {
+    h1: "Rent an apartment in Bodrum",
+    sub: "Tell us your dates and we'll find options that suit you.",
+    trust: ["Directly with the owner", "No middlemen, transparent", "24/7 local support"],
+    activity: "High interest this season",
+  },
+  de: {
+    h1: "Mieten Sie ein Apartment in Bodrum",
+    sub: "Nennen Sie uns Ihre Reisedaten — wir finden die passenden Optionen.",
+    trust: ["Direkt beim Eigentümer", "Ohne Vermittler, transparent", "Lokaler Support rund um die Uhr"],
+    activity: "Diese Saison ist die Nachfrage hoch",
+  },
+  ru: {
+    h1: "Снимите апартаменты в Бодруме",
+    sub: "Назовите ваши даты — мы подберём подходящие варианты.",
+    trust: ["Напрямую у владельца", "Без посредников, прозрачно", "Местная поддержка 24/7"],
+    activity: "В этом сезоне высокий интерес",
+  },
+};
+
+const HOME_OFFER_DEFAULT: ByLocale<OfferLocaleCopy> = {
+  tr: {
+    title: "Size özel apart seçenekleri sunuyoruz",
+    desc: "Sabit katalog yerine tarihinize göre uygun apartları sizin için seçiyoruz. Tarihinizi ve kişi sayınızı paylaşın; doğrudan mülk sahipleriyle çalıştığımız apartlar arasından size en uygun seçenekleri kısa sürede iletelim.",
+    offerCta: "Hemen Teklif Alın",
+    waCta: "WhatsApp ile Yazın",
+    waText: "Merhaba, Bodrum'da uygun apart arıyorum.",
+  },
+  en: {
+    title: "We hand-pick apartments for you",
+    desc: "Instead of a fixed catalogue, we select the apartments that fit your dates. Share your dates and group size and we'll quickly send you the best options from the apartments we work with — directly with the owners.",
+    offerCta: "Get an Offer Now",
+    waCta: "Message us on WhatsApp",
+    waText: "Hello, I'm looking for a suitable apartment in Bodrum.",
+  },
+  de: {
+    title: "Wir wählen Apartments für Sie aus",
+    desc: "Statt eines festen Katalogs suchen wir die Apartments aus, die zu Ihren Reisedaten passen. Teilen Sie uns Ihre Reisedaten und Personenzahl mit — wir senden Ihnen rasch die passendsten Optionen aus den Apartments, mit denen wir direkt bei den Eigentümern arbeiten.",
+    offerCta: "Jetzt Angebot erhalten",
+    waCta: "Per WhatsApp schreiben",
+    waText: "Hallo, ich suche eine passende Ferienwohnung in Bodrum.",
+  },
+  ru: {
+    title: "Мы подбираем апартаменты лично для вас",
+    desc: "Вместо фиксированного каталога мы выбираем апартаменты, подходящие под ваши даты. Назовите ваши даты и число гостей — мы быстро пришлём лучшие варианты из апартаментов, с которыми работаем напрямую у владельцев.",
+    offerCta: "Получить предложение",
+    waCta: "Написать в WhatsApp",
+    waText: "Здравствуйте, ищу подходящие апартаменты в Бодруме.",
+  },
+};
 
 const HOMEPAGE_REGION_SLUGS = [
   "gumbet",
@@ -86,34 +167,12 @@ export default async function HomePage({
   type L = "tr" | "en" | "de" | "ru";
   const pick = locale as L;
 
-  // ── HERO ──────────────────────────────────────────────────────────────────
-  const heroByLocale = {
-    tr: {
-      h1: "Bodrum'da apart kiralayın",
-      sub: "Tarihlerinizi söyleyin, size uygun seçenekleri biz bulalım.",
-      trust: ["Doğrudan mülk sahibiyle", "Aracısız & şeffaf", "7/24 yerel destek"],
-      activity: "Bu sezon yoğun ilgi var",
-    },
-    en: {
-      h1: "Rent an apartment in Bodrum",
-      sub: "Tell us your dates and we'll find options that suit you.",
-      trust: ["Directly with the owner", "No middlemen, transparent", "24/7 local support"],
-      activity: "High interest this season",
-    },
-    de: {
-      h1: "Mieten Sie ein Apartment in Bodrum",
-      sub: "Nennen Sie uns Ihre Reisedaten — wir finden die passenden Optionen.",
-      trust: ["Direkt beim Eigentümer", "Ohne Vermittler, transparent", "Lokaler Support rund um die Uhr"],
-      activity: "Diese Saison ist die Nachfrage hoch",
-    },
-    ru: {
-      h1: "Снимите апартаменты в Бодруме",
-      sub: "Назовите ваши даты — мы подберём подходящие варианты.",
-      trust: ["Напрямую у владельца", "Без посредников, прозрачно", "Местная поддержка 24/7"],
-      activity: "В этом сезоне высокий интерес",
-    },
-  } as const;
-  const heroCopy = heroByLocale[pick] ?? heroByLocale.en;
+  // ── HERO (DB-backed; falls back to in-code defaults when no published row) ──
+  const isDraft = (await draftMode()).isEnabled;
+  const hero =
+    (await getSiteContent<ByLocale<HeroLocaleCopy>>("home.hero")) ??
+    HOME_HERO_DEFAULT;
+  const heroCopy = hero[pick] ?? hero.en;
 
   // ── HERO SEARCH LABELS ──────────────────────────────────────────────────────
   const searchLabelsByLocale = {
@@ -161,38 +220,11 @@ export default async function HomePage({
     return { value: d.slug, label: d.name };
   });
 
-  // ── OFFER EMPHASIS (replaces the old sample-property grid) ───────────────────
-  const offerByLocale = {
-    tr: {
-      title: "Size özel apart seçenekleri sunuyoruz",
-      desc: "Sabit katalog yerine tarihinize göre uygun apartları sizin için seçiyoruz. Tarihinizi ve kişi sayınızı paylaşın; doğrudan mülk sahipleriyle çalıştığımız apartlar arasından size en uygun seçenekleri kısa sürede iletelim.",
-      offerCta: "Hemen Teklif Alın",
-      waCta: "WhatsApp ile Yazın",
-      waText: "Merhaba, Bodrum'da uygun apart arıyorum.",
-    },
-    en: {
-      title: "We hand-pick apartments for you",
-      desc: "Instead of a fixed catalogue, we select the apartments that fit your dates. Share your dates and group size and we'll quickly send you the best options from the apartments we work with — directly with the owners.",
-      offerCta: "Get an Offer Now",
-      waCta: "Message us on WhatsApp",
-      waText: "Hello, I'm looking for a suitable apartment in Bodrum.",
-    },
-    de: {
-      title: "Wir wählen Apartments für Sie aus",
-      desc: "Statt eines festen Katalogs suchen wir die Apartments aus, die zu Ihren Reisedaten passen. Teilen Sie uns Ihre Reisedaten und Personenzahl mit — wir senden Ihnen rasch die passendsten Optionen aus den Apartments, mit denen wir direkt bei den Eigentümern arbeiten.",
-      offerCta: "Jetzt Angebot erhalten",
-      waCta: "Per WhatsApp schreiben",
-      waText: "Hallo, ich suche eine passende Ferienwohnung in Bodrum.",
-    },
-    ru: {
-      title: "Мы подбираем апартаменты лично для вас",
-      desc: "Вместо фиксированного каталога мы выбираем апартаменты, подходящие под ваши даты. Назовите ваши даты и число гостей — мы быстро пришлём лучшие варианты из апартаментов, с которыми работаем напрямую у владельцев.",
-      offerCta: "Получить предложение",
-      waCta: "Написать в WhatsApp",
-      waText: "Здравствуйте, ищу подходящие апартаменты в Бодруме.",
-    },
-  } as const;
-  const offerCopy = offerByLocale[pick] ?? offerByLocale.en;
+  // ── OFFER EMPHASIS (DB-backed; falls back to in-code defaults) ──────────────
+  const offer =
+    (await getSiteContent<ByLocale<OfferLocaleCopy>>("home.offer")) ??
+    HOME_OFFER_DEFAULT;
+  const offerCopy = offer[pick] ?? offer.en;
 
   // ── REGIONS ──────────────────────────────────────────────────────────────────
   const regionsByLocale = {
@@ -416,6 +448,8 @@ export default async function HomePage({
   return (
     <>
       <JsonLd data={jsonLd} />
+
+      {isDraft && <PreviewBanner locale={locale} />}
 
       {/* 1 — HERO + SEARCH */}
       <section
@@ -778,6 +812,26 @@ function SectionHeader({
         {title}
       </h2>
       {desc && <p className="mt-3 text-muted">{desc}</p>}
+    </div>
+  );
+}
+
+/** Thin fixed bar shown only in draft (preview) mode. Mom-friendly TR signal. */
+function PreviewBanner({ locale }: { locale: string }) {
+  const exitHref = `/api/preview/exit?path=${encodeURIComponent(
+    locale === "tr" ? "/" : `/${locale}`,
+  )}`;
+  return (
+    <div
+      role="status"
+      className="fixed inset-x-0 top-0 z-[100] flex items-center justify-center gap-2 bg-amber-500 px-4 py-1.5 text-center text-sm font-medium text-amber-950 shadow-md"
+    >
+      <span>
+        Önizleme modu — bu taslak, henüz yayında değil.
+      </span>
+      <a href={exitHref} className="font-semibold underline underline-offset-2">
+        Çıkış
+      </a>
     </div>
   );
 }
