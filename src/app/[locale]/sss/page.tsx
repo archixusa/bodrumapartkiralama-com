@@ -210,16 +210,16 @@ const FAQ_ITEMS: {
   },
   {
     q: {
-      tr: "Komisyon oranınız nedir? (mülk sahipleri için)",
-      en: "What's your commission rate? (for owners)",
-      de: "Wie hoch ist Ihre Provision? (für Eigentümer)",
-      ru: "Какова ваша комиссия? (для владельцев)",
+      tr: "Komisyon nasıl belirleniyor? (mülk sahipleri için)",
+      en: "How is the commission decided? (for owners)",
+      de: "Wie wird die Provision festgelegt? (für Eigentümer)",
+      ru: "Как определяется комиссия? (для владельцев)",
     },
     a: {
-      tr: "Komisyon oranımızı mülkün lokasyonu, kapasite ve istediğiniz hizmet kapsamına göre netleştiriyoruz. Oran, anlaşma öncesinde yazılı olarak paylaşılır. Yalnızca gerçekleşmiş rezervasyonlardan komisyon tahakkuk eder; boş kalan günler için ek ücret talep etmiyoruz. Detaylar için /evinizi-kiraya-verin sayfamıza göz atabilir veya bizimle iletişime geçebilirsiniz.",
-      en: "We tailor the commission rate to the property's location, capacity and desired service scope. The rate is shared in writing before signing. Commission only accrues on completed bookings — no fees for empty days. See /evinizi-kiraya-verin or get in touch for details.",
-      de: "Wir richten die Provision nach Lage, Kapazität und gewünschtem Serviceumfang der Immobilie aus. Der Satz wird vor Vertragsabschluss schriftlich mitgeteilt. Provision fällt nur bei tatsächlich erfolgten Buchungen an — für Leerstandstage berechnen wir nichts. Weitere Einzelheiten finden Sie unter /evinizi-kiraya-verin oder kontaktieren Sie uns.",
-      ru: "Мы определяем размер комиссии в зависимости от расположения объекта, вместимости и желаемого объёма услуг. Ставка сообщается в письменном виде до заключения договора. Комиссия начисляется только за состоявшиеся бронирования — за дни простоя плата не взимается. Подробности смотрите на странице /evinizi-kiraya-verin или свяжитесь с нами.",
+      tr: "Oranı ve koşulları her mülke özel belirliyoruz; standart bir tarifemiz yok. Mülkün lokasyonu, kapasitesi ve istediğiniz hizmet kapsamına göre değerlendirme yapıp size özel oranı anlaşma öncesinde yazılı olarak paylaşıyoruz. Yalnızca gerçekleşmiş rezervasyonlardan komisyon tahakkuk eder; boş kalan günler için ek ücret talep etmiyoruz. Detaylar için /evinizi-kiraya-verin sayfamıza göz atabilir veya bizimle iletişime geçebilirsiniz.",
+      en: "We set the rate and terms individually for each property — there's no standard tariff. We assess the location, capacity and service scope you want, then share a rate tailored to your property in writing before signing. Commission only accrues on completed bookings — no fees for empty days. See /evinizi-kiraya-verin or get in touch for details.",
+      de: "Satz und Konditionen legen wir für jede Immobilie individuell fest — einen Standardtarif gibt es nicht. Wir bewerten Lage, Kapazität und gewünschten Serviceumfang und teilen Ihnen den auf Ihre Immobilie zugeschnittenen Satz vor Vertragsabschluss schriftlich mit. Provision fällt nur bei tatsächlich erfolgten Buchungen an — für Leerstandstage berechnen wir nichts. Weitere Einzelheiten finden Sie unter /evinizi-kiraya-verin oder kontaktieren Sie uns.",
+      ru: "Ставку и условия мы определяем индивидуально для каждого объекта — стандартного тарифа нет. Мы оцениваем расположение, вместимость и нужный вам объём услуг, а затем сообщаем ставку, подобранную под ваш объект, в письменном виде до заключения договора. Комиссия начисляется только за состоявшиеся бронирования — за дни простоя плата не взимается. Подробности смотрите на странице /evinizi-kiraya-verin или свяжитесь с нами.",
     },
   },
   {

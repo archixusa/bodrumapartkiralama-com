@@ -5,8 +5,9 @@ import { Star } from "lucide-react";
 import { reviews as allReviews } from "@/data/reviews";
 import { loc } from "@/lib/i18n-data";
 import { JsonLd } from "@/components/JsonLd";
+import { REVIEW_STAR_COLOR } from "@/lib/brand";
 
-const ACCENT = "#F26A1E";
+const ACCENT = REVIEW_STAR_COLOR;
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://bodrumapartkiralama.com";
@@ -78,6 +79,20 @@ export function Testimonials({
   const heading = title ?? defaultHeading;
   const sub = subtitle ?? defaultSub;
 
+  // Honest aggregate: average + count over the FULL pool we draw from
+  // (not just the 3 cards shown), using only real review data.
+  const poolAvg = pool.reduce((sum, r) => sum + r.rating, 0) / pool.length;
+  const poolCount = pool.length;
+  const reviewsWord =
+    pick === "tr"
+      ? "değerlendirme"
+      : pick === "de"
+        ? "Bewertungen"
+        : pick === "ru"
+          ? "отзывов"
+          : "reviews";
+
+  // Average used for JSON-LD aggregateRating (matches the cards rendered).
   const avg =
     shown.reduce((sum, r) => sum + r.rating, 0) / shown.length;
 
@@ -117,6 +132,18 @@ export function Testimonials({
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-balance">{heading}</h2>
           {sub && <p className="mt-3 text-muted">{sub}</p>}
+
+          {/* Aggregate rating — honest average + count over real review data. */}
+          <div className="mt-4 inline-flex items-center gap-2 rounded-full bg-white px-4 py-1.5 text-sm shadow-card">
+            <Stars value={poolAvg} />
+            <span className="font-semibold text-navy-900">
+              {poolAvg.toFixed(1)}
+            </span>
+            <span className="text-muted">
+              {" · "}
+              {poolCount} {reviewsWord}
+            </span>
+          </div>
         </div>
 
         <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">

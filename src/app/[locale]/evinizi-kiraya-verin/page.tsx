@@ -47,8 +47,8 @@ export default async function Page({
     },
     {
       icon: TrendingUp,
-      title: "Şeffaf komisyon",
-      desc: "Komisyon oranı ve hizmet kapsamı yazılı olarak paylaşılır. Gerçekleşen rezervasyonlardan komisyon tahakkuk eder; boş günler için ek ücret talep etmiyoruz.",
+      title: "Size özel oran",
+      desc: "Oranı ve koşulları mülkünüze özel belirliyor, değerlendirme sonrası yazılı olarak sizinle paylaşıyoruz. Yalnızca gerçekleşen rezervasyonlardan komisyon tahakkuk eder; boş günler için ek ücret talep etmiyoruz.",
     },
   ];
 
@@ -77,8 +77,8 @@ export default async function Page({
 
   const faqs = [
     {
-      q: "Komisyon oranınız ne kadar?",
-      a: "Komisyon oranını mülke ve hizmet kapsamına göre netleştiriyoruz; rakamı sözleşme öncesinde yazılı olarak iletip teyit alıyoruz. Yalnızca gerçekleşmiş rezervasyonlardan komisyon tahakkuk eder; boş kalan günler için ücret talep etmiyoruz.",
+      q: "Komisyon nasıl belirleniyor?",
+      a: "Oranı ve koşulları her mülke özel belirliyoruz; standart bir tarifemiz yok. Değerlendirme sonrası size özel oranı sözleşme öncesinde yazılı olarak iletip teyit alıyoruz. Yalnızca gerçekleşmiş rezervasyonlardan komisyon tahakkuk eder; boş kalan günler için ücret talep etmiyoruz.",
     },
     {
       q: "Ödemeler nasıl yapılır?",
@@ -229,17 +229,19 @@ export default async function Page({
       <section className="section">
         <div className="container-page grid gap-10 lg:grid-cols-2 lg:items-center">
           <div>
-            <span className="kicker">Komisyon Modeli</span>
-            <h2 className="mt-4">Şeffaf ve Yazılı</h2>
+            <span className="kicker">Size Özel Koşullar</span>
+            <h2 className="mt-4">Mülkünüze Göre, Yazılı</h2>
             <p className="mt-5 text-muted">
-              Komisyon oranı, hizmet kapsamı ve hesap kesim sıklığı yazılı
-              olarak paylaşılır. Pazarlama, fotoğraf çekimi ve listeleme gibi
-              kalemlerden hangileri sözleşme kapsamında, hangileri opsiyonel —
-              hepsi önceden konuşulur.
+              Oranı ve koşulları her mülke özel belirliyoruz; standart bir
+              tarifeyi peşinen ilan etmiyoruz. Hizmet kapsamı ve hesap kesim
+              sıklığı yazılı olarak paylaşılır. Pazarlama, fotoğraf çekimi ve
+              listeleme gibi kalemlerden hangileri sözleşme kapsamında,
+              hangileri opsiyonel — hepsi önceden konuşulur.
             </p>
             <p className="mt-3 text-muted">
               Yalnızca gerçekleşmiş rezervasyonlardan komisyon tahakkuk eder.
-              Mülkünüze özel oran ve detayları görüşmemizde paylaşıyoruz.
+              Mülkünüze özel oranı, değerlendirme sonrası görüşmemizde
+              paylaşıyoruz.
             </p>
           </div>
           <div className="card p-7">

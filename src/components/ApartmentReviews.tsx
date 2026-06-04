@@ -1,6 +1,8 @@
 // Server component — fetches approved reviews for an apartment slug
 // directly from Supabase via REST (anon key, RLS allows public read of approved rows).
 
+import { REVIEW_STAR_COLOR } from "@/lib/brand";
+
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
 const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
 
@@ -60,7 +62,7 @@ function formatDate(iso: string, locale: string): string {
 
 function Stars({ value, size = 16 }: { value: number; size?: number }) {
   return (
-    <span style={{ display: "inline-flex", gap: 2, color: "#F26A1E" }} aria-label={`${value} yıldız`}>
+    <span style={{ display: "inline-flex", gap: 2, color: REVIEW_STAR_COLOR }} aria-label={`${value} yıldız`}>
       {[1, 2, 3, 4, 5].map((n) => (
         <svg
           key={n}

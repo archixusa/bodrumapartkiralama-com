@@ -13,12 +13,13 @@ export function DistrictCard({ district }: { district: District }) {
   return (
     <Link
       href={`/bodrum/${district.urlSlug}`}
-      className="group relative block aspect-[4/5] overflow-hidden rounded-xl shadow-card"
+      className="group relative block aspect-[4/5] overflow-hidden rounded-xl shadow-card outline-none transition duration-300 hover:shadow-cardHover focus-visible:ring-2 focus-visible:ring-accent-400 focus-visible:ring-offset-2"
     >
       <Image
         src={district.heroImage}
         alt={district.name}
         fill
+        loading="lazy"
         sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
         className="object-cover transition duration-500 group-hover:scale-110"
       />

@@ -125,7 +125,7 @@ export default async function HomePage({
       checkOut: "Çıkış",
       guests: "Kişi",
       guestsAny: "Farketmez",
-      submit: "Müsaitlik Sorgula",
+      submit: "Teklif Al",
     },
     en: {
       region: "Region",
@@ -134,7 +134,7 @@ export default async function HomePage({
       checkOut: "Check-out",
       guests: "Guests",
       guestsAny: "Any",
-      submit: "Check Availability",
+      submit: "Get a Quote",
     },
     de: {
       region: "Region",
@@ -143,7 +143,7 @@ export default async function HomePage({
       checkOut: "Abreise",
       guests: "Personen",
       guestsAny: "Egal",
-      submit: "Verfügbarkeit prüfen",
+      submit: "Angebot erhalten",
     },
     ru: {
       region: "Район",
@@ -152,7 +152,7 @@ export default async function HomePage({
       checkOut: "Выезд",
       guests: "Гостей",
       guestsAny: "Не важно",
-      submit: "Проверить наличие",
+      submit: "Получить предложение",
     },
   } as const;
   const searchLabels = searchLabelsByLocale[pick] ?? searchLabelsByLocale.en;
@@ -369,22 +369,22 @@ export default async function HomePage({
   const ownerByLocale = {
     tr: {
       title: "Mülkünüzü kiraya mı vermek istiyorsunuz?",
-      desc: "Komisyon yapımız net, mülk sahibiyle iletişim doğrudan. Mülkünüzün kazandırabileceğini birlikte değerlendirelim.",
+      desc: "Koşulları ve oranı mülkünüze özel belirliyor, değerlendirme sonrası sizinle paylaşıyoruz. İletişim doğrudan; mülkünüzün kazandırabileceğini birlikte değerlendirelim.",
       cta: "Mülkünüzü Değerlendirelim",
     },
     en: {
       title: "Property Owner?",
-      desc: "Our commission terms are clear and contact stays direct. Let's see how your property could perform.",
+      desc: "We set the terms and rate individually for your property and share them after a personal assessment. Contact stays direct — let's see how your property could perform.",
       cta: "Open the Application Form",
     },
     de: {
       title: "Möchten Sie Ihre Wohnung vermieten?",
-      desc: "Unsere Provisionsbedingungen sind klar und der Kontakt bleibt direkt. Lassen Sie uns gemeinsam herausfinden, was Ihre Immobilie einbringen kann.",
+      desc: "Konditionen und Satz legen wir individuell für Ihre Immobilie fest und teilen sie nach einer persönlichen Einschätzung mit. Der Kontakt bleibt direkt — finden wir gemeinsam heraus, was Ihre Immobilie einbringen kann.",
       cta: "Lassen Sie uns Ihre Wohnung bewerten",
     },
     ru: {
       title: "Хотите сдать своё жильё?",
-      desc: "Условия комиссии прозрачны, а связь с владельцем остаётся прямой. Давайте вместе оценим, что может приносить ваш объект.",
+      desc: "Условия и ставку мы определяем индивидуально для вашего объекта и сообщаем их после личной оценки. Связь остаётся прямой — давайте вместе оценим, что может приносить ваш объект.",
       cta: "Давайте оценим ваше жильё",
     },
   } as const;
@@ -446,7 +446,10 @@ export default async function HomePage({
       <JsonLd data={jsonLd} />
 
       {/* 1 — HERO + SEARCH */}
-      <section className="relative overflow-hidden bg-navy-900 text-white">
+      <section
+        aria-labelledby="hero-heading"
+        className="relative overflow-hidden bg-navy-900 text-white"
+      >
         <Image
           src="/images/hero/bodrum-hero.webp"
           alt="Bodrum"
@@ -455,13 +458,17 @@ export default async function HomePage({
           sizes="100vw"
           className="object-cover opacity-45"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-navy-900/80 via-navy-900/55 to-navy-900/90" />
+        {/* Darker gradient floor so white body copy clears AA (≥4.5:1) over the photo. */}
+        <div className="absolute inset-0 bg-gradient-to-b from-navy-900/85 via-navy-900/75 to-navy-900/95" />
         <div className="container-page relative py-16 md:py-24 lg:py-28">
           <div className="mx-auto max-w-3xl text-center">
-            <h1 className="text-balance leading-tight text-white md:text-5xl lg:text-6xl">
+            <h1
+              id="hero-heading"
+              className="text-balance leading-tight text-white md:text-6xl lg:text-7xl"
+            >
               {heroCopy.h1}
             </h1>
-            <p className="mx-auto mt-4 max-w-2xl text-base text-white/90 md:text-lg">
+            <p className="mx-auto mt-4 max-w-2xl text-base text-white md:text-lg">
               {heroCopy.sub}
             </p>
 
@@ -493,11 +500,16 @@ export default async function HomePage({
         </div>
       </section>
 
-      {/* 2 — SAMPLE COLLECTION */}
-      <section className="section">
+      {/* 2 — SAMPLE COLLECTION (generous top padding to breathe after the hero) */}
+      <section
+        aria-labelledby="samples-heading"
+        className="section pt-16 md:pt-24 lg:pt-28"
+      >
         <div className="container-page">
           <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-balance">{samplesCopy.title}</h2>
+            <h2 id="samples-heading" className="text-balance">
+              {samplesCopy.title}
+            </h2>
             <p className="mt-3 text-muted">{samplesCopy.sub}</p>
           </div>
 
@@ -535,10 +547,12 @@ export default async function HomePage({
       </section>
 
       {/* 3 — REGIONS (visual grid) */}
-      <section className="section section-blue">
+      <section aria-labelledby="regions-heading" className="section section-blue">
         <div className="container-page">
           <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-balance">{regionsCopy.title}</h2>
+            <h2 id="regions-heading" className="text-balance">
+              {regionsCopy.title}
+            </h2>
             <p className="mt-3 text-muted">{regionsCopy.sub}</p>
           </div>
           <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -546,12 +560,13 @@ export default async function HomePage({
               <Link
                 key={d.slug}
                 href={`/bodrum/${d.urlSlug}`}
-                className="group relative block aspect-[3/2] overflow-hidden rounded-xl shadow-card"
+                className="group relative block aspect-[3/2] overflow-hidden rounded-xl shadow-card outline-none transition duration-300 hover:shadow-cardHover focus-visible:ring-2 focus-visible:ring-accent-400 focus-visible:ring-offset-2"
               >
                 <Image
                   src={`/images/regions/${d.slug}.webp`}
                   alt={d.name}
                   fill
+                  loading="lazy"
                   sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                   className="object-cover transition duration-500 group-hover:scale-110"
                 />
@@ -576,11 +591,16 @@ export default async function HomePage({
         </div>
       </section>
 
-      {/* 4 — HOW IT WORKS */}
-      <section className="section">
+      {/* 4 — HOW IT WORKS (tighter rhythm — a compact 3-step beat) */}
+      <section
+        aria-labelledby="how-heading"
+        className="section py-10 md:py-12 lg:py-14"
+      >
         <div className="container-page">
           <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-balance">{howCopy.title}</h2>
+            <h2 id="how-heading" className="text-balance">
+              {howCopy.title}
+            </h2>
           </div>
           <div className="mt-10 grid gap-5 sm:grid-cols-3">
             {howCopy.steps.map((s, i) => {
@@ -591,7 +611,7 @@ export default async function HomePage({
                     <span className="inline-flex h-11 w-11 items-center justify-center rounded-md bg-navy-50 text-navy-900">
                       <Icon className="h-5 w-5" />
                     </span>
-                    <span className="text-3xl font-bold text-accent-400">
+                    <span className="font-display text-2xl font-semibold text-accent-500/70">
                       0{i + 1}
                     </span>
                   </div>
@@ -604,29 +624,46 @@ export default async function HomePage({
         </div>
       </section>
 
-      {/* 5 — LIFESTYLE GALLERY */}
-      <section className="section section-soft">
+      {/* 5 — LIFESTYLE GALLERY (editorial / asymmetric 2-col split — the one
+          section that deliberately breaks the centred-header rhythm) */}
+      <section
+        aria-labelledby="lifestyle-heading"
+        className="section section-soft py-16 md:py-24 lg:py-28"
+      >
         <div className="container-page">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-balance">{lifestyleCopy.title}</h2>
-            <p className="mt-3 text-muted">{lifestyleCopy.sub}</p>
-          </div>
-          <div className="mt-10 grid auto-rows-[180px] grid-cols-2 gap-3 sm:auto-rows-[200px] lg:grid-cols-4">
-            <LifestyleTile src="/images/lifestyle/beach.webp" alt={lifestyleCopy.alts.beach} className="lg:col-span-2" />
-            <LifestyleTile src="/images/lifestyle/sunset.webp" alt={lifestyleCopy.alts.sunset} className="row-span-2" />
-            <LifestyleTile src="/images/lifestyle/marina.webp" alt={lifestyleCopy.alts.marina} />
-            <LifestyleTile src="/images/lifestyle/dinner.webp" alt={lifestyleCopy.alts.dinner} />
-            <LifestyleTile src="/images/lifestyle/boat.webp" alt={lifestyleCopy.alts.boat} />
-            <LifestyleTile src="/images/lifestyle/pool.webp" alt={lifestyleCopy.alts.pool} className="lg:col-span-2" />
+          <div className="grid items-start gap-10 lg:grid-cols-12 lg:gap-12">
+            {/* Editorial text column — left-aligned, anchored by an accent rule */}
+            <div className="lg:col-span-4 lg:sticky lg:top-28">
+              <div className="border-l-2 border-accent-400 pl-5">
+                <h2 id="lifestyle-heading" className="text-balance">
+                  {lifestyleCopy.title}
+                </h2>
+                <p className="mt-4 max-w-sm text-muted">{lifestyleCopy.sub}</p>
+              </div>
+            </div>
+
+            {/* Asymmetric image mosaic */}
+            <div className="lg:col-span-8">
+              <div className="grid auto-rows-[160px] grid-cols-2 gap-3 sm:auto-rows-[200px] lg:auto-rows-[180px] lg:grid-cols-3">
+                <LifestyleTile src="/images/lifestyle/beach.webp" alt={lifestyleCopy.alts.beach} className="col-span-2 row-span-2 lg:col-span-2" />
+                <LifestyleTile src="/images/lifestyle/sunset.webp" alt={lifestyleCopy.alts.sunset} />
+                <LifestyleTile src="/images/lifestyle/marina.webp" alt={lifestyleCopy.alts.marina} />
+                <LifestyleTile src="/images/lifestyle/dinner.webp" alt={lifestyleCopy.alts.dinner} className="col-span-2 lg:col-span-1" />
+                <LifestyleTile src="/images/lifestyle/boat.webp" alt={lifestyleCopy.alts.boat} />
+                <LifestyleTile src="/images/lifestyle/pool.webp" alt={lifestyleCopy.alts.pool} className="col-span-2 lg:col-span-3" />
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* 6 — WHY US */}
-      <section className="section">
+      <section aria-labelledby="why-heading" className="section">
         <div className="container-page">
           <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-balance">{whyCopy.title}</h2>
+            <h2 id="why-heading" className="text-balance">
+              {whyCopy.title}
+            </h2>
           </div>
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {whyCopy.items.map((item) => {
@@ -646,14 +683,14 @@ export default async function HomePage({
       </section>
 
       {/* 7 — OWNER CTA */}
-      <section className="section section-soft">
+      <section aria-labelledby="owner-heading" className="section section-soft py-10 md:py-14 lg:py-16">
         <div className="container-page">
           <div className="mx-auto flex max-w-4xl flex-col items-start gap-5 rounded-xl border border-[var(--color-border)] bg-white p-6 md:flex-row md:items-center md:gap-8 md:p-8">
             <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-md bg-accent-400/15 text-accent-500">
               <HomeIcon className="h-6 w-6" />
             </span>
             <div className="flex-1">
-              <h2 className="text-2xl">{ownerCopy.title}</h2>
+              <h2 id="owner-heading" className="text-2xl">{ownerCopy.title}</h2>
               <p className="mt-2 text-sm text-muted md:text-base">{ownerCopy.desc}</p>
             </div>
             <Link href="/evinizi-kiraya-verin" className="btn-primary shrink-0">
@@ -665,9 +702,9 @@ export default async function HomePage({
       </section>
 
       {/* 8 — SERVICES */}
-      <section className="section">
+      <section aria-labelledby="services-heading" className="section py-10 md:py-14 lg:py-16">
         <div className="container-page">
-          <SectionHeader title={t("servicesTitle")} />
+          <SectionHeader id="services-heading" title={t("servicesTitle")} />
           <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
             {services.map((s) => {
               const Icon = s.icon;
@@ -697,11 +734,11 @@ export default async function HomePage({
       <Testimonials max={3} />
 
       {/* 10 — BLOG */}
-      <section className="section section-soft">
+      <section aria-labelledby="blog-heading" className="section section-soft">
         <div className="container-page">
           <div className="flex items-end justify-between">
             <div>
-              <h2>{t("blogTitle")}</h2>
+              <h2 id="blog-heading">{t("blogTitle")}</h2>
               <p className="mt-2 text-muted">{t("blogDesc")}</p>
             </div>
             <Link href="/blog" className="hidden text-sm font-semibold text-navy-600 hover:underline md:inline">
@@ -716,6 +753,7 @@ export default async function HomePage({
                     src={p.hero}
                     alt={isTr ? p.titleTr : p.titleEn}
                     fill
+                    loading="lazy"
                     sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                     className="object-cover transition group-hover:scale-105"
                   />
@@ -734,9 +772,9 @@ export default async function HomePage({
       </section>
 
       {/* 11 — FAQ */}
-      <section className="section">
+      <section aria-labelledby="faq-heading" className="section">
         <div className="container-page max-w-4xl">
-          <SectionHeader title={t("faqTitle")} />
+          <SectionHeader id="faq-heading" title={t("faqTitle")} />
           <div className="mt-8">
             <FAQ items={faqItems} />
           </div>
@@ -761,6 +799,7 @@ function LifestyleTile({
         src={src}
         alt={alt}
         fill
+        loading="lazy"
         sizes="(min-width: 1024px) 25vw, 50vw"
         className="object-cover transition duration-500 group-hover:scale-105"
       />
@@ -774,10 +813,20 @@ function ServiceTitle({ k }: { k: string }) {
   return <>{tr(key)}</>;
 }
 
-function SectionHeader({ title, desc }: { title: string; desc?: string }) {
+function SectionHeader({
+  title,
+  desc,
+  id,
+}: {
+  title: string;
+  desc?: string;
+  id?: string;
+}) {
   return (
     <div className="mx-auto max-w-2xl text-center">
-      <h2 className="text-balance">{title}</h2>
+      <h2 id={id} className="text-balance">
+        {title}
+      </h2>
       {desc && <p className="mt-3 text-muted">{desc}</p>}
     </div>
   );

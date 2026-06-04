@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Search, MapPin, Calendar, Users } from "lucide-react";
+import { MessageCircle, MapPin, Calendar, Users } from "lucide-react";
 import { RequestModal } from "@/components/RequestModal";
 
 export interface HeroSearchLabels {
@@ -114,7 +114,7 @@ export function HeroSearch({ locale, labels, regions }: HeroSearchProps) {
           className="btn-primary mt-3 w-full justify-center"
           style={{ minHeight: 48 }}
         >
-          <Search className="h-4 w-4" />
+          <MessageCircle className="h-4 w-4" />
           {labels.submit}
         </button>
       </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { REVIEW_STAR_COLOR } from "@/lib/brand";
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
 const SUPABASE_ANON = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
@@ -114,7 +115,7 @@ export function ReviewForm({ token, brand }: Props) {
                 cursor: "pointer",
                 fontSize: 36,
                 lineHeight: 1,
-                color: n <= (hoverRating || rating) ? "#F26A1E" : "#CBD5E1",
+                color: n <= (hoverRating || rating) ? REVIEW_STAR_COLOR : "#CBD5E1",
                 padding: 0,
                 transition: "color 0.15s",
               }}
