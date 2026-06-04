@@ -1,12 +1,29 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { ArrowRight, MessageCircle, Wallet, Phone, Headphones, Sparkles } from "lucide-react";
-import { Link } from "@/i18n/routing";
+import { MessageCircle, Wallet, Phone, Headphones, Sparkles } from "lucide-react";
 import { JsonLd } from "@/components/JsonLd";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
+import { EmptyStateOfferBased } from "@/components/EmptyStateOfferBased";
+import { ApartlarFilterBar } from "@/components/ApartlarFilterBar";
+import { PropertyCard } from "@/components/PropertyCard";
+import { getPublishedProperties } from "@/lib/properties";
+import { districts } from "@/data/districts";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://bodrumapartkiralama.com";
+
+// ISR: re-query the published catalogue at most once a minute.
+export const revalidate = 60;
+
+const REGION_SLUGS = [
+  "gumbet",
+  "turgutreis",
+  "yalikavak",
+  "bitez",
+  "ortakent",
+  "gundogan",
+  "torba",
+] as const;
 
 export async function generateMetadata({
   params,
@@ -18,20 +35,20 @@ export async function generateMetadata({
     locale === "tr" ? `${SITE_URL}/apartlar` : `${SITE_URL}/${locale}/apartlar`;
   const title =
     locale === "tr"
-      ? "Bodrum'un Seçkin Apart Koleksiyonu — Yakında"
+      ? "Bodrum Apart Koleksiyonu"
       : locale === "de"
-        ? "Bodrums ausgewählte Apartmentkollektion — Demnächst"
+        ? "Bodrum Apartmentkollektion"
         : locale === "ru"
-          ? "Эксклюзивная коллекция апартаментов в Бодруме — Скоро"
-          : "Bodrum's Curated Apartment Collection — Coming Soon";
+          ? "Коллекция апартаментов в Бодруме"
+          : "Bodrum Apartment Collection";
   const description =
     locale === "tr"
-      ? "Bodrum'da titizlikle değerlendirilmiş apart kiralama seçeneklerimiz çok yakında sizinle. Mülk sahibi başvuruları halen değerlendirilmektedir."
+      ? "Bodrum'da apart kiralama. Sabit katalog yerine tarihinize göre size özel apart seçenekleri sunuyoruz — doğrudan mülk sahipleriyle, aracısız ve şeffaf."
       : locale === "de"
-        ? "Unsere sorgfältig ausgewählten Apartments zur Miete in Bodrum sind in Kürze für Sie verfügbar. Bewerbungen von Eigentümern werden derzeit noch geprüft."
+        ? "Apartments zur Miete in Bodrum. Statt eines festen Katalogs machen wir Ihnen passende Angebote nach Ihren Reisedaten — direkt bei den Eigentümern, transparent."
         : locale === "ru"
-          ? "Наши тщательно отобранные апартаменты для аренды в Бодруме скоро будут доступны. Заявки от владельцев недвижимости всё ещё рассматриваются."
-          : "Our carefully curated apartment rental options in Bodrum will be available shortly. Owner applications are still being reviewed.";
+          ? "Аренда апартаментов в Бодруме. Вместо фиксированного каталога мы предлагаем варианты под ваши даты — напрямую у владельцев, прозрачно."
+          : "Apartment rentals in Bodrum. Instead of a fixed catalogue, we offer options tailored to your dates — directly with the owners, transparent.";
   return {
     title,
     description,
@@ -53,43 +70,37 @@ export default async function ApartlarPage({
   const pick = <T,>(o: { tr: T; en: T; de: T; ru: T }): T =>
     o[locale as "tr" | "en" | "de" | "ru"] ?? o.en;
 
+  // Live catalogue. Empty-safe: returns [] on any error (missing table/column,
+  // network, env) so the page renders the offer-based empty state.
+  const properties = await getPublishedProperties();
+  const hasProperties = properties.length > 0;
+
+  const regionOptions = REGION_SLUGS.map((slug) => {
+    const d = districts.find((x) => x.slug === slug)!;
+    return { value: d.slug, label: d.name };
+  });
+
   const copy = {
-    chip: pick({
-      tr: "Yakında",
-      en: "Coming soon",
-      de: "Demnächst",
-      ru: "Скоро",
-    }),
     h1: pick({
-      tr: "Bodrum'un Seçkin Apart Koleksiyonu",
-      en: "Bodrum's Curated Apartment Collection",
-      de: "Bodrums ausgewählte Apartmentkollektion",
-      ru: "Эксклюзивная коллекция апартаментов в Бодруме",
+      tr: "Bodrum Apart Koleksiyonu",
+      en: "Bodrum Apartment Collection",
+      de: "Bodrum Apartmentkollektion",
+      ru: "Коллекция апартаментов в Бодруме",
     }),
-    sub: pick({
-      tr: "Yakında",
-      en: "Coming soon",
-      de: "Demnächst",
-      ru: "Скоро",
-    }),
-    lead: pick({
-      tr: "Bodrum'da titizlikle değerlendirilmiş apart kiralama seçeneklerimiz çok yakında sizinle. Mülk sahibi başvuruları halen değerlendirilmektedir.",
-      en: "Our carefully curated apartment rental options in Bodrum will be available shortly. Owner applications are still being reviewed.",
-      de: "Unsere sorgfältig ausgewählten Apartments zur Miete in Bodrum sind in Kürze für Sie verfügbar. Bewerbungen von Eigentümern werden derzeit noch geprüft.",
-      ru: "Наши тщательно отобранные апартаменты для аренды в Бодруме скоро будут доступны. Заявки от владельцев недвижимости всё ещё рассматриваются.",
-    }),
-    ctaReserve: pick({
-      tr: "Rezervasyon Talebi Oluştur",
-      en: "Send a Reservation Request",
-      de: "Reservierungsanfrage senden",
-      ru: "Отправить запрос на бронирование",
-    }),
-    ctaList: pick({
-      tr: "Mülkümü Listele",
-      en: "List My Property",
-      de: "Meine Immobilie inserieren",
-      ru: "Разместить мою недвижимость",
-    }),
+    // Count-aware subtitle.
+    countLine: hasProperties
+      ? pick({
+          tr: `${properties.length} apart listeleniyor`,
+          en: `${properties.length} apartments listed`,
+          de: `${properties.length} Apartments gelistet`,
+          ru: `Показано апартаментов: ${properties.length}`,
+        })
+      : pick({
+          tr: "Tarihinizi paylaşın, size özel seçenekler sunalım.",
+          en: "Share your dates and we'll offer you tailored options.",
+          de: "Teilen Sie uns Ihre Reisedaten mit — wir machen Ihnen passende Angebote.",
+          ru: "Назовите ваши даты — мы предложим персональные варианты.",
+        }),
     benefitsTitle: pick({
       tr: "Platformumuzun Yaklaşımı",
       en: "How our platform works",
@@ -207,29 +218,41 @@ export default async function ApartlarPage({
     <>
       <JsonLd data={breadcrumb} />
 
-      {/* HERO */}
+      {/* HEADER (navy) — count-aware */}
       <section className="relative overflow-hidden bg-navy-900 text-white">
         <div className="absolute inset-0 bg-gradient-to-br from-navy-900 via-navy-800 to-navy-700 opacity-95" />
         <div className="container-page relative py-16 md:py-24">
           <div className="mx-auto max-w-3xl text-center">
-            <span className="chip-accent">{copy.chip}</span>
-            <h1 className="mt-4 text-balance text-white md:text-5xl">{copy.h1}</h1>
-            <p className="mt-3 text-lg font-semibold text-accent-400 md:text-xl">
-              {copy.sub}
-            </p>
+            <h1 className="text-balance text-white md:text-5xl">{copy.h1}</h1>
             <p className="mx-auto mt-4 max-w-2xl text-base text-white/85 md:text-lg">
-              {copy.lead}
+              {copy.countLine}
             </p>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <Link href="/iletisim" className="btn-primary">
-                {copy.ctaReserve}
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-              <Link href="/evinizi-kiraya-verin" className="btn-secondary !bg-white/10 !text-white !border-white/30 hover:!bg-white/15">
-                {copy.ctaList}
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CATALOGUE — filter bar + (grid | offer-based empty state) */}
+      <section className="section">
+        <div className="container-page">
+          <ApartlarFilterBar
+            locale={locale}
+            regions={regionOptions}
+            disabled={!hasProperties}
+          />
+
+          <div className="mt-10">
+            {hasProperties ? (
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {properties.map((p) => (
+                  <PropertyCard key={p.id} property={p} locale={locale} />
+                ))}
+              </div>
+            ) : (
+              <EmptyStateOfferBased
+                locale={locale}
+                whatsappNumber={c("whatsappNumber")}
+              />
+            )}
           </div>
         </div>
       </section>

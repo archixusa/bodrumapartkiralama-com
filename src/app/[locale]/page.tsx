@@ -10,7 +10,6 @@ import {
   ArrowRight,
   Home as HomeIcon,
   MapPin,
-  Info,
   Sparkles,
   HeartHandshake,
   BadgeCheck,
@@ -20,7 +19,7 @@ import { FAQ } from "@/components/FAQ";
 import { JsonLd } from "@/components/JsonLd";
 import { Testimonials } from "@/components/Testimonials";
 import { HeroSearch } from "@/components/HeroSearch";
-import { SamplePropertyGrid } from "@/components/SamplePropertyGrid";
+import { OfferCtaButton } from "@/components/OfferCtaButton";
 import { districts } from "@/data/districts";
 import { services } from "@/data/services";
 import { posts } from "@/data/posts";
@@ -162,65 +161,38 @@ export default async function HomePage({
     return { value: d.slug, label: d.name };
   });
 
-  // ── SAMPLE COLLECTION ───────────────────────────────────────────────────────
-  const samplesByLocale = {
+  // ── OFFER EMPHASIS (replaces the old sample-property grid) ───────────────────
+  const offerByLocale = {
     tr: {
-      title: "Koleksiyonumuzdan örnekler",
-      sub: "Bodrum'un farklı bölgelerinde değerlendirdiğimiz apart tipleri.",
-      notice:
-        "Bu kartlar temsili örneklerdir; gerçek, anlık rezervasyona açık ilanlar değildir. Talebinize göre size uygun, güncel seçenekleri ileteceğiz.",
-      sampleBadge: "Örnek",
-      cta: "Bu tip için teklif al",
-      guestsWord: "kişi",
-      bedroomsWord: "oda",
-      waLine: "Aklınızdaki bölge belli mi? WhatsApp'tan hemen yazın.",
+      title: "Size özel apart seçenekleri sunuyoruz",
+      desc: "Sabit katalog yerine tarihinize göre uygun apartları sizin için seçiyoruz. Tarihinizi ve kişi sayınızı paylaşın; doğrudan mülk sahipleriyle çalıştığımız apartlar arasından size en uygun seçenekleri kısa sürede iletelim.",
+      offerCta: "Hemen Teklif Alın",
       waCta: "WhatsApp ile Yazın",
       waText: "Merhaba, Bodrum'da uygun apart arıyorum.",
     },
     en: {
-      title: "Examples from our collection",
-      sub: "Apartment types we work with across Bodrum's neighbourhoods.",
-      notice:
-        "These cards are representative samples, not live, instantly bookable listings. Based on your request, we'll send you suitable, up-to-date options.",
-      sampleBadge: "Sample",
-      cta: "Get a quote for this type",
-      guestsWord: "guests",
-      bedroomsWord: "bed",
-      waLine: "Already have a neighbourhood in mind? Message us on WhatsApp.",
+      title: "We hand-pick apartments for you",
+      desc: "Instead of a fixed catalogue, we select the apartments that fit your dates. Share your dates and group size and we'll quickly send you the best options from the apartments we work with — directly with the owners.",
+      offerCta: "Get an Offer Now",
       waCta: "Message us on WhatsApp",
       waText: "Hello, I'm looking for a suitable apartment in Bodrum.",
     },
     de: {
-      title: "Beispiele aus unserer Auswahl",
-      sub: "Apartmenttypen, mit denen wir in den Vierteln von Bodrum arbeiten.",
-      notice:
-        "Diese Karten sind repräsentative Beispiele, keine live buchbaren Inserate. Anhand Ihrer Anfrage senden wir Ihnen passende, aktuelle Optionen.",
-      sampleBadge: "Beispiel",
-      cta: "Angebot für diesen Typ",
-      guestsWord: "Pers.",
-      bedroomsWord: "Zi.",
-      waLine: "Schon ein Viertel im Sinn? Schreiben Sie uns per WhatsApp.",
+      title: "Wir wählen Apartments für Sie aus",
+      desc: "Statt eines festen Katalogs suchen wir die Apartments aus, die zu Ihren Reisedaten passen. Teilen Sie uns Ihre Reisedaten und Personenzahl mit — wir senden Ihnen rasch die passendsten Optionen aus den Apartments, mit denen wir direkt bei den Eigentümern arbeiten.",
+      offerCta: "Jetzt Angebot erhalten",
       waCta: "Per WhatsApp schreiben",
       waText: "Hallo, ich suche eine passende Ferienwohnung in Bodrum.",
     },
     ru: {
-      title: "Примеры из нашей коллекции",
-      sub: "Типы апартаментов, с которыми мы работаем в районах Бодрума.",
-      notice:
-        "Эти карточки — представительные примеры, а не объявления с мгновенным бронированием. По вашему запросу мы пришлём подходящие актуальные варианты.",
-      sampleBadge: "Пример",
-      cta: "Запросить предложение",
-      guestsWord: "гост.",
-      bedroomsWord: "спал.",
-      waLine: "Уже определились с районом? Напишите нам в WhatsApp.",
+      title: "Мы подбираем апартаменты лично для вас",
+      desc: "Вместо фиксированного каталога мы выбираем апартаменты, подходящие под ваши даты. Назовите ваши даты и число гостей — мы быстро пришлём лучшие варианты из апартаментов, с которыми работаем напрямую у владельцев.",
+      offerCta: "Получить предложение",
       waCta: "Написать в WhatsApp",
       waText: "Здравствуйте, ищу подходящие апартаменты в Бодруме.",
     },
   } as const;
-  const samplesCopy = samplesByLocale[pick] ?? samplesByLocale.en;
-  const samplesWaHref = `https://wa.me/${c("whatsappNumber")}?text=${encodeURIComponent(
-    samplesCopy.waText
-  )}`;
+  const offerCopy = offerByLocale[pick] ?? offerByLocale.en;
 
   // ── REGIONS ──────────────────────────────────────────────────────────────────
   const regionsByLocale = {
@@ -500,48 +472,26 @@ export default async function HomePage({
         </div>
       </section>
 
-      {/* 2 — SAMPLE COLLECTION (generous top padding to breathe after the hero) */}
+      {/* 2 — OFFER EMPHASIS (lean, honest, offer-based — no sample cards, no prices) */}
       <section
-        aria-labelledby="samples-heading"
+        aria-labelledby="offer-heading"
         className="section pt-16 md:pt-24 lg:pt-28"
       >
         <div className="container-page">
           <div className="mx-auto max-w-2xl text-center">
-            <h2 id="samples-heading" className="text-balance">
-              {samplesCopy.title}
+            <h2 id="offer-heading" className="text-balance">
+              {offerCopy.title}
             </h2>
-            <p className="mt-3 text-muted">{samplesCopy.sub}</p>
-          </div>
-
-          {/* Honesty notice */}
-          <div className="mx-auto mt-6 flex max-w-2xl items-start gap-2 rounded-md border border-[var(--color-border)] bg-navy-50 p-3 text-sm text-navy-900">
-            <Info className="mt-0.5 h-4 w-4 shrink-0 text-navy-600" />
-            <span>{samplesCopy.notice}</span>
-          </div>
-
-          <SamplePropertyGrid
-            locale={locale}
-            labels={{
-              sampleBadge: samplesCopy.sampleBadge,
-              cta: samplesCopy.cta,
-              guestsWord: samplesCopy.guestsWord,
-              bedroomsWord: samplesCopy.bedroomsWord,
-            }}
-          />
-
-          {/* WhatsApp quick-request CTA */}
-          <div className="mx-auto mt-10 flex max-w-2xl flex-col items-center gap-3 text-center sm:flex-row sm:justify-center">
-            <p className="text-sm text-muted">{samplesCopy.waLine}</p>
-            <a
-              href={samplesWaHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              data-lead="samples-whatsapp"
-              className="btn-secondary"
-            >
-              <MessageCircle className="h-4 w-4" />
-              {samplesCopy.waCta}
-            </a>
+            <p className="mt-3 text-muted">{offerCopy.desc}</p>
+            <div className="mt-8">
+              <OfferCtaButton
+                locale={locale}
+                offerLabel={offerCopy.offerCta}
+                whatsappLabel={offerCopy.waCta}
+                whatsappNumber={c("whatsappNumber")}
+                whatsappText={offerCopy.waText}
+              />
+            </div>
           </div>
         </div>
       </section>
