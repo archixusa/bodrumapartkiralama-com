@@ -15,7 +15,7 @@ import { getApartmentsByDistrict } from "@/data/apartments";
 import { Testimonials } from "@/components/Testimonials";
 
 const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://bodrumapartkiralama.com";
+  process.env.NEXT_PUBLIC_SITE_URL || "https://www.bodrumapartkiralama.com";
 
 export function generateStaticParams() {
   return districts.map((d) => ({ district: d.urlSlug }));

@@ -11,7 +11,7 @@ import {
 import { OwnerApplicationForm } from "@/lib/reservation-form";
 
 const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://bodrumapartkiralama.com";
+  process.env.NEXT_PUBLIC_SITE_URL || "https://www.bodrumapartkiralama.com";
 
 export const metadata: Metadata = {
   title: "Evinizi Kiraya Verin — Bodrum Apart Yönetimi",

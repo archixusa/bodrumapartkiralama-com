@@ -52,7 +52,7 @@ const cormorant = Cormorant_Garamond({
 });
 
 const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://bodrumapartkiralama.com";
+  process.env.NEXT_PUBLIC_SITE_URL || "https://www.bodrumapartkiralama.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

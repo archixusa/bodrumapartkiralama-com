@@ -28,7 +28,7 @@ import { loc } from "@/lib/i18n-data";
 import { getSiteContent } from "@/lib/content";
 
 const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://bodrumapartkiralama.com";
+  process.env.NEXT_PUBLIC_SITE_URL || "https://www.bodrumapartkiralama.com";
 
 // ── DB-backed content: section keys + shapes ─────────────────────────────────
 // section_key "home.hero":        Record<locale, { h1, sub, trust: string[], activity }>
