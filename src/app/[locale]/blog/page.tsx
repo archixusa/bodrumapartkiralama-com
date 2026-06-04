@@ -9,7 +9,7 @@ import { getMdxPosts } from "@/lib/mdx-blog";
 import { loc } from "@/lib/i18n-data";
 
 const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://bodrumapartkiralama.com";
+  process.env.NEXT_PUBLIC_SITE_URL || "https://www.bodrumapartkiralama.com";
 
 const FALLBACK_HERO = "/blog/bodrum-tatil-rehberi/hero.webp";
 

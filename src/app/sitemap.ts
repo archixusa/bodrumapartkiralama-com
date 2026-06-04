@@ -5,7 +5,7 @@ import { getMdxPosts } from "@/lib/mdx-blog";
 import { routing } from "@/i18n/routing";
 
 const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://bodrumapartkiralama.com";
+  process.env.NEXT_PUBLIC_SITE_URL || "https://www.bodrumapartkiralama.com";
 
 function urlFor(path: string, locale: string) {
   return locale === routing.defaultLocale

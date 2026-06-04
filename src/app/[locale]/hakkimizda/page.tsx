@@ -15,7 +15,7 @@ import { JsonLd } from "@/components/JsonLd";
 import { Link } from "@/i18n/routing";
 
 const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://bodrumapartkiralama.com";
+  process.env.NEXT_PUBLIC_SITE_URL || "https://www.bodrumapartkiralama.com";
 
 export async function generateMetadata({
   params,

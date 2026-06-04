@@ -81,6 +81,64 @@ const nextConfig = {
     ],
   },
 
+  /**
+   * 301 redirects from dead legacy WordPress/ASP URLs to the correct new
+   * pages (SEO migration recovery).
+   *
+   * IMPORTANT routing facts this map relies on:
+   * - localePrefix is "as-needed" with defaultLocale "tr", so Turkish is served
+   *   at ROOT. Destinations here are UNPREFIXED (`/apartlar`, NOT `/tr/apartlar`)
+   *   to avoid a 301 -> 307 chain.
+   * - Canonical district slug is `<name>-apart-kiralama` (see src/data/districts.ts
+   *   `urlSlug`), which is also what sitemap.ts emits. Bare district URLs point at
+   *   that canonical slug, never at the non-canonical `/bodrum/<bare>` duplicate.
+   * - Only sources that currently 404 on production are included; currently-valid
+   *   paths (`/apartlar`, `/iletisim`, `/hakkimizda`, `/blog`, `/blog/:slug`,
+   *   `/bodrum/:slug`) are intentionally omitted to avoid redirect loops.
+   * - www<->apex is handled at the Vercel domain level, not here, to avoid loops.
+   */
+  async redirects() {
+    return [
+      // --- Legacy ASP/ASPX home pages -> home ---
+      { source: "/anasayfa.aspx", destination: "/", permanent: true },
+      { source: "/anasayfa.asp", destination: "/", permanent: true },
+      { source: "/default.asp", destination: "/", permanent: true },
+      { source: "/index.asp", destination: "/", permanent: true },
+      { source: "/index.aspx", destination: "/", permanent: true },
+
+      // --- Legacy apart category URLs -> /apartlar ---
+      { source: "/kiralik-apart", destination: "/apartlar", permanent: true },
+      { source: "/kiralik-apart/:path*", destination: "/apartlar", permanent: true },
+      { source: "/tr/kiralik-apart", destination: "/apartlar", permanent: true },
+      { source: "/tr/kiralik-apart/:path*", destination: "/apartlar", permanent: true },
+      { source: "/bodrum-apart-kiralama", destination: "/apartlar", permanent: true },
+      { source: "/bodrum-apart-kiralama/:path*", destination: "/apartlar", permanent: true },
+      { source: "/tr/bodrum-apart-kiralama", destination: "/apartlar", permanent: true },
+      { source: "/tr/bodrum-apart-kiralama/:path*", destination: "/apartlar", permanent: true },
+
+      // --- Legacy .asp contact/about -> new pages ---
+      { source: "/iletisim.asp", destination: "/iletisim", permanent: true },
+      { source: "/hakkimizda.asp", destination: "/hakkimizda", permanent: true },
+
+      // --- Bare district URLs -> canonical /bodrum/<name>-apart-kiralama ---
+      { source: "/gumbet", destination: "/bodrum/gumbet-apart-kiralama", permanent: true },
+      { source: "/turgutreis", destination: "/bodrum/turgutreis-apart-kiralama", permanent: true },
+      { source: "/yalikavak", destination: "/bodrum/yalikavak-apart-kiralama", permanent: true },
+      { source: "/bitez", destination: "/bodrum/bitez-apart-kiralama", permanent: true },
+      { source: "/ortakent", destination: "/bodrum/ortakent-apart-kiralama", permanent: true },
+      { source: "/gundogan", destination: "/bodrum/gundogan-apart-kiralama", permanent: true },
+
+      // --- Legacy WordPress query-style permalinks (?p=<id>) -> /blog ---
+      // Use `has` query matcher; the bare `source: "/?p=:id"` syntax is invalid.
+      {
+        source: "/",
+        has: [{ type: "query", key: "p" }],
+        destination: "/blog",
+        permanent: true,
+      },
+    ];
+  },
+
   // Security headers + long-cache for static assets.
   async headers() {
     return [

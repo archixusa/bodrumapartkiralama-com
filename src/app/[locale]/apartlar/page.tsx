@@ -10,7 +10,7 @@ import { getPublishedProperties } from "@/lib/properties";
 import { districts } from "@/data/districts";
 
 const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://bodrumapartkiralama.com";
+  process.env.NEXT_PUBLIC_SITE_URL || "https://www.bodrumapartkiralama.com";
 
 // ISR: re-query the published catalogue at most once a minute.
 export const revalidate = 60;

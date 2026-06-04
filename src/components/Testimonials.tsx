@@ -10,7 +10,7 @@ import { REVIEW_STAR_COLOR } from "@/lib/brand";
 const ACCENT = REVIEW_STAR_COLOR;
 
 const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://bodrumapartkiralama.com";
+  process.env.NEXT_PUBLIC_SITE_URL || "https://www.bodrumapartkiralama.com";
 
 type L = "tr" | "en" | "de" | "ru";
 
