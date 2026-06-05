@@ -1,3 +1,6 @@
+"use client";
+
+import { useTranslations } from "next-intl";
 import { Home, BedDouble, MapPin, MessageCircle } from "lucide-react";
 
 /**
@@ -10,11 +13,12 @@ import { Home, BedDouble, MapPin, MessageCircle } from "lucide-react";
  *   `as-needed` locale routing) so a click lands directly on the real page
  *   without a 307 prefix redirect. Plain <a> is used so the URL is exact
  *   regardless of the detected locale of the 404 boundary.
- * - WhatsApp number is the brand number already used across the site
- *   (WhatsAppFab / messages common.whatsappNumber): 905385124088.
+ * - WhatsApp number is locale-aware: read from messages `common.whatsappNumber`
+ *   (TR gets the new line; other locales keep the existing one).
  */
 export default function NotFound() {
-  const WHATSAPP = "905385124088";
+  const c = useTranslations("common");
+  const WHATSAPP = c("whatsappNumber");
   const waText = encodeURIComponent(
     "Merhaba, bodrumapartkiralama.com sitesinde aradığım sayfayı bulamadım. Yardımcı olabilir misiniz?"
   );

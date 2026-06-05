@@ -15,7 +15,7 @@ type L = "tr" | "en" | "de" | "ru";
 
 interface Props {
   locale: string;
-  /** Bare WhatsApp number, e.g. "905385124088". */
+  /** Bare WhatsApp number (digits only, country code first). */
   whatsappNumber: string;
 }
 

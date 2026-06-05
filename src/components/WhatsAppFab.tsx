@@ -1,13 +1,15 @@
 "use client";
 
+import { getPhone } from "@/lib/contact";
+
 /**
  * Floating WhatsApp button shown on every page above the footer.
- * Hard-codes the brand WhatsApp number so it works regardless of locale.
+ * Locale-aware number: TR uses the new line, other locales keep the existing one.
  */
-export function WhatsAppFab() {
+export function WhatsAppFab({ locale }: { locale: string }) {
   return (
     <a
-      href="https://wa.me/905385124088"
+      href={`https://wa.me/${getPhone(locale).wa}`}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="WhatsApp ile iletişime geçin"

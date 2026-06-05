@@ -9,6 +9,7 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import { OwnerApplicationForm } from "@/lib/reservation-form";
+import { getPhone } from "@/lib/contact";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.bodrumapartkiralama.com";
@@ -335,7 +336,7 @@ export default async function Page({
           </div>
           <OwnerApplicationForm
             siteName="bodrumapartkiralama"
-            whatsappNumber="905385124088"
+            whatsappNumber={getPhone(locale).wa}
             kvkkUrl="/kvkk"
             tone="family"
           />

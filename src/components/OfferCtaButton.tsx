@@ -17,7 +17,7 @@ interface Props {
   offerLabel: string;
   /** WhatsApp secondary link label. */
   whatsappLabel: string;
-  /** Bare WhatsApp number, e.g. "905385124088". */
+  /** Bare WhatsApp number (digits only, country code first). */
   whatsappNumber: string;
   /** Prefilled WhatsApp message text. */
   whatsappText: string;
