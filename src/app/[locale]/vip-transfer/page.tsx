@@ -7,9 +7,39 @@ import { InquiryForm } from "@/components/InquiryForm";
 import { FAQ } from "@/components/FAQ";
 import { JsonLd } from "@/components/JsonLd";
 import { PartnerServiceBanner } from "@/components/PartnerServiceBanner";
+import { getSiteContent } from "@/lib/content";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.bodrumapartkiralama.com";
+
+// ── DB-backed hero copy (section_key "transfer.hero") ────────────────────────
+// Falls back to the in-code default below when no published row exists, so the
+// page renders byte-identical to today for normal visitors.
+type TransferHeroCopy = { kicker: string; title: string; sub: string };
+type ByLocale<T> = Record<"tr" | "en" | "de" | "ru", T>;
+
+const TRANSFER_HERO_DEFAULT: ByLocale<TransferHeroCopy> = {
+  tr: {
+    kicker: "Partner Hizmet · Bodrum 2026",
+    title: "Bodrum Havalimanı VIP Transfer",
+    sub: "Milas-Bodrum Havalimanı'ndan apartınızın kapısına özel araçla.",
+  },
+  en: {
+    kicker: "Partner Service · Bodrum 2026",
+    title: "Bodrum Airport Private Transfer",
+    sub: "From Milas-Bodrum Airport to your apartment door in a private vehicle.",
+  },
+  de: {
+    kicker: "Partnerservice · Bodrum 2026",
+    title: "Bodrum Flughafen-Privattransfer",
+    sub: "Vom Flughafen Milas-Bodrum bis vor Ihre Wohnungstür im privaten Fahrzeug.",
+  },
+  ru: {
+    kicker: "Партнёрская услуга · Бодрум 2026",
+    title: "Индивидуальный трансфер из аэропорта Бодрума",
+    sub: "От аэропорта Milas-Bodrum до двери ваших апартаментов на отдельном автомобиле.",
+  },
+};
 
 export async function generateMetadata({
   params,
@@ -44,6 +74,12 @@ export default async function Page({
   type L = "tr" | "en" | "de" | "ru";
   const pick = locale as L;
   const tx = <T,>(o: Record<L, T>): T => o[pick] ?? o.en;
+
+  // ── HERO (DB-backed; falls back to in-code default when no published row) ──
+  const hero =
+    (await getSiteContent<ByLocale<TransferHeroCopy>>("transfer.hero")) ??
+    TRANSFER_HERO_DEFAULT;
+  const heroCopy = hero[pick] ?? hero.en;
 
   const vehicles = [
     {
@@ -164,7 +200,7 @@ export default async function Page({
     {
       "@context": "https://schema.org",
       "@type": "TaxiService",
-      name: t("h1"),
+      name: heroCopy.title,
       description: t("metaDesc"),
       provider: { "@type": "LodgingBusiness", name: "Bodrumapartkiralama.com" },
       areaServed: "Bodrum, Muğla, TR",
@@ -185,21 +221,16 @@ export default async function Page({
     <>
       <JsonLd data={jsonLd} />
       <PageHero
-        title={t("h1")}
-        subtitle={t("subtitle")}
-        badge={tx({
-          tr: "Partner Hizmet · Bodrum 2026",
-          en: "Partner Service · Bodrum 2026",
-          de: "Partnerservice · Bodrum 2026",
-          ru: "Партнёрская услуга · Бодрум 2026",
-        })}
+        title={heroCopy.title}
+        subtitle={heroCopy.sub}
+        badge={heroCopy.kicker}
         image="https://images.unsplash.com/photo-1595880992139-8cf2ef915d78?auto=format&fit=crop&w=2000&q=80"
         crumbs={[
           {
             href: "/",
             label: tx({ tr: "Ana Sayfa", en: "Home", de: "Startseite", ru: "Главная" }),
           },
-          { label: t("h1") },
+          { label: heroCopy.title },
         ]}
       />
 
@@ -348,7 +379,7 @@ export default async function Page({
           <aside className="lg:sticky lg:top-20 lg:self-start">
             <InquiryForm
               service="transfer"
-              subjectLine={t("h1")}
+              subjectLine={heroCopy.title}
               fields={{ date: true, people: true, pickup: true, dropoff: true }}
               whatsappNumber={c("whatsappNumber")}
               whatsappTemplate={tx({

@@ -3,9 +3,40 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Phone, Mail, MessageCircle, MapPin, Clock } from "lucide-react";
 import { ContactForm } from "@/components/ContactForm";
 import { JsonLd } from "@/components/JsonLd";
+import { getSiteContent } from "@/lib/content";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.bodrumapartkiralama.com";
+
+// ── DB-backed hero copy (section_key "iletisim.hero") ────────────────────────
+// Falls back to the in-code default below when no published row exists, so the
+// page renders byte-identical to today for normal visitors. The default title
+// matches the nav "contact" label currently shown in the hero.
+type IletisimHeroCopy = { title: string; intro: string };
+type ByLocale<T> = Record<"tr" | "en" | "de" | "ru", T>;
+
+const ILETISIM_HERO_DEFAULT: ByLocale<IletisimHeroCopy> = {
+  tr: {
+    title: "İletişim",
+    intro:
+      "Soru, talep veya bilgi paylaşımı için aşağıdaki formu kullanabilir, ya da WhatsApp/telefon kanalından doğrudan ulaşabilirsiniz.",
+  },
+  en: {
+    title: "Contact",
+    intro:
+      "Use the form below for questions, requests or information sharing — or reach us directly via WhatsApp or phone.",
+  },
+  de: {
+    title: "Kontakt",
+    intro:
+      "Nutzen Sie das untenstehende Formular für Fragen, Anliegen oder zum Austausch von Informationen — oder erreichen Sie uns direkt über WhatsApp oder telefonisch.",
+  },
+  ru: {
+    title: "Контакты",
+    intro:
+      "Воспользуйтесь формой ниже для вопросов, запросов или обмена информацией — или свяжитесь с нами напрямую через WhatsApp или по телефону.",
+  },
+};
 
 export async function generateMetadata({
   params,
@@ -48,20 +79,21 @@ export default async function Page({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const nav = await getTranslations({ locale, namespace: "nav" });
   const c = await getTranslations({ locale, namespace: "common" });
 
   const pick = <T,>(o: { tr: T; en: T; de: T; ru: T }): T =>
     o[locale as "tr" | "en" | "de" | "ru"] ?? o.en;
 
+  // ── HERO (DB-backed; falls back to in-code default when no published row) ──
+  const heroByLocale =
+    (await getSiteContent<ByLocale<IletisimHeroCopy>>("iletisim.hero")) ??
+    ILETISIM_HERO_DEFAULT;
+  const heroCopy =
+    heroByLocale[locale as "tr" | "en" | "de" | "ru"] ?? heroByLocale.en;
+
   const copy = {
-    h1: nav("contact"),
-    intro: pick({
-      tr: "Soru, talep veya bilgi paylaşımı için aşağıdaki formu kullanabilir, ya da WhatsApp/telefon kanalından doğrudan ulaşabilirsiniz.",
-      en: "Use the form below for questions, requests or information sharing — or reach us directly via WhatsApp or phone.",
-      de: "Nutzen Sie das untenstehende Formular für Fragen, Anliegen oder zum Austausch von Informationen — oder erreichen Sie uns direkt über WhatsApp oder telefonisch.",
-      ru: "Воспользуйтесь формой ниже для вопросов, запросов или обмена информацией — или свяжитесь с нами напрямую через WhatsApp или по телефону.",
-    }),
+    h1: heroCopy.title,
+    intro: heroCopy.intro,
     sideTitle: pick({
       tr: "Doğrudan iletişim",
       en: "Direct contact",
