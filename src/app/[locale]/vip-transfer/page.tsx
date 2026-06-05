@@ -86,19 +86,19 @@ export default async function Page({
       title: t("vehicle1Title"),
       desc: t("vehicle1Desc"),
       image:
-        "https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=1200&q=80",
+        "https://images.unsplash.com/photo-1592309905620-e5b59f6dcb98?auto=format&fit=crop&w=1200&q=80",
     },
     {
       title: t("vehicle2Title"),
       desc: t("vehicle2Desc"),
       image:
-        "https://images.unsplash.com/photo-1601932195800-fae5a0c44889?auto=format&fit=crop&w=1200&q=80",
+        "https://images.unsplash.com/photo-1656426650699-a76ffe479608?auto=format&fit=crop&w=1200&q=80",
     },
     {
       title: t("vehicle3Title"),
       desc: t("vehicle3Desc"),
       image:
-        "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&w=1200&q=80",
+        "https://images.unsplash.com/photo-1688619100853-cc0e3ae443ab?auto=format&fit=crop&w=1200&q=80",
     },
   ];
 
