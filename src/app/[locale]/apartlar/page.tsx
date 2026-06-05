@@ -7,10 +7,39 @@ import { EmptyStateOfferBased } from "@/components/EmptyStateOfferBased";
 import { ApartlarFilterBar } from "@/components/ApartlarFilterBar";
 import { PropertyCard } from "@/components/PropertyCard";
 import { getPublishedProperties } from "@/lib/properties";
+import { getSiteContent } from "@/lib/content";
 import { districts } from "@/data/districts";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.bodrumapartkiralama.com";
+
+// ── DB-backed listing intro copy (section_key "apartlar.intro") ──────────────
+// Editable heading + the static subtitle shown above the list when the
+// catalogue is empty. The count-aware line for a populated catalogue stays
+// computed in code. Falls back to the in-code default below when no published
+// row exists, so the page renders byte-identical to today.
+type ApartlarIntroCopy = { h1: string; subtitle: string };
+type ByLocale<T> = Record<"tr" | "en" | "de" | "ru", T>;
+
+const APARTLAR_INTRO_DEFAULT: ByLocale<ApartlarIntroCopy> = {
+  tr: {
+    h1: "Bodrum Apart Koleksiyonu",
+    subtitle: "Tarihinizi paylaşın, size özel seçenekler sunalım.",
+  },
+  en: {
+    h1: "Bodrum Apartment Collection",
+    subtitle: "Share your dates and we'll offer you tailored options.",
+  },
+  de: {
+    h1: "Bodrum Apartmentkollektion",
+    subtitle:
+      "Teilen Sie uns Ihre Reisedaten mit — wir machen Ihnen passende Angebote.",
+  },
+  ru: {
+    h1: "Коллекция апартаментов в Бодруме",
+    subtitle: "Назовите ваши даты — мы предложим персональные варианты.",
+  },
+};
 
 // ISR: re-query the published catalogue at most once a minute.
 export const revalidate = 60;
@@ -75,19 +104,21 @@ export default async function ApartlarPage({
   const properties = await getPublishedProperties();
   const hasProperties = properties.length > 0;
 
+  // ── INTRO (DB-backed; falls back to in-code default when no published row) ──
+  const introData =
+    (await getSiteContent<ByLocale<ApartlarIntroCopy>>("apartlar.intro")) ??
+    APARTLAR_INTRO_DEFAULT;
+  const intro = introData[locale as "tr" | "en" | "de" | "ru"] ?? introData.en;
+
   const regionOptions = REGION_SLUGS.map((slug) => {
     const d = districts.find((x) => x.slug === slug)!;
     return { value: d.slug, label: d.name };
   });
 
   const copy = {
-    h1: pick({
-      tr: "Bodrum Apart Koleksiyonu",
-      en: "Bodrum Apartment Collection",
-      de: "Bodrum Apartmentkollektion",
-      ru: "Коллекция апартаментов в Бодруме",
-    }),
-    // Count-aware subtitle.
+    h1: intro.h1,
+    // Count-aware subtitle: dynamic count line when populated; the editable
+    // intro subtitle (DB-backed) when empty.
     countLine: hasProperties
       ? pick({
           tr: `${properties.length} apart listeleniyor`,
@@ -95,12 +126,7 @@ export default async function ApartlarPage({
           de: `${properties.length} Apartments gelistet`,
           ru: `Показано апартаментов: ${properties.length}`,
         })
-      : pick({
-          tr: "Tarihinizi paylaşın, size özel seçenekler sunalım.",
-          en: "Share your dates and we'll offer you tailored options.",
-          de: "Teilen Sie uns Ihre Reisedaten mit — wir machen Ihnen passende Angebote.",
-          ru: "Назовите ваши даты — мы предложим персональные варианты.",
-        }),
+      : intro.subtitle,
     benefitsTitle: pick({
       tr: "Platformumuzun Yaklaşımı",
       en: "How our platform works",

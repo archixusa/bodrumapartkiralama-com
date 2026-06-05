@@ -21,7 +21,7 @@ type ByLocale<T> = Record<"tr" | "en" | "de" | "ru", T>;
 const TRANSFER_HERO_DEFAULT: ByLocale<TransferHeroCopy> = {
   tr: {
     kicker: "Partner Hizmet · Bodrum 2026",
-    title: "Bodrum Havalimanı VIP Transfer",
+    title: "Bodrum Havalimanı Özel Transfer",
     sub: "Milas-Bodrum Havalimanı'ndan apartınızın kapısına özel araçla.",
   },
   en: {

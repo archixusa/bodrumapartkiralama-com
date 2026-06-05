@@ -10,9 +10,43 @@ import {
 } from "lucide-react";
 import { OwnerApplicationForm } from "@/lib/reservation-form";
 import { getPhone } from "@/lib/contact";
+import { getSiteContent } from "@/lib/content";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.bodrumapartkiralama.com";
+
+// ── DB-backed owner hero copy (section_key "owner.hero") ─────────────────────
+// Falls back to the in-code default below when no published row exists, so the
+// page renders byte-identical to today for normal visitors.
+type OwnerHeroCopy = { kicker: string; title: string; intro: string };
+type ByLocale<T> = Record<"tr" | "en" | "de" | "ru", T>;
+
+const OWNER_HERO_DEFAULT: ByLocale<OwnerHeroCopy> = {
+  tr: {
+    kicker: "Mülk Sahipleri İçin",
+    title: "Bodrum'daki Mülkünüz İçin Şeffaf Bir Kira Yönetimi",
+    intro:
+      "Bodrum'un farklı bölgelerinde mülk sahipleriyle çalışıyoruz. Komisyon ve hizmet kapsamı yazılı, iletişim doğrudan, süreç şeffaf. Mülkünüzü birlikte değerlendirelim.",
+  },
+  en: {
+    kicker: "For Property Owners",
+    title: "Transparent Rental Management for Your Bodrum Property",
+    intro:
+      "We work with property owners across the Bodrum peninsula. Commission and service scope in writing, communication direct, the process transparent. Let's assess your property together.",
+  },
+  de: {
+    kicker: "For Property Owners",
+    title: "Transparent Rental Management for Your Bodrum Property",
+    intro:
+      "We work with property owners across the Bodrum peninsula. Commission and service scope in writing, communication direct, the process transparent. Let's assess your property together.",
+  },
+  ru: {
+    kicker: "For Property Owners",
+    title: "Transparent Rental Management for Your Bodrum Property",
+    intro:
+      "We work with property owners across the Bodrum peninsula. Commission and service scope in writing, communication direct, the process transparent. Let's assess your property together.",
+  },
+};
 
 export const metadata: Metadata = {
   title: "Evinizi Kiraya Verin — Bodrum Apart Yönetimi",
@@ -34,6 +68,12 @@ export default async function Page({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
+
+  // ── HERO (DB-backed; falls back to in-code default when no published row) ──
+  const heroData =
+    (await getSiteContent<ByLocale<OwnerHeroCopy>>("owner.hero")) ??
+    OWNER_HERO_DEFAULT;
+  const hero = heroData[locale as "tr" | "en" | "de" | "ru"] ?? heroData.en;
 
   const benefits = [
     {
@@ -153,15 +193,11 @@ export default async function Page({
         />
         <div className="container-page relative py-20 md:py-28 lg:py-32">
           <div className="mx-auto max-w-3xl text-center">
-            <span className="kicker-light">Mülk Sahipleri İçin</span>
-            <h1 className="mt-6 font-display text-white">
-              Bodrum'daki Mülkünüz İçin Şeffaf Bir Kira Yönetimi
-            </h1>
+            <span className="kicker-light">{hero.kicker}</span>
+            <h1 className="mt-6 font-display text-white">{hero.title}</h1>
             <span className="mx-auto mt-6 block h-px w-16 bg-accent-400" />
             <p className="mt-6 text-base text-white/85 md:text-lg">
-              Bodrum'un farklı bölgelerinde mülk sahipleriyle çalışıyoruz.
-              Komisyon ve hizmet kapsamı yazılı, iletişim doğrudan, süreç
-              şeffaf. Mülkünüzü birlikte değerlendirelim.
+              {hero.intro}
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <a href="#basvur" className="btn-primary">
