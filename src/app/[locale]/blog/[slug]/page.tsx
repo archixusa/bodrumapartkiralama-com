@@ -145,9 +145,19 @@ export default async function Page({
       datePublished: post.date,
       dateModified: post.date,
       author: {
-        "@type": "Organization",
+        // E-E-A-T: December 2025 Google Core Update strongly favors Person
+        // authors over Organization for all queries (not just YMYL). Using the
+        // brand editorial team byline as Person — semantically a collective,
+        // but the type matters more than singular vs. plural for ranking.
+        "@type": "Person",
         name: "Bodrumapartkiralama Editör Ekibi",
-        url: SITE_URL,
+        url: `${SITE_URL}/hakkimizda`,
+        jobTitle: "Editör",
+        worksFor: {
+          "@type": "Organization",
+          name: "Bodrumapartkiralama.com",
+          url: SITE_URL,
+        },
       },
       publisher: {
         "@type": "Organization",
@@ -336,9 +346,18 @@ function renderMdxPost(
     datePublished: mdx.published_at,
     dateModified: mdx.published_at,
     author: {
+      // /yazar/{slug} is not a real route — point Person URL at /hakkimizda
+      // (the canonical "about us" page) so the schema validates and the link
+      // resolves. worksFor anchors authorship to the publishing organization.
       "@type": "Person",
       name: mdx.author,
-      url: `${SITE_URL}/yazar/${mdx.author_slug}`,
+      url: `${SITE_URL}/hakkimizda`,
+      jobTitle: "Editör",
+      worksFor: {
+        "@type": "Organization",
+        name: "Bodrumapartkiralama.com",
+        url: SITE_URL,
+      },
     },
     publisher: {
       "@type": "Organization",
