@@ -8,6 +8,7 @@ import { ApartCard } from "@/components/ApartCard";
 import { FAQ } from "@/components/FAQ";
 import { JsonLd } from "@/components/JsonLd";
 import { districts, getDistrict } from "@/data/districts";
+import { getSiteContent } from "@/lib/content";
 import { loc, locArr } from "@/lib/i18n-data";
 import { districtGuides } from "@/data/districtGuides";
 import { DistrictGuide } from "@/components/DistrictGuide";
@@ -66,13 +67,28 @@ export default async function DistrictPage({
   const c = await getTranslations({ locale, namespace: "common" });
   const isTr = locale === "tr";
   const districtName = dt(d.slug);
-  const longDesc = loc(locale, {
-    tr: d.longDescTr,
-    en: d.longDescEn,
-    de: d.longDescDe,
-    ru: d.longDescRu,
-  });
-  const highlights = locArr(locale, d.highlights);
+
+  // DB overlay (panel-editable). Keyed by BASE slug (e.g. "gumbet"), matching
+  // districts.content.json keys. section_key is `district.<baseSlug>` (dash-free,
+  // base slugs have no dashes). Falls back to the in-code JSON content when the
+  // DB row is absent → byte-identical output when override is null.
+  const override = await getSiteContent<
+    Record<string, { shortDesc?: string; longDesc?: string; highlights?: string[] }>
+  >("district." + d.slug);
+  const oc = override?.[locale] ?? override?.en;
+
+  const longDesc =
+    oc?.longDesc ??
+    loc(locale, {
+      tr: d.longDescTr,
+      en: d.longDescEn,
+      de: d.longDescDe,
+      ru: d.longDescRu,
+    });
+  const highlights =
+    oc?.highlights && oc.highlights.length
+      ? oc.highlights
+      : locArr(locale, d.highlights);
   const apts = getApartmentsByDistrict(d.slug);
 
   const availabilityByLocale = {
@@ -278,12 +294,13 @@ export default async function DistrictPage({
           </nav>
           <h1 className="text-white">{t("h1", { district: districtName })}</h1>
           <p className="mt-3 max-w-2xl text-base text-white/85 md:text-lg">
-            {loc(locale, {
-              tr: d.shortDescTr,
-              en: d.shortDescEn,
-              de: d.shortDescDe,
-              ru: d.shortDescRu,
-            })}
+            {oc?.shortDesc ??
+              loc(locale, {
+                tr: d.shortDescTr,
+                en: d.shortDescEn,
+                de: d.shortDescDe,
+                ru: d.shortDescRu,
+              })}
           </p>
         </div>
       </section>
