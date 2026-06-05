@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans, Cormorant_Garamond } from "next/font/google";
-import dynamic from "next/dynamic";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -11,26 +10,15 @@ import { Footer } from "@/components/Footer";
 import { AnalyticsScripts, GtmNoScript } from "@/components/Analytics";
 import { LeadTracking } from "@/components/LeadTracking";
 import { JsonLd } from "@/components/JsonLd";
+// Heavy below-fold client-only widgets. The `next/dynamic` + `ssr:false` lazy
+// imports live inside this Client Component because Next.js 15 disallows them in
+// Server Components.
+import {
+  SeasonBannerLazy,
+  DeferredClientWidgets,
+} from "@/components/DeferredClientWidgets";
 import { districts } from "@/data/districts";
 import { getPhone } from "@/lib/contact";
-
-// Heavy below-fold client components — load lazily so they don't block LCP.
-const SeasonBanner = dynamic(
-  () => import("@/components/SeasonBanner").then((m) => m.SeasonBanner),
-  { ssr: false },
-);
-const WhatsAppFab = dynamic(
-  () => import("@/components/WhatsAppFab").then((m) => m.WhatsAppFab),
-  { ssr: false },
-);
-const ExitIntentModal = dynamic(
-  () => import("@/components/ExitIntentModal").then((m) => m.ExitIntentModal),
-  { ssr: false },
-);
-const CookieConsent = dynamic(
-  () => import("@/components/CookieConsent").then((m) => m.CookieConsent),
-  { ssr: false },
-);
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin", "latin-ext"],
@@ -207,15 +195,13 @@ export default async function LocaleLayout({
           >
             Skip to content
           </a>
-          <SeasonBanner />
+          <SeasonBannerLazy />
           <Header />
           <main id="main" className="min-h-[60vh]">
             {children}
           </main>
           <Footer />
-          <WhatsAppFab locale={locale} />
-          <ExitIntentModal />
-          <CookieConsent />
+          <DeferredClientWidgets locale={locale} />
           <AnalyticsScripts />
         </NextIntlClientProvider>
       </body>
