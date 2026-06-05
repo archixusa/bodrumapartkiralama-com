@@ -156,12 +156,12 @@ export default async function DistrictPage({
               : `How do I get to ${districtName}?`,
       a:
         locale === "tr"
-          ? `Milas-Bodrum Havalimanı'ndan ${districtName}'a VIP transfer hizmetimiz vardır. Ortalama transfer süresi 30-50 dakikadır; rezervasyon sırasında talep edebilirsiniz.`
+          ? `Milas-Bodrum Havalimanı'ndan ${districtName}'a özel transfer hizmetimiz vardır. Ortalama transfer süresi 30-50 dakikadır; rezervasyon sırasında talep edebilirsiniz.`
           : locale === "de"
-            ? `Wir bieten einen VIP-Transfer vom Flughafen Milas-Bodrum nach ${districtName}. Die durchschnittliche Fahrzeit beträgt 30-50 Minuten; Sie können ihn bei der Buchung anfragen.`
+            ? `Wir bieten einen Privattransfer vom Flughafen Milas-Bodrum nach ${districtName}. Die durchschnittliche Fahrzeit beträgt 30-50 Minuten; Sie können ihn bei der Buchung anfragen.`
             : locale === "ru"
-              ? `Мы предоставляем VIP-трансфер из аэропорта Милас-Бодрум до ${districtName}. Среднее время в пути — 30-50 минут; вы можете заказать его при бронировании.`
-              : `We provide VIP transfer from Milas-Bodrum Airport to ${districtName}. Average transfer time is 30-50 minutes; request it during booking.`,
+              ? `Мы предоставляем индивидуальный трансфер из аэропорта Милас-Бодрум до ${districtName}. Среднее время в пути — 30-50 минут; вы можете заказать его при бронировании.`
+              : `We provide private transfer from Milas-Bodrum Airport to ${districtName}. Average transfer time is 30-50 minutes; request it during booking.`,
     },
     {
       q:

@@ -83,7 +83,7 @@ export const posts: Post[] = [
         "Torba — Havalimanına en yakın, resort hattı, sakin.",
       ] },
       { type: "h2", id: "ulasim", text: "Ulaşım: havalimanı, transfer, araç" },
-      { type: "p", text: "Bodrum'a ulaşım Milas-Bodrum Havalimanı (BJV) üzerinden olur. Havalimanı yarımadanın doğusunda; merkeze 35 km, Yalıkavak'a 50 km'dir. En pratiği önceden ayarlanmış VIP transferdir; uçuş takibi yapılır, gecikmelerde ek ücret yoktur. Eğer Bodrum'da hareket etmek istiyorsanız araç kiralama mantıklı; bölgeler arası taksiler hızlı bir biçimde pahalılaşıyor." },
+      { type: "p", text: "Bodrum'a ulaşım Milas-Bodrum Havalimanı (BJV) üzerinden olur. Havalimanı yarımadanın doğusunda; merkeze 35 km, Yalıkavak'a 50 km'dir. En pratiği önceden ayarlanmış özel transferdir; uçuş takibi yapılır, gecikmelerde ek ücret yoktur. Eğer Bodrum'da hareket etmek istiyorsanız araç kiralama mantıklı; bölgeler arası taksiler hızlı bir biçimde pahalılaşıyor." },
       { type: "h2", id: "butce", text: "Bütçe: 4 kişilik bir aile için tipik harcama" },
       { type: "p", text: "Aşağıda 2026 yüksek sezon (Temmuz-Ağustos) için 7 gece tahmini bir bütçe yer alıyor. Apart kiralayan + kendi yemeğini pişirebilen aileler, otele göre %35-50 daha az harcar." },
       { type: "ul", items: [
@@ -132,7 +132,7 @@ export const posts: Post[] = [
         "Torba — closest to the airport, resort row, calm.",
       ] },
       { type: "h2", id: "transport", text: "Transport: airport, transfer, car" },
-      { type: "p", text: "Milas-Bodrum Airport (BJV) is your entry point. It sits east of the peninsula — 35 km to centre, 50 km to Yalıkavak. Pre-booked VIP transfer is the easiest path; flight tracking is included with no delay surcharges. If you want to move around, renting a car makes sense — taxis between districts add up quickly." },
+      { type: "p", text: "Milas-Bodrum Airport (BJV) is your entry point. It sits east of the peninsula — 35 km to centre, 50 km to Yalıkavak. Pre-booked private transfer is the easiest path; flight tracking is included with no delay surcharges. If you want to move around, renting a car makes sense — taxis between districts add up quickly." },
       { type: "h2", id: "budget", text: "Budget: typical week for a family of four" },
       { type: "p", text: "A rough 2026 high-season (July-August) estimate for 7 nights. A family renting an apartment and cooking some meals spends 35-50% less than the hotel equivalent." },
       { type: "ul", items: [
@@ -181,7 +181,7 @@ export const posts: Post[] = [
         "Torba — am nächsten zum Flughafen, Resort-Zeile, ruhig.",
       ] },
       { type: "h2", id: "ulasim", text: "Anreise: Flughafen, Transfer, Auto" },
-      { type: "p", text: "Der Flughafen Milas-Bodrum (BJV) ist Ihr Ankunftspunkt. Er liegt im Osten der Halbinsel — 35 km bis zum Zentrum, 50 km bis Yalıkavak. Am bequemsten ist ein vorab gebuchter VIP-Transfer; die Flugverfolgung ist inklusive, bei Verspätungen fallen keine Zusatzkosten an. Wenn Sie mobil sein möchten, ist ein Mietwagen sinnvoll — Taxis zwischen den Regionen summieren sich schnell." },
+      { type: "p", text: "Der Flughafen Milas-Bodrum (BJV) ist Ihr Ankunftspunkt. Er liegt im Osten der Halbinsel — 35 km bis zum Zentrum, 50 km bis Yalıkavak. Am bequemsten ist ein vorab gebuchter Privattransfer; die Flugverfolgung ist inklusive, bei Verspätungen fallen keine Zusatzkosten an. Wenn Sie mobil sein möchten, ist ein Mietwagen sinnvoll — Taxis zwischen den Regionen summieren sich schnell." },
       { type: "h2", id: "butce", text: "Budget: typische Woche für eine vierköpfige Familie" },
       { type: "p", text: "Eine grobe Schätzung für 7 Nächte in der Hochsaison 2026 (Juli–August). Eine Familie, die ein Apartment mietet und einige Mahlzeiten selbst kocht, gibt 35–50 % weniger aus als im vergleichbaren Hotel." },
       { type: "ul", items: [
@@ -230,7 +230,7 @@ export const posts: Post[] = [
         "Торба — ближе всего к аэропорту, линия отелей, тишина.",
       ] },
       { type: "h2", id: "ulasim", text: "Транспорт: аэропорт, трансфер, авто" },
-      { type: "p", text: "Аэропорт Милас-Бодрум (BJV) — ваша точка прибытия. Он находится на востоке полуострова: 35 км до центра, 50 км до Ялыкавака. Самый удобный вариант — заранее заказанный VIP-трансфер; отслеживание рейса включено, а за задержки доплат нет. Если вы хотите передвигаться самостоятельно, имеет смысл арендовать автомобиль — такси между районами быстро складываются в крупную сумму." },
+      { type: "p", text: "Аэропорт Милас-Бодрум (BJV) — ваша точка прибытия. Он находится на востоке полуострова: 35 км до центра, 50 км до Ялыкавака. Самый удобный вариант — заранее заказанный индивидуальный трансфер; отслеживание рейса включено, а за задержки доплат нет. Если вы хотите передвигаться самостоятельно, имеет смысл арендовать автомобиль — такси между районами быстро складываются в крупную сумму." },
       { type: "h2", id: "butce", text: "Бюджет: типичная неделя для семьи из четырех человек" },
       { type: "p", text: "Примерная оценка на 7 ночей в высокий сезон 2026 года (июль–август). Семья, которая снимает апартаменты и часть еды готовит сама, тратит на 35–50 % меньше, чем в сопоставимом отеле." },
       { type: "ul", items: [

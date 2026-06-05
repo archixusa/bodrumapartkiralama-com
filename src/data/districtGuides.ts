@@ -65,7 +65,7 @@ export const districtGuides: Record<DistrictSlug, DistrictGuide> = {
       {
         h2: "Ulaşım",
         body: [
-          "Gümbet, ulaşım açısından Bodrum yarımadasının en kolay erişilebilen bölgelerinden biri. Milas-Bodrum Havalimanı'ndan ortalama 40-45 dakikada VIP transfer ile, taksiyle veya araç kiralama ile ulaşılır. Havalimanı–Bodrum otobüs servisi (Havaş) Gümbet'e doğrudan iniş yapmaz; Bodrum otogarına iniş sonrası dolmuşla yaklaşık 10-15 dakikada Gümbet'e geçilir.",
+          "Gümbet, ulaşım açısından Bodrum yarımadasının en kolay erişilebilen bölgelerinden biri. Milas-Bodrum Havalimanı'ndan ortalama 40-45 dakikada özel transfer ile, taksiyle veya araç kiralama ile ulaşılır. Havalimanı–Bodrum otobüs servisi (Havaş) Gümbet'e doğrudan iniş yapmaz; Bodrum otogarına iniş sonrası dolmuşla yaklaşık 10-15 dakikada Gümbet'e geçilir.",
           "Bölge içi ulaşımda dolmuş hattı çok yoğun: yaz aylarında 5-10 dakikada bir Bodrum merkezi yönüne kalkar; aynı şekilde Bitez, Ortakent, Turgutreis ve Yalıkavak istikametine kolay erişim vardır. Yaya dolaşımı için Gümbet'in sahil hattı düz, ancak iç sokaklar eğimli; arabayla geliyorsanız apartınızın park imkanını önceden teyit etmenizde fayda var.",
         ],
       },
@@ -159,7 +159,7 @@ export const districtGuides: Record<DistrictSlug, DistrictGuide> = {
       {
         h2: "Ulaşım ve Kos Feribotu",
         body: [
-          "Turgutreis'e Milas-Bodrum Havalimanı'ndan VIP transfer veya araç kiralama ile yaklaşık 50-60 dakikada ulaşılır. Toplu taşımayla gelmek isteyenler için Bodrum otogarından sezonda 30 dakikada bir Turgutreis dolmuşu kalkar; süre yaklaşık 35-40 dakika, ücret ekonomik.",
+          "Turgutreis'e Milas-Bodrum Havalimanı'ndan özel transfer veya araç kiralama ile yaklaşık 50-60 dakikada ulaşılır. Toplu taşımayla gelmek isteyenler için Bodrum otogarından sezonda 30 dakikada bir Turgutreis dolmuşu kalkar; süre yaklaşık 35-40 dakika, ücret ekonomik.",
           "Turgutreis Marinası, Yunan adası Kos'a günlük feribot seferleri sunar. Süre yaklaşık 1 saat. Vize gerekiyor (Türk vatandaşları için Yunan vizesi ya da uygun e-vize alınmalı). Kos'a sabah gidip akşam dönmek mümkün; alışveriş, antik kentler ve adayı bisikletle gezmek isteyenler için popüler bir günlük tur.",
         ],
       },
@@ -253,7 +253,7 @@ export const districtGuides: Record<DistrictSlug, DistrictGuide> = {
       {
         h2: "Ulaşım",
         body: [
-          "Milas-Bodrum Havalimanı'ndan Yalıkavak'a transfer yaklaşık 50-60 dakika sürer. VIP transfer veya araç kiralama en pratik yöntem. Toplu taşımada Bodrum otogarına iniş sonrası Yalıkavak dolmuşu kullanılır; süre yaklaşık 30-35 dakika, sezonda 15 dakikada bir kalkış vardır.",
+          "Milas-Bodrum Havalimanı'ndan Yalıkavak'a transfer yaklaşık 50-60 dakika sürer. Özel transfer veya araç kiralama en pratik yöntem. Toplu taşımada Bodrum otogarına iniş sonrası Yalıkavak dolmuşu kullanılır; süre yaklaşık 30-35 dakika, sezonda 15 dakikada bir kalkış vardır.",
           "Yalıkavak içinde yaya dolaşımı eski kasaba ve marina bölgesinde çok kolay; tepe yamaçlarındaki apartlar için ise eğim nedeniyle araç önerilir. Marina ile kasaba arasında ücretsiz mekik servisi vardır. Çevre köylere (Gündoğan, Türkbükü, Bodrum merkezi) günübirlik gitmek için araç kiralama veya taksi tercih edilir.",
         ],
       },
@@ -542,7 +542,7 @@ export const districtGuides: Record<DistrictSlug, DistrictGuide> = {
       {
         h2: "Ulaşım",
         body: [
-          "Milas-Bodrum Havalimanı'ndan Gündoğan'a transfer yaklaşık 55-65 dakika. VIP transfer veya araç kiralama en pratik yöntem. Toplu taşıma sınırlı: Bodrum otogarına iniş sonrası Yalıkavak veya Türkbükü dolmuşuyla Gündoğan'a geçilebilir, sezonda yaklaşık 20-30 dakikada bir.",
+          "Milas-Bodrum Havalimanı'ndan Gündoğan'a transfer yaklaşık 55-65 dakika. Özel transfer veya araç kiralama en pratik yöntem. Toplu taşıma sınırlı: Bodrum otogarına iniş sonrası Yalıkavak veya Türkbükü dolmuşuyla Gündoğan'a geçilebilir, sezonda yaklaşık 20-30 dakikada bir.",
           "Gündoğan içinde yaya dolaşımı için yamaç yapısı zorlayıcı olabilir; üst kısımdaki apartlarda kalanlar için araç önerilir. Sahil-restoran ekseninde yaya dolaşımı kolaydır. Yalıkavak'a (8 km, 15 dk araba) ve Türkbükü'ne (5 km, 10 dk araba) günlük gezi mümkündür.",
         ],
       },
@@ -636,7 +636,7 @@ export const districtGuides: Record<DistrictSlug, DistrictGuide> = {
       {
         h2: "Ulaşım — Havalimanına Yakınlık",
         body: [
-          "Torba'nın en büyük avantajı havalimanına 25 dakika mesafede olması — yarımadanın en yakın tatil bölgesi. VIP transfer veya araç kiralama ile uçaktan iner inmez 30 dakika içinde apartınıza varabilirsiniz. Bu özellik, kısa hafta sonu kaçamağı planlayanlar için Torba'yı pratik bir seçim yapar.",
+          "Torba'nın en büyük avantajı havalimanına 25 dakika mesafede olması — yarımadanın en yakın tatil bölgesi. Özel transfer veya araç kiralama ile uçaktan iner inmez 30 dakika içinde apartınıza varabilirsiniz. Bu özellik, kısa hafta sonu kaçamağı planlayanlar için Torba'yı pratik bir seçim yapar.",
           "Bodrum merkezine 10 km, 15 dakika araba. Toplu taşımada Bodrum otogarına iniş sonrası Torba dolmuşu kullanılır; sezonda 20-30 dakikada bir kalkış, süre 15-20 dakika. Yarımadanın güney koylarına (Gümbet, Turgutreis) ulaşmak için 30-50 dakikalık araba yolu gerekiyor.",
         ],
       },

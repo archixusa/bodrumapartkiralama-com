@@ -243,8 +243,8 @@ export default async function Page({
           ru: "Партнёрская услуга",
         })}
         description={tx({
-          tr: "Havalimanı transferleri, Bodrum bölgesinde uçuş takibi yapabilen ve sigortalı VIP araç filosuna sahip transfer ortaklarımızla yürütülür. Misafir karşılama, araç değişikliği ve gece operasyonu operatör tarafında çalışır.",
-          en: "Airport transfers are operated by our partners with flight-tracking and insured VIP fleets in Bodrum. Guest meet-and-greet, vehicle changes and night operations run on the operator side.",
+          tr: "Havalimanı transferleri, Bodrum bölgesinde uçuş takibi yapabilen ve sigortalı özel araç filosuna sahip transfer ortaklarımızla yürütülür. Misafir karşılama, araç değişikliği ve gece operasyonu operatör tarafında çalışır.",
+          en: "Airport transfers are operated by our partners with flight-tracking and insured private fleets in Bodrum. Guest meet-and-greet, vehicle changes and night operations run on the operator side.",
           de: "Flughafentransfers werden von unseren Partnern in der Region Bodrum durchgeführt, die Flüge verfolgen und über eine versicherte Privattransfer-Flotte verfügen. Empfang der Gäste, Fahrzeugwechsel und Nachtbetrieb laufen auf der Seite des Betreibers.",
           ru: "Трансферы из аэропорта выполняют наши партнёры в регионе Бодрум, отслеживающие рейсы и располагающие застрахованным автопарком для индивидуальных трансферов. Встреча гостей, замена автомобиля и ночные перевозки обеспечиваются со стороны оператора.",
         })}
@@ -271,7 +271,7 @@ export default async function Page({
             {
               num: "2",
               title: "Araç sınıfı ve fiyat teyidi",
-              desc: "Kişi/bagaj sayısına göre sedan, minivan ya da Sprinter VIP önerelim; bölgeye göre sabit fiyat teyit edelim.",
+              desc: "Kişi/bagaj sayısına göre sedan, minivan ya da geniş Sprinter önerelim; bölgeye göre sabit fiyat teyit edelim.",
             },
             {
               num: "3",
@@ -288,7 +288,7 @@ export default async function Page({
             {
               num: "2",
               title: "Vehicle class and price",
-              desc: "We suggest sedan, minivan or VIP Sprinter by group/luggage; confirm the fixed price for your district.",
+              desc: "We suggest sedan, minivan or spacious Sprinter by group/luggage; confirm the fixed price for your district.",
             },
             {
               num: "3",
@@ -340,14 +340,14 @@ export default async function Page({
         coverage={tx({
           tr: [
             "Milas-Bodrum Havalimanı'ndan tüm Bodrum bölgelerine transfer",
-            "1-3 kişi sedan, 4-7 kişi Vito/Caravelle, 8-16 kişi Sprinter VIP",
+            "1-3 kişi sedan, 4-7 kişi Vito/Caravelle, 8-16 kişi geniş Sprinter",
             "Uçuş takibi, bebek koltuğu ve sabit fiyat",
             "Tek yön veya gidiş-dönüş",
             "Şoför, sigorta, fatura ve ödeme operatör üzerinden",
           ],
           en: [
             "Transfer from Milas-Bodrum Airport to all Bodrum districts",
-            "1-3 pax sedan, 4-7 pax Vito/Caravelle, 8-16 pax VIP Sprinter",
+            "1-3 pax sedan, 4-7 pax Vito/Caravelle, 8-16 pax spacious Sprinter",
             "Flight tracking, child seat and fixed pricing",
             "One-way or round-trip",
             "Driver, insurance, invoicing and payment handled by the operator",

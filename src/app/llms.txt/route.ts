@@ -39,7 +39,7 @@ const BODY = `# Bodrum Apart Kiralama
 - Torba apart kiralama: https://www.bodrumapartkiralama.com/bodrum/torba-apart-kiralama
 
 ## Hizmetler
-- VIP/Özel Transfer: https://www.bodrumapartkiralama.com/vip-transfer
+- Özel Transfer: https://www.bodrumapartkiralama.com/vip-transfer
 - Araç Kiralama: https://www.bodrumapartkiralama.com/arac-kiralama
 - Tekne Kiralama: https://www.bodrumapartkiralama.com/tekne-kiralama
 - Turlar: https://www.bodrumapartkiralama.com/turlar
