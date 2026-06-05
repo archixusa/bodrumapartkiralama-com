@@ -13,9 +13,35 @@ import {
 import { PageHero } from "@/components/PageHero";
 import { JsonLd } from "@/components/JsonLd";
 import { Link } from "@/i18n/routing";
+import { getSiteContent } from "@/lib/content";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.bodrumapartkiralama.com";
+
+// ── DB-backed hero copy (section_key "hakkimizda.hero") ──────────────────────
+// Falls back to the in-code default below when no published row exists, so the
+// page renders byte-identical to today for normal visitors.
+type HakkimizdaHeroCopy = { title: string; sub: string };
+type ByLocale<T> = Record<"tr" | "en" | "de" | "ru", T>;
+
+const HAKKIMIZDA_HERO_DEFAULT: ByLocale<HakkimizdaHeroCopy> = {
+  tr: {
+    title: "Hakkımızda",
+    sub: "Bodrum'da apart kiralama için küçük ölçekli, yerel bir platform.",
+  },
+  en: {
+    title: "About Us",
+    sub: "A small-scale local platform for apartment rental in Bodrum.",
+  },
+  de: {
+    title: "Über uns",
+    sub: "Eine kleine, lokale Plattform für die Vermietung von Ferienwohnungen in Bodrum.",
+  },
+  ru: {
+    title: "О нас",
+    sub: "Небольшая местная платформа для аренды апартаментов в Бодруме.",
+  },
+};
 
 export async function generateMetadata({
   params,
@@ -221,10 +247,16 @@ export default async function Page({
   };
   const copy = copyByLocale[pick] ?? copyByLocale.en;
 
+  // ── HERO (DB-backed; falls back to in-code default when no published row) ──
+  const hero =
+    (await getSiteContent<ByLocale<HakkimizdaHeroCopy>>("hakkimizda.hero")) ??
+    HAKKIMIZDA_HERO_DEFAULT;
+  const heroCopy = hero[pick] ?? hero.en;
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "AboutPage",
-    name: copy.h1,
+    name: heroCopy.title,
     description: copy.intro,
     url:
       locale === "tr"
@@ -244,8 +276,8 @@ export default async function Page({
       <JsonLd data={jsonLd} />
 
       <PageHero
-        title={copy.h1}
-        subtitle={copy.subtitle}
+        title={heroCopy.title}
+        subtitle={heroCopy.sub}
         badge={c("brand")}
         image="https://images.unsplash.com/photo-1684858504602-677ac40eadfd?auto=format&fit=crop&w=2000&q=80"
         crumbs={[

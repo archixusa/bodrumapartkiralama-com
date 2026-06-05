@@ -6,9 +6,39 @@ import { InquiryForm } from "@/components/InquiryForm";
 import { FAQ } from "@/components/FAQ";
 import { JsonLd } from "@/components/JsonLd";
 import { PartnerServiceBanner } from "@/components/PartnerServiceBanner";
+import { getSiteContent } from "@/lib/content";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.bodrumapartkiralama.com";
+
+// ── DB-backed hero copy (section_key "tekne.hero") ───────────────────────────
+// Falls back to the in-code default below when no published row exists, so the
+// page renders byte-identical to today for normal visitors.
+type TekneHeroCopy = { kicker: string; title: string; sub: string };
+type ByLocale<T> = Record<"tr" | "en" | "de" | "ru", T>;
+
+const TEKNE_HERO_DEFAULT: ByLocale<TekneHeroCopy> = {
+  tr: {
+    kicker: "Partner Hizmet · Bodrum 2026",
+    title: "Bodrum Tekne Kiralama",
+    sub: "Günlük tur, mavi tur, özel charter — her bütçeye uygun tekne ve rota.",
+  },
+  en: {
+    kicker: "Partner Service · Bodrum 2026",
+    title: "Bodrum Boat Rental",
+    sub: "Daily tour, blue cruise, private charter — a boat and route for every budget.",
+  },
+  de: {
+    kicker: "Partnerservice · Bodrum 2026",
+    title: "Bodrum Bootsverleih",
+    sub: "Tagestour, Blaue Reise, Privatcharter – ein Boot und eine Route für jedes Budget.",
+  },
+  ru: {
+    kicker: "Партнёрская услуга · Бодрум 2026",
+    title: "Аренда яхт в Бодруме",
+    sub: "Дневная прогулка, круиз вдоль побережья, частный чартер — яхта и маршрут на любой бюджет.",
+  },
+};
 
 export async function generateMetadata({
   params,
@@ -43,6 +73,12 @@ export default async function Page({
   type L = "tr" | "en" | "de" | "ru";
   const pick = locale as L;
   const tx = <T,>(o: Record<L, T>): T => o[pick] ?? o.en;
+
+  // ── HERO (DB-backed; falls back to in-code default when no published row) ──
+  const hero =
+    (await getSiteContent<ByLocale<TekneHeroCopy>>("tekne.hero")) ??
+    TEKNE_HERO_DEFAULT;
+  const heroCopy = hero[pick] ?? hero.en;
 
   const types = [
     { title: t("boatType1Title"), desc: t("boatType1Desc"), price: t("boatType1Price"), icon: Sun },
@@ -149,7 +185,7 @@ export default async function Page({
     {
       "@context": "https://schema.org",
       "@type": "Service",
-      name: t("h1"),
+      name: heroCopy.title,
       description: t("metaDesc"),
       provider: { "@type": "LodgingBusiness", name: "Bodrumapartkiralama.com" },
       areaServed: "Bodrum, Muğla, TR",
@@ -170,21 +206,16 @@ export default async function Page({
     <>
       <JsonLd data={jsonLd} />
       <PageHero
-        title={t("h1")}
-        subtitle={t("subtitle")}
-        badge={tx({
-          tr: "Partner Hizmet · Bodrum 2026",
-          en: "Partner Service · Bodrum 2026",
-          de: "Partnerservice · Bodrum 2026",
-          ru: "Партнёрская услуга · Бодрум 2026",
-        })}
+        title={heroCopy.title}
+        subtitle={heroCopy.sub}
+        badge={heroCopy.kicker}
         image="https://images.unsplash.com/photo-1564166489229-dfb970a591bf?auto=format&fit=crop&w=2000&q=80"
         crumbs={[
           {
             href: "/",
             label: tx({ tr: "Ana Sayfa", en: "Home", de: "Startseite", ru: "Главная" }),
           },
-          { label: t("h1") },
+          { label: heroCopy.title },
         ]}
       />
 
@@ -333,7 +364,7 @@ export default async function Page({
           <aside className="lg:sticky lg:top-20 lg:self-start">
             <InquiryForm
               service="boat"
-              subjectLine={t("h1")}
+              subjectLine={heroCopy.title}
               fields={{ date: true, people: true }}
               whatsappNumber={c("whatsappNumber")}
               whatsappTemplate={tx({

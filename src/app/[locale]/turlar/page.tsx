@@ -7,9 +7,39 @@ import { InquiryForm } from "@/components/InquiryForm";
 import { FAQ } from "@/components/FAQ";
 import { JsonLd } from "@/components/JsonLd";
 import { PartnerServiceBanner } from "@/components/PartnerServiceBanner";
+import { getSiteContent } from "@/lib/content";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.bodrumapartkiralama.com";
+
+// ── DB-backed hero copy (section_key "turlar.hero") ──────────────────────────
+// Falls back to the in-code default below when no published row exists, so the
+// page renders byte-identical to today for normal visitors.
+type TurlarHeroCopy = { kicker: string; title: string; sub: string };
+type ByLocale<T> = Record<"tr" | "en" | "de" | "ru", T>;
+
+const TURLAR_HERO_DEFAULT: ByLocale<TurlarHeroCopy> = {
+  tr: {
+    kicker: "Partner Hizmet · Bodrum 2026",
+    title: "Bodrum Günlük Turlar",
+    sub: "Mavi tur, dalış, jeep safari, antik kent — Bodrum'u keşfetmenin en güzel yolları.",
+  },
+  en: {
+    kicker: "Partner Service · Bodrum 2026",
+    title: "Bodrum Daily Tours",
+    sub: "Blue cruise, diving, jeep safari, ancient cities — the best ways to discover Bodrum.",
+  },
+  de: {
+    kicker: "Partnerservice · Bodrum 2026",
+    title: "Bodrum Tagestouren",
+    sub: "Blaue Reise, Tauchen, Jeep-Safari, antike Städte – die schönsten Wege, Bodrum zu entdecken.",
+  },
+  ru: {
+    kicker: "Партнёрская услуга · Бодрум 2026",
+    title: "Дневные экскурсии по Бодруму",
+    sub: "Морской круиз, дайвинг, джип-сафари, античные города — лучшие способы открыть для себя Бодрум.",
+  },
+};
 
 export async function generateMetadata({
   params,
@@ -44,6 +74,12 @@ export default async function Page({
   type L = "tr" | "en" | "de" | "ru";
   const pick = locale as L;
   const tx = <T,>(o: Record<L, T>): T => o[pick] ?? o.en;
+
+  // ── HERO (DB-backed; falls back to in-code default when no published row) ──
+  const hero =
+    (await getSiteContent<ByLocale<TurlarHeroCopy>>("turlar.hero")) ??
+    TURLAR_HERO_DEFAULT;
+  const heroCopy = hero[pick] ?? hero.en;
 
   const tours = [
     {
@@ -176,7 +212,7 @@ export default async function Page({
     {
       "@context": "https://schema.org",
       "@type": "Service",
-      name: t("h1"),
+      name: heroCopy.title,
       description: t("metaDesc"),
       provider: { "@type": "LodgingBusiness", name: "Bodrumapartkiralama.com" },
       areaServed: "Bodrum, Muğla, TR",
@@ -197,21 +233,16 @@ export default async function Page({
     <>
       <JsonLd data={jsonLd} />
       <PageHero
-        title={t("h1")}
-        subtitle={t("subtitle")}
-        badge={tx({
-          tr: "Partner Hizmet · Bodrum 2026",
-          en: "Partner Service · Bodrum 2026",
-          de: "Partnerservice · Bodrum 2026",
-          ru: "Партнёрская услуга · Бодрум 2026",
-        })}
+        title={heroCopy.title}
+        subtitle={heroCopy.sub}
+        badge={heroCopy.kicker}
         image="https://images.unsplash.com/photo-1591078314870-fe9b75a1665a?auto=format&fit=crop&w=2000&q=80"
         crumbs={[
           {
             href: "/",
             label: tx({ tr: "Ana Sayfa", en: "Home", de: "Startseite", ru: "Главная" }),
           },
-          { label: t("h1") },
+          { label: heroCopy.title },
         ]}
       />
 
@@ -360,7 +391,7 @@ export default async function Page({
           <aside className="lg:sticky lg:top-20 lg:self-start">
             <InquiryForm
               service="tour"
-              subjectLine={t("h1")}
+              subjectLine={heroCopy.title}
               fields={{ date: true, people: true }}
               whatsappNumber={c("whatsappNumber")}
               whatsappTemplate={tx({
