@@ -1,9 +1,22 @@
+import { timingSafeEqual } from "node:crypto";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { NextResponse, type NextRequest } from "next/server";
 import { submitToIndexNow } from "@/lib/indexnow";
 
 /** Canonical host for the site — always the www subdomain. */
 const CANONICAL_HOST = "www.bodrumapartkiralama.com";
+
+/**
+ * Constant-time secret comparison (avoids timing side-channels on the gate).
+ * Returns false for any missing/empty input so a wrong/absent secret is 401.
+ */
+function secretsMatch(provided: string | null, expected: string | undefined): boolean {
+  if (!provided || !expected) return false;
+  const a = Buffer.from(provided);
+  const b = Buffer.from(expected);
+  if (a.length !== b.length) return false;
+  return timingSafeEqual(a, b);
+}
 
 /**
  * On-publish revalidation hook (lets the admin panel push a publish live in seconds).
@@ -21,8 +34,7 @@ export async function POST(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const secret = searchParams.get("secret");
 
-  const expected = process.env.CONTENT_REVALIDATE_SECRET;
-  if (!expected || secret !== expected) {
+  if (!secretsMatch(secret, process.env.CONTENT_REVALIDATE_SECRET)) {
     return NextResponse.json({ revalidated: false, message: "Invalid token" }, {
       status: 401,
     });
