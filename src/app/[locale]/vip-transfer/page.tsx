@@ -98,7 +98,7 @@ export default async function Page({
       title: t("vehicle3Title"),
       desc: t("vehicle3Desc"),
       image:
-        "https://images.unsplash.com/photo-1688619100853-cc0e3ae443ab?auto=format&fit=crop&w=1200&q=80",
+        "https://images.unsplash.com/photo-1656426630273-ca84171a2010?auto=format&fit=crop&w=1200&q=80",
     },
   ];
 
