@@ -1,10 +1,41 @@
 import type { Metadata } from "next";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 import { FAQ } from "@/components/FAQ";
 import { JsonLd } from "@/components/JsonLd";
+import { getSiteContent } from "@/lib/content";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.bodrumapartkiralama.com";
+
+// ── DB-backed FAQ hero copy (section_key "sss.hero") ─────────────────────────
+// The FAQ page heading + intro paragraph (the individual Q&A items stay in
+// FAQ_ITEMS below). Falls back to the in-code default when no published row
+// exists, so the page renders byte-identical to today.
+type FaqHeroCopy = { title: string; intro: string };
+type ByLocale<T> = Record<"tr" | "en" | "de" | "ru", T>;
+
+const FAQ_HERO_DEFAULT: ByLocale<FaqHeroCopy> = {
+  tr: {
+    title: "Sıkça Sorulan Sorular",
+    intro:
+      "Misafirlerimizin sık sorduğu konular ve bizim ortak yanıtlarımız. Aradığınızı bulamazsanız WhatsApp veya e-posta ile yazın; yardımcı olalım.",
+  },
+  en: {
+    title: "Frequently Asked Questions",
+    intro:
+      "Topics our guests often ask about, with our standard answers. If you don't find what you need, message us on WhatsApp or by email and we'll help.",
+  },
+  de: {
+    title: "Häufig gestellte Fragen",
+    intro:
+      "Themen, nach denen unsere Gäste oft fragen, mit unseren Standardantworten. Falls Sie nicht finden, was Sie suchen, schreiben Sie uns per WhatsApp oder E-Mail — wir helfen Ihnen gerne.",
+  },
+  ru: {
+    title: "Часто задаваемые вопросы",
+    intro:
+      "Темы, о которых часто спрашивают наши гости, с нашими стандартными ответами. Если вы не нашли нужного, напишите нам в WhatsApp или по электронной почте — мы поможем.",
+  },
+};
 
 export async function generateMetadata({
   params,
@@ -44,10 +75,15 @@ export default async function Page({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const h = await getTranslations({ locale, namespace: "home" });
 
   const pick = <T,>(o: { tr: T; en: T; de: T; ru: T }): T =>
     o[locale as "tr" | "en" | "de" | "ru"] ?? o.en;
+
+  // ── HERO (DB-backed; falls back to in-code default when no published row) ──
+  const heroData =
+    (await getSiteContent<ByLocale<FaqHeroCopy>>("sss.hero")) ??
+    FAQ_HERO_DEFAULT;
+  const hero = heroData[locale as "tr" | "en" | "de" | "ru"] ?? heroData.en;
 
   const items = FAQ_ITEMS.map((it) => ({ q: pick(it.q), a: pick(it.a) }));
 
@@ -89,15 +125,8 @@ export default async function Page({
     <section className="section">
       <JsonLd data={[ld, breadcrumb]} />
       <div className="container-page max-w-4xl">
-        <h1>{h("faqTitle")}</h1>
-        <p className="mt-2 text-muted">
-          {pick({
-            tr: "Misafirlerimizin sık sorduğu konular ve bizim ortak yanıtlarımız. Aradığınızı bulamazsanız WhatsApp veya e-posta ile yazın; yardımcı olalım.",
-            en: "Topics our guests often ask about, with our standard answers. If you don't find what you need, message us on WhatsApp or by email and we'll help.",
-            de: "Themen, nach denen unsere Gäste oft fragen, mit unseren Standardantworten. Falls Sie nicht finden, was Sie suchen, schreiben Sie uns per WhatsApp oder E-Mail — wir helfen Ihnen gerne.",
-            ru: "Темы, о которых часто спрашивают наши гости, с нашими стандартными ответами. Если вы не нашли нужного, напишите нам в WhatsApp или по электронной почте — мы поможем.",
-          })}
-        </p>
+        <h1>{hero.title}</h1>
+        <p className="mt-2 text-muted">{hero.intro}</p>
         <div className="mt-8">
           <FAQ items={items} />
         </div>
