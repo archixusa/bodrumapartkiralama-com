@@ -26,6 +26,7 @@ import { services } from "@/data/services";
 import { posts } from "@/data/posts";
 import { loc } from "@/lib/i18n-data";
 import { getSiteContent } from "@/lib/content";
+import { getPhone } from "@/lib/contact";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.bodrumapartkiralama.com";
@@ -453,7 +454,7 @@ export default async function HomePage({
       },
       geo: { "@type": "GeoCoordinates", latitude: 37.0344, longitude: 27.4305 },
       areaServed: ["Bodrum", ...districts.map((d) => d.name)],
-      telephone: "+90 538 512 40 88",
+      telephone: getPhone(locale).tel,
       email: "info@bodrumapartkiralama.com",
       openingHoursSpecification: [
         {

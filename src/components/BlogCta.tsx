@@ -1,7 +1,6 @@
 import { MessageCircle, ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/routing";
-
-const WHATSAPP_NUMBER = "905385124088";
+import { getPhone } from "@/lib/contact";
 
 type Copy = {
   heading: string;
@@ -49,7 +48,7 @@ const COPY: Record<"tr" | "en" | "de" | "ru", Copy> = {
 
 export function BlogCta({ locale }: { locale: string }) {
   const copy = COPY[(locale as "tr" | "en" | "de" | "ru") in COPY ? (locale as keyof typeof COPY) : "en"];
-  const waHref = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(copy.waText)}`;
+  const waHref = `https://wa.me/${getPhone(locale).wa}?text=${encodeURIComponent(copy.waText)}`;
 
   return (
     <div className="mt-12 rounded-2xl border border-accent-400/40 bg-accent-400/5 p-6 sm:p-8">

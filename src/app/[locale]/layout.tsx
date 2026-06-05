@@ -12,6 +12,7 @@ import { AnalyticsScripts, GtmNoScript } from "@/components/Analytics";
 import { LeadTracking } from "@/components/LeadTracking";
 import { JsonLd } from "@/components/JsonLd";
 import { districts } from "@/data/districts";
+import { getPhone } from "@/lib/contact";
 
 // Heavy below-fold client components — load lazily so they don't block LCP.
 const SeasonBanner = dynamic(
@@ -155,7 +156,7 @@ export default async function LocaleLayout({
     image: `${SITE_URL}/og-default.svg`,
     description:
       "Bodrum yarımadasında apart kiralama hizmeti veren yerel platform.",
-    telephone: "+905385124088",
+    telephone: getPhone(locale).tel,
     email: "info@bodrumapartkiralama.com",
     priceRange: "₺₺",
     address: {
@@ -212,7 +213,7 @@ export default async function LocaleLayout({
             {children}
           </main>
           <Footer />
-          <WhatsAppFab />
+          <WhatsAppFab locale={locale} />
           <ExitIntentModal />
           <CookieConsent />
           <AnalyticsScripts />

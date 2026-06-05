@@ -1,9 +1,11 @@
 "use client";
 
 import { useState, useEffect, useTransition, FormEvent } from "react";
+import { useLocale } from "next-intl";
 import { getReservationClient } from "./supabaseClient";
 import { isValidTrPhone, getUtmFromUrl } from "./utils";
 import type { SiteName } from "./types";
+import { getPhone } from "@/lib/contact";
 
 export interface OwnerApplicationFormProps {
   /** "bodrumapartkiralama" or "bodrumapartvilla" */
@@ -62,7 +64,7 @@ const CHANNELS = ["Airbnb", "Booking", "Direkt", "Diğer komisyoncu", "Hiçbiri"
 
 export function OwnerApplicationForm({
   siteName,
-  whatsappNumber = "905385124088",
+  whatsappNumber,
   kvkkUrl = "/kvkk",
   supabaseUrl,
   supabaseAnonKey,
@@ -70,6 +72,10 @@ export function OwnerApplicationForm({
   className = "",
   tone = "family",
 }: OwnerApplicationFormProps) {
+  const locale = useLocale();
+  // Locale-aware: TR gets the new line; other locales keep the existing one.
+  // An explicit prop still wins if a caller passes one.
+  const waNumber = whatsappNumber ?? getPhone(locale).wa;
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
@@ -177,9 +183,9 @@ export function OwnerApplicationForm({
           Başvurunuz alındı. Ekibimiz 1-2 saat içinde size dönüş yapacak; mülkünüzü
           değerlendirmek için randevu ayarlayacağız.
         </p>
-        {whatsappNumber && (
+        {waNumber && (
           <a
-            href={`https://wa.me/${whatsappNumber}?text=${waText}`}
+            href={`https://wa.me/${waNumber}?text=${waText}`}
             target="_blank"
             rel="noopener noreferrer"
             className="oaf-btn oaf-btn-secondary"
