@@ -13,17 +13,22 @@ const SUPABASE_HOST = "ddnigdorbnvnubjejzfu.supabase.co";
  *   production-ready on Next 14 yet — accepted tradeoff.
  * - `wss://*.supabase.co` enables Supabase Realtime channels (used by
  *   yorum/unsubscribe/newsletter-onayla clients).
- * - `connect.facebook.net` / `www.facebook.com` for Meta Pixel — loaded only
+ * - `connect.facebook.net` / `*.facebook.com` for Meta Pixel — loaded only
  *   after marketing consent (see Analytics.tsx + CookieConsent).
+ * - GA4 uses regional collect endpoints (region1/region2/.../analytics.google.com),
+ *   so `*.google-analytics.com` + `*.analytics.google.com` are allowed in
+ *   connect-src/img-src rather than enumerating each region.
+ * - `*.googletagmanager.com` in frame-src is REQUIRED by the GTM `<noscript>`
+ *   fallback iframe (googletagmanager.com/ns.html) rendered in the layout.
  */
 const CSP = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://va.vercel-scripts.com https://connect.facebook.net",
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://*.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://va.vercel-scripts.com https://connect.facebook.net",
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-  `img-src 'self' data: blob: https://${SUPABASE_HOST} https://images.unsplash.com https://www.google-analytics.com https://www.googletagmanager.com https://www.facebook.com`,
+  `img-src 'self' data: blob: https://${SUPABASE_HOST} https://images.unsplash.com https://www.google-analytics.com https://*.google-analytics.com https://www.googletagmanager.com https://www.facebook.com https://*.facebook.com`,
   "font-src 'self' data: https://fonts.gstatic.com",
-  `connect-src 'self' https://${SUPABASE_HOST} wss://${SUPABASE_HOST} https://www.google-analytics.com https://region1.google-analytics.com https://api.resend.com https://www.facebook.com`,
-  "frame-src 'self' https://www.google.com https://www.youtube.com https://www.facebook.com",
+  `connect-src 'self' https://${SUPABASE_HOST} wss://${SUPABASE_HOST} https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://www.googletagmanager.com https://api.resend.com https://connect.facebook.net https://www.facebook.com`,
+  "frame-src 'self' https://www.google.com https://www.googletagmanager.com https://www.youtube.com https://www.facebook.com",
   "media-src 'self'",
   "object-src 'none'",
   "base-uri 'self'",
