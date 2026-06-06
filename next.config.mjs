@@ -56,6 +56,9 @@ const securityHeaders = [
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // ESLint runs in dev/CI; don't let lint rules (e.g. no-html-link-for-pages)
+  // break the production build on Vercel. Type-checking (tsc) still guards builds.
+  eslint: { ignoreDuringBuilds: true },
   reactStrictMode: true,
   poweredByHeader: false,
   compress: true,
