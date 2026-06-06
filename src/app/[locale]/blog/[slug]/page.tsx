@@ -13,6 +13,7 @@ import { posts, getPost } from "@/data/posts";
 import { districts } from "@/data/districts";
 import { getMdxPosts, getMdxPost } from "@/lib/mdx-blog";
 import { loc } from "@/lib/i18n-data";
+import { buildAlternates } from "@/lib/seo";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.bodrumapartkiralama.com";
@@ -48,7 +49,7 @@ export async function generateMetadata({
     return {
       title: mdx.meta_title,
       description: mdx.meta_description,
-      alternates: { canonical: url },
+      alternates: buildAlternates(locale, `/blog/${mdx.slug}`),
       openGraph: {
         title: mdx.title,
         description: mdx.excerpt || mdx.meta_description,
@@ -77,7 +78,7 @@ export async function generateMetadata({
   return {
     title: loc(locale, { tr: post.metaTitleTr, en: post.metaTitleEn, de: post.metaTitleDe, ru: post.metaTitleRu }),
     description: loc(locale, { tr: post.metaDescTr, en: post.metaDescEn, de: post.metaDescDe, ru: post.metaDescRu }),
-    alternates: { canonical: url },
+    alternates: buildAlternates(locale, `/blog/${post.slug}`),
     openGraph: {
       title,
       description: excerpt,

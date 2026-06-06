@@ -27,6 +27,7 @@ import { posts } from "@/data/posts";
 import { loc } from "@/lib/i18n-data";
 import { getSiteContent } from "@/lib/content";
 import { getPhone } from "@/lib/contact";
+import { buildAlternates } from "@/lib/seo";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.bodrumapartkiralama.com";
@@ -257,15 +258,7 @@ export async function generateMetadata({
   return {
     title: t("metaTitle"),
     description: t("metaDesc"),
-    alternates: {
-      canonical: url,
-      languages: {
-        tr: SITE_URL,
-        en: `${SITE_URL}/en`,
-        de: `${SITE_URL}/de`,
-        ru: `${SITE_URL}/ru`,
-      },
-    },
+    alternates: buildAlternates(locale, ""),
     openGraph: {
       title: t("ogTitle"),
       description: t("ogDesc"),
@@ -287,7 +280,7 @@ export default async function HomePage({
   const f = await getTranslations({ locale, namespace: "faq" });
   const isTr = locale === "tr";
 
-  const faqItems = [1, 2, 3, 4, 5, 6].map((i) => ({
+  const faqItems = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => ({
     q: f(`q${i}`),
     a: f(`a${i}`),
   }));

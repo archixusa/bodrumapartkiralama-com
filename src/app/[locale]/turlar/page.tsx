@@ -7,7 +7,9 @@ import { InquiryForm } from "@/components/InquiryForm";
 import { FAQ } from "@/components/FAQ";
 import { JsonLd } from "@/components/JsonLd";
 import { PartnerServiceBanner } from "@/components/PartnerServiceBanner";
+import { ServiceRelatedLinks } from "@/components/ServiceRelatedLinks";
 import { getSiteContent } from "@/lib/content";
+import { buildAlternates } from "@/lib/seo";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.bodrumapartkiralama.com";
@@ -55,7 +57,7 @@ export async function generateMetadata({
   return {
     title: t("metaTitle"),
     description: t("metaDesc"),
-    alternates: { canonical: url },
+    alternates: buildAlternates(locale, "/turlar"),
     openGraph: { title: t("metaTitle"), description: t("metaDesc"), url },
   };
 }
@@ -213,10 +215,38 @@ export default async function Page({
       "@context": "https://schema.org",
       "@type": "Service",
       name: heroCopy.title,
+      serviceType: tx({
+        tr: "Günlük turlar",
+        en: "Daily tours",
+        de: "Tagestouren",
+        ru: "Дневные экскурсии",
+      }),
       description: t("metaDesc"),
-      provider: { "@type": "LodgingBusiness", name: "Bodrumapartkiralama.com" },
-      areaServed: "Bodrum, Muğla, TR",
+      provider: {
+        "@type": "Organization",
+        name: "Bodrumapartkiralama.com",
+        url: SITE_URL,
+      },
+      areaServed: { "@type": "Place", name: "Bodrum" },
       url: `${SITE_URL}/turlar`,
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: tx({ tr: "Ana Sayfa", en: "Home", de: "Startseite", ru: "Главная" }),
+          item: SITE_URL,
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: heroCopy.title,
+          item: `${SITE_URL}/turlar`,
+        },
+      ],
     },
     {
       "@context": "https://schema.org",
@@ -387,6 +417,7 @@ export default async function Page({
             <p>{t("intro1")}</p>
             <p>{t("intro2")}</p>
             <p>{t("intro3")}</p>
+            <ServiceRelatedLinks locale={locale} />
           </div>
           <aside className="lg:sticky lg:top-20 lg:self-start">
             <InquiryForm

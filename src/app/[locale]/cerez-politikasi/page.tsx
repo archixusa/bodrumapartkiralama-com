@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { LegalLayout } from "@/components/LegalLayout";
-
-const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://www.bodrumapartkiralama.com";
+import { buildAlternates } from "@/lib/seo";
 
 export async function generateMetadata({
   params,
@@ -12,10 +10,6 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const isTr = locale === "tr";
-  const url =
-    locale === "tr"
-      ? `${SITE_URL}/cerez-politikasi`
-      : `${SITE_URL}/${locale}/cerez-politikasi`;
   const title = isTr
     ? "Çerez Politikası — Bodrum Apart Kiralama"
     : "Cookie Policy — Bodrum Apartment Rental";
@@ -25,7 +19,7 @@ export async function generateMetadata({
   return {
     title,
     description,
-    alternates: { canonical: url },
+    alternates: buildAlternates(locale, "/cerez-politikasi"),
   };
 }
 

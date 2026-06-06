@@ -8,7 +8,9 @@ import { ApartCard } from "@/components/ApartCard";
 import { FAQ } from "@/components/FAQ";
 import { JsonLd } from "@/components/JsonLd";
 import { districts, getDistrict } from "@/data/districts";
+import { posts } from "@/data/posts";
 import { getSiteContent } from "@/lib/content";
+import { buildAlternates } from "@/lib/seo";
 import { loc, locArr } from "@/lib/i18n-data";
 import { districtGuides } from "@/data/districtGuides";
 import { DistrictGuide } from "@/components/DistrictGuide";
@@ -40,7 +42,7 @@ export async function generateMetadata({
   return {
     title: t("metaTitle", { district: districtName }),
     description: t("metaDesc", { district: districtName }),
-    alternates: { canonical: url },
+    alternates: buildAlternates(locale, `/bodrum/${d.urlSlug}`),
     openGraph: {
       title: t("metaTitle", { district: districtName }),
       description: t("metaDesc", { district: districtName }),
@@ -132,6 +134,14 @@ export default async function DistrictPage({
     .map((slug) => districts.find((x) => x.slug === slug))
     .filter(Boolean);
   const guide = isTr ? districtGuides[d.slug] : undefined;
+
+  // Topical internal link: surface a blog guide relevant to this district
+  // (one that lists it under relatedDistricts), falling back to the main
+  // Bodrum holiday guide so there's always a contextual editorial link.
+  const relatedPost =
+    posts.find((p) => p.relatedDistricts?.includes(d.slug)) ??
+    posts.find((p) => p.slug === "bodrum-tatil-rehberi") ??
+    posts[0];
 
   const districtFaq = [
     {
@@ -409,6 +419,28 @@ export default async function DistrictPage({
               </Link>
             ))}
           </div>
+          {relatedPost && (
+            <p className="mt-6 text-sm text-muted">
+              {isTr
+                ? "Daha fazlasını okuyun: "
+                : locale === "de"
+                  ? "Weiterlesen: "
+                  : locale === "ru"
+                    ? "Читать далее: "
+                    : "Read more: "}
+              <Link
+                href={`/blog/${relatedPost.slug}`}
+                className="font-semibold text-navy-600 hover:underline"
+              >
+                {loc(locale, {
+                  tr: relatedPost.titleTr,
+                  en: relatedPost.titleEn,
+                  de: relatedPost.titleDe,
+                  ru: relatedPost.titleRu,
+                })}
+              </Link>
+            </p>
+          )}
         </div>
       </section>
     </>

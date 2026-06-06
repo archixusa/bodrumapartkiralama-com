@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { LegalLayout } from "@/components/LegalLayout";
-
-const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://www.bodrumapartkiralama.com";
+import { buildAlternates } from "@/lib/seo";
 
 export async function generateMetadata({
   params,
@@ -12,12 +10,10 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "kvkk" });
-  const url =
-    locale === "tr" ? `${SITE_URL}/kvkk` : `${SITE_URL}/${locale}/kvkk`;
   return {
     title: t("metaTitle"),
     description: t("subtitle"),
-    alternates: { canonical: url },
+    alternates: buildAlternates(locale, "/kvkk"),
     robots: { index: true, follow: true },
   };
 }

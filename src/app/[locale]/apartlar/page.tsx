@@ -8,6 +8,7 @@ import { ApartlarFilterBar } from "@/components/ApartlarFilterBar";
 import { PropertyCard } from "@/components/PropertyCard";
 import { getPublishedProperties } from "@/lib/properties";
 import { getSiteContent } from "@/lib/content";
+import { buildAlternates } from "@/lib/seo";
 import { districts } from "@/data/districts";
 
 const SITE_URL =
@@ -81,7 +82,7 @@ export async function generateMetadata({
   return {
     title,
     description,
-    alternates: { canonical: url },
+    alternates: buildAlternates(locale, "/apartlar"),
     openGraph: { title, description, url },
   };
 }
