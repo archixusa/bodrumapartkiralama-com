@@ -7,6 +7,8 @@ import { Link } from "@/i18n/routing";
 import { posts } from "@/data/posts";
 import { getMdxPosts } from "@/lib/mdx-blog";
 import { loc } from "@/lib/i18n-data";
+import { buildAlternates } from "@/lib/seo";
+import { JsonLd } from "@/components/JsonLd";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.bodrumapartkiralama.com";
@@ -74,7 +76,7 @@ export async function generateMetadata({
   return {
     title: t("metaTitle"),
     description: t("metaDesc"),
-    alternates: { canonical: url },
+    alternates: buildAlternates(locale, "/blog"),
   };
 }
 
@@ -89,8 +91,19 @@ export default async function Page({
   const isTr = locale === "tr";
   const sorted = unifyAll(locale);
 
+  const blogUrl = locale === "tr" ? `${SITE_URL}/blog` : `${SITE_URL}/${locale}/blog`;
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: isTr ? "Ana Sayfa" : "Home", item: SITE_URL },
+      { "@type": "ListItem", position: 2, name: t("h1"), item: blogUrl },
+    ],
+  };
+
   return (
     <>
+      <JsonLd data={breadcrumbLd} />
       <PageHero
         title={t("h1")}
         subtitle={t("subtitle")}

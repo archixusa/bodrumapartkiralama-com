@@ -93,7 +93,15 @@
     "q5": "Do you offer airport transfer?",
     "a5": "Through our transfer partners we can arrange private transfer from Milas-Bodrum Airport to your apartment. Request it during booking or check the Transfer page for details.",
     "q6": "What's the minimum stay?",
-    "a6": "Typically 3 nights minimum in high season (June–September) and 2 nights off-season. It varies by property; weekly stays often come with a discount."
+    "a6": "Typically 3 nights minimum in high season (June–September) and 2 nights off-season. It varies by property; weekly stays often come with a discount.",
+    "q7": "How much does it cost to rent an apartment in Bodrum?",
+    "a7": "We don't keep a fixed price list — the rate depends on your dates, group size, area and the apartment's amenities. Tell us your travel dates and how many you are, and we'll quickly share the best options and a tailored offer from the owners we've worked with since 2013. Because we work directly with the owners, there's no extra middleman commission.",
+    "q8": "Which area is best?",
+    "a8": "The right area depends on your style of holiday. Gümbet suits lively nightlife and beach access; Bitez and Ortakent are calmer and family-friendly; Yalıkavak is the upscale, marina choice; Gündoğan and Torba stand out for nature and quiet. Tell us what you're after and we'll suggest the bay that fits you best.",
+    "q9": "Are pets allowed?",
+    "a9": "Some of our apartments are pet-friendly. We confirm this with the owner before booking. Let us know your pet's type and size and we'll filter the suitable options and send them over.",
+    "q10": "What are the check-in and check-out times?",
+    "a10": "Standard check-in is 2:00 PM and check-out is 11:00 AM. If there's no same-day guest, early check-in or late check-out can usually be arranged free of charge — just let us know in advance and we'll confirm availability close to your stay."
   },
   "services": {
     "apartTitle": "Apartment Rental",

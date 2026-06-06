@@ -183,6 +183,11 @@ export default async function LocaleLayout({
           crossOrigin=""
         />
         <link rel="dns-prefetch" href="https://images.unsplash.com" />
+        <link
+          rel="preconnect"
+          href="https://images.unsplash.com"
+          crossOrigin=""
+        />
       </head>
       <body className="bg-white font-sans text-ink antialiased">
         <JsonLd data={localBusinessLd} />

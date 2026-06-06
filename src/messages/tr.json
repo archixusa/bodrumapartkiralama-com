@@ -93,7 +93,15 @@
     "q5": "Havalimanı transferi sağlıyor musunuz?",
     "a5": "Anlaşmalı transfer ortaklarımız aracılığıyla Milas-Bodrum Havalimanı'ndan apartınıza özel transfer ayarlayabiliyoruz. Rezervasyon sırasında talep edebilir ya da Transfer sayfasından detaylı bilgi alabilirsiniz.",
     "q6": "Minimum kaç gece kalmam gerekiyor?",
-    "a6": "Yüksek sezonda (Haziran–Eylül) genellikle minimum 3 gece, diğer aylarda minimum 2 gece olarak uygulanır. Mülke göre değişebilir; haftalık kalışlarda yer yer indirim uygulanmaktadır."
+    "a6": "Yüksek sezonda (Haziran–Eylül) genellikle minimum 3 gece, diğer aylarda minimum 2 gece olarak uygulanır. Mülke göre değişebilir; haftalık kalışlarda yer yer indirim uygulanmaktadır.",
+    "q7": "Bodrum'da apart kiralamak ne kadar?",
+    "a7": "Sabit bir fiyat listemiz yok; ücret tarihinize, kişi sayınıza, bölgeye ve apartın olanaklarına göre değişir. Bize tatil tarihlerinizi ve kaç kişi olduğunuzu iletin; 2013'ten bu yana çalıştığımız mülk sahipleri arasından size en uygun seçenekleri ve kişiye özel teklifi kısa sürede paylaşalım. Doğrudan mülk sahibiyle çalıştığımız için araya ekstra komisyon girmez.",
+    "q8": "En uygun bölge hangisi?",
+    "a8": "Doğru bölge, tatil tarzınıza bağlıdır. Hareketli gece hayatı ve plaja yakınlık için Gümbet; sakin aile tatili için Bitez ve Ortakent; lüks ve marina için Yalıkavak; doğa ve huzur için Gündoğan ile Torba öne çıkar. Ne aradığınızı söyleyin, sizin için en uygun koyu önerelim.",
+    "q9": "Evcil hayvan kabul ediliyor mu?",
+    "a9": "Bazı apartlarımız evcil hayvan dostudur. Bunu rezervasyon öncesinde mülk sahibiyle birlikte teyit ediyoruz. Evcil hayvanınızın türü ve boyutu hakkında bilgi verirseniz, uygun seçenekleri hızlıca süzüp size iletiriz.",
+    "q10": "Giriş-çıkış saatleri nedir?",
+    "a10": "Standart giriş saati 14:00, çıkış saati 11:00'dir. Aynı gün başka bir misafir yoksa erken giriş ya da geç çıkış çoğu zaman ücretsiz ayarlanabilir; talebinizi önceden iletmeniz yeterli, müsaitliği tatilinize yakın teyit ederiz."
   },
   "services": {
     "apartTitle": "Apart Kiralama",

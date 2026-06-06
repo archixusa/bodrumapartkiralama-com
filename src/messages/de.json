@@ -93,7 +93,15 @@
     "q5": "Bieten Sie einen Flughafentransfer an?",
     "a5": "Über unsere Transferpartner können wir einen Privattransfer vom Flughafen Milas-Bodrum bis zu Ihrer Wohnung organisieren. Fragen Sie ihn bei der Buchung an oder schauen Sie für Details auf die Transferseite.",
     "q6": "Wie lange muss ich mindestens bleiben?",
-    "a6": "In der Hauptsaison (Juni–September) sind es in der Regel mindestens 3 Nächte, in der Nebensaison 2 Nächte. Das hängt von der jeweiligen Wohnung ab; für wöchentliche Aufenthalte gibt es oft einen Nachlass."
+    "a6": "In der Hauptsaison (Juni–September) sind es in der Regel mindestens 3 Nächte, in der Nebensaison 2 Nächte. Das hängt von der jeweiligen Wohnung ab; für wöchentliche Aufenthalte gibt es oft einen Nachlass.",
+    "q7": "Was kostet es, in Bodrum eine Ferienwohnung zu mieten?",
+    "a7": "Wir führen keine feste Preisliste — der Preis richtet sich nach Ihren Reisedaten, der Personenzahl, dem Gebiet und der Ausstattung der Wohnung. Nennen Sie uns Ihre Reisedaten und Personenzahl, und wir senden Ihnen rasch die besten Optionen und ein individuelles Angebot aus dem Kreis der Eigentümer, mit denen wir seit 2013 arbeiten. Da wir direkt mit den Eigentümern arbeiten, fällt keine zusätzliche Vermittlerprovision an.",
+    "q8": "Welches Gebiet ist am besten?",
+    "a8": "Das passende Gebiet hängt von Ihrem Urlaubsstil ab. Gümbet eignet sich für lebhaftes Nachtleben und Strandnähe; Bitez und Ortakent sind ruhiger und familienfreundlich; Yalıkavak ist die gehobene Wahl mit Yachthafen; Gündoğan und Torba stehen für Natur und Ruhe. Sagen Sie uns, was Sie suchen, und wir empfehlen Ihnen die passende Bucht.",
+    "q9": "Sind Haustiere erlaubt?",
+    "a9": "Einige unserer Wohnungen sind haustierfreundlich. Wir klären dies vor der Buchung mit dem Eigentümer. Teilen Sie uns Art und Größe Ihres Haustiers mit, dann filtern wir die passenden Optionen heraus und senden sie Ihnen.",
+    "q10": "Wie sind die Check-in- und Check-out-Zeiten?",
+    "a10": "Der Standard-Check-in ist um 14:00 Uhr und der Check-out um 11:00 Uhr. Wenn am selben Tag kein weiterer Gast anreist, lassen sich ein früher Check-in oder ein später Check-out meist kostenlos arrangieren — geben Sie uns einfach vorab Bescheid, wir bestätigen die Verfügbarkeit kurz vor Ihrem Aufenthalt."
   },
   "services": {
     "apartTitle": "Ferienwohnung mieten",

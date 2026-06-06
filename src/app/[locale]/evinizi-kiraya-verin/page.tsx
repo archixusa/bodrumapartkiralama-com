@@ -11,6 +11,7 @@ import {
 import { OwnerApplicationForm } from "@/lib/reservation-form";
 import { getPhone } from "@/lib/contact";
 import { getSiteContent } from "@/lib/content";
+import { buildAlternates, buildLocaleUrl } from "@/lib/seo";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.bodrumapartkiralama.com";
@@ -48,18 +49,25 @@ const OWNER_HERO_DEFAULT: ByLocale<OwnerHeroCopy> = {
   },
 };
 
-export const metadata: Metadata = {
-  title: "Evinizi Kiraya Verin — Bodrum Apart Yönetimi",
-  description:
-    "Bodrum'daki mülkünüz için yönetim, pazarlama ve misafir iletişimini birlikte planlayalım. Şeffaf çalışma yapısı, doğrudan mülk sahibi iletişimi.",
-  alternates: { canonical: `${SITE_URL}/evinizi-kiraya-verin` },
-  openGraph: {
-    title: "Evinizi Kiraya Verin — Bodrumapartkiralama.com",
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  return {
+    title: "Evinizi Kiraya Verin — Bodrum Apart Yönetimi",
     description:
-      "Mülk sahipleri için profesyonel kira yönetimi ve şeffaf iletişim.",
-    url: `${SITE_URL}/evinizi-kiraya-verin`,
-  },
-};
+      "Bodrum'daki mülkünüz için yönetim, pazarlama ve misafir iletişimini birlikte planlayalım. Şeffaf çalışma yapısı, doğrudan mülk sahibi iletişimi.",
+    alternates: buildAlternates(locale, "/evinizi-kiraya-verin"),
+    openGraph: {
+      title: "Evinizi Kiraya Verin — Bodrumapartkiralama.com",
+      description:
+        "Mülk sahipleri için profesyonel kira yönetimi ve şeffaf iletişim.",
+      url: buildLocaleUrl(locale, "/evinizi-kiraya-verin"),
+    },
+  };
+}
 
 export default async function Page({
   params,
