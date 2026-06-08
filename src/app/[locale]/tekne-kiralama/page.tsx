@@ -7,11 +7,27 @@ import { FAQ } from "@/components/FAQ";
 import { JsonLd } from "@/components/JsonLd";
 import { PartnerServiceBanner } from "@/components/PartnerServiceBanner";
 import { ServiceRelatedLinks } from "@/components/ServiceRelatedLinks";
+import { RelatedGuides, type RelatedLink } from "@/components/RelatedGuides";
 import { getSiteContent } from "@/lib/content";
 import { buildAlternates, defaultOgImages } from "@/lib/seo";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.bodrumapartkiralama.com";
+
+const RELATED_LINKS: RelatedLink[] = [
+  {
+    href: "/turlar",
+    labels: { tr: "Bodrum turları", en: "Bodrum tours", de: "Bodrum-Touren", ru: "Туры по Бодруму" },
+  },
+  {
+    href: "/blog/bodrum-tekne-turu-rehberi",
+    labels: { tr: "Bodrum tekne turu rehberi", en: "Bodrum boat tour guide", de: "Bodrum Bootstour-Reiseführer", ru: "Гид по морским прогулкам" },
+  },
+  {
+    href: "/blog/bodrum-plajlari",
+    labels: { tr: "Bodrum plajları rehberi", en: "Bodrum beaches guide", de: "Strände von Bodrum", ru: "Путеводитель по пляжам" },
+  },
+];
 
 // ── DB-backed hero copy (section_key "tekne.hero") ───────────────────────────
 // Falls back to the in-code default below when no published row exists, so the
@@ -392,6 +408,7 @@ export default async function Page({
             <p>{t("intro2")}</p>
             <p>{t("intro3")}</p>
             <ServiceRelatedLinks locale={locale} />
+            <RelatedGuides locale={locale} links={RELATED_LINKS} />
           </div>
           <aside className="lg:sticky lg:top-20 lg:self-start">
             <InquiryForm

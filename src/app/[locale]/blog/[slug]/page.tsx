@@ -9,6 +9,7 @@ import { FAQ } from "@/components/FAQ";
 import { JsonLd } from "@/components/JsonLd";
 import { MdxBody } from "@/components/MdxBody";
 import { BlogCta } from "@/components/BlogCta";
+import { RelatedGuides, type RelatedLink } from "@/components/RelatedGuides";
 import { posts, getPost } from "@/data/posts";
 import { districts } from "@/data/districts";
 import { getMdxPosts, getMdxPost } from "@/lib/mdx-blog";
@@ -20,6 +21,30 @@ const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.bodrumapartkiralama.com";
 
 const FALLBACK_HERO = "/blog/bodrum-tatil-rehberi/hero.webp";
+
+// Spoke→hub: contextual links surfaced from every blog post (in addition to the
+// Bodrum Tatil Rehberi pillar, which RelatedGuides always adds first). Kept
+// generic + natural so all posts share one block without hand-editing each one.
+const BLOG_RELATED_LINKS: RelatedLink[] = [
+  {
+    href: "/apartlar",
+    labels: {
+      tr: "Bodrum apart seçenekleri",
+      en: "Bodrum apartments",
+      de: "Bodrum-Apartments",
+      ru: "Апартаменты в Бодруме",
+    },
+  },
+  {
+    href: "/vip-transfer",
+    labels: {
+      tr: "Havalimanı özel transfer",
+      en: "Airport private transfer",
+      de: "Flughafen-Privattransfer",
+      ru: "Трансфер из аэропорта",
+    },
+  },
+];
 
 export function generateStaticParams() {
   const legacy = posts.map((p) => ({ slug: p.slug }));
@@ -245,6 +270,7 @@ export default async function Page({
                   </div>
                 </>
               )}
+              <RelatedGuides locale={locale} links={BLOG_RELATED_LINKS} />
               <BlogCta locale={locale} />
             </div>
             <aside className="lg:sticky lg:top-20 lg:self-start">
@@ -477,6 +503,8 @@ function renderMdxPost(
             )}
 
             <AuthorBio />
+
+            <RelatedGuides locale={locale} links={BLOG_RELATED_LINKS} />
 
             <BlogCta locale={locale} />
           </div>

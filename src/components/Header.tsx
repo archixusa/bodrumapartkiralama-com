@@ -23,9 +23,19 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
 
+  const guideLabel =
+    locale === "tr"
+      ? "Tatil Rehberi"
+      : locale === "de"
+        ? "Reiseführer"
+        : locale === "ru"
+          ? "Путеводитель"
+          : "Travel Guide";
+
   const navLinks = [
     { href: "/", label: locale === "tr" ? "Anasayfa" : "Home" },
     { href: "/apartlar", label: t("apartments") },
+    { href: "/bodrum-tatil-rehberi", label: guideLabel },
     { href: "/blog", label: "Blog" },
     { href: "/hakkimizda", label: t("about") },
     { href: "/iletisim", label: t("contact") },
