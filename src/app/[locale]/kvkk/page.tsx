@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { LegalLayout } from "@/components/LegalLayout";
 import { buildAlternates } from "@/lib/seo";
@@ -140,7 +141,7 @@ function KvkkTr({ email }: { email: string }) {
       <p>
         Sitemiz; performans, analitik ve pazarlama amacıyla çerez kullanır.
         Detaylar ve tercih değiştirme adımları için{" "}
-        <a href="/cerez-politikasi">Çerez Politikası</a> sayfamıza
+        <Link href="/cerez-politikasi">Çerez Politikası</Link> sayfamıza
         bakabilirsiniz.
       </p>
 

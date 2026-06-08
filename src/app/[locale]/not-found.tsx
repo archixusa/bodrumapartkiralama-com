@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { Home, BedDouble, MapPin, MessageCircle } from "lucide-react";
 
@@ -11,8 +12,10 @@ import { Home, BedDouble, MapPin, MessageCircle } from "lucide-react";
  *   (navy-900 #042C53 and friends), warm family tone, native Turkish.
  * - Links use literal UNPREFIXED root paths (Turkish is served at root under
  *   `as-needed` locale routing) so a click lands directly on the real page
- *   without a 307 prefix redirect. Plain <a> is used so the URL is exact
- *   regardless of the detected locale of the 404 boundary.
+ *   without a 307 prefix redirect. next/link's <Link> (NOT the next-intl
+ *   wrapper) is used so the URL stays exact — no locale prefix is injected —
+ *   regardless of the detected locale of the 404 boundary, while still giving
+ *   client-side navigation.
  * - WhatsApp number is locale-aware: read from messages `common.whatsappNumber`
  *   (TR gets the new line; other locales keep the existing one).
  */
@@ -39,18 +42,18 @@ export default function NotFound() {
         </p>
 
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-          <a href="/" className="btn-secondary">
+          <Link href="/" className="btn-secondary">
             <Home className="h-4 w-4" />
             Anasayfa
-          </a>
-          <a href="/apartlar" className="btn-secondary">
+          </Link>
+          <Link href="/apartlar" className="btn-secondary">
             <BedDouble className="h-4 w-4" />
             Apartlar
-          </a>
-          <a href="/bodrum/gumbet-apart-kiralama" className="btn-secondary">
+          </Link>
+          <Link href="/bodrum/gumbet-apart-kiralama" className="btn-secondary">
             <MapPin className="h-4 w-4" />
             Bölgeler
-          </a>
+          </Link>
           <a
             href={`https://wa.me/${WHATSAPP}?text=${waText}`}
             target="_blank"

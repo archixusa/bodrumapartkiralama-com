@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
 type Status = "idle" | "loading" | "success" | "missing-token" | "error";
@@ -98,9 +99,9 @@ export function NewsletterConfirmClient() {
           Bu sayfa, e-posta ile gelen onay linkinden gelmek için tasarlandı.
           Linkin tamamını kopyaladığınızdan emin olun.
         </p>
-        <a href="/" style={linkBtn}>
+        <Link href="/" style={linkBtn}>
           Anasayfaya dön
-        </a>
+        </Link>
       </div>
     );
   }
@@ -123,9 +124,9 @@ export function NewsletterConfirmClient() {
           sezon fırsatları olduğunda size kısa bir bilgilendirme yapacağız.
           İstediğiniz an çıkabilirsiniz.
         </p>
-        <a href="/" style={linkBtn}>
+        <Link href="/" style={linkBtn}>
           Anasayfaya dön
-        </a>
+        </Link>
       </div>
     );
   }
@@ -149,9 +150,9 @@ export function NewsletterConfirmClient() {
           {errorMsg}
         </p>
       )}
-      <a href="/" style={linkBtn}>
+      <Link href="/" style={linkBtn}>
         Anasayfaya dön
-      </a>
+      </Link>
     </div>
   );
 }
