@@ -1,38 +1,10 @@
 "use client";
 
 import { useLocale } from "next-intl";
-import { Star } from "lucide-react";
 import { reviews as allReviews } from "@/data/reviews";
 import { loc } from "@/lib/i18n-data";
-import { JsonLd } from "@/components/JsonLd";
-import { REVIEW_STAR_COLOR } from "@/lib/brand";
-
-const ACCENT = REVIEW_STAR_COLOR;
-
-const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://www.bodrumapartkiralama.com";
 
 type L = "tr" | "en" | "de" | "ru";
-
-function Stars({ value }: { value: number }) {
-  const v = Math.round(value);
-  return (
-    <span
-      className="inline-flex items-center gap-0.5"
-      style={{ color: ACCENT }}
-      aria-label={`${v}/5`}
-    >
-      {[1, 2, 3, 4, 5].map((n) => (
-        <Star
-          key={n}
-          className="h-4 w-4"
-          fill={n <= v ? ACCENT : "none"}
-          strokeWidth={1.75}
-        />
-      ))}
-    </span>
-  );
-}
 
 export function Testimonials({
   district,
@@ -69,87 +41,39 @@ export function Testimonials({
           : "What our guests say";
   const defaultSub =
     pick === "tr"
-      ? "Bodrum'da tatilini bizimle planlayan ailelerden gerçek yorumlar."
+      ? "Bodrum'da tatilini bizimle planlayan ailelerden anılar."
       : pick === "de"
-        ? "Echte Bewertungen von Familien, die ihren Bodrum-Urlaub mit uns geplant haben."
+        ? "Eindrücke von Familien, die ihren Bodrum-Urlaub mit uns geplant haben."
         : pick === "ru"
-          ? "Реальные отзывы семей, спланировавших отдых в Бодруме вместе с нами."
-          : "Real reviews from families who planned their Bodrum stay with us.";
+          ? "Впечатления семей, спланировавших отдых в Бодруме вместе с нами."
+          : "Stories from families who planned their Bodrum stay with us.";
 
   const heading = title ?? defaultHeading;
   const sub = subtitle ?? defaultSub;
 
-  // Honest aggregate: average + count over the FULL pool we draw from
-  // (not just the 3 cards shown), using only real review data.
-  const poolAvg = pool.reduce((sum, r) => sum + r.rating, 0) / pool.length;
-  const poolCount = pool.length;
-  const reviewsWord =
-    pick === "tr"
-      ? "değerlendirme"
-      : pick === "de"
-        ? "Bewertungen"
-        : pick === "ru"
-          ? "отзывов"
-          : "reviews";
-
-  // Average used for JSON-LD aggregateRating (matches the cards rendered).
-  const avg =
-    shown.reduce((sum, r) => sum + r.rating, 0) / shown.length;
-
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "LodgingBusiness",
-    "@id": `${SITE_URL}/#organization`,
-    name: "Bodrumapartkiralama.com",
-    url: SITE_URL,
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: Number(avg.toFixed(1)),
-      reviewCount: shown.length,
-      bestRating: 5,
-      worstRating: 1,
-    },
-    review: shown.map((r) => ({
-      "@type": "Review",
-      author: { "@type": "Person", name: r.author },
-      reviewRating: {
-        "@type": "Rating",
-        ratingValue: r.rating,
-        bestRating: 5,
-        worstRating: 1,
-      },
-      reviewBody: loc(locale, { tr: r.textTr, en: r.textEn }),
-    })),
-  };
+  // NOTE (E-E-A-T / review-schema authenticity):
+  // These testimonial cards are illustrative marketing copy from `data/reviews.ts`,
+  // NOT verified, individually-attributable review records. We therefore do NOT
+  // emit AggregateRating / Review JSON-LD here and do NOT surface a numeric
+  // star-average to users — fabricated machine-readable review schema is a
+  // Google manual-action risk and erodes AI/search trust. Real, verified
+  // guest reviews (Supabase-backed) drive ApartmentReviews.tsx on property
+  // pages; structured review data should originate only from that real source.
 
   return (
     <section
       className="section section-soft"
       aria-label={heading}
     >
-      <JsonLd data={jsonLd} />
       <div className="container-page">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-balance">{heading}</h2>
           {sub && <p className="mt-3 text-muted">{sub}</p>}
-
-          {/* Aggregate rating — honest average + count over real review data. */}
-          <div className="mt-4 inline-flex items-center gap-2 rounded-full bg-white px-4 py-1.5 text-sm shadow-card">
-            <Stars value={poolAvg} />
-            <span className="font-semibold text-navy-900">
-              {poolAvg.toFixed(1)}
-            </span>
-            <span className="text-muted">
-              {" · "}
-              {poolCount} {reviewsWord}
-            </span>
-          </div>
         </div>
 
         <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {shown.map((r) => (
             <figure key={r.id} className="card flex h-full flex-col gap-4 p-6">
-              <Stars value={r.rating} />
               <blockquote className="flex-1 text-[15px] leading-relaxed text-ink/90">
                 “{loc(locale, { tr: r.textTr, en: r.textEn })}”
               </blockquote>
@@ -158,8 +82,6 @@ export function Testimonials({
                 <span className="text-muted">
                   {" · "}
                   {r.city}
-                  {" · "}
-                  {r.source}
                 </span>
               </figcaption>
             </figure>

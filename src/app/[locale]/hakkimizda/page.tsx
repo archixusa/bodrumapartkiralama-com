@@ -9,6 +9,11 @@ import {
   Phone,
   Mail,
   CalendarClock,
+  Handshake,
+  Clock,
+  Car,
+  CheckCircle2,
+  Users,
 } from "lucide-react";
 import { PageHero } from "@/components/PageHero";
 import { JsonLd } from "@/components/JsonLd";
@@ -120,6 +125,45 @@ export default async function Page({
       founderRole: "Yerel ekip, sürdürülebilir ortaklık",
       founderDesc:
         "Faaliyetlerimize 2013 yılında başladık. Bodrum yarımadasında konaklama yönetimi alanında çalışmakta, mülk sahipleriyle bireysel ilişki kurmayı, misafirlerle doğrudan iletişim kurmayı önceliklendiriyoruz.",
+      storyTitle: "Kuruluş hikâyemiz",
+      story: [
+        "Her şey 2013'te küçük bir fikirle başladı: Bodrum'a gelen ailelerin, fotoğrafıyla gerçeği aynı olan, güvenebilecekleri bir aparta aracısız ulaşması. O yıllarda yarımadada konaklama çoğunlukla zincirleme komisyoncularla ilerliyordu; misafir kiminle konuştuğunu, evin gerçekte nasıl olduğunu çoğu zaman bilemiyordu.",
+        "Biz bu zinciri kısalttık. Tek tek mülk sahipleriyle tanıştık, evleri yerinde gezdik, sadece kendimizin de gönül rahatlığıyla kalacağı apartları listelemeye başladık. On yılı aşkın sürede aynı bölgede, aynı ilkelerle çalışmaya devam ediyoruz; bugün geri dönen misafirleri ve uzun yıllardır birlikte çalıştığımız ev sahiplerini bir aile gibi görüyoruz.",
+      ],
+      whyTitle: "Neden doğrudan, neden aracısız?",
+      whyLead:
+        "Misafirle mülk sahibi arasında ne kadar az halka olursa, tatil o kadar güvenli ve net olur.",
+      whyItems: [
+        {
+          icon: Handshake,
+          title: "Doğrudan mülk sahibi ağı",
+          desc: "Listelediğimiz her apartın sahibini bizzat tanıyoruz. Aradaki komisyon zincirini kaldırınca hem fotoğrafla gerçek birebir oluyor hem de bir sorun olduğunda doğru kişiye saniyeler içinde ulaşıyoruz.",
+        },
+        {
+          icon: Compass,
+          title: "Yerinde yerel uzmanlık",
+          desc: "Gümbet, Turgutreis, Yalıkavak, Bitez, Ortakent ve Gündoğan'ı harita üzerinden değil, içinde yaşayarak biliyoruz. Hangi mahalle hangi aileye uyar, plaja kaç dakika yürünür — bunları deneyimden söylüyoruz.",
+        },
+        {
+          icon: Clock,
+          title: "7/24 yanınızdayız",
+          desc: "Tatil hep mesai saatlerinde geçmiyor. Check-in'den check-out'a, gece yarısı bile bir ihtiyaç çıktığında WhatsApp'tan bize ulaşabilir, gerçek bir insanla konuşabilirsiniz.",
+        },
+        {
+          icon: Car,
+          title: "Özel Transfer ve uçtan uca destek",
+          desc: "Milas-Bodrum Havalimanı'ndan apartınızın kapısına Özel Transfer, market, araç ve gezi önerilerine kadar tatilin tüm halkalarında yanınızda oluyoruz. İlk telefonun yarımadaya ayak basmadan önce çalmasını istemiyoruz.",
+        },
+      ],
+      trustTitle: "Güven unsurları",
+      trust: [
+        "2013'ten beri kesintisiz, aynı bölgede faaliyet.",
+        "Doğrudan mülk sahipleriyle birebir, aracısız çalışma.",
+        "Sadece yerinde gördüğümüz, kendimizin de kalacağı apartlar.",
+        "7/24 WhatsApp, telefon ve e-posta ile gerçek bir ekibe erişim.",
+        "Havalimanı Özel Transfer dahil uçtan uca konaklama desteği.",
+      ],
+      editorialLink: "İçeriklerimizi hazırlayan Editör Ekibi'ni tanıyın",
       contactTitle: "İletişim",
       contactLead:
         "Sorularınız için en hızlı kanal WhatsApp; telefon ve e-posta da açıktır.",
@@ -158,6 +202,45 @@ export default async function Page({
       founderRole: "Local team, lasting partnership",
       founderDesc:
         "We have been operating in property management on the Bodrum peninsula since 2013, with a strong preference for personal relationships with owners and direct contact with guests.",
+      storyTitle: "Our founding story",
+      story: [
+        "It all started in 2013 with a simple idea: that families coming to Bodrum should be able to reach an apartment they can trust — one where the photos match reality — without any middleman. Back then, accommodation on the peninsula mostly ran through chains of brokers; guests rarely knew who they were really talking to or what a property was actually like.",
+        "We shortened that chain. We met the owners one by one, walked through the homes in person, and listed only the apartments we'd happily stay in ourselves. More than a decade later we still work the same region with the same principles — today we treat returning guests and the owners we've worked with for years like family.",
+      ],
+      whyTitle: "Why direct, why no middleman?",
+      whyLead:
+        "The fewer links between guest and owner, the safer and clearer the stay.",
+      whyItems: [
+        {
+          icon: Handshake,
+          title: "Direct owner network",
+          desc: "We personally know the owner of every apartment we list. Removing the broker chain means the photos match reality, and when something comes up we reach the right person in seconds.",
+        },
+        {
+          icon: Compass,
+          title: "First-hand local expertise",
+          desc: "We know Gümbet, Turgutreis, Yalıkavak, Bitez, Ortakent and Gündoğan from living it, not from a map. Which neighbourhood suits which family, how many minutes' walk to the beach — we tell you from experience.",
+        },
+        {
+          icon: Clock,
+          title: "Here for you 24/7",
+          desc: "Holidays don't keep office hours. From check-in to check-out, even at midnight, you can reach us on WhatsApp and talk to a real person.",
+        },
+        {
+          icon: Car,
+          title: "Private Transfer and end-to-end support",
+          desc: "From Private Transfer between Milas-Bodrum Airport and your apartment door, to tips on groceries, cars and outings — we're with you through every link of the trip. We'd rather the first call happen before you even land.",
+        },
+      ],
+      trustTitle: "Why you can trust us",
+      trust: [
+        "Continuous operation in the same region since 2013.",
+        "One-to-one work with owners directly, with no middleman.",
+        "Only apartments we've seen in person and would stay in ourselves.",
+        "A real team reachable 24/7 via WhatsApp, phone and email.",
+        "End-to-end stay support, including Airport Private Transfer.",
+      ],
+      editorialLink: "Meet the Editorial Team behind our content",
       contactTitle: "Contact",
       contactLead:
         "WhatsApp is the fastest channel; phone and email are also open.",
@@ -197,6 +280,45 @@ export default async function Page({
       founderRole: "Lokales Team, beständige Partnerschaft",
       founderDesc:
         "Wir haben unsere Tätigkeit 2013 aufgenommen. Wir sind im Bereich der Unterkunftsverwaltung auf der Halbinsel Bodrum tätig und legen Wert auf persönliche Beziehungen zu Eigentümern und direkten Kontakt zu unseren Gästen.",
+      storyTitle: "Unsere Gründungsgeschichte",
+      story: [
+        "Alles begann 2013 mit einer einfachen Idee: Familien, die nach Bodrum kommen, sollten ohne Vermittler eine Ferienwohnung finden, der sie vertrauen können — eine, bei der die Fotos der Realität entsprechen. Damals lief die Vermietung auf der Halbinsel meist über Ketten von Maklern; Gäste wussten selten, mit wem sie wirklich sprachen oder wie eine Unterkunft tatsächlich aussah.",
+        "Wir haben diese Kette verkürzt. Wir haben die Eigentümer einzeln kennengelernt, die Wohnungen persönlich besichtigt und nur die Apartments gelistet, in denen wir selbst gern wohnen würden. Mehr als ein Jahrzehnt später arbeiten wir in derselben Region nach denselben Grundsätzen — wiederkehrende Gäste und Eigentümer, mit denen wir seit Jahren zusammenarbeiten, sind für uns wie eine Familie.",
+      ],
+      whyTitle: "Warum direkt, warum ohne Vermittler?",
+      whyLead:
+        "Je weniger Glieder zwischen Gast und Eigentümer, desto sicherer und klarer der Aufenthalt.",
+      whyItems: [
+        {
+          icon: Handshake,
+          title: "Direktes Eigentümernetzwerk",
+          desc: "Wir kennen den Eigentümer jeder gelisteten Wohnung persönlich. Ohne Maklerkette stimmen die Fotos mit der Realität überein, und bei Fragen erreichen wir in Sekunden die richtige Person.",
+        },
+        {
+          icon: Compass,
+          title: "Lokale Kompetenz aus erster Hand",
+          desc: "Wir kennen Gümbet, Turgutreis, Yalıkavak, Bitez, Ortakent und Gündoğan, weil wir dort leben, nicht von der Karte. Welches Viertel zu welcher Familie passt, wie viele Gehminuten bis zum Strand — das sagen wir aus Erfahrung.",
+        },
+        {
+          icon: Clock,
+          title: "Rund um die Uhr für Sie da",
+          desc: "Urlaub hält sich nicht an Bürozeiten. Vom Check-in bis zum Check-out, auch um Mitternacht, erreichen Sie uns über WhatsApp und sprechen mit einem echten Menschen.",
+        },
+        {
+          icon: Car,
+          title: "Privattransfer und Rundum-Unterstützung",
+          desc: "Vom Privattransfer zwischen dem Flughafen Milas-Bodrum und Ihrer Wohnungstür bis zu Tipps für Einkauf, Mietwagen und Ausflüge — wir begleiten Sie bei jedem Schritt. Der erste Anruf darf gern erfolgen, bevor Sie überhaupt landen.",
+        },
+      ],
+      trustTitle: "Warum Sie uns vertrauen können",
+      trust: [
+        "Durchgehende Tätigkeit in derselben Region seit 2013.",
+        "Direkte Eins-zu-eins-Zusammenarbeit mit Eigentümern, ohne Vermittler.",
+        "Nur Wohnungen, die wir persönlich gesehen haben und in denen wir selbst wohnen würden.",
+        "Ein echtes Team, rund um die Uhr per WhatsApp, Telefon und E-Mail erreichbar.",
+        "Rundum-Unterstützung beim Aufenthalt, inklusive Flughafen-Privattransfer.",
+      ],
+      editorialLink: "Lernen Sie das Redaktionsteam hinter unseren Inhalten kennen",
       contactTitle: "Kontakt",
       contactLead:
         "Der schnellste Weg für Ihre Fragen ist WhatsApp; Telefon und E-Mail stehen ebenfalls offen.",
@@ -236,6 +358,45 @@ export default async function Page({
       founderRole: "Местная команда, надёжное партнёрство",
       founderDesc:
         "Мы начали свою деятельность в 2013 году. Мы работаем в сфере управления жильём на полуострове Бодрум и отдаём предпочтение личным отношениям с владельцами и прямому общению с гостями.",
+      storyTitle: "История нашего основания",
+      story: [
+        "Всё началось в 2013 году с простой идеи: семьи, приезжающие в Бодрум, должны без посредников находить апартаменты, которым можно доверять, — такие, где фотографии совпадают с реальностью. Тогда аренда жилья на полуострове в основном шла через цепочки посредников; гости редко знали, с кем на самом деле говорят и каков объект в действительности.",
+        "Мы сократили эту цепочку. Мы знакомились с владельцами по одному, лично осматривали жильё и публиковали только те апартаменты, в которых остановились бы сами. Спустя более десяти лет мы работаем в том же районе по тем же принципам — возвращающихся гостей и владельцев, с которыми сотрудничаем годами, мы считаем своей семьёй.",
+      ],
+      whyTitle: "Почему напрямую, почему без посредников?",
+      whyLead:
+        "Чем меньше звеньев между гостем и владельцем, тем безопаснее и понятнее отдых.",
+      whyItems: [
+        {
+          icon: Handshake,
+          title: "Прямая сеть владельцев",
+          desc: "Мы лично знаем владельца каждого публикуемого объекта. Без цепочки посредников фотографии совпадают с реальностью, а при любом вопросе мы за секунды связываемся с нужным человеком.",
+        },
+        {
+          icon: Compass,
+          title: "Местная экспертиза из первых рук",
+          desc: "Мы знаем Гюмбет, Тургутрейс, Ялыкавак, Битез, Ортакент и Гюндоган не по карте, а потому что живём здесь. Какой район подходит какой семье, сколько минут пешком до пляжа — говорим по опыту.",
+        },
+        {
+          icon: Clock,
+          title: "Рядом с вами 24/7",
+          desc: "Отдых не подчиняется рабочему графику. От заезда до выезда, даже посреди ночи, вы можете написать нам в WhatsApp и поговорить с живым человеком.",
+        },
+        {
+          icon: Car,
+          title: "Индивидуальный трансфер и поддержка от и до",
+          desc: "От индивидуального трансфера между аэропортом Milas-Bodrum и дверью ваших апартаментов до советов о магазинах, аренде авто и поездках — мы рядом на каждом этапе. Пусть первый звонок прозвучит ещё до того, как вы приземлитесь.",
+        },
+      ],
+      trustTitle: "Почему нам можно доверять",
+      trust: [
+        "Непрерывная работа в одном и том же районе с 2013 года.",
+        "Прямое сотрудничество с владельцами один на один, без посредников.",
+        "Только жильё, которое мы видели лично и в котором остановились бы сами.",
+        "Реальная команда, доступная 24/7 в WhatsApp, по телефону и e-mail.",
+        "Поддержка проживания от и до, включая индивидуальный трансфер из аэропорта.",
+      ],
+      editorialLink: "Познакомьтесь с редакционной командой, готовящей наш контент",
       contactTitle: "Контакты",
       contactLead:
         "Самый быстрый канал для ваших вопросов — WhatsApp; телефон и e-mail также открыты.",
@@ -266,10 +427,25 @@ export default async function Page({
         : `${SITE_URL}/${locale}/hakkimizda`,
     mainEntity: {
       "@type": "Organization",
+      "@id": `${SITE_URL}/#organization`,
       name: "Bodrumapartkiralama.com",
       url: SITE_URL,
+      logo: { "@type": "ImageObject", url: `${SITE_URL}/logo_kare.svg` },
       foundingDate: "2013",
       areaServed: "Bodrum, Muğla, TR",
+      knowsAbout: [
+        "Bodrum apart kiralama",
+        "Gümbet",
+        "Turgutreis",
+        "Yalıkavak",
+        "Bitez",
+        "Ortakent",
+        "Gündoğan",
+      ],
+      sameAs: [
+        "https://www.facebook.com/BodrumApartKiralama",
+        "https://www.instagram.com/bodrumapartkiralama",
+      ],
     },
   };
 
@@ -335,6 +511,72 @@ export default async function Page({
               </p>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Founding story — E-E-A-T: real origin + 2013 history */}
+      <section className="section section-soft">
+        <div className="container-page max-w-3xl">
+          <h2 className="text-2xl">{copy.storyTitle}</h2>
+          <div className="mt-5 space-y-4">
+            {copy.story.map((para, i) => (
+              <p key={i} className="text-base leading-relaxed text-ink/90">
+                {para}
+              </p>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Why direct / no-middleman, local expertise, 24/7, Özel Transfer */}
+      <section className="section">
+        <div className="container-page">
+          <div className="mx-auto max-w-2xl text-center">
+            <h2 className="text-balance">{copy.whyTitle}</h2>
+            <p className="mt-3 text-muted">{copy.whyLead}</p>
+          </div>
+          <div className="mt-10 grid gap-5 sm:grid-cols-2">
+            {copy.whyItems.map((item) => {
+              const Icon = item.icon;
+              return (
+                <div key={item.title} className="card flex gap-4 p-6">
+                  <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-md bg-navy-50 text-navy-900">
+                    <Icon className="h-6 w-6" />
+                  </span>
+                  <div>
+                    <h3 className="text-lg">{item.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-ink/85">
+                      {item.desc}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Trust elements + link to editorial team */}
+      <section className="section section-soft">
+        <div className="container-page max-w-3xl">
+          <h2 className="text-2xl">{copy.trustTitle}</h2>
+          <ul className="mt-6 space-y-3">
+            {copy.trust.map((item) => (
+              <li key={item} className="flex items-start gap-3">
+                <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-navy-600" />
+                <span className="text-sm leading-relaxed text-ink/90">
+                  {item}
+                </span>
+              </li>
+            ))}
+          </ul>
+          <Link
+            href="/yazar/editor"
+            className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-navy-600 underline-offset-2 hover:underline"
+          >
+            <Users className="h-4 w-4" />
+            {copy.editorialLink}
+          </Link>
         </div>
       </section>
 
