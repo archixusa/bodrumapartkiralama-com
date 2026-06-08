@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { LegalLayout } from "@/components/LegalLayout";
 import { buildAlternates } from "@/lib/seo";
@@ -161,7 +162,7 @@ function CerezTr({ email }: { email: string }) {
         Çerez politikamız veya kişisel verilerinizle ilgili soru ve talepleriniz
         için <a href={`mailto:${email}`}>{email}</a> adresine yazabilirsiniz.
         Detaylı bilgi için{" "}
-        <a href="/kvkk">KVKK Aydınlatma Metnine</a> de göz atabilirsiniz.
+        <Link href="/kvkk">KVKK Aydınlatma Metnine</Link> de göz atabilirsiniz.
       </p>
     </>
   );
@@ -265,7 +266,7 @@ function CerezEn({ email }: { email: string }) {
       <p>
         For questions about our cookie policy or your personal data, write to{" "}
         <a href={`mailto:${email}`}>{email}</a>. For more details, also see our{" "}
-        <a href="/kvkk">Privacy Notice</a>.
+        <Link href="/kvkk">Privacy Notice</Link>.
       </p>
     </>
   );
