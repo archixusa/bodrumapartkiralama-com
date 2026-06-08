@@ -8,7 +8,7 @@ import { ApartlarFilterBar } from "@/components/ApartlarFilterBar";
 import { PropertyCard } from "@/components/PropertyCard";
 import { getPublishedProperties } from "@/lib/properties";
 import { getSiteContent } from "@/lib/content";
-import { buildAlternates } from "@/lib/seo";
+import { buildAlternates, defaultOgImages } from "@/lib/seo";
 import { districts } from "@/data/districts";
 
 const SITE_URL =
@@ -83,7 +83,8 @@ export async function generateMetadata({
     title,
     description,
     alternates: buildAlternates(locale, "/apartlar"),
-    openGraph: { title, description, url },
+    openGraph: { title, description, url, ...defaultOgImages(locale).openGraph },
+    twitter: defaultOgImages(locale).twitter,
   };
 }
 
@@ -222,6 +223,9 @@ export default async function ApartlarPage({
     }),
   };
 
+  const listUrl =
+    locale === "tr" ? `${SITE_URL}/apartlar` : `${SITE_URL}/${locale}/apartlar`;
+
   const breadcrumb = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -241,9 +245,37 @@ export default async function ApartlarPage({
     ],
   };
 
+  // ItemList of the rendered apart items (position-ordered) for AEO. Only
+  // emitted when inventory exists; with an empty catalogue we skip it gracefully
+  // so we never advertise a list of zero items. Per-item detail pages do not yet
+  // exist (they 404), so items carry name + image but no dead per-item URL.
+  const itemListLd = hasProperties
+    ? {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        name: copy.h1,
+        url: listUrl,
+        numberOfItems: properties.length,
+        itemListElement: properties.map((p, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          name:
+            pick({
+              tr: p.title.tr,
+              en: p.title.en,
+              de: p.title.de ?? p.title.en,
+              ru: p.title.ru ?? p.title.en,
+            }) ?? p.title.tr,
+          image: p.coverImage.startsWith("http")
+            ? p.coverImage
+            : `${SITE_URL}${p.coverImage}`,
+        })),
+      }
+    : null;
+
   return (
     <>
-      <JsonLd data={breadcrumb} />
+      <JsonLd data={itemListLd ? [breadcrumb, itemListLd] : breadcrumb} />
 
       {/* HEADER (navy) — count-aware */}
       <section className="relative overflow-hidden bg-navy-900 text-white">

@@ -9,7 +9,7 @@ import { JsonLd } from "@/components/JsonLd";
 import { PartnerServiceBanner } from "@/components/PartnerServiceBanner";
 import { ServiceRelatedLinks } from "@/components/ServiceRelatedLinks";
 import { getSiteContent } from "@/lib/content";
-import { buildAlternates } from "@/lib/seo";
+import { buildAlternates, defaultOgImages } from "@/lib/seo";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.bodrumapartkiralama.com";
@@ -58,7 +58,8 @@ export async function generateMetadata({
     title: t("metaTitle"),
     description: t("metaDesc"),
     alternates: buildAlternates(locale, "/turlar"),
-    openGraph: { title: t("metaTitle"), description: t("metaDesc"), url },
+    openGraph: { title: t("metaTitle"), description: t("metaDesc"), url, ...defaultOgImages(locale).openGraph },
+    twitter: defaultOgImages(locale).twitter,
   };
 }
 

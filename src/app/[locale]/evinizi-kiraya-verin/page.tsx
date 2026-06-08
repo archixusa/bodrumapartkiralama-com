@@ -11,7 +11,7 @@ import {
 import { OwnerApplicationForm } from "@/lib/reservation-form";
 import { getPhone } from "@/lib/contact";
 import { getSiteContent } from "@/lib/content";
-import { buildAlternates, buildLocaleUrl } from "@/lib/seo";
+import { buildAlternates, buildLocaleUrl, defaultOgImages } from "@/lib/seo";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.bodrumapartkiralama.com";
@@ -65,7 +65,9 @@ export async function generateMetadata({
       description:
         "Mülk sahipleri için profesyonel kira yönetimi ve şeffaf iletişim.",
       url: buildLocaleUrl(locale, "/evinizi-kiraya-verin"),
+      ...defaultOgImages(locale).openGraph,
     },
+    twitter: defaultOgImages(locale).twitter,
   };
 }
 

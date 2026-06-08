@@ -7,7 +7,7 @@ import { Link } from "@/i18n/routing";
 import { posts } from "@/data/posts";
 import { getMdxPosts } from "@/lib/mdx-blog";
 import { loc } from "@/lib/i18n-data";
-import { buildAlternates } from "@/lib/seo";
+import { buildAlternates, defaultOgImages } from "@/lib/seo";
 import { JsonLd } from "@/components/JsonLd";
 
 const SITE_URL =
@@ -77,6 +77,8 @@ export async function generateMetadata({
     title: t("metaTitle"),
     description: t("metaDesc"),
     alternates: buildAlternates(locale, "/blog"),
+    openGraph: { title: t("metaTitle"), description: t("metaDesc"), url, ...defaultOgImages(locale).openGraph },
+    twitter: defaultOgImages(locale).twitter,
   };
 }
 
@@ -92,6 +94,8 @@ export default async function Page({
   const sorted = unifyAll(locale);
 
   const blogUrl = locale === "tr" ? `${SITE_URL}/blog` : `${SITE_URL}/${locale}/blog`;
+  const postUrl = (slug: string) =>
+    locale === "tr" ? `${SITE_URL}/blog/${slug}` : `${SITE_URL}/${locale}/blog/${slug}`;
   const breadcrumbLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -101,9 +105,25 @@ export default async function Page({
     ],
   };
 
+  // ItemList of the rendered posts (newest-first, position-ordered) for AEO —
+  // helps search/AI engines understand the blog index as an ordered collection.
+  const itemListLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: t("h1"),
+    url: blogUrl,
+    numberOfItems: sorted.length,
+    itemListElement: sorted.map((p, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      url: postUrl(p.slug),
+      name: loc(locale, { tr: p.titleTr, en: p.titleEn, de: p.titleDe, ru: p.titleRu }),
+    })),
+  };
+
   return (
     <>
-      <JsonLd data={breadcrumbLd} />
+      <JsonLd data={[breadcrumbLd, itemListLd]} />
       <PageHero
         title={t("h1")}
         subtitle={t("subtitle")}

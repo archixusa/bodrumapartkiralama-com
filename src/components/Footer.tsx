@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
-import { Mail, Phone, MapPin, MessageCircle } from "lucide-react";
+import { Mail, Phone, MapPin, MessageCircle, Facebook, Instagram } from "lucide-react";
 import { Link } from "@/i18n/routing";
 
 export function Footer() {
@@ -128,6 +128,28 @@ export function Footer() {
             <li className="inline-flex items-center gap-2 text-navy-100/85">
               <MapPin className="h-4 w-4 text-accent-400" />
               Bodrum, Muğla / Türkiye
+            </li>
+            <li className="flex items-center gap-4">
+              <a
+                href="https://www.facebook.com/BodrumApartKiralama"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook"
+                className="inline-flex items-center gap-2 text-navy-100/85 hover:text-white"
+              >
+                <Facebook className="h-4 w-4 text-accent-400" />
+                Facebook
+              </a>
+              <a
+                href="https://www.instagram.com/bodrumapartkiralama"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="inline-flex items-center gap-2 text-navy-100/85 hover:text-white"
+              >
+                <Instagram className="h-4 w-4 text-accent-400" />
+                Instagram
+              </a>
             </li>
           </FooterColumn>
         </div>

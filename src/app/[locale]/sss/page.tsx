@@ -3,7 +3,7 @@ import { setRequestLocale } from "next-intl/server";
 import { FAQ } from "@/components/FAQ";
 import { JsonLd } from "@/components/JsonLd";
 import { getSiteContent } from "@/lib/content";
-import { buildAlternates } from "@/lib/seo";
+import { buildAlternates, defaultOgImages } from "@/lib/seo";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.bodrumapartkiralama.com";
@@ -65,7 +65,8 @@ export async function generateMetadata({
     title,
     description,
     alternates: buildAlternates(locale, "/sss"),
-    openGraph: { title, description, url },
+    openGraph: { title, description, url, ...defaultOgImages(locale).openGraph },
+    twitter: defaultOgImages(locale).twitter,
   };
 }
 
