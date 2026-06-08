@@ -376,7 +376,7 @@ function ApartlarGuideTr() {
     },
     {
       q: "Depozito alıyor musunuz?",
-      a: "Mülk sahipleri genellikle apartın hasar riskine karşılık depozito ister; tutar 2.000-10.000 TL arası değişir. Çıkışta apart kontrolü sonrası iade edilir. Bu uygulama mülke göre farklılık gösterir; her durumda rezervasyon onayında size yazılı olarak bildirilir.",
+      a: "Mülk sahipleri genellikle apartın hasar riskine karşılık depozito ister; tutar mülke göre değişir ve çıkışta apart kontrolü sonrası iade edilir. Bu uygulama mülke göre farklılık gösterir; her durumda rezervasyon onayında size yazılı olarak bildirilir.",
     },
     {
       q: "Apartta evcil hayvan kabul ediyor musunuz?",

@@ -7,7 +7,6 @@ import {
   submitBooking,
   type BookingFormState,
 } from "@/app/actions/bookingAction";
-import { formatTRY } from "@/lib/format";
 import { Link } from "@/i18n/routing";
 import { trackLead } from "@/lib/analytics";
 
@@ -15,8 +14,6 @@ interface Props {
   apartmentSlug: string;
   apartmentTitle: string;
   capacity: number;
-  highSeasonPrice: number;
-  lowSeasonPrice: number;
   whatsappNumber: string;
 }
 
@@ -24,8 +21,6 @@ export function BookingForm({
   apartmentSlug,
   apartmentTitle,
   capacity,
-  highSeasonPrice,
-  lowSeasonPrice,
   whatsappNumber,
 }: Props) {
   const t = useTranslations("apartDetail");
@@ -106,15 +101,9 @@ export function BookingForm({
         <p className="mt-1 text-xs text-muted">{t("bookSubtitle")}</p>
       </div>
 
-      <div className="grid grid-cols-2 gap-3 rounded-md bg-navy-50 p-3 text-xs">
-        <div>
-          <p className="text-muted">{t("highSeason")}</p>
-          <p className="text-sm font-bold text-navy-900">{formatTRY(highSeasonPrice)}</p>
-        </div>
-        <div>
-          <p className="text-muted">{t("lowSeason")}</p>
-          <p className="text-sm font-bold text-navy-900">{formatTRY(lowSeasonPrice)}</p>
-        </div>
+      <div className="rounded-md bg-navy-50 p-3 text-xs">
+        <p className="text-sm font-bold text-navy-900">{t("priceCta")}</p>
+        <p className="mt-1 text-muted">{t("priceCtaDesc")}</p>
       </div>
 
       <div className="grid grid-cols-2 gap-3">

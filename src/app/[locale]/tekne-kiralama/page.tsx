@@ -23,22 +23,22 @@ const TEKNE_HERO_DEFAULT: ByLocale<TekneHeroCopy> = {
   tr: {
     kicker: "Partner Hizmet · Bodrum 2026",
     title: "Bodrum Tekne Kiralama",
-    sub: "Günlük tur, mavi tur, özel charter — her bütçeye uygun tekne ve rota.",
+    sub: "Günlük tur, mavi tur, özel charter — her plana uygun tekne ve rota.",
   },
   en: {
     kicker: "Partner Service · Bodrum 2026",
     title: "Bodrum Boat Rental",
-    sub: "Daily tour, blue cruise, private charter — a boat and route for every budget.",
+    sub: "Daily tour, blue cruise, private charter — a boat and route for every plan.",
   },
   de: {
     kicker: "Partnerservice · Bodrum 2026",
     title: "Bodrum Bootsverleih",
-    sub: "Tagestour, Blaue Reise, Privatcharter – ein Boot und eine Route für jedes Budget.",
+    sub: "Tagestour, Blaue Reise, Privatcharter – ein Boot und eine Route für jeden Plan.",
   },
   ru: {
     kicker: "Партнёрская услуга · Бодрум 2026",
     title: "Аренда яхт в Бодруме",
-    sub: "Дневная прогулка, круиз вдоль побережья, частный чартер — яхта и маршрут на любой бюджет.",
+    sub: "Дневная прогулка, круиз вдоль побережья, частный чартер — яхта и маршрут под любой план.",
   },
 };
 

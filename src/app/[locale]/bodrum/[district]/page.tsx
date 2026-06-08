@@ -176,20 +176,20 @@ export default async function DistrictPage({
     {
       q:
         locale === "tr"
-          ? `${districtName}'da apart kiralama fiyatları ne kadar?`
+          ? `${districtName}'da apart kiralama bütçesi neye göre değişir?`
           : locale === "de"
-            ? `Wie hoch sind die Mietpreise für Apartments in ${districtName}?`
+            ? `Wovon hängt das Budget für eine Ferienwohnung in ${districtName} ab?`
             : locale === "ru"
-              ? `Каковы цены на аренду апартаментов в ${districtName}?`
-              : `What are the apartment rental prices in ${districtName}?`,
+              ? `От чего зависит бюджет на аренду апартаментов в ${districtName}?`
+              : `What affects the budget for an apartment in ${districtName}?`,
       a:
         locale === "tr"
-          ? `Yüksek sezonda (Haziran-Eylül) günlük fiyatlar 2.400 TL'den başlar, lüks segmente göre değişir. Düşük sezonda fiyatlar yaklaşık %50 düşer.`
+          ? `Bütçe; tarihinize, sezona (yüksek sezon Haziran-Eylül en yoğun dönemdir), kişi sayısına ve apartın segmentine göre değişir. Düşük sezonda konaklama belirgin biçimde daha uygun olur. Tarihinizi paylaşın; size özel teklifi iletelim.`
           : locale === "de"
-            ? `In der Hauptsaison (Juni-September) beginnen die Tagespreise bei etwa 2.400 TL und steigen je nach Luxusklasse. In der Nebensaison liegen die Preise rund 50 % niedriger.`
+            ? `Das Budget hängt von Ihren Terminen, der Saison (Hauptsaison Juni-September ist am gefragtesten), der Personenzahl und der Kategorie der Wohnung ab. In der Nebensaison ist die Unterkunft spürbar günstiger. Teilen Sie uns Ihre Termine mit, und wir senden Ihnen ein individuelles Angebot.`
             : locale === "ru"
-              ? `В высокий сезон (июнь-сентябрь) суточные цены начинаются примерно от 2 400 TL и растут в зависимости от класса люкс. В низкий сезон цены примерно на 50 % ниже.`
-              : `In high season (June-September), daily prices start from around 2,400 TL and rise with the luxury tier. Off-season prices are roughly 50% lower.`,
+              ? `Бюджет зависит от ваших дат, сезона (высокий сезон июнь-сентябрь — самый востребованный), числа гостей и категории апартаментов. В низкий сезон проживание заметно доступнее. Сообщите нам даты — и мы пришлём индивидуальное предложение.`
+              : `The budget depends on your dates, the season (high season June-September is the busiest), party size and the apartment's tier. Accommodation is noticeably more affordable off-season. Share your dates and we'll send a tailored offer.`,
     },
     {
       q:
