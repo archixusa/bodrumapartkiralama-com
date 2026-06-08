@@ -15,8 +15,8 @@ export interface DistrictGuide {
   notSuitedFor: string[];
   /** Each section becomes an H2 block with multiple paragraphs. */
   sections: GuideSection[];
-  /** Indicative price band shown as a small card. */
-  priceBand: { from: string; to: string; note: string };
+  /** Qualitative seasonal/accommodation note shown as a small card. No prices. */
+  priceBand: { note: string };
   /** 5 SSS — every district has its own, no repeats. */
   faqs: { q: string; a: string }[];
   /** Hand-curated 4 keywords used as page keywords for the meta tag. */
@@ -73,7 +73,7 @@ export const districtGuides: Record<DistrictSlug, DistrictGuide> = {
         h2: "Apart Özellikleri ve Fiyat Aralıkları",
         body: [
           "Gümbet'teki apart stoku oldukça çeşitli: sahil hattına çok yakın 1+1 ekonomi daireler, ara sokaklarda klimalı 2+1 aile apartları ve tepe konumlu deniz manzaralı 3+1 site dairelerine kadar geniş bir yelpaze var. Çoğu apart havuzlu sitelerde yer alıyor; bireysel apartlar genelde merkez konumda bulunuyor.",
-          "Yüksek sezonda (haziran sonu – eylül başı) Gümbet için günlük kira aralığı genellikle 1.500 TL ile 5.000 TL arasında değişir. Düşük sezonda (mayıs ve ekim) bu rakam %40-50 oranında düşer. Haftalık konaklamalarda %10-15 indirim almak genellikle mümkün. 4 ve üzeri kişi seyahat eden gruplar için apart, otel odasına göre çoğu zaman daha avantajlıdır.",
+          "Yüksek sezon (haziran sonu – eylül başı) en hareketli ve en talep gören dönemdir; düşük sezonda (mayıs ve ekim) konaklama belirgin biçimde daha uygun olur. Haftalık konaklamalarda esneklik genellikle mümkün. 4 ve üzeri kişi seyahat eden gruplar için apart, otel odasına göre çoğu zaman daha avantajlıdır. Tarihinize göre size en uygun seçenekleri ve kişiye özel teklifi paylaşalım.",
         ],
       },
       {
@@ -85,8 +85,6 @@ export const districtGuides: Record<DistrictSlug, DistrictGuide> = {
       },
     ],
     priceBand: {
-      from: "1.500 TL/gece",
-      to: "5.000 TL/gece",
       note: "2026 yüksek sezon — 2+1 standart apart aralığı",
     },
     faqs: [
@@ -104,7 +102,7 @@ export const districtGuides: Record<DistrictSlug, DistrictGuide> = {
       },
       {
         q: "Plajda şezlong/şemsiye ücretsiz mi?",
-        a: "Halk plajı kısmı ücretsiz ancak donanım yok. İşletmelerin önünde minimum harcamayla (kişi başı yaklaşık 250-400 TL'lik yeme-içme) şezlong-şemsiye kullanılabilir; bazı yerler günlük 200-500 TL arasında doğrudan ücret de alır.",
+        a: "Halk plajı kısmı ücretsiz ancak donanım yok. İşletmelerin önünde genellikle uygun bir minimum yeme-içme harcamasıyla şezlong-şemsiye kullanılabilir; bazı yerler günlük şezlong ücreti de alır.",
       },
       {
         q: "Eylül sonunda gitsem hâlâ denize girilir mi?",
@@ -167,7 +165,7 @@ export const districtGuides: Record<DistrictSlug, DistrictGuide> = {
         h2: "Apart Özellikleri ve Fiyat Aralıkları",
         body: [
           "Turgutreis'teki apart stoku ağırlıklı olarak site içinde havuzlu daireler ve müstakil küçük apart binalarından oluşur. 1+1 stüdyo apartlardan 4+1 dubleks daireye kadar geniş bir yelpaze mevcut. Site içi apartlar genellikle 24 saat güvenlik, çocuk havuzu ve oyun alanı gibi olanaklar içerir; aile tatilleri için pratiktir.",
-          "Yüksek sezonda günlük kira aralığı 1.200 TL ile 4.500 TL arasında değişir. Düşük sezonda %35-45 indirim mümkündür. Haftalık ve aylık konaklamalarda mülk sahipleri çoğu zaman ek esneklik gösterir; eylül sonu - ekim arasında 'orta sezon' avantajlı fiyatlarla yakalanabilir.",
+          "Yüksek sezon en yoğun dönemdir; düşük sezonda konaklama belirgin biçimde daha uygun olur. Haftalık ve aylık konaklamalarda mülk sahipleri çoğu zaman ek esneklik gösterir; eylül sonu - ekim arasındaki 'orta sezon' sakin ve uygun bir kaçamak için iyi bir fırsattır. Tarihinize göre kişiye özel teklif hazırlıyoruz.",
         ],
       },
       {
@@ -179,8 +177,6 @@ export const districtGuides: Record<DistrictSlug, DistrictGuide> = {
       },
     ],
     priceBand: {
-      from: "1.200 TL/gece",
-      to: "4.500 TL/gece",
       note: "2026 yüksek sezon — 2+1 aile apart aralığı",
     },
     faqs: [
@@ -239,7 +235,7 @@ export const districtGuides: Record<DistrictSlug, DistrictGuide> = {
         h2: "Marina, Restoranlar ve Butik Alışveriş",
         body: [
           "Palmarina Yalıkavak, Akdeniz'in en büyük süper yat marinalarından biri. 600+ yat kapasitesi, 60+ restoran ve mağaza, kongre merkezi ve sanat galerileri içerir. Akşamları marinanın su kenarındaki yürüyüş yolu boyunca dolaşmak, yatlara bakarken kokteyl içmek bölgenin klasik akşam aktivitesi.",
-          "Yalıkavak gastronomisi son yıllarda Türkiye'nin en dinamik bölgesi haline geldi. Marina içinde Zuma, Cipriani, Macakizi gibi uluslararası markaların yanı sıra şef Mehmet Gürs, Civan Er, Maksut Aşkar gibi Türk şeflerin mekânları yer alır. Eski kasaba sokaklarında ise daha mütevazı meyhane, balık ızgara işletmeleri ve yerel Ege mutfağı sunan butik mekânlar var. Akşam yemeği için ortalama kişi başı harcama 1.500 TL-5.000 TL bandında.",
+          "Yalıkavak gastronomisi son yıllarda Türkiye'nin en dinamik bölgesi haline geldi. Marina içinde Zuma, Cipriani, Macakizi gibi uluslararası markaların yanı sıra şef Mehmet Gürs, Civan Er, Maksut Aşkar gibi Türk şeflerin mekânları yer alır. Eski kasaba sokaklarında ise daha mütevazı meyhane, balık ızgara işletmeleri ve yerel Ege mutfağı sunan butik mekânlar var. Akşam yemeği için bütçeniz, tercih ettiğiniz mekânın konseptine göre belirgin biçimde değişir.",
           "Alışveriş açısından marinada Hermes, Louis Vuitton, Brunello Cucinelli, Loro Piana gibi lüks markaların butikleri; eski kasaba sokaklarında ise yerel Türk tasarımcıların butik mağazaları ve el yapımı seramik atölyeleri bulunur.",
         ],
       },
@@ -261,7 +257,7 @@ export const districtGuides: Record<DistrictSlug, DistrictGuide> = {
         h2: "Apart Özellikleri ve Fiyat Aralıkları",
         body: [
           "Yalıkavak apart stoku, butik tatil anlayışına göre şekillenmiş. Marina çevresinde modern, dekorasyonu özenli, deniz manzaralı küçük apartlar; eski kasaba sokaklarında geleneksel taş ev şeklinde dönüştürülmüş butik daireler; tepe yamaçlarında ise geniş, havuzlu site apartları bulunur. Çoğu apart sahibi mülkünü dikkatle döşemiş; tasarım kalitesi yarımadanın diğer bölgelerine göre genelde bir adım önde.",
-          "Yüksek sezonda günlük kira aralığı 2.000 TL ile 8.000 TL arasında geniş bir spektrum gösterir; lüks villa ve apartlarda 15.000 TL'yi aşabiliyor. Apart fiyatlarında 2+1 standart bir daire için ortalama 3.000-5.000 TL/gece bandı yaygın. Düşük sezonda %30-40 indirim mümkün, ancak Yalıkavak diğer bölgelerden daha az sezonsal fiyat dalgalanması gösterir.",
+          "Yalıkavak, konaklama tarafında yarımadanın butik ve üst segment bölgelerinden biri; standart 2+1 dairelerden lüks villa ve apartlara kadar geniş bir aralık sunar. Düşük sezonda konaklama daha uygun olur, ancak Yalıkavak diğer bölgelere göre daha az sezonsal dalgalanma gösterir. Tarihinize ve mülke göre kişiye özel teklif hazırlıyoruz.",
         ],
       },
       {
@@ -273,8 +269,6 @@ export const districtGuides: Record<DistrictSlug, DistrictGuide> = {
       },
     ],
     priceBand: {
-      from: "2.000 TL/gece",
-      to: "8.000 TL/gece",
       note: "2026 yüksek sezon — apart tarafı, 2+1 ortalama bandı",
     },
     faqs: [
@@ -284,7 +278,7 @@ export const districtGuides: Record<DistrictSlug, DistrictGuide> = {
       },
       {
         q: "Marinaya giriş ücretli mi?",
-        a: "Marina alanına giriş ücretsiz; otopark kullanımı saatlik ücretli (yaklaşık 100-200 TL/saat). Restoran rezervasyonu yapanlar için bazı işletmeler valet park hizmeti sunar.",
+        a: "Marina alanına giriş ücretsiz; otopark kullanımı saatlik ücretlidir. Restoran rezervasyonu yapanlar için bazı işletmeler valet park hizmeti sunar.",
       },
       {
         q: "Eski kasabada konaklamak ile marina çevresi farkı ne?",
@@ -292,11 +286,11 @@ export const districtGuides: Record<DistrictSlug, DistrictGuide> = {
       },
       {
         q: "Süper yat kiralama yaptırılır mı?",
-        a: "Evet, Palmarina'da kiralama acenteleri bulunur. Günlük charter ortalama 80.000-300.000 TL bandı; sezonda en az 1 ay önceden rezervasyon önerilir.",
+        a: "Evet, Palmarina'da kiralama acenteleri bulunur. Günlük charter teknenin tipine ve donanımına göre değişir; sezonda en az 1 ay önceden rezervasyon önerilir.",
       },
       {
         q: "Yalıkavak'ta plaj kulübü deneyimi nasıl?",
-        a: "Marina içindeki Casa Dell'Arte, Macakizi gibi premium beach club'lar şezlong-şemsiye + minimum harcama sistemiyle çalışır. Kişi başı 1.500-3.000 TL minimum harcama yaygın. Daha yerel bir alternatif için Tilkicik Koyu'ndaki küçük işletmeler tercih edilebilir.",
+        a: "Marina içindeki Casa Dell'Arte, Macakizi gibi premium beach club'lar şezlong-şemsiye + minimum harcama sistemiyle çalışır; minimum harcama yarımadanın üst segmentindedir. Daha yerel ve uygun bir alternatif için Tilkicik Koyu'ndaki küçük işletmeler tercih edilebilir.",
       },
     ],
     keywords: [
@@ -333,14 +327,14 @@ export const districtGuides: Record<DistrictSlug, DistrictGuide> = {
         h2: "Sahil ve Su Sporları",
         body: [
           "Bitez sahili yaklaşık 2 km uzunluğunda, kum-çakıl karışımı. Suyun girişi yumuşak, sığ; küçük çocuklar için güvenli. Sahilin doğu kısmı (Gümbet'e yakın) daha dar, batı kısmı (Ortakent yönü) daha geniş ve sakin.",
-          "Bitez koyu, Türkiye'nin en iyi rüzgâr sörfü noktalarından biri kabul edilir. Öğleden sonra meltem rüzgârı düzenli olarak eser ve koy yapısı dalgayı düşük tutar — bu, yeni başlayanlar için ideal koşullar yaratır. Bölgede 3-4 sörf okulu var; başlangıç dersi yaklaşık 1.500-2.500 TL/saat, ekipman dahil. Kitesurf için de uygun rüzgâr koşulları var, fakat daha çok deneyimli kullanıcılara önerilir. Paddle board ve kano kiralama yaz boyunca sahilde mevcut.",
+          "Bitez koyu, Türkiye'nin en iyi rüzgâr sörfü noktalarından biri kabul edilir. Öğleden sonra meltem rüzgârı düzenli olarak eser ve koy yapısı dalgayı düşük tutar — bu, yeni başlayanlar için ideal koşullar yaratır. Bölgede 3-4 sörf okulu var; başlangıç dersleri genellikle ekipman dahil sunulur. Kitesurf için de uygun rüzgâr koşulları var, fakat daha çok deneyimli kullanıcılara önerilir. Paddle board ve kano kiralama yaz boyunca sahilde mevcut.",
           "Sahilde halk plajı bölümü ve işletmelere ait şezlong-şemsiye düzeni mevcut. İskelelerde minimum harcama ile şezlong; halk bölümünde kendi malzemenizle gün geçirebilirsiniz.",
         ],
       },
       {
         h2: "Yeme-İçme",
         body: [
-          "Bitez'in gastronomik kimliği balık, meze ve Ege ev mutfağı üzerine kurulu. Sahil iskelelerindeki restoranlar (Naz, Mavi, Akin's, Atilla'nın Yeri gibi yerel klasikler) on yıllardır faaliyette ve yerel halk tarafından da tercih edilir. Kişi başı ortalama harcama 800-1.500 TL (içkili akşam yemeği).",
+          "Bitez'in gastronomik kimliği balık, meze ve Ege ev mutfağı üzerine kurulu. Sahil iskelelerindeki restoranlar (Naz, Mavi, Akin's, Atilla'nın Yeri gibi yerel klasikler) on yıllardır faaliyette ve yerel halk tarafından da tercih edilir; içkili bir akşam yemeği keyifli ve makul bir deneyim sunar.",
           "Sahil hattının arkasındaki sokaklarda küçük kahvaltı evleri, gözleme dükkânları ve kafeler bulunur. Bitez'in serpme kahvaltısı (yöre ürünleri ile zenginleştirilmiş) ünlüdür; pazar sabahı brunch'ı sevenler için ideal bir aktivite. Tepedeki Eski Bitez köyünde ise daha mütevazı esnaf lokantaları, yerel pazar ve haftalık manav gezisi yapılabilir.",
         ],
       },
@@ -355,7 +349,7 @@ export const districtGuides: Record<DistrictSlug, DistrictGuide> = {
         h2: "Apart Özellikleri ve Fiyat Aralıkları",
         body: [
           "Bitez apart stoku ağırlıklı olarak 2 katlı küçük apart binaları, müstakil bahçeli yazlıklar ve havuzlu site apartlarından oluşur. Apartların büyük çoğunluğu mandalina ve zeytin ağaçlarıyla çevrili bahçelerde yer alır; bu, Bitez'in atmosferine özgü bir özellik. Lüks villa stoku da azımsanmayacak şekilde var ancak Yalıkavak kadar yoğun değil.",
-          "Yüksek sezonda 2+1 apart için günlük kira aralığı 1.400 TL ile 4.500 TL arasında. Mandalina bahçeli müstakil yazlıklar 5.000-10.000 TL/gece bandına çıkabiliyor. Düşük sezonda %40 indirim mümkün. Bitez, eylül-ekim sezonunda hâlâ sakin denizi sayesinde popüler kalır.",
+          "Yüksek sezon en yoğun dönemdir; mandalina bahçeli müstakil yazlıklar üst segmente kadar uzanır. Düşük sezonda konaklama belirgin biçimde daha uygun olur. Bitez, eylül-ekim sezonunda hâlâ sakin denizi sayesinde popüler kalır. Tarihinize göre kişiye özel teklif hazırlıyoruz.",
         ],
       },
       {
@@ -367,8 +361,6 @@ export const districtGuides: Record<DistrictSlug, DistrictGuide> = {
       },
     ],
     priceBand: {
-      from: "1.400 TL/gece",
-      to: "4.500 TL/gece",
       note: "2026 yüksek sezon — 2+1 standart apart aralığı",
     },
     faqs: [
@@ -427,22 +419,22 @@ export const districtGuides: Record<DistrictSlug, DistrictGuide> = {
         h2: "Yahşi Plajı",
         body: [
           "Yahşi plajı yaklaşık 1 km uzunluğunda ve Bodrum yarımadasının en uzun kumlu plajı. Tamamen kumlu zemin, hafif eğimli giriş, sığ su yapısı — özellikle 0-7 yaş arası çocuklarla seyahat eden aileler için yarımadanın en güvenli plajlarından biri kabul edilir.",
-          "Plaj boyunca işletmelerin önünde minimum harcama veya günlük şezlong ücretiyle (200-400 TL) gün geçirilebilir. Halk plajı bölgeleri ücretsiz ancak donanımsız. Sahilde su sporları (jet ski, banana, ringo) işletmeleri yaz aylarında aktif. Plajın doğu ucunda 'Yahşi Beach' adlı daha modern beach club, batı ucunda ise daha yerel ve aile dostu işletmeler yoğunlaşır.",
+          "Plaj boyunca işletmelerin önünde uygun bir minimum harcama veya günlük şezlong ücretiyle gün geçirilebilir. Halk plajı bölgeleri ücretsiz ancak donanımsız. Sahilde su sporları (jet ski, banana, ringo) işletmeleri yaz aylarında aktif. Plajın doğu ucunda 'Yahşi Beach' adlı daha modern beach club, batı ucunda ise daha yerel ve aile dostu işletmeler yoğunlaşır.",
           "Plajdan yaklaşık 1 km içeride çocuk parkları, voleybol sahası ve halka açık WC-duş alanı bulunur. Ailelerin günlerini orada uzun süre geçirmesine uygun altyapı mevcut.",
         ],
       },
       {
         h2: "Eski Köy ve Salı Pazarı",
         body: [
-          "Eski Ortakent köyü, Bodrum'un Halikarnas Mozolesi öncesi köy yaşamını bir ölçüde hâlâ taşır. Köy meydanında her salı kurulan pazar; sebze-meyve, peynir-zeytin, ev yapımı reçel, yerel zeytinyağı ve özellikle el yapımı seramik-tekstil ürünleriyle ünlü. Turistik bir pazar olmaktan ziyade yerli halkın haftalık alışveriş yaptığı bir nokta; bu özellik fiyatlandırmaya da yansır (Bodrum merkezi pazarına göre daha uygun).",
+          "Eski Ortakent köyü, Bodrum'un Halikarnas Mozolesi öncesi köy yaşamını bir ölçüde hâlâ taşır. Köy meydanında her salı kurulan pazar; sebze-meyve, peynir-zeytin, ev yapımı reçel, yerel zeytinyağı ve özellikle el yapımı seramik-tekstil ürünleriyle ünlü. Turistik bir pazar olmaktan ziyade yerli halkın haftalık alışveriş yaptığı bir nokta; bu da onu Bodrum merkezi pazarına göre daha uygun ve samimi kılar.",
           "Köy içinde Mustafa Paşa Kulesi'ni gezmek, köy meydanındaki kafede Türk kahvesi içmek ve geleneksel taş ev sokaklarında yürümek 1.5-2 saatlik bir köy gezisi planı için yeterli. Yaz aylarında köyün sokakları gölgelidir; öğleden sonra ziyaret etmek keyiflidir.",
         ],
       },
       {
         h2: "Yeme-İçme",
         body: [
-          "Ortakent yeme-içme sahnesi 'aile lokantası' kategorisinde güçlüdür. Yahşi sahilindeki restoranlar balık-meze, izgara ve ev mutfağı ağırlıklı; ortalama akşam yemeği harcaması kişi başı 600-1.200 TL bandında. Plajın batı ucundaki küçük balıkçı işletmeleri yöresel sade lezzeti, doğu ucundaki daha modern işletmeler ise çeşitli mutfak konsepti sunar.",
-          "Eski köyde esnaf lokantaları ve kahvaltıcılar var; tipik bir köy serpme kahvaltısı kişi başı 250-400 TL. Pizza, burger gibi modern fast food seçenekleri sahil hattında daha yaygındır; gerçek 'köy yemeği' deneyimi için Eski Ortakent tercih edilmeli.",
+          "Ortakent yeme-içme sahnesi 'aile lokantası' kategorisinde güçlüdür. Yahşi sahilindeki restoranlar balık-meze, izgara ve ev mutfağı ağırlıklı; aile bütçesine uygun bir akşam yemeği için ideal. Plajın batı ucundaki küçük balıkçı işletmeleri yöresel sade lezzeti, doğu ucundaki daha modern işletmeler ise çeşitli mutfak konsepti sunar.",
+          "Eski köyde esnaf lokantaları ve kahvaltıcılar var; tipik bir köy serpme kahvaltısı keyifli ve uygundur. Pizza, burger gibi modern fast food seçenekleri sahil hattında daha yaygındır; gerçek 'köy yemeği' deneyimi için Eski Ortakent tercih edilmeli.",
         ],
       },
       {
@@ -456,7 +448,7 @@ export const districtGuides: Record<DistrictSlug, DistrictGuide> = {
         h2: "Apart Özellikleri ve Fiyat Aralıkları",
         body: [
           "Ortakent apart stoku Yahşi sahili çevresinde yoğunlaşır. Site apartları (havuz, güvenlik, çocuk oyun alanlı) yaygın; müstakil küçük apart binaları sahil hattının arka sokaklarında bulunur. Eski köyde butik bir kaç taş ev apart şeklinde tatilciye açılmış durumda — sınırlı sayıda ancak otantik bir konaklama tecrübesi sunar.",
-          "Yüksek sezonda 2+1 standart apart için günlük 1.300-4.000 TL bandı yaygın. Havuzlu site apartları üst banda yakın, müstakil binalar alt banda. Eski köy taş evleri 2.500-5.000 TL/gece arası, sınırlı stok. Düşük sezonda %35-45 indirim mümkün.",
+          "Havuzlu site apartları üst segmente, müstakil binalar daha uygun tarafa konumlanır. Eski köy taş evleri sınırlı stoklu ve özel bir konaklama sunar. Düşük sezonda konaklama belirgin biçimde daha uygun olur. Tarihinize göre kişiye özel teklif hazırlıyoruz.",
         ],
       },
       {
@@ -468,8 +460,6 @@ export const districtGuides: Record<DistrictSlug, DistrictGuide> = {
       },
     ],
     priceBand: {
-      from: "1.300 TL/gece",
-      to: "4.000 TL/gece",
       note: "2026 yüksek sezon — 2+1 standart apart aralığı",
     },
     faqs: [
@@ -483,7 +473,7 @@ export const districtGuides: Record<DistrictSlug, DistrictGuide> = {
       },
       {
         q: "Yahşi plajında şezlong-şemsiye ücreti ne kadar?",
-        a: "İşletmeye göre değişir: doğrudan ücret 200-400 TL/gün veya minimum harcama (kişi başı 250-500 TL yeme-içme). Halk plajı bölgesi ücretsiz ancak donanım kendiniz getirirsiniz.",
+        a: "İşletmeye göre değişir: ya günlük bir şezlong ücreti ya da uygun bir minimum yeme-içme harcaması uygulanır. Halk plajı bölgesi ücretsiz ancak donanım kendiniz getirirsiniz.",
       },
       {
         q: "Ortakent'ten Bodrum merkezine akşam gitmek mantıklı mı?",
@@ -528,13 +518,13 @@ export const districtGuides: Record<DistrictSlug, DistrictGuide> = {
         h2: "Sahil ve Cennet Adası",
         body: [
           "Gündoğan sahili çakıllı, yaklaşık 800 metre uzunluğunda. Kum değil, ancak suyun berraklığı yarımadanın en iyilerinden. Sahilde küçük ve orta ölçekli işletmeler şezlong-şemsiye servisi sunar; minimum harcama veya günlük ücret sistemi yaygın. Halk plajı bölümü dar ama ücretsiz.",
-          "Gündoğan'ın imzası, koyun yaklaşık 1 km açığındaki Cennet Adası (Aigialos Adası). Tekneyle 5-10 dakikada ulaşılan bu küçük ada, berrak suyu ve doğal bitki örtüsüyle yarım günlük kaçamak için ideal. Sahilden tekne kiralama saatlik 800-1.500 TL bandında; bireysel olarak veya günlük tur tekneleriyle gidilebilir. Adada bir küçük restoran ve gölgelik var.",
+          "Gündoğan'ın imzası, koyun yaklaşık 1 km açığındaki Cennet Adası (Aigialos Adası). Tekneyle 5-10 dakikada ulaşılan bu küçük ada, berrak suyu ve doğal bitki örtüsüyle yarım günlük kaçamak için ideal. Sahilden bireysel tekne kiralayarak veya günlük tur tekneleriyle gidilebilir. Adada bir küçük restoran ve gölgelik var.",
         ],
       },
       {
         h2: "Yeme-İçme",
         body: [
-          "Gündoğan'ın gastronomik kimliği son yıllarda Akdeniz mutfağı odaklı butik restoranlarla şekillenmiştir. Sahil hattındaki klasik balıkçı işletmelerine ek olarak yenilenmiş, modern konseptli mekânlar yaz aylarında aktif. Ortalama akşam yemeği kişi başı 1.000-2.500 TL bandı.",
+          "Gündoğan'ın gastronomik kimliği son yıllarda Akdeniz mutfağı odaklı butik restoranlarla şekillenmiştir. Sahil hattındaki klasik balıkçı işletmelerine ek olarak yenilenmiş, modern konseptli mekânlar yaz aylarında aktif; akşam yemeği bütçeniz tercih ettiğiniz mekânın konseptine göre değişir.",
           "Köyün eski kısmındaki esnaf işletmeleri ve gözleme dükkânları daha mütevazı seçenekler sunar. Sabah kahvaltısı için yamaç apartlarından deniz manzaralı kahvaltıyı kendi apartınızda hazırlamak; öğle yemeği için sahil işletmelerine inmek; akşam yemeği için Yalıkavak veya Türkbükü'ne yarım saatlik araba turu yapmak yaygın bir kombinasyon.",
           "Cumartesi günleri köyün üst kısmında küçük bir pazar kurulur; turistik değil, yerli halkın alışveriş ettiği bir nokta.",
         ],
@@ -550,7 +540,7 @@ export const districtGuides: Record<DistrictSlug, DistrictGuide> = {
         h2: "Apart Özellikleri ve Fiyat Aralıkları",
         body: [
           "Gündoğan'ın apart stoku ağırlıklı olarak yamaç sitelerinde havuzlu, deniz manzaralı dairelerden oluşur. Apartların büyük çoğunluğu son 15 yılda inşa edilmiş; modern dekorasyon, klima, havuz, otopark gibi olanaklar standarttır. Eski köy bölgesinde sınırlı sayıda butik taş ev apart bulunur.",
-          "Yüksek sezonda 2+1 deniz manzaralı apart için günlük 1.800-5.500 TL bandı yaygın. Tepe konumlu, geniş terasli dubleks daireler 6.000-12.000 TL/gece bandına çıkabilir. Düşük sezonda %30-45 indirim mümkün. Gündoğan, eylül-ekim arası sakin denizi sayesinde popüler kalır; geç sezon kaçamak için iyi bir seçim.",
+          "Deniz manzaralı standart daireler ile tepe konumlu, geniş teraslı dubleksler arasında geniş bir aralık vardır. Düşük sezonda konaklama belirgin biçimde daha uygun olur. Gündoğan, eylül-ekim arası sakin denizi sayesinde popüler kalır; geç sezon kaçamak için iyi bir seçim. Tarihinize göre kişiye özel teklif hazırlıyoruz.",
         ],
       },
       {
@@ -562,8 +552,6 @@ export const districtGuides: Record<DistrictSlug, DistrictGuide> = {
       },
     ],
     priceBand: {
-      from: "1.800 TL/gece",
-      to: "5.500 TL/gece",
       note: "2026 yüksek sezon — 2+1 deniz manzaralı apart bandı",
     },
     faqs: [
@@ -573,7 +561,7 @@ export const districtGuides: Record<DistrictSlug, DistrictGuide> = {
       },
       {
         q: "Cennet Adası'na nasıl gidilir?",
-        a: "Üç yol var: (1) sahilden bireysel küçük tekne kiralayarak (saatlik 800-1.500 TL), (2) günlük grup tur tekneleriyle (kişi başı 800-1.500 TL, öğle yemeği dahil), (3) kendiniz paddle board veya kano kiralayarak. Adada gölgelik az; şapka, su ve hafif yiyecek götürün.",
+        a: "Üç yol var: (1) sahilden bireysel küçük tekne kiralayarak, (2) günlük grup tur tekneleriyle (genellikle öğle yemeği dahil), (3) kendiniz paddle board veya kano kiralayarak. Adada gölgelik az; şapka, su ve hafif yiyecek götürün.",
       },
       {
         q: "Yamaç apartında konaklamak yorucu mu?",
@@ -622,15 +610,15 @@ export const districtGuides: Record<DistrictSlug, DistrictGuide> = {
         h2: "Sahil ve Su",
         body: [
           "Torba sahili yaklaşık 1.2 km uzunluğunda, ince çakıl-kum karışımı. Su girişi yumuşak ve sığ; küçük çocuklar için son derece güvenli. Sahilin doğu ucu daha sakin (resort otellerin özel plajları), batı ucu daha hareketli (halk plajı ve apart sitelerinin sahil bölgeleri).",
-          "Halk plajında ücretsiz kullanım mümkün ancak donanımsız. Resort otellere ait beach club'larda günlük ücretle (genelde 500-1.500 TL kişi başı) yüzme ve kafe-restoran kullanımı imkânı sunulur. Bu seçenek, apart konaklamak ama otel plaj kulübü keyfini yaşamak isteyenler için pratiktir.",
+          "Halk plajında ücretsiz kullanım mümkün ancak donanımsız. Resort otellere ait beach club'larda günlük geçiş ücretiyle yüzme ve kafe-restoran kullanımı imkânı sunulur. Bu seçenek, apart konaklamak ama otel plaj kulübü keyfini yaşamak isteyenler için pratiktir.",
           "Sahilin batı ucundan başlayan yaklaşık 4 km'lik yürüyüş hattı, kıyı boyunca devam eder ve doğa yürüyüşü için keyifli bir alternatiftir.",
         ],
       },
       {
         h2: "Yeme-İçme",
         body: [
-          "Torba'nın yeme-içme sahnesi resort otellerin restoranları, sahil hattındaki birkaç bağımsız işletme ve köy merkezindeki esnaf lokantaları olmak üzere üç katmandan oluşur. Resort restoranları menü açısından zengin, fiyat olarak daha yüksek; bağımsız sahil işletmeleri balık-meze ağırlıklı, kişi başı 800-1.500 TL bandı yaygın.",
-          "Köy merkezinde günlük ev mutfağı, gözleme, kahvaltı ve dürüm sunan küçük işletmeler var. Sabah serpme kahvaltı kişi başı 300-500 TL bandında. Bodrum merkezindeki restoran çeşitliliğine erişmek için 15 dakikalık araba turu yeterli.",
+          "Torba'nın yeme-içme sahnesi resort otellerin restoranları, sahil hattındaki birkaç bağımsız işletme ve köy merkezindeki esnaf lokantaları olmak üzere üç katmandan oluşur. Resort restoranları menü açısından zengin ve daha üst segmentte; bağımsız sahil işletmeleri balık-meze ağırlıklı ve daha uygundur.",
+          "Köy merkezinde günlük ev mutfağı, gözleme, kahvaltı ve dürüm sunan küçük işletmeler var; sabah serpme kahvaltısı keyifli ve uygundur. Bodrum merkezindeki restoran çeşitliliğine erişmek için 15 dakikalık araba turu yeterli.",
         ],
       },
       {
@@ -644,7 +632,7 @@ export const districtGuides: Record<DistrictSlug, DistrictGuide> = {
         h2: "Apart Özellikleri ve Fiyat Aralıkları",
         body: [
           "Torba apart stoku, resort hattının etrafında konumlanan modern site apartlarından oluşur. Çoğu site havuz, güvenlik, çocuk oyun alanı, otopark gibi olanaklara sahip. Müstakil apart binası az; bağımsız taş ev apart neredeyse yok.",
-          "Yüksek sezonda 2+1 standart apart için günlük 1.500-4.000 TL bandı yaygın. Lüks, deniz manzaralı dubleks daireler 6.000-10.000 TL/gece bandına çıkabiliyor. Düşük sezonda %30-40 indirim mümkün. Torba, yumuşak iklim avantajıyla nisan-mayıs ve ekim-kasım arası sezon dışı tatil için de tercih edilir.",
+          "Standart 2+1 dairelerden lüks, deniz manzaralı dublekslere kadar geniş bir aralık vardır. Düşük sezonda konaklama belirgin biçimde daha uygun olur. Torba, yumuşak iklim avantajıyla nisan-mayıs ve ekim-kasım arası sezon dışı tatil için de tercih edilir. Tarihinize göre kişiye özel teklif hazırlıyoruz.",
         ],
       },
       {
@@ -656,8 +644,6 @@ export const districtGuides: Record<DistrictSlug, DistrictGuide> = {
       },
     ],
     priceBand: {
-      from: "1.500 TL/gece",
-      to: "4.000 TL/gece",
       note: "2026 yüksek sezon — 2+1 site apart bandı",
     },
     faqs: [
@@ -667,7 +653,7 @@ export const districtGuides: Record<DistrictSlug, DistrictGuide> = {
       },
       {
         q: "Resort otelinin beach club'unu apart kalırken kullanabilir miyim?",
-        a: "Çoğu resort günlük geçiş bileti satar (500-1.500 TL kişi başı, yeme-içme dahil değil). Yüksek sezonda kontenjan dolabilir; sabah erken gitmek önerilir. Doria, Vogue ve Casa De Maris gibi tesislerin beach club'ları popüler tercihler.",
+        a: "Çoğu resort günlük geçiş bileti satar (genellikle yeme-içme dahil değil). Yüksek sezonda kontenjan dolabilir; sabah erken gitmek önerilir. Doria, Vogue ve Casa De Maris gibi tesislerin beach club'ları popüler tercihler.",
       },
       {
         q: "Torba'da gece hayatı var mı?",

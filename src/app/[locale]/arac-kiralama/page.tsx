@@ -23,22 +23,22 @@ const ARAC_HERO_DEFAULT: ByLocale<AracHeroCopy> = {
   tr: {
     kicker: "Partner Hizmet · Bodrum 2026",
     title: "Bodrum Araç Kiralama",
-    sub: "Havalimanına teslim, tam sigorta dahil, sınırsız km — şeffaf fiyat.",
+    sub: "Havalimanına teslim, tam sigorta dahil, sınırsız km.",
   },
   en: {
     kicker: "Partner Service · Bodrum 2026",
     title: "Bodrum Car Rental",
-    sub: "Airport delivery, full insurance included, unlimited km — transparent pricing.",
+    sub: "Airport delivery, full insurance included, unlimited km.",
   },
   de: {
     kicker: "Partnerservice · Bodrum 2026",
     title: "Bodrum Mietwagen",
-    sub: "Übergabe am Flughafen, Vollkasko inklusive, unbegrenzte Kilometer – transparente Preise.",
+    sub: "Übergabe am Flughafen, Vollkasko inklusive, unbegrenzte Kilometer.",
   },
   ru: {
     kicker: "Партнёрская услуга · Бодрум 2026",
     title: "Аренда авто в Бодруме",
-    sub: "Подача в аэропорт, полная страховка включена, безлимитный пробег — прозрачные цены.",
+    sub: "Подача в аэропорт, полная страховка включена, безлимитный пробег.",
   },
 };
 
@@ -355,7 +355,7 @@ export default async function Page({
         coverage={tx({
           tr: [
             "Milas-Bodrum Havalimanı, Bodrum merkez, Yalıkavak, Turgutreis, Bitez teslim",
-            "Ekonomiden lükse, her bütçeye araç",
+            "Ekonomi, kompakt, SUV ve premium sınıf araçlar",
             "Tam sigorta ve sınırsız km opsiyonları operatör politikasına göre değişir",
             "Otele teslim çoğu noktada ücretsiz; iade noktası farklı olabilir",
             "Sözleşme, kasko ve fatura operatör tarafından düzenlenir",
@@ -369,14 +369,14 @@ export default async function Page({
           ],
           de: [
             "Übernahme am Flughafen Milas-Bodrum, im Zentrum von Bodrum, in Yalıkavak, Turgutreis und Bitez",
-            "Fahrzeuge für jedes Budget — von der Economy-Klasse bis zur Luxusklasse",
+            "Fahrzeuge der Klassen Economy, Kompakt, SUV und Premium",
             "Vollversicherung und Optionen mit unbegrenzten Kilometern je nach Betreiberrichtlinie",
             "Lieferung zum Hotel an den meisten Orten kostenlos; der Rückgabeort kann abweichen",
             "Vertrag, Kaskoversicherung und Rechnung werden vom Betreiber ausgestellt",
           ],
           ru: [
             "Получение в аэропорту Милас-Бодрум, центре Бодрума, Ялыкаваке, Тургутрейсе и Битезе",
-            "Автомобили на любой бюджет — от эконома до люкса",
+            "Автомобили классов эконом, компакт, внедорожник и премиум",
             "Полная страховка и опции с безлимитным пробегом зависят от политики оператора",
             "Доставка в отель в большинстве мест бесплатна; место возврата может отличаться",
             "Договор, КАСКО и счёт оформляет оператор",

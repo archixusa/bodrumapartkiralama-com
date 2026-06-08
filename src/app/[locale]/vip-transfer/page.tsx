@@ -290,8 +290,8 @@ export default async function Page({
             },
             {
               num: "2",
-              title: "Araç sınıfı ve fiyat teyidi",
-              desc: "Kişi/bagaj sayısına göre sedan, minivan ya da geniş Sprinter önerelim; bölgeye göre sabit fiyat teyit edelim.",
+              title: "Araç sınıfı ve teklif teyidi",
+              desc: "Kişi/bagaj sayısına göre sedan, minivan ya da geniş Sprinter önerelim; bölgeye göre net bir teklif teyit edelim.",
             },
             {
               num: "3",
@@ -307,8 +307,8 @@ export default async function Page({
             },
             {
               num: "2",
-              title: "Vehicle class and price",
-              desc: "We suggest sedan, minivan or spacious Sprinter by group/luggage; confirm the fixed price for your district.",
+              title: "Vehicle class and quote",
+              desc: "We suggest sedan, minivan or spacious Sprinter by group/luggage; confirm a clear quote for your district.",
             },
             {
               num: "3",
@@ -324,8 +324,8 @@ export default async function Page({
             },
             {
               num: "2",
-              title: "Fahrzeugklasse und Preis",
-              desc: "Je nach Personen- und Gepäckzahl empfehlen wir Limousine, Minivan oder Privat-Sprinter und bestätigen den Festpreis für Ihren Zielort.",
+              title: "Fahrzeugklasse und Angebot",
+              desc: "Je nach Personen- und Gepäckzahl empfehlen wir Limousine, Minivan oder Privat-Sprinter und bestätigen ein klares Angebot für Ihren Zielort.",
             },
             {
               num: "3",
@@ -341,8 +341,8 @@ export default async function Page({
             },
             {
               num: "2",
-              title: "Класс автомобиля и цена",
-              desc: "В зависимости от числа пассажиров и багажа предложим седан, минивэн или Sprinter для индивидуального трансфера и подтвердим фиксированную цену для вашего района.",
+              title: "Класс автомобиля и предложение",
+              desc: "В зависимости от числа пассажиров и багажа предложим седан, минивэн или Sprinter для индивидуального трансфера и подтвердим понятное предложение для вашего района.",
             },
             {
               num: "3",
@@ -361,28 +361,28 @@ export default async function Page({
           tr: [
             "Milas-Bodrum Havalimanı'ndan tüm Bodrum bölgelerine transfer",
             "1-3 kişi sedan, 4-7 kişi Vito/Caravelle, 8-16 kişi geniş Sprinter",
-            "Uçuş takibi, bebek koltuğu ve sabit fiyat",
+            "Uçuş takibi, bebek koltuğu ve net teklif",
             "Tek yön veya gidiş-dönüş",
             "Şoför, sigorta, fatura ve ödeme operatör üzerinden",
           ],
           en: [
             "Transfer from Milas-Bodrum Airport to all Bodrum districts",
             "1-3 pax sedan, 4-7 pax Vito/Caravelle, 8-16 pax spacious Sprinter",
-            "Flight tracking, child seat and fixed pricing",
+            "Flight tracking, child seat and a clear quote",
             "One-way or round-trip",
             "Driver, insurance, invoicing and payment handled by the operator",
           ],
           de: [
             "Transfer vom Flughafen Milas-Bodrum in alle Bezirke von Bodrum",
             "1-3 Personen Limousine, 4-7 Personen Vito/Caravelle, 8-16 Personen Sprinter",
-            "Flugverfolgung, Kindersitz und Festpreis",
+            "Flugverfolgung, Kindersitz und klares Angebot",
             "Einzelfahrt oder Hin- und Rückfahrt",
             "Fahrer, Versicherung, Rechnung und Zahlung über den Betreiber",
           ],
           ru: [
             "Трансфер из аэропорта Милас-Бодрум во все районы Бодрума",
             "1-3 человека — седан, 4-7 — Vito/Caravelle, 8-16 — Sprinter",
-            "Отслеживание рейса, детское кресло и фиксированная цена",
+            "Отслеживание рейса, детское кресло и понятное предложение",
             "В одну сторону или туда-обратно",
             "Водитель, страховка, счёт и оплата — через оператора",
           ],

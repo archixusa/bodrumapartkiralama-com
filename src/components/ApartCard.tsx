@@ -4,7 +4,6 @@ import { Users, BedDouble, Bath, MapPin, Star } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import type { Apartment } from "@/data/apartments";
 import { districts } from "@/data/districts";
-import { formatTRY } from "@/lib/format";
 
 export function ApartCard({ apt }: { apt: Apartment }) {
   const t = useTranslations("common");
@@ -64,15 +63,9 @@ export function ApartCard({ apt }: { apt: Apartment }) {
           <li>{apt.area_m2} m²</li>
         </ul>
         <div className="mt-auto flex items-center justify-between border-t border-[var(--color-border)] pt-3">
-          <div>
-            <p className="text-[11px] uppercase tracking-wide text-muted">
-              {t("from")}
-            </p>
-            <p className="text-base font-bold text-navy-900">
-              {formatTRY(apt.lowSeasonPrice)}{" "}
-              <span className="text-xs font-normal text-muted">{t("perNight")}</span>
-            </p>
-          </div>
+          <p className="text-xs font-semibold text-navy-900">
+            {t("priceCta")}
+          </p>
           <Link href={`/apartlar/${apt.slug}`} className="btn-primary !px-3 !py-2 !text-xs">
             {t("details")}
           </Link>

@@ -73,23 +73,19 @@ export function DistrictGuide({ guide, districtName }: Props) {
           ))}
         </div>
 
-        {/* Price band */}
+        {/* Seasonal guidance */}
         <div className="mt-10 flex items-start gap-4 rounded-xl border border-accent-500/30 bg-accent-500/5 p-5">
           <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-md bg-accent-500/15 text-accent-600">
             <Wallet className="h-5 w-5" />
           </span>
           <div>
             <p className="text-sm font-bold text-navy-900">
-              {districtName} 2026 fiyat aralığı (gösterge)
+              {districtName} — sezon ve konaklama notu
             </p>
-            <p className="mt-1 text-sm text-ink/85">
-              <strong>{guide.priceBand.from}</strong> –{" "}
-              <strong>{guide.priceBand.to}</strong>
-              <span className="text-muted"> · {guide.priceBand.note}</span>
-            </p>
+            <p className="mt-1 text-sm text-ink/85">{guide.priceBand.note}</p>
             <p className="mt-2 text-xs text-muted">
-              Tarihinize ve mülke göre değişir; netleştirmek için iletişime
-              geçin.
+              Tarihinize ve mülke göre kişiye özel teklif hazırlıyoruz; fiyat
+              için iletişime geçin.
             </p>
           </div>
         </div>
