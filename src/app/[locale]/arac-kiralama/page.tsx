@@ -7,11 +7,23 @@ import { FAQ } from "@/components/FAQ";
 import { JsonLd } from "@/components/JsonLd";
 import { PartnerServiceBanner } from "@/components/PartnerServiceBanner";
 import { ServiceRelatedLinks } from "@/components/ServiceRelatedLinks";
+import { RelatedGuides, type RelatedLink } from "@/components/RelatedGuides";
 import { getSiteContent } from "@/lib/content";
 import { buildAlternates, defaultOgImages } from "@/lib/seo";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.bodrumapartkiralama.com";
+
+const RELATED_LINKS: RelatedLink[] = [
+  {
+    href: "/vip-transfer",
+    labels: { tr: "Havalimanı özel transfer", en: "Airport private transfer", de: "Flughafen-Privattransfer", ru: "Трансфер из аэропорта" },
+  },
+  {
+    href: "/blog/bodrum-havalimanindan-merkeze-ulasim",
+    labels: { tr: "Havalimanından ulaşım rehberi", en: "Airport transport guide", de: "Anreise vom Flughafen", ru: "Как добраться из аэропорта" },
+  },
+];
 
 // ── DB-backed hero copy (section_key "arac.hero") ────────────────────────────
 // Falls back to the in-code default below when no published row exists, so the
@@ -392,6 +404,7 @@ export default async function Page({
             <p>{t("intro2")}</p>
             <p>{t("intro3")}</p>
             <ServiceRelatedLinks locale={locale} />
+            <RelatedGuides locale={locale} links={RELATED_LINKS} />
           </div>
           <aside className="lg:sticky lg:top-20 lg:self-start">
             <InquiryForm

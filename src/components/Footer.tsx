@@ -70,6 +70,15 @@ export function Footer() {
             <FooterLink href="/evinizi-kiraya-verin">
               {colLabels.ownerCta}
             </FooterLink>
+            <FooterLink href="/bodrum-tatil-rehberi">
+              {isTr
+                ? "Bodrum Tatil Rehberi"
+                : locale === "de"
+                  ? "Bodrum Reiseführer"
+                  : locale === "ru"
+                    ? "Путеводитель по Бодруму"
+                    : "Bodrum Travel Guide"}
+            </FooterLink>
             <FooterLink href="/blog">{nav("blog")}</FooterLink>
           </FooterColumn>
 

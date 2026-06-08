@@ -441,6 +441,28 @@ export default async function DistrictPage({
               </Link>
             </p>
           )}
+          <p className="mt-3 text-sm text-muted">
+            {isTr
+              ? "Bodrum tatilinizi baştan sona planlamak için "
+              : locale === "de"
+                ? "Um Ihren Bodrum-Urlaub von A bis Z zu planen, lesen Sie unseren "
+                : locale === "ru"
+                  ? "Чтобы спланировать отдых в Бодруме от и до, читайте наш "
+                  : "To plan your whole Bodrum holiday, read our "}
+            <Link
+              href="/bodrum-tatil-rehberi"
+              className="font-semibold text-navy-600 hover:underline"
+            >
+              {isTr
+                ? "Bodrum Tatil Rehberi'ne göz atın"
+                : locale === "de"
+                  ? "Bodrum Reiseführer"
+                  : locale === "ru"
+                    ? "Путеводитель по Бодруму"
+                    : "Bodrum Travel Guide"}
+            </Link>
+            {locale === "tr" ? "." : "."}
+          </p>
         </div>
       </section>
     </>

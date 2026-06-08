@@ -785,6 +785,28 @@ export default async function HomePage({
             <div>
               <h2 id="blog-heading">{t("blogTitle")}</h2>
               <p className="mt-2 text-muted">{t("blogDesc")}</p>
+              <p className="mt-3 text-sm text-muted">
+                {isTr
+                  ? "Tatilinizi baştan sona planlamak için "
+                  : locale === "de"
+                    ? "Um Ihren Urlaub von A bis Z zu planen, lesen Sie unseren "
+                    : locale === "ru"
+                      ? "Чтобы спланировать отдых от и до, читайте наш "
+                      : "To plan your whole trip, read our "}
+                <Link
+                  href="/bodrum-tatil-rehberi"
+                  className="font-semibold text-navy-600 hover:underline"
+                >
+                  {isTr
+                    ? "Bodrum Tatil Rehberi"
+                    : locale === "de"
+                      ? "Bodrum Reiseführer"
+                      : locale === "ru"
+                        ? "Путеводитель по Бодруму"
+                        : "Bodrum Travel Guide"}
+                </Link>
+                {"."}
+              </p>
             </div>
             <Link href="/blog" className="hidden text-sm font-semibold text-navy-600 hover:underline md:inline">
               {c("viewAll")} <ArrowRight className="ml-1 inline h-4 w-4" />

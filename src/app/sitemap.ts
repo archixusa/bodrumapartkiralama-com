@@ -17,6 +17,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const staticPaths = [
     "/",
     "/apartlar",
+    "/bodrum-tatil-rehberi",
     "/tekne-kiralama",
     "/arac-kiralama",
     "/vip-transfer",
@@ -40,7 +41,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: urlFor(path, routing.defaultLocale),
       lastModified: now,
       changeFrequency: "weekly",
-      priority: path === "/" ? 1 : 0.7,
+      priority:
+        path === "/" ? 1 : path === "/bodrum-tatil-rehberi" ? 0.9 : 0.7,
       alternates: {
         languages: Object.fromEntries(
           routing.locales.map((l) => [l, urlFor(path, l)])
