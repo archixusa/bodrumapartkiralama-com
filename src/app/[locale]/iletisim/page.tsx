@@ -4,7 +4,7 @@ import { Phone, Mail, MessageCircle, MapPin, Clock } from "lucide-react";
 import { ContactForm } from "@/components/ContactForm";
 import { JsonLd } from "@/components/JsonLd";
 import { getSiteContent } from "@/lib/content";
-import { buildAlternates } from "@/lib/seo";
+import { buildAlternates, defaultOgImages } from "@/lib/seo";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.bodrumapartkiralama.com";
@@ -69,7 +69,8 @@ export async function generateMetadata({
     title,
     description,
     alternates: buildAlternates(locale, "/iletisim"),
-    openGraph: { title, description, url, type: "website" },
+    openGraph: { title, description, url, type: "website", ...defaultOgImages(locale).openGraph },
+    twitter: defaultOgImages(locale).twitter,
   };
 }
 

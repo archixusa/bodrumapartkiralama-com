@@ -64,18 +64,15 @@ export const metadata: Metadata = {
     type: "website",
     siteName: "Bodrumapartkiralama.com",
     locale: "tr_TR",
-    images: [
-      {
-        url: "/og-default.svg",
-        width: 1200,
-        height: 630,
-        alt: "Bodrum Apart Kiralama",
-      },
-    ],
+    // Default og:image is supplied by the file-convention
+    // `app/[locale]/opengraph-image.tsx` (a real branded PNG). It is injected
+    // automatically on every route and is not clobbered by route-level
+    // `openGraph` objects, so we no longer reference the static SVG here (SVG
+    // does not render in social cards).
   },
   twitter: {
     card: "summary_large_image",
-    images: ["/og-default.svg"],
+    // twitter:image is supplied by `app/[locale]/twitter-image.tsx`.
   },
   alternates: {
     canonical: SITE_URL,
@@ -147,6 +144,10 @@ export default async function LocaleLayout({
     telephone: getPhone(locale).tel,
     email: "info@bodrumapartkiralama.com",
     priceRange: "₺₺",
+    sameAs: [
+      "https://www.facebook.com/BodrumApartKiralama",
+      "https://www.instagram.com/bodrumapartkiralama",
+    ],
     address: {
       "@type": "PostalAddress",
       addressLocality: "Bodrum",

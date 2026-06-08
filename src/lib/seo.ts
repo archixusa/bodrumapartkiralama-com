@@ -40,6 +40,39 @@ export function buildLocaleUrl(locale: string, path: string): string {
  *                       for the homepage). Build dynamic paths from the slug,
  *                       e.g. `/blog/${slug}` or `/bodrum/${urlSlug}`.
  */
+/**
+ * Default branded OG/Twitter image for a route, pointing at the dynamic
+ * `app/[locale]/opengraph-image.tsx` PNG.
+ *
+ * Why this exists: Next.js auto-injects the file-convention OG image only when a
+ * route does NOT return its own `openGraph` object. Almost every page here sets
+ * `openGraph: { title, description, url }`, which OVERRIDES the inherited image
+ * and drops `og:image` entirely. Spreading `defaultOgImages(locale)` into a
+ * route's `openGraph`/`twitter` restores the branded image on those pages.
+ *
+ * Routes that already set a more specific image (e.g. a blog hero) should keep
+ * their own `images` and skip this helper.
+ */
+export function defaultOgImages(currentLocale: string): {
+  openGraph: { images: { url: string; width: number; height: number; alt: string }[] };
+  twitter: { images: string[] };
+} {
+  // The dynamic image lives at the metadata route `/[locale]/opengraph-image`.
+  // With `localePrefix: "as-needed"`, the default locale (tr) is served WITHOUT
+  // a prefix (`/opengraph-image`) — the prefixed `/tr/opengraph-image` 307s to
+  // it — while en/de/ru are prefixed. Emit the final (non-redirecting) URL so
+  // social crawlers fetch the PNG directly. metadataBase makes it absolute.
+  const url =
+    currentLocale === "tr"
+      ? "/opengraph-image"
+      : `/${currentLocale}/opengraph-image`;
+  const alt = "Bodrum Apart Kiralama — Doğrudan mülk sahibinden";
+  return {
+    openGraph: { images: [{ url, width: 1200, height: 630, alt }] },
+    twitter: { images: [url] },
+  };
+}
+
 export function buildAlternates(
   currentLocale: string,
   path: string,

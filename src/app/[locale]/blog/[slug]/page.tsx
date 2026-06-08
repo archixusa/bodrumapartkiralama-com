@@ -14,6 +14,7 @@ import { districts } from "@/data/districts";
 import { getMdxPosts, getMdxPost } from "@/lib/mdx-blog";
 import { loc } from "@/lib/i18n-data";
 import { buildAlternates } from "@/lib/seo";
+import { buildHowToSchema } from "@/lib/blog-howto";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.bodrumapartkiralama.com";
@@ -367,7 +368,16 @@ function renderMdxPost(
     },
     mainEntityOfPage: `${SITE_URL}/blog/${mdx.slug}`,
     keywords: mdx.keywords.join(", "),
+    // Speakable (AEO / voice): point assistants at the answer-first intro
+    // headline + summary and the FAQ questions for spoken snippets.
+    speakable: {
+      "@type": "SpeakableSpecification",
+      cssSelector: ["h1", "[data-speakable='intro']"],
+    },
   };
+
+  const pageUrl = `${SITE_URL}/blog/${mdx.slug}`;
+  const howToSchema = buildHowToSchema(mdx.slug, pageUrl);
 
   const breadcrumbSchema = {
     "@context": "https://schema.org",
@@ -392,7 +402,9 @@ function renderMdxPost(
         }
       : null;
 
-  const jsonLd = [articleSchema, breadcrumbSchema, faqSchema].filter(Boolean) as object[];
+  const jsonLd = [articleSchema, breadcrumbSchema, faqSchema, howToSchema].filter(
+    Boolean,
+  ) as object[];
 
   return (
     <>
@@ -446,7 +458,10 @@ function renderMdxPost(
         <section className="container-page py-10 lg:py-14">
           <div className="mx-auto max-w-3xl">
             {mdx.excerpt && (
-              <p className="mb-6 border-l-4 border-accent-500 bg-navy-50/40 px-4 py-3 text-base italic text-ink">
+              <p
+                data-speakable="intro"
+                className="mb-6 border-l-4 border-accent-500 bg-navy-50/40 px-4 py-3 text-base italic text-ink"
+              >
                 {mdx.excerpt}
               </p>
             )}

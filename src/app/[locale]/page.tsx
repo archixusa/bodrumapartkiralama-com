@@ -27,7 +27,7 @@ import { posts } from "@/data/posts";
 import { loc } from "@/lib/i18n-data";
 import { getSiteContent } from "@/lib/content";
 import { getPhone } from "@/lib/contact";
-import { buildAlternates } from "@/lib/seo";
+import { buildAlternates, defaultOgImages } from "@/lib/seo";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.bodrumapartkiralama.com";
@@ -256,7 +256,10 @@ export async function generateMetadata({
   const t = await getTranslations({ locale, namespace: "home" });
   const url = locale === "tr" ? SITE_URL : `${SITE_URL}/${locale}`;
   return {
-    title: t("metaTitle"),
+    // `absolute` so the rich, self-contained homepage title is used verbatim and
+    // the "%s | Bodrumapartkiralama.com" template suffix is not appended on top
+    // of an already keyword-complete title.
+    title: { absolute: t("metaTitle") },
     description: t("metaDesc"),
     alternates: buildAlternates(locale, ""),
     openGraph: {
@@ -264,7 +267,9 @@ export async function generateMetadata({
       description: t("ogDesc"),
       url,
       type: "website",
+      ...defaultOgImages(locale).openGraph,
     },
+    twitter: defaultOgImages(locale).twitter,
   };
 }
 
@@ -439,6 +444,10 @@ export default async function HomePage({
       logo: `${SITE_URL}/logo_kare.svg`,
       image: `${SITE_URL}/og-default.svg`,
       description: t("metaDesc"),
+      sameAs: [
+        "https://www.facebook.com/BodrumApartKiralama",
+        "https://www.instagram.com/bodrumapartkiralama",
+      ],
       address: {
         "@type": "PostalAddress",
         addressLocality: "Bodrum",
@@ -467,6 +476,20 @@ export default async function HomePage({
         "@type": "SearchAction",
         target: `${SITE_URL}/apartlar?district={search_term_string}`,
         "query-input": "required name=search_term_string",
+      },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "@id": `${SITE_URL}/#webpage`,
+      url: SITE_URL,
+      name: t("metaTitle"),
+      description: t("metaDesc"),
+      inLanguage: locale,
+      // Speakable (AEO / voice): answer-first hero headline + intro and the FAQ.
+      speakable: {
+        "@type": "SpeakableSpecification",
+        cssSelector: ["#hero-heading", "[data-speakable='intro']", "#faq-heading"],
       },
     },
     {
@@ -509,7 +532,10 @@ export default async function HomePage({
             >
               {heroCopy.h1}
             </h1>
-            <p className="mx-auto mt-4 max-w-2xl text-base text-white md:text-lg">
+            <p
+              data-speakable="intro"
+              className="mx-auto mt-4 max-w-2xl text-base text-white md:text-lg"
+            >
               {heroCopy.sub}
             </p>
 
