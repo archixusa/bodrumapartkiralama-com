@@ -14,7 +14,7 @@ import { posts, getPost } from "@/data/posts";
 import { districts } from "@/data/districts";
 import { getMdxPosts, getMdxPost } from "@/lib/mdx-blog";
 import { loc } from "@/lib/i18n-data";
-import { buildAlternates } from "@/lib/seo";
+import { buildAlternates, buildLocaleUrl } from "@/lib/seo";
 import { buildHowToSchema } from "@/lib/blog-howto";
 
 const SITE_URL =
@@ -163,6 +163,9 @@ export default async function Page({
 
   const related = posts.filter((p) => p.slug !== post.slug).slice(0, 3);
 
+  // Locale-aware URL of the editorial-team author profile (E-E-A-T byline link).
+  const authorUrl = buildLocaleUrl(locale, "/yazar/editor");
+
   const jsonLd = [
     {
       "@context": "https://schema.org",
@@ -176,9 +179,11 @@ export default async function Page({
         // authors over Organization for all queries (not just YMYL). Using the
         // brand editorial team byline as Person — semantically a collective,
         // but the type matters more than singular vs. plural for ranking.
+        // `url` resolves to the dedicated author/editor profile page so the
+        // byline links to a real, crawlable E-E-A-T author entity.
         "@type": "Person",
         name: "Bodrumapartkiralama Editör Ekibi",
-        url: `${SITE_URL}/hakkimizda`,
+        url: authorUrl,
         jobTitle: "Editör",
         worksFor: {
           "@type": "Organization",
@@ -250,10 +255,13 @@ export default async function Page({
               <span className="inline-flex items-center gap-1">
                 <Clock className="h-4 w-4" /> {t("readingTime", { min: post.readingTime })}
               </span>
-              <span className="inline-flex items-center gap-1">
+              <Link
+                href="/yazar/editor"
+                className="inline-flex items-center gap-1 underline-offset-2 hover:underline"
+              >
                 <User className="h-4 w-4" />
                 {isTr ? "Bodrumapartkiralama Editör Ekibi" : "Bodrumapartkiralama Editor Team"}
-              </span>
+              </Link>
             </div>
           </div>
         </section>
@@ -365,6 +373,8 @@ function renderMdxPost(
 ) {
   const isTr = locale === "tr";
   const heroUrl = mdx.hero_image ?? FALLBACK_HERO;
+  // Locale-aware URL of the editorial-team author profile (E-E-A-T byline link).
+  const authorUrl = buildLocaleUrl(locale, "/yazar/editor");
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -374,12 +384,12 @@ function renderMdxPost(
     datePublished: mdx.published_at,
     dateModified: mdx.published_at,
     author: {
-      // /yazar/{slug} is not a real route — point Person URL at /hakkimizda
-      // (the canonical "about us" page) so the schema validates and the link
-      // resolves. worksFor anchors authorship to the publishing organization.
+      // Point the Person URL at the dedicated editorial-team author profile
+      // (/yazar/editor) so the byline links to a real, crawlable E-E-A-T author
+      // entity. worksFor anchors authorship to the publishing organization.
       "@type": "Person",
       name: mdx.author,
-      url: `${SITE_URL}/hakkimizda`,
+      url: authorUrl,
       jobTitle: "Editör",
       worksFor: {
         "@type": "Organization",
@@ -473,10 +483,13 @@ function renderMdxPost(
               <span className="inline-flex items-center gap-1">
                 <Clock className="h-4 w-4" /> {t("readingTime", { min: mdx.reading_time_min })}
               </span>
-              <span className="inline-flex items-center gap-1">
+              <Link
+                href="/yazar/editor"
+                className="inline-flex items-center gap-1 underline-offset-2 hover:underline"
+              >
                 <User className="h-4 w-4" />
                 Editör Ekibi
-              </span>
+              </Link>
             </div>
           </div>
         </section>
@@ -521,11 +534,24 @@ function AuthorBio() {
         BAK
       </div>
       <div>
-        <h3 className="text-base font-bold">Bodrumapartkiralama Editör Ekibi</h3>
+        <h3 className="text-base font-bold">
+          <Link
+            href="/yazar/editor"
+            className="underline-offset-2 hover:underline"
+          >
+            Bodrumapartkiralama Editör Ekibi
+          </Link>
+        </h3>
         <p className="mt-1 text-sm leading-relaxed text-muted">
           Bodrum yarımadasında apart kiralama yönetimi yapan ekibimiz; Yalıkavak,
           Gümbet, Turgutreis başta olmak üzere bölgedeki konaklama dinamiklerini
-          yerinden takip ediyor.
+          yerinden takip ediyor.{" "}
+          <Link
+            href="/yazar/editor"
+            className="font-medium text-navy-600 underline-offset-2 hover:underline"
+          >
+            Ekip hakkında daha fazlası →
+          </Link>
         </p>
       </div>
     </div>
