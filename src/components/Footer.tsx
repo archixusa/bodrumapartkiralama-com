@@ -2,14 +2,24 @@ import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { Mail, Phone, MapPin, MessageCircle, Facebook, Instagram } from "lucide-react";
 import { Link } from "@/i18n/routing";
+import { districts } from "@/data/districts";
 
 export function Footer() {
   const t = useTranslations("footer");
   const c = useTranslations("common");
   const nav = useTranslations("nav");
+  const dt = useTranslations("districts");
   const locale = useLocale();
   const isTr = locale === "tr";
   const year = new Date().getFullYear();
+
+  const regionsLabel = isTr
+    ? "BÖLGELER"
+    : locale === "de"
+      ? "REGIONEN"
+      : locale === "ru"
+        ? "РАЙОНЫ"
+        : "REGIONS";
 
   const colLabels = isTr
     ? {
@@ -63,7 +73,7 @@ export function Footer() {
         </div>
 
         {/* Columns */}
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-5">
           <FooterColumn title={colLabels.corporate}>
             <FooterLink href="/hakkimizda">{nav("about")}</FooterLink>
             <FooterLink href="/iletisim">{nav("contact")}</FooterLink>
@@ -92,6 +102,15 @@ export function Footer() {
             <FooterLink href="/arac-kiralama">{`${nav("car")} (${isTr ? "Partner" : "Partner"})`}</FooterLink>
             <FooterLink href="/vip-transfer">{`${nav("transfer")} (${isTr ? "Partner" : "Partner"})`}</FooterLink>
             <FooterLink href="/turlar">{`${isTr ? "Bodrum Turları" : "Bodrum Tours"} (Partner)`}</FooterLink>
+          </FooterColumn>
+
+          {/* Bölge sayfalarına tam set iç link — SEO + keşfedilebilirlik. */}
+          <FooterColumn title={regionsLabel}>
+            {districts.map((d) => (
+              <FooterLink key={d.slug} href={`/bodrum/${d.urlSlug}`}>
+                {dt(d.slug)}
+              </FooterLink>
+            ))}
           </FooterColumn>
 
           <FooterColumn title={colLabels.help}>
