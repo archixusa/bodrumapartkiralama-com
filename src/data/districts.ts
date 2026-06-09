@@ -127,7 +127,7 @@ const structuralDistricts: DistrictStructural[] = [
     urlSlug: "gundogan-apart-kiralama",
     name: "Gündoğan",
     heroImage:
-      "https://images.unsplash.com/photo-1734723042943-db74efd1d40a?auto=format&fit=crop&w=1600&q=80",
+      "https://images.unsplash.com/photo-1591078314870-db74efd1d40a?auto=format&fit=crop&w=1600&q=80",
     nearby: ["yalikavak", "torba"],
     lat: 37.1311,
     lng: 27.3458,
