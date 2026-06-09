@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Plus_Jakarta_Sans, Cormorant_Garamond } from "next/font/google";
+import { Plus_Jakarta_Sans, Fraunces } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -28,15 +28,14 @@ const jakarta = Plus_Jakarta_Sans({
   preload: true,
 });
 
-// Warm/family serif headline voice. Mapped to --font-display and used by h1/h2.
-// Only 600 (font-semibold) and 700 (font-bold) are actually used by headings;
-// 500 was dead weight in the homepage bundle. latin-ext kept for TR glyphs
-// (ş/ğ/ı/İ live in latin-ext).
-const cormorant = Cormorant_Garamond({
+// "Canlı Akdeniz" display voice (DESIGN_SPEC.md §2): Fraunces, opsz destekli
+// değişken eksen, ağırlık 400–700. Mapped to --font-display, used by h1/h2.
+// latin-ext kept for TR glyphs (ş/ğ/ı/İ live in latin-ext).
+const fraunces = Fraunces({
   subsets: ["latin", "latin-ext"],
   display: "swap",
   variable: "--font-display",
-  weight: ["600", "700"],
+  weight: ["400", "500", "600", "700"],
   preload: true,
 });
 
@@ -107,7 +106,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#042C53",
+  themeColor: "#06343B",
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
@@ -171,7 +170,7 @@ export default async function LocaleLayout({
   };
 
   return (
-    <html lang={locale} className={`${jakarta.variable} ${cormorant.variable}`}>
+    <html lang={locale} className={`${jakarta.variable} ${fraunces.variable}`}>
       <head>
         {/* Warm up connections to third-party origins used on every page. */}
         <link
@@ -190,7 +189,7 @@ export default async function LocaleLayout({
           crossOrigin=""
         />
       </head>
-      <body className="bg-white font-sans text-ink antialiased">
+      <body className="bg-kum-50 font-sans text-ink antialiased">
         <JsonLd data={localBusinessLd} />
         <GtmNoScript />
         <LeadTracking />
