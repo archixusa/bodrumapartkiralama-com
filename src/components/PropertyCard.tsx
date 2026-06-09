@@ -67,8 +67,9 @@ export function PropertyCard({ property, locale, labels }: Props) {
             sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
             className="object-cover transition duration-500 group-hover:scale-105"
           />
+          {/* Sol üst: kum zemin bölge pill'i (spec §4 kart) */}
           {property.region && (
-            <span className="absolute right-3 top-3 inline-flex items-center gap-1 rounded-full bg-accent-400 px-3 py-1 text-xs font-semibold text-navy-900">
+            <span className="chip-region absolute left-3 top-3">
               <MapPin className="h-3 w-3" />
               {property.region}
             </span>
