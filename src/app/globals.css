@@ -2,21 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── "Canlı Akdeniz" değişkenleri (DESIGN_SPEC.md §1) ───────────────────── */
 :root {
-  --color-primary: #042c53;
-  --color-primary-light: #185fa5;
-  --color-primary-lighter: #378add;
-  --color-accent: #ef9f27;
-  --color-accent-dark: #ba7517;
-  --color-bg: #ffffff;
-  --color-bg-soft: #f1efe8;
-  --color-bg-blue: #e6f1fb;
-  --color-text: #1a2434;
-  --color-text-muted: #5f6b7a;
-  --color-border: #e2e8f0;
+  --color-primary: #0ea5a5; /* turkuaz-500 */
+  --color-primary-light: #34c8c4; /* turkuaz-300 */
+  --color-primary-lighter: #e6faf8; /* turkuaz-50 */
+  --color-accent: #e0218a; /* begonvil-500 */
+  --color-accent-dark: #b5176f; /* begonvil-600 */
+  --color-sun: #ffb23e; /* gunes-400 */
+  --color-bg: #fff8f0; /* kum-bg */
+  --color-bg-soft: #fbeedd; /* kum-koyu */
+  --color-bg-blue: #e6faf8; /* turkuaz-50 */
+  --color-text: #06343b; /* murekkep-900 */
+  --color-text-muted: #5e7a7e;
+  --color-border: #f0e2cf; /* kum-cizgi */
+  --color-footer: #04252b;
   --color-success: #0f6e56;
-  --color-warning: #ba7517;
+  --color-warning: #c2750e;
   --color-danger: #a32d2d;
+  --shadow-card: 0 8px 24px -16px rgba(6, 52, 59, 0.35);
+  --shadow-card-hover: 0 18px 40px -22px rgba(6, 52, 59, 0.45);
 }
 
 html,
@@ -32,22 +37,23 @@ body {
 }
 
 @layer base {
-  /* h1/h2 carry the serif display voice (Cormorant Garamond → --font-display). */
+  /* h1/h2 carry the display voice (Fraunces → --font-display), 600 ağırlık,
+     spec §2: letter-spacing -0.015em. */
   h1, h2 {
-    @apply font-display tracking-tight text-navy-900;
+    @apply font-display font-semibold text-murekkep-900;
+    letter-spacing: -0.015em;
+    line-height: 1.08;
     text-wrap: balance;
   }
-  /* h3/h4 stay on the sans body for legibility at small sizes. */
+  /* h3/h4 stay on the sans body (Plus Jakarta 700) for legibility. */
   h3, h4 {
-    @apply font-sans tracking-tight text-navy-900;
+    @apply font-sans font-bold tracking-tight text-murekkep-900;
     text-wrap: balance;
   }
-  /* Cormorant renders smaller/lighter than a sans at the same px, so display
-     headings get a touch more size + weight to keep visual hierarchy. */
-  h1 { @apply text-5xl md:text-6xl font-bold; }
-  h2 { @apply text-3xl md:text-4xl font-bold; }
-  h3 { @apply text-xl md:text-2xl font-semibold; }
-  h4 { @apply text-lg md:text-xl font-semibold; }
+  h1 { @apply text-4xl md:text-5xl; }
+  h2 { @apply text-3xl md:text-4xl; }
+  h3 { @apply text-xl md:text-2xl; }
+  h4 { @apply text-lg md:text-xl; }
   p  { @apply leading-relaxed; }
 }
 
@@ -55,35 +61,53 @@ body {
   .container-page {
     @apply mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8;
   }
+  /* Birincil CTA: begonvil pill + gölge, hover'da -2px lift (spec §4/§5). */
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-md bg-accent-400 px-5 py-3 text-sm font-semibold text-navy-900 shadow-card transition hover:bg-accent-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-accent-400 focus:ring-offset-2;
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-begonvil-500 px-6 py-3 text-sm font-bold text-white shadow-btn transition duration-200 hover:-translate-y-0.5 hover:bg-begonvil-600 focus:outline-none focus:ring-2 focus:ring-begonvil-500 focus:ring-offset-2;
   }
+  /* İkincil: turkuaz-500 pill, beyaz metin. */
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 rounded-md border border-navy-900 bg-white px-5 py-3 text-sm font-semibold text-navy-900 transition hover:bg-navy-50;
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-turkuaz-500 px-6 py-3 text-sm font-bold text-white shadow-btnTurkuaz transition duration-200 hover:-translate-y-0.5 hover:bg-turkuaz-600 focus:outline-none focus:ring-2 focus:ring-turkuaz-500 focus:ring-offset-2;
   }
+  /* Ghost: yarı saydam beyaz + kum-cizgi kenarlık. */
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium text-navy-900 transition hover:bg-navy-50;
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-kum-200 bg-white/70 px-5 py-2.5 text-sm font-semibold text-murekkep-900 transition duration-200 hover:border-turkuaz-500;
   }
+  /* WhatsApp pill — her zaman yeşil, her zaman görünür (spec §4 header). */
+  .btn-whatsapp {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-whatsapp px-5 py-2.5 text-sm font-bold text-white shadow-btnWa transition duration-200 hover:-translate-y-0.5 hover:bg-[#178f45] focus:outline-none focus:ring-2 focus:ring-whatsapp focus:ring-offset-2;
+  }
+  /* Kart: radius 26px, kum-cizgi kenarlık, hover'da -6px lift + gölge artışı. */
   .card {
-    @apply overflow-hidden rounded-xl border border-[var(--color-border)] bg-white shadow-card outline-none transition hover:shadow-cardHover focus-visible:ring-2 focus-visible:ring-accent-400 focus-visible:ring-offset-2;
+    @apply overflow-hidden rounded-xl border border-kum-200 bg-white shadow-card outline-none transition duration-[250ms] ease-akdeniz hover:-translate-y-1.5 hover:shadow-cardHover focus-visible:ring-2 focus-visible:ring-turkuaz-500 focus-visible:ring-offset-2;
   }
   .chip {
-    @apply inline-flex items-center gap-1 rounded-full bg-navy-50 px-3 py-1 text-xs font-medium text-navy-900;
+    @apply inline-flex items-center gap-1 rounded-full bg-turkuaz-50 px-3 py-1 text-xs font-semibold text-turkuaz-600;
   }
+  /* Güneş rozeti: üzerine koyu metin (#3A2400) — spec kontrast kuralı. */
   .chip-accent {
-    @apply inline-flex items-center gap-1 rounded-full bg-accent-400 px-3 py-1 text-xs font-semibold text-navy-900;
+    @apply inline-flex items-center gap-1 rounded-full bg-gunes-400 px-3 py-1 text-xs font-bold text-[#3A2400];
+  }
+  /* Bölge etiketi: kum zemin pill (kart görseli sol-üst köşesi). */
+  .chip-region {
+    @apply inline-flex items-center gap-1 rounded-full bg-kum-50/95 px-3 py-1 text-xs font-bold text-turkuaz-600 shadow-sm backdrop-blur-sm;
+  }
+  /* Rating rozeti: mürekkep zemin + güneş yıldız (kart görseli sağ-alt). */
+  .chip-rating {
+    @apply inline-flex items-center gap-1 rounded-full bg-murekkep-900 px-2.5 py-1 text-xs font-bold text-white;
   }
   .section {
     @apply py-12 md:py-16 lg:py-20;
   }
   .section-soft {
-    @apply bg-sand-50;
+    @apply bg-kum-100;
   }
   .section-blue {
-    @apply bg-navy-50;
+    @apply bg-turkuaz-50;
   }
+  /* Form alanları: kum zemin + kum-cizgi kenarlık, focus'ta turkuaz ring 2px. */
   .input-base {
-    @apply w-full rounded-md border border-[var(--color-border)] bg-white px-3 py-2.5 text-sm text-ink placeholder:text-muted focus:border-navy-600 focus:outline-none focus:ring-2 focus:ring-navy-200;
+    @apply w-full rounded-md border border-kum-200 bg-kum-50 px-3 py-2.5 text-sm text-ink placeholder:text-muted focus:border-turkuaz-500 focus:outline-none focus:ring-2 focus:ring-turkuaz-500/60;
   }
   .label-base {
     @apply mb-1 block text-xs font-semibold uppercase tracking-wide text-muted;
@@ -93,6 +117,39 @@ body {
 @layer utilities {
   .text-balance { text-wrap: balance; }
   .text-pretty  { text-wrap: pretty; }
+  /* Sayfa girişi stagger fade-up (spec §5). */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(22px);
+    animation: fade-up 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+  }
+  .fade-d1 { animation-delay: 0.05s; }
+  .fade-d2 { animation-delay: 0.15s; }
+  .fade-d3 { animation-delay: 0.25s; }
+  .fade-d4 { animation-delay: 0.35s; }
+}
+
+@keyframes fade-up {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Spec §5: reduced-motion MUTLAKA desteklenir — tüm animasyonlar kapanır. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .fade-up {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .prose-legal h2 {
@@ -108,5 +165,5 @@ body {
   @apply ml-5 list-decimal space-y-1;
 }
 .prose-legal a {
-  @apply text-navy-600 underline-offset-2 hover:underline;
+  @apply text-turkuaz-600 underline-offset-2 hover:underline;
 }
