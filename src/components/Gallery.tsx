@@ -26,6 +26,7 @@ export function Gallery({ images, alt }: { images: string[]; alt: string }) {
             alt={alt}
             fill
             priority
+            fetchPriority="high"
             sizes="(min-width: 768px) 50vw, 100vw"
             className="object-cover transition group-hover:scale-105"
           />

@@ -231,6 +231,7 @@ export default async function Page({
             alt={title}
             fill
             priority
+            fetchPriority="high"
             sizes="100vw"
             className="object-cover opacity-40"
           />
@@ -459,6 +460,7 @@ function renderMdxPost(
             alt={mdx.hero_image_alt || mdx.title}
             fill
             priority
+            fetchPriority="high"
             sizes="100vw"
             className="object-cover opacity-40"
           />

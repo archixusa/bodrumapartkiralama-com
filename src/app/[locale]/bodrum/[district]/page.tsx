@@ -292,6 +292,7 @@ export default async function DistrictPage({
           alt={`${districtName}, Bodrum`}
           fill
           priority
+          fetchPriority="high"
           sizes="100vw"
           className="object-cover opacity-40"
         />
