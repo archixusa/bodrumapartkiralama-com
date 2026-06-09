@@ -289,7 +289,7 @@ export default async function DistrictPage({
       <section className="relative overflow-hidden bg-navy-900 text-white">
         <Image
           src={d.heroImage}
-          alt={districtName}
+          alt={`${districtName}, Bodrum`}
           fill
           priority
           sizes="100vw"

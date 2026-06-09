@@ -623,7 +623,7 @@ export default async function HomePage({
               >
                 <Image
                   src={`/images/regions/${d.slug}.webp`}
-                  alt={d.name}
+                  alt={`${d.name}, Bodrum`}
                   fill
                   loading="lazy"
                   sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"

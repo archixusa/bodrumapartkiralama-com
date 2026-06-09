@@ -17,7 +17,7 @@ export function DistrictCard({ district }: { district: District }) {
     >
       <Image
         src={district.heroImage}
-        alt={district.name}
+        alt={`${district.name}, Bodrum`}
         fill
         loading="lazy"
         sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
