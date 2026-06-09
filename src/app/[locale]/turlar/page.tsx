@@ -127,7 +127,7 @@ export default async function Page({
       price: t("tour4Price"),
       icon: Landmark,
       image:
-        "https://images.unsplash.com/photo-1734723042943-db74efd1d40a?auto=format&fit=crop&w=1200&q=80",
+        "https://images.unsplash.com/photo-1591078314870-db74efd1d40a?auto=format&fit=crop&w=1200&q=80",
     },
   ];
 
