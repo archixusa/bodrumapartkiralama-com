@@ -105,25 +105,40 @@ export default async function Page({
     ],
   };
 
-  // ItemList of the rendered posts (newest-first, position-ordered) for AEO —
-  // helps search/AI engines understand the blog index as an ordered collection.
-  const itemListLd = {
+  // CollectionPage + içindeki ItemList (newest-first, position-ordered) —
+  // blog dizinini arama/AI motorlarına sıralı bir koleksiyon sayfası olarak
+  // tanıtır (DESIGN_SPEC.md §7). ItemList alanları aynen korunup mainEntity
+  // olarak iç içe verildi.
+  const collectionLd = {
     "@context": "https://schema.org",
-    "@type": "ItemList",
-    name: t("h1"),
+    "@type": "CollectionPage",
+    "@id": `${blogUrl}#collection`,
     url: blogUrl,
-    numberOfItems: sorted.length,
-    itemListElement: sorted.map((p, i) => ({
-      "@type": "ListItem",
-      position: i + 1,
-      url: postUrl(p.slug),
-      name: loc(locale, { tr: p.titleTr, en: p.titleEn, de: p.titleDe, ru: p.titleRu }),
-    })),
+    name: t("h1"),
+    description: t("metaDesc"),
+    inLanguage: locale,
+    isPartOf: {
+      "@type": "WebSite",
+      name: "Bodrumapartkiralama.com",
+      url: SITE_URL,
+    },
+    mainEntity: {
+      "@type": "ItemList",
+      name: t("h1"),
+      url: blogUrl,
+      numberOfItems: sorted.length,
+      itemListElement: sorted.map((p, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        url: postUrl(p.slug),
+        name: loc(locale, { tr: p.titleTr, en: p.titleEn, de: p.titleDe, ru: p.titleRu }),
+      })),
+    },
   };
 
   return (
     <>
-      <JsonLd data={[breadcrumbLd, itemListLd]} />
+      <JsonLd data={[breadcrumbLd, collectionLd]} />
       <PageHero
         title={t("h1")}
         subtitle={t("subtitle")}

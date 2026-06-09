@@ -19,6 +19,7 @@ import {
 } from "@/components/DeferredClientWidgets";
 import { districts } from "@/data/districts";
 import { getPhone } from "@/lib/contact";
+import { getSiteReviewAggregate } from "@/lib/reviews";
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin", "latin-ext"],
@@ -130,6 +131,11 @@ export default async function LocaleLayout({
   setRequestLocale(locale);
   const messages = await getMessages();
 
+  // AggregateRating yalnız GERÇEK yorum verisinden (property_review_summary,
+  // server-side). Veri yoksa/istek başarısızsa şemaya hiç eklenmez — sahte
+  // değer asla (DESIGN_SPEC.md §7).
+  const reviewAggregate = await getSiteReviewAggregate();
+
   const localBusinessLd = {
     "@context": "https://schema.org",
     "@type": ["LocalBusiness", "LodgingBusiness"],
@@ -167,6 +173,17 @@ export default async function LocaleLayout({
         closes: "19:00",
       },
     ],
+    ...(reviewAggregate
+      ? {
+          aggregateRating: {
+            "@type": "AggregateRating",
+            ratingValue: reviewAggregate.ratingValue,
+            reviewCount: reviewAggregate.reviewCount,
+            bestRating: 5,
+            worstRating: 1,
+          },
+        }
+      : {}),
   };
 
   return (
