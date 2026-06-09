@@ -18,6 +18,10 @@ const WhatsAppFab = dynamic(
   () => import("@/components/WhatsAppFab").then((m) => m.WhatsAppFab),
   { ssr: false },
 );
+const MobileStickyCta = dynamic(
+  () => import("@/components/MobileStickyCta").then((m) => m.MobileStickyCta),
+  { ssr: false },
+);
 const ExitIntentModal = dynamic(
   () => import("@/components/ExitIntentModal").then((m) => m.ExitIntentModal),
   { ssr: false },
@@ -35,6 +39,7 @@ export function DeferredClientWidgets({ locale }: { locale: string }) {
   return (
     <>
       <WhatsAppFab locale={locale} />
+      <MobileStickyCta locale={locale} />
       <ExitIntentModal />
       <CookieConsent />
     </>

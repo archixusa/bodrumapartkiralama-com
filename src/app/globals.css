@@ -36,6 +36,14 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+/* <md ekranlarda alttaki yapışkan CTA çubuğu (MobileStickyCta) içerikle
+   çakışmasın diye gövdeye nefes payı. */
+@media (max-width: 767px) {
+  body {
+    padding-bottom: 76px;
+  }
+}
+
 @layer base {
   /* h1/h2 carry the display voice (Fraunces → --font-display), 600 ağırlık,
      spec §2: letter-spacing -0.015em. */
