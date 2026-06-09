@@ -509,57 +509,71 @@ export default async function HomePage({
 
       {isDraft && <PreviewBanner locale={locale} />}
 
-      {/* 1 — HERO + SEARCH */}
+      {/* 1 — HERO + SEARCH — "Canlı Akdeniz" degrade gökyüzü/deniz (salt CSS).
+          Degrade durakları referans mockup'tan (bodrum-design-preview/index.html):
+          kum-bg → açık turkuaz deniz; güneş ve begonvil radyalleri dekor. */}
       <section
         aria-labelledby="hero-heading"
-        className="relative overflow-hidden bg-navy-900 text-white"
+        className="relative overflow-hidden"
       >
-        <Image
-          src="/images/hero/bodrum-hero.webp"
-          alt="Bodrum"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover opacity-45"
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-[radial-gradient(120%_80%_at_78%_8%,rgba(255,203,112,.55),transparent_42%),radial-gradient(90%_70%_at_18%_22%,rgba(224,33,138,.12),transparent_55%),linear-gradient(180deg,#FFF8F0_0%,#EAF7F4_46%,#CFEFEA_72%,#A9E4DD_100%)]"
         />
-        {/* Darker gradient floor so white body copy clears AA (≥4.5:1) over the photo. */}
-        <div className="absolute inset-0 bg-gradient-to-b from-navy-900/85 via-navy-900/75 to-navy-900/95" />
-        <div className="container-page relative py-16 md:py-24 lg:py-28">
+        {/* Güneş — gunes token'larından radyal dekor */}
+        <div
+          aria-hidden="true"
+          className="absolute right-[10%] top-12 hidden h-24 w-24 rounded-full bg-[radial-gradient(circle_at_50%_50%,#FFCB70,#FFB23E_65%)] shadow-[0_0_80px_12px_rgba(255,178,62,.5)] md:block"
+        />
+        {/* Dalgalar — turkuaz skalası */}
+        <svg
+          aria-hidden="true"
+          className="absolute inset-x-0 bottom-0 h-20 w-full md:h-32"
+          viewBox="0 0 1200 170"
+          preserveAspectRatio="none"
+        >
+          <path d="M0 70 Q150 40 300 70 T600 70 T900 70 T1200 70 V170 H0 Z" fill="#7FD6CD" opacity=".55" />
+          <path d="M0 100 Q150 70 300 100 T600 100 T900 100 T1200 100 V170 H0 Z" fill="#34C8C4" opacity=".6" />
+          <path d="M0 130 Q150 105 300 130 T600 130 T900 130 T1200 130 V170 H0 Z" fill="#0EA5A5" />
+        </svg>
+        <div className="container-page relative z-10 py-16 pb-32 md:py-24 md:pb-40 lg:py-28 lg:pb-44">
           <div className="mx-auto max-w-3xl text-center">
             <h1
               id="hero-heading"
-              className="text-balance leading-tight text-white md:text-6xl lg:text-7xl"
+              className="fade-up fade-d1 text-balance leading-tight text-murekkep-900 md:text-5xl lg:text-6xl"
             >
               {heroCopy.h1}
             </h1>
             <p
               data-speakable="intro"
-              className="mx-auto mt-4 max-w-2xl text-base text-white md:text-lg"
+              className="fade-up fade-d2 mx-auto mt-4 max-w-2xl text-base text-murekkep-700 md:text-lg"
             >
               {heroCopy.sub}
             </p>
 
-            <HeroSearch
-              locale={locale}
-              labels={searchLabels}
-              regions={regionOptions}
-            />
+            <div className="fade-up fade-d3">
+              <HeroSearch
+                locale={locale}
+                labels={searchLabels}
+                regions={regionOptions}
+              />
+            </div>
 
             {/* Trust micro-signals */}
-            <div className="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm text-white/85">
+            <div className="fade-up fade-d4 mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm font-medium text-murekkep-700">
               {heroCopy.trust.map((tr) => (
                 <span key={tr} className="inline-flex items-center gap-1.5">
-                  <ShieldCheck className="h-4 w-4 text-accent-400" />
+                  <ShieldCheck className="h-4 w-4 text-turkuaz-600" />
                   {tr}
                 </span>
               ))}
             </div>
 
             {/* Activity signal (generic, honest — no fake numbers) */}
-            <div className="mt-4 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-sm font-medium text-white/90">
+            <div className="fade-up fade-d4 mt-4 inline-flex items-center gap-2 rounded-full border border-white/80 bg-white/70 px-4 py-1.5 text-sm font-semibold text-murekkep-700 backdrop-blur-sm">
               <span className="relative flex h-2.5 w-2.5">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400" />
+                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500" />
               </span>
               {heroCopy.activity}
             </div>

@@ -39,11 +39,11 @@ export function HeroSearch({ locale, labels, regions }: HeroSearchProps) {
 
   return (
     <>
-      <div className="mx-auto mt-8 max-w-3xl rounded-xl border border-white/15 bg-white/95 p-3 shadow-2xl backdrop-blur sm:p-4">
+      <div className="mx-auto mt-8 max-w-3xl rounded-2xl border border-white/90 bg-white/80 p-4 shadow-cardHover backdrop-blur-[18px] sm:p-5">
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {/* Region */}
           <label className="flex flex-col gap-1 text-left">
-            <span className="inline-flex items-center gap-1 text-xs font-semibold text-muted">
+            <span className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wide text-muted">
               <MapPin className="h-3.5 w-3.5 text-navy-600" />
               {labels.region}
             </span>
@@ -64,7 +64,7 @@ export function HeroSearch({ locale, labels, regions }: HeroSearchProps) {
 
           {/* Check-in */}
           <label className="flex flex-col gap-1 text-left">
-            <span className="inline-flex items-center gap-1 text-xs font-semibold text-muted">
+            <span className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wide text-muted">
               <Calendar className="h-3.5 w-3.5 text-navy-600" />
               {labels.checkIn}
             </span>
@@ -79,7 +79,7 @@ export function HeroSearch({ locale, labels, regions }: HeroSearchProps) {
 
           {/* Check-out */}
           <label className="flex flex-col gap-1 text-left">
-            <span className="inline-flex items-center gap-1 text-xs font-semibold text-muted">
+            <span className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wide text-muted">
               <Calendar className="h-3.5 w-3.5 text-navy-600" />
               {labels.checkOut}
             </span>
@@ -94,7 +94,7 @@ export function HeroSearch({ locale, labels, regions }: HeroSearchProps) {
 
           {/* Guests */}
           <label className="flex flex-col gap-1 text-left">
-            <span className="inline-flex items-center gap-1 text-xs font-semibold text-muted">
+            <span className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wide text-muted">
               <Users className="h-3.5 w-3.5 text-navy-600" />
               {labels.guests}
             </span>
