@@ -30,6 +30,10 @@ const CookieConsent = dynamic(
   () => import("@/components/CookieConsent").then((m) => m.CookieConsent),
   { ssr: false },
 );
+const ScrollToTop = dynamic(
+  () => import("@/components/ScrollToTop").then((m) => m.ScrollToTop),
+  { ssr: false },
+);
 
 export function SeasonBannerLazy() {
   return <SeasonBanner />;
@@ -40,6 +44,7 @@ export function DeferredClientWidgets({ locale }: { locale: string }) {
     <>
       <WhatsAppFab locale={locale} />
       <MobileStickyCta locale={locale} />
+      <ScrollToTop locale={locale} />
       <ExitIntentModal />
       <CookieConsent />
     </>

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { MapPin, Check, ArrowRight, MessageCircle } from "lucide-react";
+import { MapPin, Check, ArrowRight, ChevronRight, MessageCircle } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import { ApartCard } from "@/components/ApartCard";
 import { FAQ } from "@/components/FAQ";
@@ -297,10 +297,13 @@ export default async function DistrictPage({
         />
         <div className="absolute inset-0 bg-gradient-to-b from-navy-900/80 via-navy-900/55 to-navy-900/85" />
         <div className="container-page relative py-14 md:py-20">
-          <nav aria-label="breadcrumb" className="mb-3 text-xs text-white/80">
+          {/* Breadcrumb UI — JSON-LD'deki BreadcrumbList ile birebir aynı zincir. */}
+          <nav aria-label="breadcrumb" className="mb-3 flex flex-wrap items-center gap-1 text-xs text-white/80">
             <Link href="/" className="hover:underline">{isTr ? "Ana Sayfa" : "Home"}</Link>
-            <span className="px-2">/</span>
+            <ChevronRight className="h-3 w-3 opacity-60" />
             <Link href="/apartlar" className="hover:underline">{fl("title")}</Link>
+            <ChevronRight className="h-3 w-3 opacity-60" />
+            <span aria-current="page" className="font-semibold text-white">{districtName}</span>
           </nav>
           <h1 className="text-white">{t("h1", { district: districtName })}</h1>
           <p className="mt-3 max-w-2xl text-base text-white/85 md:text-lg">

@@ -120,6 +120,27 @@ body {
   .label-base {
     @apply mb-1 block text-xs font-semibold uppercase tracking-wide text-muted;
   }
+  /* Hata durumu (spec §4 form kuralları): kullanıcı alanla etkileşip geçersiz
+     bıraktığında danger kenarlık + soluk kırmızı ring. Salt CSS — form
+     gönderim mantığına dokunmaz. (`:user-invalid` ve `[aria-invalid]`
+     kuralları bilinçli olarak AYRI yazıldı: tek listede desteklemeyen
+     tarayıcı tüm listeyi düşürürdü.) */
+  .input-base:user-invalid {
+    @apply border-danger ring-2 ring-danger/20;
+  }
+  .input-base:user-invalid:focus {
+    @apply border-danger ring-danger/40;
+  }
+  .input-base[aria-invalid="true"] {
+    @apply border-danger ring-2 ring-danger/20;
+  }
+  .input-base[aria-invalid="true"]:focus {
+    @apply border-danger ring-danger/40;
+  }
+  /* Alan altı / form geneli hata mesajı. */
+  .field-error {
+    @apply flex items-start gap-1.5 text-xs font-medium text-danger;
+  }
 }
 
 @layer utilities {
