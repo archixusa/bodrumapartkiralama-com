@@ -42,7 +42,7 @@ export function Header() {
   ];
 
   return (
-    <header className="sticky top-0 z-40 border-b border-[var(--color-border)] bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80">
+    <header className="sticky top-0 z-40 border-b border-kum-200 bg-kum-50/95 backdrop-blur-[14px] supports-[backdrop-filter]:bg-[rgba(255,248,240,.82)]">
       <div className="container-page flex h-16 items-center justify-between gap-4">
         <Link href="/" className="flex shrink-0 items-center" aria-label="Bodrum Apart Kiralama">
           <Image
@@ -60,7 +60,7 @@ export function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className="rounded-md px-3 py-2 text-sm font-medium text-navy-900 transition hover:bg-navy-50"
+              className="relative px-3 py-2 text-sm font-semibold text-murekkep-700 transition hover:text-murekkep-900 after:absolute after:inset-x-3 after:bottom-0.5 after:h-0.5 after:origin-left after:scale-x-0 after:rounded-full after:bg-begonvil-500 after:transition-transform after:duration-300 after:content-[''] hover:after:scale-x-100"
             >
               {link.label}
             </Link>
@@ -104,7 +104,7 @@ export function Header() {
           </div>
           <Link
             href="/evinizi-kiraya-verin"
-            className="inline-flex items-center gap-1.5 rounded-md border border-accent-500/40 px-3 py-2 text-xs font-semibold uppercase tracking-wide text-accent-600 transition hover:bg-accent-500 hover:text-white"
+            className="inline-flex items-center gap-1.5 rounded-full border border-begonvil-500/40 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-begonvil-600 transition hover:bg-begonvil-500 hover:text-white"
           >
             {locale === "tr" ? "Evinizi Kiraya Verin" : "List Your Property"}
           </Link>
@@ -112,7 +112,7 @@ export function Header() {
             href={`https://wa.me/${c("whatsappNumber")}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-primary"
+            className="btn-whatsapp"
           >
             <MessageCircle className="h-4 w-4" />
             WhatsApp
@@ -130,7 +130,7 @@ export function Header() {
       </div>
 
       {open && (
-        <div className="border-t border-[var(--color-border)] bg-white lg:hidden">
+        <div className="border-t border-kum-200 bg-kum-50 lg:hidden">
           <div className="container-page space-y-1 py-3">
             {navLinks.map((link) => (
               <Link
@@ -145,7 +145,7 @@ export function Header() {
             <Link
               href="/evinizi-kiraya-verin"
               onClick={() => setOpen(false)}
-              className="block rounded-md px-3 py-2 text-base font-bold text-accent-600 hover:bg-accent-500/10"
+              className="block rounded-md px-3 py-2 text-base font-bold text-begonvil-600 hover:bg-begonvil-50"
             >
               Evinizi Kiraya Verin →
             </Link>
@@ -176,7 +176,7 @@ export function Header() {
                 href={`https://wa.me/${c("whatsappNumber")}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-primary"
+                className="btn-whatsapp"
               >
                 <MessageCircle className="h-4 w-4" />
                 WhatsApp

@@ -44,12 +44,12 @@ export function Footer() {
       };
 
   return (
-    <footer className="border-t border-[var(--color-border)] bg-navy-900 text-navy-100">
+    <footer className="bg-footer text-navy-100">
       <div className="container-page py-12 lg:py-16">
         {/* Brand row */}
         <div className="mb-10 flex flex-col items-start gap-4 border-b border-white/10 pb-8 md:flex-row md:items-center md:justify-between">
           <div className="flex items-start gap-4">
-            <div className="rounded-md bg-white/95 p-3">
+            <div className="rounded-lg bg-white/95 p-3">
               <Image
                 src="/logo_yatay.svg"
                 alt="Bodrum Apart Kiralama"
@@ -110,7 +110,7 @@ export function Footer() {
                 href={`https://wa.me/${c("whatsappNumber")}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-navy-100/85 hover:text-white"
+                className="inline-flex items-center gap-2 text-navy-100/85 transition hover:text-turkuaz-300"
               >
                 <MessageCircle className="h-4 w-4 text-[#25D366]" />
                 {colLabels.whatsapp}
@@ -119,7 +119,7 @@ export function Footer() {
             <li>
               <a
                 href={`mailto:${c("email")}`}
-                className="inline-flex items-center gap-2 text-navy-100/85 hover:text-white"
+                className="inline-flex items-center gap-2 text-navy-100/85 transition hover:text-turkuaz-300"
               >
                 <Mail className="h-4 w-4 text-accent-400" />
                 {c("email")}
@@ -128,7 +128,7 @@ export function Footer() {
             <li>
               <a
                 href={`tel:${c("phone").replace(/\s/g, "")}`}
-                className="inline-flex items-center gap-2 text-navy-100/85 hover:text-white"
+                className="inline-flex items-center gap-2 text-navy-100/85 transition hover:text-turkuaz-300"
               >
                 <Phone className="h-4 w-4 text-accent-400" />
                 {c("phoneDisplay")}
@@ -144,7 +144,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook"
-                className="inline-flex items-center gap-2 text-navy-100/85 hover:text-white"
+                className="inline-flex items-center gap-2 text-navy-100/85 transition hover:text-turkuaz-300"
               >
                 <Facebook className="h-4 w-4 text-accent-400" />
                 Facebook
@@ -154,7 +154,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
-                className="inline-flex items-center gap-2 text-navy-100/85 hover:text-white"
+                className="inline-flex items-center gap-2 text-navy-100/85 transition hover:text-turkuaz-300"
               >
                 <Instagram className="h-4 w-4 text-accent-400" />
                 Instagram
@@ -203,7 +203,7 @@ function FooterLink({
 }) {
   return (
     <li>
-      <Link href={href} className="text-navy-100/85 hover:text-white">
+      <Link href={href} className="text-navy-100/85 transition hover:text-turkuaz-300">
         {children}
       </Link>
     </li>
