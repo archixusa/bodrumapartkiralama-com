@@ -15,7 +15,7 @@ import { loc, locArr } from "@/lib/i18n-data";
 import { districtGuides } from "@/data/districtGuides";
 import { DistrictGuide } from "@/components/DistrictGuide";
 import { getApartmentsByDistrict } from "@/data/apartments";
-import { Testimonials } from "@/components/Testimonials";
+import { GuestReviews } from "@/components/GuestReviews";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.bodrumapartkiralama.com";
@@ -357,7 +357,7 @@ export default async function DistrictPage({
           </div>
           {apts.length === 0 ? (
             <div className="mt-6 flex flex-col items-start gap-5 rounded-xl border border-[var(--color-border)] bg-white p-6 md:flex-row md:items-center md:gap-8 md:p-8">
-              <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-md bg-accent-400/15 text-accent-500">
+              <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-md bg-turkuaz-500/10 text-turkuaz-600">
                 <MessageCircle className="h-6 w-6" />
               </span>
               <div className="flex-1">
@@ -396,7 +396,9 @@ export default async function DistrictPage({
         </div>
       </section>
 
-      <Testimonials district={d.name} max={3} />
+      {/* Gerçek onaylı misafir yorumları (site geneli, empty-safe) —
+          v2 sahte yorum yasağı: uydurma Testimonials kaldırıldı. */}
+      <GuestReviews locale={locale} max={3} />
 
       <section className="section">
         <div className="container-page max-w-4xl">

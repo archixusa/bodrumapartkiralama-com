@@ -18,7 +18,7 @@ import {
 import { Link } from "@/i18n/routing";
 import { FAQ } from "@/components/FAQ";
 import { JsonLd } from "@/components/JsonLd";
-import { Testimonials } from "@/components/Testimonials";
+import { GuestReviews } from "@/components/GuestReviews";
 import { HeroSearch } from "@/components/HeroSearch";
 import { OfferCtaButton } from "@/components/OfferCtaButton";
 import { districts } from "@/data/districts";
@@ -510,20 +510,20 @@ export default async function HomePage({
       {isDraft && <PreviewBanner locale={locale} />}
 
       {/* 1 — HERO + SEARCH — "Canlı Akdeniz" degrade gökyüzü/deniz (salt CSS).
-          Degrade durakları referans mockup'tan (bodrum-design-preview/index.html):
-          kum-bg → açık turkuaz deniz; güneş ve begonvil radyalleri dekor. */}
+          v2 palet: kum-bg → açık turkuaz deniz; dekor radyalleri kum + turkuaz
+          (begonvil tamamen kaldırıldı, gunes yalnız yıldız/puanda). */}
       <section
         aria-labelledby="hero-heading"
         className="relative overflow-hidden"
       >
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-[radial-gradient(120%_80%_at_78%_8%,rgba(255,203,112,.55),transparent_42%),radial-gradient(90%_70%_at_18%_22%,rgba(224,33,138,.12),transparent_55%),linear-gradient(180deg,#FFF8F0_0%,#EAF7F4_46%,#CFEFEA_72%,#A9E4DD_100%)]"
+          className="absolute inset-0 bg-[radial-gradient(120%_80%_at_78%_8%,rgba(251,238,221,.9),transparent_42%),radial-gradient(90%_70%_at_18%_22%,rgba(52,200,196,.16),transparent_55%),linear-gradient(180deg,#FFF8F0_0%,#EAF7F4_46%,#CFEFEA_72%,#A9E4DD_100%)]"
         />
-        {/* Güneş — gunes token'larından radyal dekor */}
+        {/* Yumuşak ışık halesi — kum tonlu nötr dekor (v2: gunes dekorda kullanılmaz) */}
         <div
           aria-hidden="true"
-          className="absolute right-[10%] top-12 hidden h-24 w-24 rounded-full bg-[radial-gradient(circle_at_50%_50%,#FFCB70,#FFB23E_65%)] shadow-[0_0_80px_12px_rgba(255,178,62,.5)] md:block"
+          className="absolute right-[10%] top-12 hidden h-24 w-24 rounded-full bg-[radial-gradient(circle_at_50%_50%,#FFF8F0,#FBEEDD_65%)] shadow-[0_0_80px_12px_rgba(240,226,207,.7)] md:block"
         />
         {/* Dalgalar — turkuaz skalası */}
         <svg
@@ -619,7 +619,7 @@ export default async function HomePage({
               <Link
                 key={d.slug}
                 href={`/bodrum/${d.urlSlug}`}
-                className="group relative block aspect-[3/2] overflow-hidden rounded-xl shadow-card outline-none transition duration-300 hover:shadow-cardHover focus-visible:ring-2 focus-visible:ring-accent-400 focus-visible:ring-offset-2"
+                className="group relative block aspect-[3/2] overflow-hidden rounded-xl shadow-card outline-none transition duration-300 hover:shadow-cardHover focus-visible:ring-2 focus-visible:ring-turkuaz-500 focus-visible:ring-offset-2"
               >
                 <Image
                   src={`/images/regions/${d.slug}.webp`}
@@ -632,7 +632,7 @@ export default async function HomePage({
                 <div className="absolute inset-0 bg-gradient-to-t from-navy-900/95 via-navy-900/35 to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 p-5 text-white">
                   <h3 className="flex items-center gap-1.5 text-xl font-bold text-white drop-shadow">
-                    <MapPin className="h-4 w-4 text-accent-400" />
+                    <MapPin className="h-4 w-4 text-turkuaz-300" />
                     {d.name}
                   </h3>
                   <p className="mt-1 line-clamp-2 text-sm text-white/85">
@@ -693,7 +693,7 @@ export default async function HomePage({
           <div className="grid items-start gap-10 lg:grid-cols-12 lg:gap-12">
             {/* Editorial text column — left-aligned, anchored by an accent rule */}
             <div className="lg:col-span-4 lg:sticky lg:top-28">
-              <div className="border-l-2 border-accent-400 pl-5">
+              <div className="border-l-2 border-turkuaz-500 pl-5">
                 <h2 id="lifestyle-heading" className="text-balance">
                   {lifestyleCopy.title}
                 </h2>
@@ -729,7 +729,7 @@ export default async function HomePage({
               const Icon = WHY_ICONS[i] ?? WHY_ICONS[0];
               return (
                 <div key={item.title} className="card flex flex-col gap-3 p-6">
-                  <span className="inline-flex h-12 w-12 items-center justify-center rounded-md bg-accent-400/15 text-accent-500">
+                  <span className="inline-flex h-12 w-12 items-center justify-center rounded-md bg-turkuaz-500/10 text-turkuaz-600">
                     <Icon className="h-6 w-6" />
                   </span>
                   <h3 className="text-lg">{item.title}</h3>
@@ -745,7 +745,7 @@ export default async function HomePage({
       <section aria-labelledby="owner-heading" className="section section-soft py-10 md:py-14 lg:py-16">
         <div className="container-page">
           <div className="mx-auto flex max-w-4xl flex-col items-start gap-5 rounded-xl border border-[var(--color-border)] bg-white p-6 md:flex-row md:items-center md:gap-8 md:p-8">
-            <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-md bg-accent-400/15 text-accent-500">
+            <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-md bg-turkuaz-500/10 text-turkuaz-600">
               <HomeIcon className="h-6 w-6" />
             </span>
             <div className="flex-1">
@@ -789,8 +789,9 @@ export default async function HomePage({
         </div>
       </section>
 
-      {/* 9 — TESTIMONIALS */}
-      <Testimonials max={3} />
+      {/* 9 — GERÇEK MİSAFİR YORUMLARI (Supabase, onaylı; veri yoksa hiç
+          render edilmez — v2 sahte yorum yasağı) */}
+      <GuestReviews locale={locale} max={3} />
 
       {/* 10 — BLOG */}
       <section aria-labelledby="blog-heading" className="section section-soft">
