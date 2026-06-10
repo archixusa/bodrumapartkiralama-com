@@ -1,7 +1,7 @@
-import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { Mail, Phone, MapPin, MessageCircle, Facebook, Instagram } from "lucide-react";
 import { Link } from "@/i18n/routing";
+import { BrandLockup } from "@/components/BrandLockup";
 import { districts } from "@/data/districts";
 
 export function Footer() {
@@ -101,16 +101,10 @@ export function Footer() {
       <div className="container-page py-12 lg:py-16">
         {/* Brand row */}
         <div className="mb-10 flex flex-col items-start gap-4 border-b border-white/10 pb-8 md:flex-row md:items-center md:justify-between">
-          <div className="flex items-start gap-4">
-            <div className="rounded-lg bg-white/95 p-3">
-              <Image
-                src="/logo_yatay.svg"
-                alt="Bodrum Apart Kiralama"
-                width={200}
-                height={40}
-                className="h-10 w-auto"
-              />
-            </div>
+          <div className="flex flex-col items-start gap-4 md:flex-row md:items-center">
+            {/* A3 Yelken lockup, koyu zemin varyantı — beyaz kutu kalktı
+                (spec: işaret kutusuz/transparan kullanılır). */}
+            <BrandLockup variant="dark" className="shrink-0" />
             <p className="max-w-md text-sm text-navy-100/85">{t("tagline")}</p>
           </div>
         </div>

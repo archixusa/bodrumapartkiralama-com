@@ -130,7 +130,7 @@ export default async function Page({
       publisher: {
         "@type": "Organization",
         name: "Bodrumapartkiralama.com",
-        logo: { "@type": "ImageObject", url: `${SITE_URL}/logo_kare.svg` },
+        logo: { "@type": "ImageObject", url: `${SITE_URL}/brand/apart-logo-512.png` },
       },
       mainEntityOfPage: pageUrl,
       speakable: {

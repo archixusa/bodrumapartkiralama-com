@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { Menu, X, Phone, MessageCircle, Globe } from "lucide-react";
 import { Link, usePathname } from "@/i18n/routing";
 import { routing } from "@/i18n/routing";
+import { BrandLockup } from "@/components/BrandLockup";
 import clsx from "clsx";
 
 const LOCALE_LABEL: Record<string, string> = {
@@ -60,15 +60,14 @@ export function Header() {
   return (
     <header className="sticky top-0 z-40 border-b border-kum-200 bg-kum-50/95 backdrop-blur-[14px] supports-[backdrop-filter]:bg-[rgba(255,248,240,.82)]">
       <div className="container-page flex h-16 items-center justify-between gap-4">
-        <Link href="/" className="flex shrink-0 items-center" aria-label="Bodrum Apart Kiralama">
-          <Image
-            src="/logo_yatay.svg"
-            alt="Bodrum Apart Kiralama"
-            width={200}
-            height={40}
-            priority
-            className="h-10 w-auto"
-          />
+        {/* A3 Yelken lockup — inline SVG, ekstra istek yok (spec "Logo
+            uygulaması"). py-2 ile dokunma hedefi ≥44px. */}
+        <Link
+          href="/"
+          className="flex shrink-0 items-center py-2"
+          aria-label="Bodrum Apart Kiralama"
+        >
+          <BrandLockup />
         </Link>
 
         <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary">

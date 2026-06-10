@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" role="img" aria-label="Bodrum Apart">
-  <rect width="48" height="48" rx="10" fill="#042C53"/>
-  <path d="M8 32 Q 16 26, 24 32 T 40 32" stroke="#EF9F27" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-  <path d="M14 22 L 24 12 L 34 22 L 34 30 L 14 30 Z" fill="#E6F1FB"/>
-  <rect x="22" y="22" width="4" height="6" fill="#042C53"/>
-</svg>

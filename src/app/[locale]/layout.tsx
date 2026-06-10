@@ -84,9 +84,12 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
+    ],
     shortcut: "/icon.svg",
-    apple: [{ url: "/apple-touch-icon.svg", type: "image/svg+xml" }],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
   },
   manifest: "/site.webmanifest",
   robots: {
@@ -142,7 +145,7 @@ export default async function LocaleLayout({
     "@id": `${SITE_URL}/#organization`,
     name: "Bodrumapartkiralama.com",
     url: SITE_URL,
-    logo: `${SITE_URL}/logo_kare.svg`,
+    logo: `${SITE_URL}/brand/apart-logo-512.png`,
     image: `${SITE_URL}/og-default.svg`,
     description:
       "Bodrum yarımadasında apart kiralama hizmeti veren yerel platform.",

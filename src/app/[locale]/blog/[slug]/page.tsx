@@ -194,7 +194,7 @@ export default async function Page({
       publisher: {
         "@type": "Organization",
         name: "Bodrumapartkiralama.com",
-        logo: { "@type": "ImageObject", url: `${SITE_URL}/logo_kare.svg` },
+        logo: { "@type": "ImageObject", url: `${SITE_URL}/brand/apart-logo-512.png` },
       },
       mainEntityOfPage: `${SITE_URL}/blog/${post.slug}`,
       description: loc(locale, { tr: post.metaDescTr, en: post.metaDescEn, de: post.metaDescDe, ru: post.metaDescRu }),
@@ -401,7 +401,7 @@ function renderMdxPost(
     publisher: {
       "@type": "Organization",
       name: "Bodrumapartkiralama.com",
-      logo: { "@type": "ImageObject", url: `${SITE_URL}/logo_kare.svg` },
+      logo: { "@type": "ImageObject", url: `${SITE_URL}/brand/apart-logo-512.png` },
     },
     mainEntityOfPage: `${SITE_URL}/blog/${mdx.slug}`,
     keywords: mdx.keywords.join(", "),
