@@ -118,11 +118,8 @@ export default async function Page({
     name: t("h1"),
     description: t("metaDesc"),
     inLanguage: locale,
-    isPartOf: {
-      "@type": "WebSite",
-      name: "Bodrumapartkiralama.com",
-      url: SITE_URL,
-    },
+    // Layout'taki tekil WebSite düğümüne referans (kopya düğüm açılmaz).
+    isPartOf: { "@id": `${SITE_URL}/#website` },
     mainEntity: {
       "@type": "ItemList",
       name: t("h1"),

@@ -189,6 +189,26 @@ export default async function LocaleLayout({
       : {}),
   };
 
+  // WebSite düğümü — layout'ta TEK SEFER, her sayfada (spec v3 SEO:
+  // "Organization + WebSite JSON-LD (layout'a, tek sefer)").
+  // LocalBusiness/LodgingBusiness zaten Organization alt türü olduğundan ayrı
+  // bir Organization düğümü AÇILMAZ — publisher #organization'a referans verir.
+  // SearchAction ana sayfadaki tekil WebSite düğümünden buraya taşındı.
+  const webSiteLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${SITE_URL}/#website`,
+    url: SITE_URL,
+    name: "Bodrumapartkiralama.com",
+    inLanguage: locale,
+    publisher: { "@id": `${SITE_URL}/#organization` },
+    potentialAction: {
+      "@type": "SearchAction",
+      target: `${SITE_URL}/apartlar?district={search_term_string}`,
+      "query-input": "required name=search_term_string",
+    },
+  };
+
   return (
     <html lang={locale} className={`${jakarta.variable} ${fraunces.variable}`}>
       <head>
@@ -210,7 +230,7 @@ export default async function LocaleLayout({
         />
       </head>
       <body className="bg-kum-50 font-sans text-ink antialiased">
-        <JsonLd data={localBusinessLd} />
+        <JsonLd data={[localBusinessLd, webSiteLd]} />
         <GtmNoScript />
         <LeadTracking />
         <NextIntlClientProvider locale={locale} messages={messages}>

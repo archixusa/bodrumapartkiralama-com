@@ -438,18 +438,9 @@ export default async function HomePage({
   // her sayfada aynı @id (`#organization`) ile tam düğümü (aggregateRating
   // dahil, gerçek veriden) basıyor; ikinci bir kopya çelişen alanlarla aynı
   // varlığı ikiye bölüyordu. Bu dizi yalnız sayfaya özgü şemaları içerir.
+  // WebSite düğümü de layout'a taşındı (#website, SearchAction dahil) —
+  // burada tekrarlanmaz (aynı varlığın iki kopyası).
   const jsonLd = [
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      url: SITE_URL,
-      name: "Bodrumapartkiralama.com",
-      potentialAction: {
-        "@type": "SearchAction",
-        target: `${SITE_URL}/apartlar?district={search_term_string}`,
-        "query-input": "required name=search_term_string",
-      },
-    },
     {
       "@context": "https://schema.org",
       "@type": "WebPage",

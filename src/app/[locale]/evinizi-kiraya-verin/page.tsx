@@ -49,21 +49,45 @@ const OWNER_HERO_DEFAULT: ByLocale<OwnerHeroCopy> = {
   },
 };
 
+// Sayfa metadata'sı 4 dilde (spec v3 SEO: benzersiz title+description —
+// eskiden tüm locale'lerde sabit Türkçeydi).
+const OWNER_META: ByLocale<{ title: string; desc: string; ogDesc: string }> = {
+  tr: {
+    title: "Evinizi Kiraya Verin — Bodrum Apart Yönetimi",
+    desc: "Bodrum'daki mülkünüz için yönetim, pazarlama ve misafir iletişimini birlikte planlayalım. Şeffaf çalışma yapısı, doğrudan mülk sahibi iletişimi.",
+    ogDesc: "Mülk sahipleri için kira yönetimi ve yazılı, şeffaf koşullar.",
+  },
+  en: {
+    title: "List Your Property — Bodrum Apartment Management",
+    desc: "Plan management, marketing and guest communication for your Bodrum property with us. Written terms, direct owner communication.",
+    ogDesc: "Rental management for owners with written, transparent terms.",
+  },
+  de: {
+    title: "Immobilie vermieten — Apartmentverwaltung in Bodrum",
+    desc: "Verwaltung, Vermarktung und Gästekommunikation für Ihre Immobilie in Bodrum. Schriftliche Konditionen, direkter Kontakt zum Eigentümer.",
+    ogDesc: "Mietverwaltung für Eigentümer mit schriftlichen, transparenten Konditionen.",
+  },
+  ru: {
+    title: "Сдайте свою недвижимость — управление апартаментами в Бодруме",
+    desc: "Управление, продвижение и общение с гостями для вашей недвижимости в Бодруме. Письменные условия, прямой контакт с владельцем.",
+    ogDesc: "Управление арендой для владельцев: письменные и прозрачные условия.",
+  },
+};
+
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
+  const m = OWNER_META[locale as keyof typeof OWNER_META] ?? OWNER_META.en;
   return {
-    title: "Evinizi Kiraya Verin — Bodrum Apart Yönetimi",
-    description:
-      "Bodrum'daki mülkünüz için yönetim, pazarlama ve misafir iletişimini birlikte planlayalım. Şeffaf çalışma yapısı, doğrudan mülk sahibi iletişimi.",
+    title: m.title,
+    description: m.desc,
     alternates: buildAlternates(locale, "/evinizi-kiraya-verin"),
     openGraph: {
-      title: "Evinizi Kiraya Verin — Bodrumapartkiralama.com",
-      description:
-        "Mülk sahipleri için profesyonel kira yönetimi ve şeffaf iletişim.",
+      title: m.title,
+      description: m.ogDesc,
       url: buildLocaleUrl(locale, "/evinizi-kiraya-verin"),
       ...defaultOgImages(locale).openGraph,
     },
