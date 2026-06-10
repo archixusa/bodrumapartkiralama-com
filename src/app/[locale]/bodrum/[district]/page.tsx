@@ -10,7 +10,7 @@ import { JsonLd } from "@/components/JsonLd";
 import { districts, getDistrict } from "@/data/districts";
 import { posts } from "@/data/posts";
 import { getSiteContent } from "@/lib/content";
-import { buildAlternates } from "@/lib/seo";
+import { buildAlternates, buildLocaleUrl } from "@/lib/seo";
 import { loc, locArr } from "@/lib/i18n-data";
 import { districtGuides } from "@/data/districtGuides";
 import { DistrictGuide } from "@/components/DistrictGuide";
@@ -69,6 +69,13 @@ export default async function DistrictPage({
   const c = await getTranslations({ locale, namespace: "common" });
   const isTr = locale === "tr";
   const districtName = dt(d.slug);
+  // Breadcrumb ilk halkası — 4 dilli (tr/en ikilisi de/ru'yu İngilizceye
+  // düşürüyordu); UI ve JSON-LD aynı etiketi paylaşır.
+  const homeLabel =
+    ({ tr: "Ana Sayfa", en: "Home", de: "Startseite", ru: "Главная" } as Record<
+      string,
+      string
+    >)[locale] ?? "Home";
 
   // DB overlay (panel-editable). Keyed by BASE slug (e.g. "gumbet"), matching
   // districts.content.json keys. section_key is `district.<baseSlug>` (dash-free,
@@ -265,10 +272,12 @@ export default async function DistrictPage({
     {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
+      // Locale-duyarlı: item URL'leri UI'daki i18n Link'lerle aynı prefix'i
+      // taşır (tr kökte, en/de/ru /{locale} altında) ve ilk halka 4 dilde.
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: isTr ? "Ana Sayfa" : "Home", item: SITE_URL },
-        { "@type": "ListItem", position: 2, name: fl("title"), item: `${SITE_URL}/apartlar` },
-        { "@type": "ListItem", position: 3, name: districtName, item: `${SITE_URL}/bodrum/${d.urlSlug}` },
+        { "@type": "ListItem", position: 1, name: homeLabel, item: buildLocaleUrl(locale, "") },
+        { "@type": "ListItem", position: 2, name: fl("title"), item: buildLocaleUrl(locale, "/apartlar") },
+        { "@type": "ListItem", position: 3, name: districtName, item: buildLocaleUrl(locale, `/bodrum/${d.urlSlug}`) },
       ],
     },
     {
@@ -298,9 +307,10 @@ export default async function DistrictPage({
         />
         <div className="absolute inset-0 bg-gradient-to-b from-navy-900/80 via-navy-900/55 to-navy-900/85" />
         <div className="container-page relative py-14 md:py-20">
-          {/* Breadcrumb UI — JSON-LD'deki BreadcrumbList ile birebir aynı zincir. */}
+          {/* Breadcrumb UI — JSON-LD'deki BreadcrumbList ile aynı zincir
+              (etiketler VE locale-prefix'li URL'ler birebir eşleşir). */}
           <nav aria-label="breadcrumb" className="mb-3 flex flex-wrap items-center gap-1 text-xs text-white/80">
-            <Link href="/" className="hover:underline">{isTr ? "Ana Sayfa" : "Home"}</Link>
+            <Link href="/" className="hover:underline">{homeLabel}</Link>
             <ChevronRight className="h-3 w-3 opacity-60" />
             <Link href="/apartlar" className="hover:underline">{fl("title")}</Link>
             <ChevronRight className="h-3 w-3 opacity-60" />

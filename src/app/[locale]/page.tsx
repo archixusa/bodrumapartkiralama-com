@@ -26,7 +26,6 @@ import { services } from "@/data/services";
 import { posts } from "@/data/posts";
 import { loc } from "@/lib/i18n-data";
 import { getSiteContent } from "@/lib/content";
-import { getPhone } from "@/lib/contact";
 import { buildAlternates, defaultOgImages } from "@/lib/seo";
 
 const SITE_URL =
@@ -434,39 +433,11 @@ export default async function HomePage({
     HOME_OWNER_DEFAULT;
   const ownerCopy = owner[pick] ?? owner.en;
 
+  // NOT: LocalBusiness/LodgingBusiness düğümü BURADA TEKRARLANMAZ — layout.tsx
+  // her sayfada aynı @id (`#organization`) ile tam düğümü (aggregateRating
+  // dahil, gerçek veriden) basıyor; ikinci bir kopya çelişen alanlarla aynı
+  // varlığı ikiye bölüyordu. Bu dizi yalnız sayfaya özgü şemaları içerir.
   const jsonLd = [
-    {
-      "@context": "https://schema.org",
-      "@type": ["LocalBusiness", "LodgingBusiness"],
-      "@id": `${SITE_URL}/#organization`,
-      name: "Bodrumapartkiralama.com",
-      url: SITE_URL,
-      logo: `${SITE_URL}/logo_kare.svg`,
-      image: `${SITE_URL}/og-default.svg`,
-      description: t("metaDesc"),
-      sameAs: [
-        "https://www.facebook.com/BodrumApartKiralama",
-        "https://www.instagram.com/bodrumapartkiralama",
-      ],
-      address: {
-        "@type": "PostalAddress",
-        addressLocality: "Bodrum",
-        addressRegion: "Muğla",
-        addressCountry: "TR",
-      },
-      geo: { "@type": "GeoCoordinates", latitude: 37.0344, longitude: 27.4305 },
-      areaServed: ["Bodrum", ...districts.map((d) => d.name)],
-      telephone: getPhone(locale).tel,
-      email: "info@bodrumapartkiralama.com",
-      openingHoursSpecification: [
-        {
-          "@type": "OpeningHoursSpecification",
-          dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-          opens: "09:00",
-          closes: "19:00",
-        },
-      ],
-    },
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
@@ -518,7 +489,7 @@ export default async function HomePage({
       >
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-[radial-gradient(120%_80%_at_78%_8%,rgba(251,238,221,.9),transparent_42%),radial-gradient(90%_70%_at_18%_22%,rgba(52,200,196,.16),transparent_55%),linear-gradient(180deg,#FFF8F0_0%,#EAF7F4_46%,#CFEFEA_72%,#A9E4DD_100%)]"
+          className="absolute inset-0 bg-[radial-gradient(120%_80%_at_78%_8%,rgba(251,238,221,.9),transparent_42%),radial-gradient(90%_70%_at_18%_22%,rgba(52,200,196,.16),transparent_55%),linear-gradient(180deg,theme(colors.kum.50)_0%,theme(colors.turkuaz.50)_46%,theme(colors.turkuaz.100)_72%,theme(colors.turkuaz.200)_100%)]"
         />
         {/* Yumuşak ışık halesi — kum tonlu nötr dekor (v2: gunes dekorda kullanılmaz) */}
         <div
@@ -532,9 +503,9 @@ export default async function HomePage({
           viewBox="0 0 1200 170"
           preserveAspectRatio="none"
         >
-          <path d="M0 70 Q150 40 300 70 T600 70 T900 70 T1200 70 V170 H0 Z" fill="#7FD6CD" opacity=".55" />
-          <path d="M0 100 Q150 70 300 100 T600 100 T900 100 T1200 100 V170 H0 Z" fill="#34C8C4" opacity=".6" />
-          <path d="M0 130 Q150 105 300 130 T600 130 T900 130 T1200 130 V170 H0 Z" fill="#0EA5A5" />
+          <path d="M0 70 Q150 40 300 70 T600 70 T900 70 T1200 70 V170 H0 Z" className="fill-turkuaz-200" opacity=".55" />
+          <path d="M0 100 Q150 70 300 100 T600 100 T900 100 T1200 100 V170 H0 Z" className="fill-turkuaz-300" opacity=".6" />
+          <path d="M0 130 Q150 105 300 130 T600 130 T900 130 T1200 130 V170 H0 Z" className="fill-turkuaz-500" />
         </svg>
         <div className="container-page relative z-10 py-16 pb-32 md:py-24 md:pb-40 lg:py-28 lg:pb-44">
           <div className="mx-auto max-w-3xl text-center">
@@ -572,8 +543,8 @@ export default async function HomePage({
             {/* Activity signal (generic, honest — no fake numbers) */}
             <div className="fade-up fade-d4 mt-4 inline-flex items-center gap-2 rounded-full border border-white/80 bg-white/70 px-4 py-1.5 text-sm font-semibold text-murekkep-700 backdrop-blur-sm">
               <span className="relative flex h-2.5 w-2.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500" />
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-75" />
+                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-success" />
               </span>
               {heroCopy.activity}
             </div>
@@ -670,7 +641,7 @@ export default async function HomePage({
                     <span className="inline-flex h-11 w-11 items-center justify-center rounded-md bg-navy-50 text-navy-900">
                       <Icon className="h-5 w-5" />
                     </span>
-                    <span className="font-display text-2xl font-semibold text-accent-500/70">
+                    <span className="font-display text-2xl font-semibold text-accent-500">
                       0{i + 1}
                     </span>
                   </div>
