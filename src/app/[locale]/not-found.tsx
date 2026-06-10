@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { Home, BedDouble, MapPin, MessageCircle } from "lucide-react";
@@ -7,9 +5,10 @@ import { Home, BedDouble, MapPin, MessageCircle } from "lucide-react";
 /**
  * On-brand 404 page.
  *
+ * - Server Component: next-intl'in sync `useTranslations`'ı RSC'de çalışır —
+ *   sayfa düzeyi "use client" gerekmiyordu (spec v3 SSR kuralı).
  * - Returns HTTP 404 (Next.js sets the status for not-found boundaries).
- * - Brand rule: the kiralama site uses NO gold/amber. Palette is navy/blue
- *   (navy-900 #042C53 and friends), warm family tone, native Turkish.
+ * - Palet: "Canlı Akdeniz" token'ları (navy-* eşlemesi turkuaza gider).
  * - Links use literal UNPREFIXED root paths (Turkish is served at root under
  *   `as-needed` locale routing) so a click lands directly on the real page
  *   without a 307 prefix redirect. next/link's <Link> (NOT the next-intl
