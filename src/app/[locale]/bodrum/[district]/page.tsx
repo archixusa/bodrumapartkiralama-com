@@ -246,7 +246,9 @@ export default async function DistrictPage({
       name: `${districtName}, Bodrum`,
       description: longDesc,
       image: d.heroImage,
-      url: `${SITE_URL}/bodrum/${d.urlSlug}`,
+      // Breadcrumb ile aynı locale-duyarlı URL — aynı sayfada aynı varlık
+      // için iki farklı URL beyanı tutarsız sinyaldi (SEO bulgusu).
+      url: buildLocaleUrl(locale, `/bodrum/${d.urlSlug}`),
       geo: {
         "@type": "GeoCoordinates",
         latitude: d.lat,
@@ -258,7 +260,7 @@ export default async function DistrictPage({
       "@type": "Place",
       name: `${districtName}, Bodrum`,
       description: guide?.lead ?? longDesc,
-      url: `${SITE_URL}/bodrum/${d.urlSlug}`,
+      url: buildLocaleUrl(locale, `/bodrum/${d.urlSlug}`),
       containedInPlace: {
         "@type": "AdministrativeArea",
         name: "Bodrum, Muğla, TR",

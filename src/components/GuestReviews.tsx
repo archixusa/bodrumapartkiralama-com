@@ -7,6 +7,7 @@
 // layout's LocalBusiness schema (real data, empty-safe).
 
 import { REVIEW_STAR_COLOR } from "@/lib/brand";
+import { ANON, DATE_LOCALE, GUEST, HEADING, SUB, pick } from "@/lib/review-i18n";
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
 const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
@@ -44,44 +45,8 @@ async function fetchLatestApproved(limit: number): Promise<Review[]> {
   }
 }
 
-const DATE_LOCALE: Record<string, string> = {
-  tr: "tr-TR",
-  de: "de-DE",
-  ru: "ru-RU",
-  en: "en-US",
-};
-
-const HEADING: Record<string, string> = {
-  tr: "Misafir değerlendirmeleri",
-  en: "Guest reviews",
-  de: "Gästebewertungen",
-  ru: "Отзывы гостей",
-};
-
-const SUB: Record<string, string> = {
-  tr: "Konaklamasını tamamlayan misafirlerimizin onaylı yorumları.",
-  en: "Verified reviews from guests who completed their stay.",
-  de: "Verifizierte Bewertungen von Gästen nach ihrem Aufenthalt.",
-  ru: "Проверенные отзывы гостей после проживания.",
-};
-
-const ANON: Record<string, string> = {
-  tr: "Anonim Misafir",
-  en: "Anonymous Guest",
-  de: "Anonymer Gast",
-  ru: "Анонимный гость",
-};
-
-const GUEST: Record<string, string> = {
-  tr: "Misafir",
-  en: "Guest",
-  de: "Gast",
-  ru: "Гость",
-};
-
-function pick(map: Record<string, string>, locale: string): string {
-  return map[locale] ?? map.en;
-}
+// Sözlükler @/lib/review-i18n'de — ApartmentReviews ile ortak kaynak
+// (İ18N bütünlüğü: iki yorum yüzeyi aynı metinleri aynı dilde gösterir).
 
 function Stars({ value }: { value: number }) {
   // role="img": aria-label generic <span> üzerinde ARIA'da desteklenmez —

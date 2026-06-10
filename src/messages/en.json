@@ -366,5 +366,14 @@
     "rights": "All rights reserved.",
     "follow": "Follow us",
     "madeWith": "Made with care in Bodrum"
+  },
+  "notFound": {
+    "title": "The page you're looking for may have moved",
+    "body": "We've refreshed our site and some addresses have changed. Don't worry — you can find the apartment or information you need in a few clicks, or reach our team directly. We're here for your Bodrum holiday.",
+    "home": "Home",
+    "apartments": "Apartments",
+    "districts": "Districts",
+    "whatsapp": "Message us on WhatsApp",
+    "waMessage": "Hello, I couldn't find the page I was looking for on bodrumapartkiralama.com. Could you help me?"
   }
 }

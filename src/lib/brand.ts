@@ -11,3 +11,16 @@
  * constant / the gunes-400 token.
  */
 export const REVIEW_STAR_COLOR = "#FFB23E";
+
+/**
+ * Spec token'larının inline-style (Tailwind dışı) yüzeylerdeki karşılıkları
+ * (DESIGN_SPEC.md §1). ReviewForm, UnsubscribeClient ve ApartmentReviews gibi
+ * kendi başına stillenen bileşenler renkleri BURADAN okur — tek vurgu rengi
+ * yenilenip dosyanın kalanı eski slate/lacivert palette kalmasın diye.
+ */
+export const INK = "#06343B"; // murekkep-900 — ana metin
+export const MUTED = "#546E70"; // soluk metin (kum/beyaz zeminlerde AA)
+export const BORDER = "#F0E2CF"; // kum-cizgi — kenarlıklar
+export const ACCENT = "#0B7E80"; // turkuaz-600 — buton/vurgu zemini
+export const ACCENT_DARK = "#06676A"; // turkuaz-700 — hover/koyu vurgu
+export const DANGER = "#A32D2D"; // semantik hata (danger token)

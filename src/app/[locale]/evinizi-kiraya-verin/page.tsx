@@ -36,16 +36,16 @@ const OWNER_HERO_DEFAULT: ByLocale<OwnerHeroCopy> = {
       "We work with property owners across the Bodrum peninsula. Commission and service scope in writing, communication direct, the process transparent. Let's assess your property together.",
   },
   de: {
-    kicker: "For Property Owners",
-    title: "Transparent Rental Management for Your Bodrum Property",
+    kicker: "Für Eigentümer",
+    title: "Transparente Mietverwaltung für Ihre Immobilie in Bodrum",
     intro:
-      "We work with property owners across the Bodrum peninsula. Commission and service scope in writing, communication direct, the process transparent. Let's assess your property together.",
+      "Wir arbeiten mit Eigentümern auf der gesamten Halbinsel Bodrum. Provision und Leistungsumfang schriftlich, die Kommunikation direkt, der Prozess transparent. Lassen Sie uns Ihre Immobilie gemeinsam bewerten.",
   },
   ru: {
-    kicker: "For Property Owners",
-    title: "Transparent Rental Management for Your Bodrum Property",
+    kicker: "Владельцам недвижимости",
+    title: "Прозрачное управление арендой вашей недвижимости в Бодруме",
     intro:
-      "We work with property owners across the Bodrum peninsula. Commission and service scope in writing, communication direct, the process transparent. Let's assess your property together.",
+      "Мы работаем с владельцами по всему полуострову Бодрум. Комиссия и объём услуг — письменно, общение — напрямую, процесс — прозрачный. Давайте вместе оценим вашу недвижимость.",
   },
 };
 
@@ -109,10 +109,10 @@ export default async function Page({
     OWNER_HERO_DEFAULT;
   const hero = heroData[locale as "tr" | "en" | "de" | "ru"] ?? heroData.en;
 
-  // ── Gövde içerikleri: tr + en (de/ru İngilizceye düşer) ─────────────────────
-  // Hero gibi DB'ye taşınana kadar geçici köprü — eskiden tüm locale'lerde
-  // sabit Türkçe gövde gösteriliyordu (İ18N bütünlüğü bulgusu).
-  const isTr = locale === "tr";
+  // ── Gövde içerikleri 4 dilde — metadata (OWNER_META) 4 dilde üretilirken
+  // gövde de/ru'da İngilizceye düşüyor ve SERP dili ile sayfa dili
+  // çelişiyordu (İ18N bütünlüğü bulgusu). Hero gibi DB'ye taşınana kadar
+  // kod içi sözlük.
   const BODY_COPY = {
     tr: {
       applyCta: "Başvuru Yap",
@@ -332,8 +332,227 @@ export default async function Page({
         },
       ],
     },
+    de: {
+      applyCta: "Jetzt bewerben",
+      howCta: "Wie funktioniert es?",
+      benefitsKicker: "Unser Ansatz",
+      benefitsTitle: "So arbeiten wir mit Eigentümern",
+      howKicker: "Ablauf",
+      howTitle: "Wie funktioniert es?",
+      howNote:
+        "Je nach Objekt ist die Veröffentlichung nach Vertragsabschluss in der Regel innerhalb weniger Werktage abgeschlossen.",
+      transKicker: "Konditionen speziell für Sie",
+      transTitle: "Auf Ihre Immobilie zugeschnitten, schriftlich",
+      transP1:
+        "Provision und Konditionen legen wir für jede Immobilie individuell fest; einen pauschalen Tarif veröffentlichen wir nicht im Voraus. Leistungsumfang und Abrechnungsrhythmus werden schriftlich festgehalten. Welche Posten — Vermarktung, Fotoshooting, Inserat — im Vertrag enthalten und welche optional sind, wird vorab besprochen.",
+      transP2:
+        "Provision fällt nur für tatsächlich realisierte Buchungen an. Den konkreten Satz für Ihre Immobilie teilen wir Ihnen im Gespräch nach der Besichtigung mit.",
+      transCardTitle: "Erstellen wir gemeinsam eine Beispielrechnung",
+      transCardBody:
+        "Preisspanne, Gästeprofil und saisonale Auslastung variieren je nach Lage und Objekttyp erheblich. Im Gespräch erstellen wir eine Ertragsschätzung speziell für Ihre Immobilie und übergeben sie zusammen mit dem Vertrag.",
+      transList: [
+        "Preisvorschlag für Haupt- und Nebensaison",
+        "Schriftliche Aufstellung von Provision und Leistungen",
+        "Monatlicher Abrechnungskalender",
+      ],
+      faqKicker: "FAQ",
+      faqTitle: "Häufige Fragen",
+      applyKicker: "Bewerbung",
+      applyTitlePre: "",
+      applyTitleEm: "Wenige Minuten",
+      applyTitlePost: " genügen für den Start",
+      applyBody:
+        "Das Formular dauert etwa 3 Minuten. Ihre Angaben verwenden wir ausschließlich zur Prüfung Ihrer Bewerbung. Bei einer passenden Immobilie melden wir uns bei Ihnen.",
+      applyList: [
+        "Termin zur Besichtigung Ihrer Immobilie",
+        "Schriftliche Provisionsvereinbarung",
+        "Professionelles Fotoshooting",
+        "Die letzte Freigabe vor Veröffentlichung liegt bei Ihnen",
+      ],
+      applyReferral: "Sonderkonditionen für Eigentümer auf Empfehlung",
+      benefits: [
+        {
+          title: "Regelmäßige Kommunikation",
+          desc: "Kalender, Buchungen und Zahlungsflüsse teilen wir regelmäßig mit Ihnen und besprechen jeden Schritt des Prozesses im Voraus.",
+        },
+        {
+          title: "Gästeempfang und Reinigung",
+          desc: "Check-in, Check-out, Reinigung und die tägliche Gästekommunikation übernimmt unser Partnerteam nach einem festen Empfangsprotokoll.",
+        },
+        {
+          title: "Ihr individueller Satz",
+          desc: "Provision und Konditionen legen wir individuell für Ihre Immobilie fest und teilen sie Ihnen nach der Besichtigung schriftlich mit. Provision fällt nur für realisierte Buchungen an; für leerstehende Tage berechnen wir nichts.",
+        },
+      ],
+      howItWorks: [
+        {
+          step: "01",
+          title: "Formular ausfüllen",
+          desc: "Stellen Sie Ihre Immobilie kurz vor. Dauert etwa 5 Minuten.",
+        },
+        {
+          step: "02",
+          title: "Erstes Gespräch",
+          desc: "Wir prüfen Ihre Bewerbung und melden uns bei passender Gelegenheit per WhatsApp oder Telefon.",
+        },
+        {
+          step: "03",
+          title: "Besichtigung vor Ort",
+          desc: "Wir besuchen und bewerten Ihre Immobilie und einigen uns gemeinsam auf das passende Modell.",
+        },
+        {
+          step: "04",
+          title: "Vertrag und Veröffentlichung",
+          desc: "Der Vertrag wird unterzeichnet, Fotos werden gemacht, Ihre Immobilie wird gelistet und für Buchungen freigeschaltet.",
+        },
+      ],
+      faqs: [
+        {
+          q: "Wie wird die Provision festgelegt?",
+          a: "Provision und Konditionen legen wir für jede Immobilie individuell fest; einen Pauschaltarif gibt es nicht. Nach der Besichtigung erhalten Sie Ihren Satz vor Vertragsabschluss schriftlich zur Bestätigung. Provision fällt nur für realisierte Buchungen an; leerstehende Tage werden nicht berechnet.",
+        },
+        {
+          q: "Wie erfolgen die Zahlungen?",
+          a: "Zu Monatsbeginn erstellen wir die Abrechnung des Vormonats; Anzahlungen und Restzahlungen werden eingezogen, die Provision wird abgezogen und der Restbetrag innerhalb der vereinbarten Werktage auf Ihre IBAN überwiesen.",
+        },
+        {
+          q: "Wie lange läuft der Vertrag?",
+          a: "Die Standardvereinbarung läuft 1 Jahr und kann zum Saisonende verlängert werden. Die Ausstiegsbedingungen für die Anfangsphase sind im Vertrag klar geregelt.",
+        },
+        {
+          q: "Kann ich die Immobilie selbst nutzen?",
+          a: "Natürlich. Außerhalb der Saison oder in buchungsfreien Wochen können Sie Ihre Immobilie für den Eigenbedarf reservieren. Wir markieren den Kalender und nehmen für diese Termine keine Buchungen an.",
+        },
+        {
+          q: "Was passiert bei Schäden oder Verlust?",
+          a: "Kleinere Schäden decken wir über die Kaution der Gäste ab; in größeren Fällen stellen wir dem Gast die Kosten in Rechnung und informieren Sie. Auf Wunsch nennen wir Ihnen auch Optionen für eine Mietversicherung.",
+        },
+        {
+          q: "Wer übernimmt Reinigung und Wartung?",
+          a: "Unser Partnerteam bereitet die Immobilie vor jedem Check-in vor; Wäsche- und Handtuchrotation sowie kleine Reparaturen (Glühbirnen, Kleinigkeiten) gehören zum Tagesgeschäft. Bei größeren Reparaturen wie Haushaltsgeräten oder Heizung kontaktieren wir zuerst Sie.",
+        },
+        {
+          q: "In welchen Regionen sind Sie tätig?",
+          a: "Wir arbeiten mit Eigentümern auf der gesamten Halbinsel Bodrum — unter anderem in Gümbet, Turgutreis, Yalıkavak, Bitez, Ortakent, Gündoğan, Torba, Türkbükü, Akyarlar und Gümüşlük. Das passende Gästeprofil kann je nach Region variieren.",
+        },
+        {
+          q: "Wie vermarkten Sie die Immobilie?",
+          a: "Ihre Immobilie wird auf unserer eigenen Website gelistet. Auf Wunsch planen wir die Synchronisierung mit Plattformen wie Booking und Airbnb sowie Google-/Instagram-Kampagnen. Die Vermarktungsstrategie legen wir gemeinsam und objektbezogen fest.",
+        },
+      ],
+    },
+    ru: {
+      applyCta: "Подать заявку",
+      howCta: "Как это работает?",
+      benefitsKicker: "Наш подход",
+      benefitsTitle: "Как мы работаем с владельцами",
+      howKicker: "Процесс",
+      howTitle: "Как это работает?",
+      howNote:
+        "В зависимости от объекта публикация после подписания договора обычно занимает несколько рабочих дней.",
+      transKicker: "Условия именно для вас",
+      transTitle: "Индивидуально для вашего объекта, письменно",
+      transP1:
+        "Ставку и условия мы определяем индивидуально для каждого объекта; единого тарифа заранее не публикуем. Объём услуг и периодичность отчётов фиксируются письменно. Какие позиции — маркетинг, фотосъёмка, размещение — входят в договор, а какие опциональны, обсуждается заранее.",
+      transP2:
+        "Комиссия начисляется только с состоявшихся бронирований. Конкретную ставку для вашего объекта мы озвучиваем на встрече после оценки.",
+      transCardTitle: "Подготовим примерный расчёт вместе",
+      transCardBody:
+        "Диапазон цен, профиль гостей и сезонная загрузка заметно различаются в зависимости от района и типа объекта. На встрече мы готовим прогноз дохода именно для вашего объекта и передаём его вместе с договором.",
+      transList: [
+        "Рекомендация цен на высокий и низкий сезон",
+        "Письменная расшифровка комиссии и услуг",
+        "График ежемесячных отчётов",
+      ],
+      faqKicker: "FAQ",
+      faqTitle: "Частые вопросы",
+      applyKicker: "Заявка",
+      applyTitlePre: "Чтобы начать, достаточно ",
+      applyTitleEm: "нескольких минут",
+      applyTitlePost: "",
+      applyBody:
+        "Заполнение формы занимает около 3 минут. Указанные данные используются только для рассмотрения заявки. Если объект нам подходит, мы свяжемся с вами.",
+      applyList: [
+        "Встреча для осмотра вашего объекта",
+        "Письменное соглашение о комиссии",
+        "Профессиональная фотосъёмка",
+        "Финальное одобрение перед публикацией — за вами",
+      ],
+      applyReferral: "Особые условия для владельцев по рекомендации",
+      benefits: [
+        {
+          title: "Регулярная связь",
+          desc: "Мы регулярно делимся с вами календарём, бронированиями и движением платежей и заранее обсуждаем каждый этап работы.",
+        },
+        {
+          title: "Встреча гостей и уборка",
+          desc: "Заезд, выезд, уборку и ежедневное общение с гостями ведёт наша партнёрская команда по единому протоколу приёма.",
+        },
+        {
+          title: "Индивидуальная ставка",
+          desc: "Ставку и условия мы определяем индивидуально для вашего объекта и после оценки передаём вам письменно. Комиссия начисляется только с состоявшихся бронирований; за свободные дни мы ничего не берём.",
+        },
+      ],
+      howItWorks: [
+        {
+          step: "01",
+          title: "Заполните форму",
+          desc: "Коротко расскажите о своём объекте. Это займёт около 5 минут.",
+        },
+        {
+          step: "02",
+          title: "Первый разговор",
+          desc: "Мы рассматриваем заявку и при подходящем варианте связываемся с вами в WhatsApp или по телефону.",
+        },
+        {
+          step: "03",
+          title: "Осмотр на месте",
+          desc: "Мы приезжаем, оцениваем объект и вместе согласуем подходящую модель работы.",
+        },
+        {
+          step: "04",
+          title: "Договор и публикация",
+          desc: "Подписывается договор, проводится фотосъёмка, объект добавляется в каталог и открывается для бронирований.",
+        },
+      ],
+      faqs: [
+        {
+          q: "Как определяется комиссия?",
+          a: "Ставку и условия мы определяем индивидуально для каждого объекта; единого тарифа нет. После оценки мы письменно сообщаем вашу ставку до подписания договора и подтверждаем её с вами. Комиссия начисляется только с состоявшихся бронирований; свободные дни не оплачиваются.",
+        },
+        {
+          q: "Как происходят выплаты?",
+          a: "В начале каждого месяца готовится отчёт за предыдущий месяц; предоплаты и остатки собираются, комиссия удерживается, а остаток в оговорённые рабочие дни переводится на ваш IBAN.",
+        },
+        {
+          q: "Каков срок договора?",
+          a: "Стандартное соглашение заключается на 1 год и может продлеваться по окончании сезона. Условия выхода в начальный период чётко прописаны в договоре.",
+        },
+        {
+          q: "Могу ли я сам пользоваться объектом?",
+          a: "Конечно. Вне сезона или в недели без бронирований вы можете зарезервировать объект для себя. Мы отмечаем это в календаре и не принимаем бронирования на эти даты.",
+        },
+        {
+          q: "Что делать при ущербе или пропаже?",
+          a: "Мелкий ущерб покрывается депозитом, который вносят гости; в более серьёзных случаях мы выставляем счёт гостю и держим вас в курсе. По запросу подскажем варианты страхования аренды.",
+        },
+        {
+          q: "Кто занимается уборкой и обслуживанием?",
+          a: "Наша партнёрская команда готовит объект перед каждым заездом; смена белья и полотенец и мелкий ремонт (замена лампочек и т. п.) входят в ежедневную работу. По крупному ремонту — бытовая техника, котёл — мы сначала связываемся с вами.",
+        },
+        {
+          q: "В каких районах вы работаете?",
+          a: "Мы работаем с владельцами по всему полуострову Бодрум — в том числе в Гюмбете, Тургутреисе, Ялыкаваке, Битезе, Ортакенте, Гюндогане, Торбе, Тюркбюкю, Акьярларе и Гюмюшлюке. Подходящий профиль гостей зависит от района.",
+        },
+        {
+          q: "Как вы продвигаете объект?",
+          a: "Объект размещается на нашем сайте. По запросу возможна синхронизация с платформами Booking и Airbnb, а также рекламные кампании в Google и Instagram. Маркетинговую стратегию мы определяем вместе, под конкретный объект.",
+        },
+      ],
+    },
   } as const;
-  const pc = isTr ? BODY_COPY.tr : BODY_COPY.en;
+  const pc =
+    BODY_COPY[locale as keyof typeof BODY_COPY] ?? BODY_COPY.en;
   const BENEFIT_ICONS = [Shield, Users, TrendingUp] as const;
   const benefits = pc.benefits.map((b, i) => ({
     ...b,
@@ -356,6 +575,9 @@ export default async function Page({
     {
       "@context": "https://schema.org",
       "@type": "FAQPage",
+      // Soru-cevaplar sayfa dilinde üretiliyor — şemadaki dil beyanı da
+      // aynı locale'i taşır (SERP dili / sayfa dili tutarlılığı).
+      inLanguage: locale,
       mainEntity: faqs.map((f) => ({
         "@type": "Question",
         name: f.q,

@@ -366,5 +366,14 @@
     "rights": "Tüm hakları saklıdır.",
     "follow": "Bizi takip edin",
     "madeWith": "Bodrum'da özenle hazırlandı"
+  },
+  "notFound": {
+    "title": "Aradığınız sayfa taşınmış olabilir",
+    "body": "Sitemizi yeniledik ve bazı sayfaların adresleri değişti. Endişe etmeyin — aradığınız apartı veya bilgiyi birkaç tıkla bulabilir, ya da ekibimize doğrudan ulaşabilirsiniz. Bodrum tatiliniz için buradayız.",
+    "home": "Anasayfa",
+    "apartments": "Apartlar",
+    "districts": "Bölgeler",
+    "whatsapp": "WhatsApp ile yazın",
+    "waMessage": "Merhaba, bodrumapartkiralama.com sitesinde aradığım sayfayı bulamadım. Yardımcı olabilir misiniz?"
   }
 }

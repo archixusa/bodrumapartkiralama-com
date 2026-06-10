@@ -366,5 +366,14 @@
     "rights": "Alle Rechte vorbehalten.",
     "follow": "Folgen Sie uns",
     "madeWith": "Mit Sorgfalt in Bodrum erstellt"
+  },
+  "notFound": {
+    "title": "Die gesuchte Seite wurde möglicherweise verschoben",
+    "body": "Wir haben unsere Website erneuert, und einige Adressen haben sich geändert. Keine Sorge — Sie finden das gesuchte Apartment oder die Information mit wenigen Klicks, oder Sie erreichen unser Team direkt. Wir sind für Ihren Bodrum-Urlaub da.",
+    "home": "Startseite",
+    "apartments": "Apartments",
+    "districts": "Regionen",
+    "whatsapp": "Per WhatsApp schreiben",
+    "waMessage": "Hallo, ich konnte die gesuchte Seite auf bodrumapartkiralama.com nicht finden. Können Sie mir helfen?"
   }
 }

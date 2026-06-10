@@ -7,7 +7,7 @@ import { Link } from "@/i18n/routing";
 import { posts } from "@/data/posts";
 import { getMdxPosts } from "@/lib/mdx-blog";
 import { loc } from "@/lib/i18n-data";
-import { buildAlternates, defaultOgImages } from "@/lib/seo";
+import { buildAlternates, buildLocaleUrl, defaultOgImages } from "@/lib/seo";
 import { BLUR_KUM } from "@/lib/blur";
 import { JsonLd } from "@/components/JsonLd";
 
@@ -15,6 +15,24 @@ const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.bodrumapartkiralama.com";
 
 const FALLBACK_HERO = "/blog/bodrum-tatil-rehberi/hero.webp";
+
+// Breadcrumb ilk halkası 4 dilde — tr/en ikilisi de/ru'yu İngilizceye
+// düşürüyordu (district sayfasındaki desenle aynı); UI ve JSON-LD aynı
+// etiketi paylaşır.
+const HOME_LABEL: Record<string, string> = {
+  tr: "Ana Sayfa",
+  en: "Home",
+  de: "Startseite",
+  ru: "Главная",
+};
+
+// Tarih biçimi sayfa dilinde (de/ru eskiden İngilizce ay adları görüyordu).
+const DATE_LOCALE: Record<string, string> = {
+  tr: "tr-TR",
+  en: "en-GB",
+  de: "de-DE",
+  ru: "ru-RU",
+};
 
 interface UnifiedPost {
   source: "legacy" | "mdx";
@@ -91,8 +109,8 @@ export default async function Page({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "blog" });
-  const isTr = locale === "tr";
   const sorted = unifyAll(locale);
+  const homeLabel = HOME_LABEL[locale] ?? HOME_LABEL.en;
 
   const blogUrl = locale === "tr" ? `${SITE_URL}/blog` : `${SITE_URL}/${locale}/blog`;
   const postUrl = (slug: string) =>
@@ -100,8 +118,10 @@ export default async function Page({
   const breadcrumbLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
+    // İlk halka 4 dilli ve locale-prefix'li — 2. halka ile aynı URL düzeni
+    // (eskiden name tr/en ikiliydi ve item locale'siz SITE_URL'di).
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: isTr ? "Ana Sayfa" : "Home", item: SITE_URL },
+      { "@type": "ListItem", position: 1, name: homeLabel, item: buildLocaleUrl(locale, "") },
       { "@type": "ListItem", position: 2, name: t("h1"), item: blogUrl },
     ],
   };
@@ -140,7 +160,7 @@ export default async function Page({
       <PageHero
         title={t("h1")}
         subtitle={t("subtitle")}
-        crumbs={[{ href: "/", label: isTr ? "Ana Sayfa" : "Home" }, { label: t("h1") }]}
+        crumbs={[{ href: "/", label: homeLabel }, { label: t("h1") }]}
       />
       <section className="section">
         <div className="container-page">
@@ -163,7 +183,7 @@ export default async function Page({
                 </Link>
                 <div className="flex flex-1 flex-col gap-3 p-5">
                   <div className="flex items-center gap-3 text-xs text-muted">
-                    <span>{new Date(p.date).toLocaleDateString(isTr ? "tr-TR" : "en-GB", { day: "2-digit", month: "short", year: "numeric" })}</span>
+                    <span>{new Date(p.date).toLocaleDateString(DATE_LOCALE[locale] ?? DATE_LOCALE.en, { day: "2-digit", month: "short", year: "numeric" })}</span>
                     <span className="inline-flex items-center gap-1">
                       <Clock className="h-3 w-3" /> {t("readingTime", { min: p.readingTime })}
                     </span>
