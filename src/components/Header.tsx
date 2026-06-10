@@ -15,6 +15,22 @@ const LOCALE_LABEL: Record<string, string> = {
   ru: "RU",
 };
 
+// 4 dilli sabitler — tr/en ikili ternary'leri de/ru'yu İngilizceye
+// düşürüyordu (İ18N bütünlüğü).
+const HOME_LABEL: Record<string, string> = {
+  tr: "Anasayfa",
+  en: "Home",
+  de: "Startseite",
+  ru: "Главная",
+};
+
+const OWNER_LABEL: Record<string, string> = {
+  tr: "Evinizi Kiraya Verin",
+  en: "List Your Property",
+  de: "Immobilie vermieten",
+  ru: "Сдать недвижимость",
+};
+
 export function Header() {
   const t = useTranslations("nav");
   const c = useTranslations("common");
@@ -33,7 +49,7 @@ export function Header() {
           : "Travel Guide";
 
   const navLinks = [
-    { href: "/", label: locale === "tr" ? "Anasayfa" : "Home" },
+    { href: "/", label: HOME_LABEL[locale] ?? HOME_LABEL.en },
     { href: "/apartlar", label: t("apartments") },
     { href: "/bodrum-tatil-rehberi", label: guideLabel },
     { href: "/blog", label: "Blog" },
@@ -69,12 +85,16 @@ export function Header() {
 
         <div className="hidden items-center gap-2 lg:flex">
           <div className="relative">
+            {/* Açılır liste düz linklerden oluşuyor — role="menu"/menuitem
+                deseni yerine aria-expanded + aria-controls'lu disclosure
+                kullanılır (menuitem'sız role="menu" SR'lerde bozuk anons
+                ediliyordu). */}
             <button
               onClick={() => setLangOpen((v) => !v)}
               onBlur={() => setTimeout(() => setLangOpen(false), 150)}
               className="btn-ghost"
               aria-label={t("language")}
-              aria-haspopup="menu"
+              aria-controls="lang-switcher"
               aria-expanded={langOpen}
             >
               <Globe className="h-4 w-4" />
@@ -82,7 +102,7 @@ export function Header() {
             </button>
             {langOpen && (
               <div
-                role="menu"
+                id="lang-switcher"
                 className="absolute right-0 mt-1 w-32 overflow-hidden rounded-md border border-[var(--color-border)] bg-white shadow-cardHover"
               >
                 {routing.locales.map((l) => (
@@ -106,7 +126,7 @@ export function Header() {
             href="/evinizi-kiraya-verin"
             className="inline-flex items-center gap-1.5 rounded-full border border-turkuaz-600/40 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-turkuaz-600 transition hover:bg-turkuaz-600 hover:text-white"
           >
-            {locale === "tr" ? "Evinizi Kiraya Verin" : "List Your Property"}
+            {OWNER_LABEL[locale] ?? OWNER_LABEL.en}
           </Link>
           <a
             href={`https://wa.me/${c("whatsappNumber")}`}
@@ -147,7 +167,7 @@ export function Header() {
               onClick={() => setOpen(false)}
               className="block rounded-md px-3 py-2 text-base font-bold text-turkuaz-600 hover:bg-turkuaz-50"
             >
-              Evinizi Kiraya Verin →
+              {OWNER_LABEL[locale] ?? OWNER_LABEL.en} →
             </Link>
             <div className="flex items-center gap-2 pt-2">
               {routing.locales.map((l) => (

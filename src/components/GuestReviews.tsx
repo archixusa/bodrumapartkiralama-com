@@ -84,14 +84,19 @@ function pick(map: Record<string, string>, locale: string): string {
 }
 
 function Stars({ value }: { value: number }) {
+  // role="img": aria-label generic <span> üzerinde ARIA'da desteklenmez —
+  // rol verilmeden ekran okuyucular puanı seslendirmez (WCAG 1.1.1/4.1.2).
   return (
     <span
+      role="img"
       style={{ display: "inline-flex", gap: 2, color: REVIEW_STAR_COLOR }}
       aria-label={`${value} / 5`}
     >
       {[1, 2, 3, 4, 5].map((n) => (
         <svg
           key={n}
+          aria-hidden="true"
+          focusable="false"
           width={15}
           height={15}
           viewBox="0 0 24 24"

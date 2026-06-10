@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import {
   X,
   Loader2,
@@ -243,6 +243,8 @@ export function RequestModal({ open, onClose, prefilled, locale }: RequestModalP
   const t = copy[(locale as L) in copy ? (locale as L) : "en"];
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState("");
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeBtnRef = useRef<HTMLButtonElement>(null);
 
   // Editable prefill state
   const [region, setRegion] = useState(prefilled?.region ?? "");
@@ -263,11 +265,38 @@ export function RequestModal({ open, onClose, prefilled, locale }: RequestModalP
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, prefilled?.region, prefilled?.checkIn, prefilled?.checkOut, prefilled?.guests]);
 
-  // ESC to close + body scroll lock while open
+  // ESC to close + body scroll lock + focus management while open (WCAG
+  // 2.4.3): açılışta odak kapat butonuna gider, Tab/Shift+Tab diyalog içinde
+  // hapsedilir, kapanışta odak tetikleyiciye iade edilir.
   useEffect(() => {
     if (!open) return;
+    const previouslyFocused = document.activeElement as HTMLElement | null;
+    closeBtnRef.current?.focus();
+
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") {
+        onClose();
+        return;
+      }
+      if (e.key !== "Tab") return;
+      const node = dialogRef.current;
+      if (!node) return;
+      const focusables = Array.from(
+        node.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), input:not([disabled]):not([tabindex="-1"]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        ),
+      ).filter((el) => el.offsetParent !== null);
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      const active = document.activeElement as HTMLElement | null;
+      if (e.shiftKey && (active === first || !node.contains(active))) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && (active === last || !node.contains(active))) {
+        e.preventDefault();
+        first.focus();
+      }
     };
     window.addEventListener("keydown", onKey);
     const prevOverflow = document.body.style.overflow;
@@ -275,6 +304,7 @@ export function RequestModal({ open, onClose, prefilled, locale }: RequestModalP
     return () => {
       window.removeEventListener("keydown", onKey);
       document.body.style.overflow = prevOverflow;
+      previouslyFocused?.focus?.();
     };
   }, [open, onClose]);
 
@@ -369,8 +399,12 @@ export function RequestModal({ open, onClose, prefilled, locale }: RequestModalP
       }}
       className="fixed inset-0 z-[70] flex items-end justify-center bg-black/55 p-4 sm:items-center"
     >
-      <div className="relative max-h-[92vh] w-full max-w-md overflow-y-auto rounded-xl bg-white shadow-2xl">
+      <div
+        ref={dialogRef}
+        className="relative max-h-[92vh] w-full max-w-md overflow-y-auto rounded-xl bg-white shadow-2xl"
+      >
         <button
+          ref={closeBtnRef}
           type="button"
           onClick={onClose}
           aria-label={t.close}
