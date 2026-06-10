@@ -60,7 +60,7 @@ export function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className="relative px-3 py-2 text-sm font-semibold text-murekkep-700 transition hover:text-murekkep-900 after:absolute after:inset-x-3 after:bottom-0.5 after:h-0.5 after:origin-left after:scale-x-0 after:rounded-full after:bg-begonvil-500 after:transition-transform after:duration-300 after:content-[''] hover:after:scale-x-100"
+              className="relative px-3 py-2 text-sm font-semibold text-murekkep-700 transition hover:text-murekkep-900 after:absolute after:inset-x-3 after:bottom-0.5 after:h-0.5 after:origin-left after:scale-x-0 after:rounded-full after:bg-turkuaz-600 after:transition-transform after:duration-300 after:content-[''] hover:after:scale-x-100"
             >
               {link.label}
             </Link>
@@ -104,7 +104,7 @@ export function Header() {
           </div>
           <Link
             href="/evinizi-kiraya-verin"
-            className="inline-flex items-center gap-1.5 rounded-full border border-begonvil-500/40 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-begonvil-600 transition hover:bg-begonvil-500 hover:text-white"
+            className="inline-flex items-center gap-1.5 rounded-full border border-turkuaz-600/40 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-turkuaz-600 transition hover:bg-turkuaz-600 hover:text-white"
           >
             {locale === "tr" ? "Evinizi Kiraya Verin" : "List Your Property"}
           </Link>
@@ -145,7 +145,7 @@ export function Header() {
             <Link
               href="/evinizi-kiraya-verin"
               onClick={() => setOpen(false)}
-              className="block rounded-md px-3 py-2 text-base font-bold text-begonvil-600 hover:bg-begonvil-50"
+              className="block rounded-md px-3 py-2 text-base font-bold text-turkuaz-600 hover:bg-turkuaz-50"
             >
               Evinizi Kiraya Verin →
             </Link>

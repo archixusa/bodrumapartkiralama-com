@@ -81,7 +81,7 @@ export function EmptyStateOfferBased({ locale, whatsappNumber }: Props) {
     <>
       <div className="mx-auto max-w-2xl">
         <div className="card flex flex-col items-center gap-5 p-8 text-center md:p-12">
-          <span className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-accent-400/15 text-accent-500">
+          <span className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-turkuaz-500/10 text-turkuaz-600">
             <Sparkles className="h-7 w-7" />
           </span>
 

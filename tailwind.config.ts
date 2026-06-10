@@ -6,12 +6,15 @@ const turkuaz = {
   50: "#E6FAF8",
   300: "#34C8C4",
   500: "#0EA5A5",
-  600: "#0B7E80", // metin/link olarak turkuaz (AA kontrast)
+  600: "#0B7E80", // metin/link + birincil CTA zemini (AA kontrast)
+  700: "#06676A", // birincil CTA hover (koyu turkuaz)
 };
+// v2: BEGONVİL/PEMBE TAMAMEN KALDIRILDI (DESIGN_SPEC.md "v2 DEĞİŞİKLİĞİ").
+// Eski `begonvil-*` sınıf adları kırılmasın diye token'lar turkuaza eşitlendi.
 const begonvil = {
-  50: "#FCE7F2",
-  500: "#E0218A", // birincil CTA (beyaz metinle)
-  600: "#B5176F", // hover / küçük metin
+  50: turkuaz[50], //  = turkuaz-50
+  500: turkuaz[600], // = turkuaz-600 (CTA zemini, beyaz metin)
+  600: turkuaz[700], // = turkuaz-700 (hover / koyu)
 };
 const gunes = {
   300: "#FFCB70",
@@ -60,9 +63,9 @@ const config: Config = {
         },
         sand: kum,
         accent: {
-          400: gunes[400], //   yıldız/rozet/dekor (üzerine koyu metin)
-          500: begonvil[500], // CTA vurgusu
-          600: begonvil[600], // küçük metin için koyu begonvil
+          400: gunes[400], //   YALNIZ yıldız ikonu/puan (v2 kuralı)
+          500: turkuaz[600], // CTA/vurgu (v2: begonvil yerine turkuaz)
+          600: turkuaz[700], // koyu vurgu / hover
         },
         muted: "#5E7A7E",
         ink: murekkep[900],
@@ -89,7 +92,7 @@ const config: Config = {
       boxShadow: {
         card: "0 8px 24px -16px rgba(6,52,59,.35)",
         cardHover: "0 18px 40px -22px rgba(6,52,59,.45)",
-        btn: "0 12px 26px -12px rgba(224,33,138,.75)",
+        btn: "0 12px 26px -12px rgba(11,126,128,.65)",
         btnTurkuaz: "0 12px 26px -12px rgba(14,165,165,.7)",
         btnWa: "0 10px 22px -12px rgba(31,174,84,.8)",
       },

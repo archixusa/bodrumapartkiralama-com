@@ -51,7 +51,7 @@ export function BlogCta({ locale }: { locale: string }) {
   const waHref = `https://wa.me/${getPhone(locale).wa}?text=${encodeURIComponent(copy.waText)}`;
 
   return (
-    <div className="mt-12 rounded-2xl border border-accent-400/40 bg-accent-400/5 p-6 sm:p-8">
+    <div className="mt-12 rounded-2xl border border-turkuaz-500/30 bg-turkuaz-500/5 p-6 sm:p-8">
       <h3 className="text-xl font-bold text-navy-900">{copy.heading}</h3>
       <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted">{copy.body}</p>
       <div className="mt-5 flex flex-wrap items-center gap-3">

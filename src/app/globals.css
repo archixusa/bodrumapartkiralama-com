@@ -7,8 +7,8 @@
   --color-primary: #0ea5a5; /* turkuaz-500 */
   --color-primary-light: #34c8c4; /* turkuaz-300 */
   --color-primary-lighter: #e6faf8; /* turkuaz-50 */
-  --color-accent: #e0218a; /* begonvil-500 */
-  --color-accent-dark: #b5176f; /* begonvil-600 */
+  --color-accent: #0b7e80; /* turkuaz-600 (v2: begonvil/pembe kaldırıldı) */
+  --color-accent-dark: #06676a; /* turkuaz-700 (hover) */
   --color-sun: #ffb23e; /* gunes-400 */
   --color-bg: #fff8f0; /* kum-bg */
   --color-bg-soft: #fbeedd; /* kum-koyu */
@@ -69,9 +69,10 @@ body {
   .container-page {
     @apply mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8;
   }
-  /* Birincil CTA: begonvil pill + gölge, hover'da -2px lift (spec §4/§5). */
+  /* Birincil CTA (v2): turkuaz-600 zemin + beyaz metin, hover turkuaz-700,
+     -2px lift (spec §4/§5 + "v2 DEĞİŞİKLİĞİ"). */
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full bg-begonvil-500 px-6 py-3 text-sm font-bold text-white shadow-btn transition duration-200 hover:-translate-y-0.5 hover:bg-begonvil-600 focus:outline-none focus:ring-2 focus:ring-begonvil-500 focus:ring-offset-2;
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-turkuaz-600 px-6 py-3 text-sm font-bold text-white shadow-btn transition duration-200 hover:-translate-y-0.5 hover:bg-turkuaz-700 focus:outline-none focus:ring-2 focus:ring-turkuaz-600 focus:ring-offset-2;
   }
   /* İkincil: turkuaz-500 pill, beyaz metin. */
   .btn-secondary {
@@ -92,9 +93,10 @@ body {
   .chip {
     @apply inline-flex items-center gap-1 rounded-full bg-turkuaz-50 px-3 py-1 text-xs font-semibold text-turkuaz-600;
   }
-  /* Güneş rozeti: üzerine koyu metin (#3A2400) — spec kontrast kuralı. */
+  /* Vurgu rozeti (v2): gunes yalnız yıldız/puanda kaldığı için rozet
+     turkuaz zemine alındı — beyaz metinle AA kontrast. */
   .chip-accent {
-    @apply inline-flex items-center gap-1 rounded-full bg-gunes-400 px-3 py-1 text-xs font-bold text-[#3A2400];
+    @apply inline-flex items-center gap-1 rounded-full bg-turkuaz-600 px-3 py-1 text-xs font-bold text-white;
   }
   /* Bölge etiketi: kum zemin pill (kart görseli sol-üst köşesi). */
   .chip-region {

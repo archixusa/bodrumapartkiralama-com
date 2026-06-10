@@ -205,7 +205,7 @@ export default async function Page({
           <div className="mx-auto max-w-3xl text-center">
             <span className="kicker-light">{hero.kicker}</span>
             <h1 className="mt-6 font-display text-white">{hero.title}</h1>
-            <span className="mx-auto mt-6 block h-px w-16 bg-accent-400" />
+            <span className="mx-auto mt-6 block h-px w-16 bg-turkuaz-300" />
             <p className="mt-6 text-base text-white/85 md:text-lg">
               {hero.intro}
             </p>
@@ -353,7 +353,7 @@ export default async function Page({
           <div>
             <span className="kicker-light">Başvuru</span>
             <h2 className="mt-4 text-white">
-              Başlamak için <span className="font-display italic text-accent-400">birkaç dakika</span> yeterli
+              Başlamak için <span className="font-display italic text-turkuaz-300">birkaç dakika</span> yeterli
             </h2>
             <p className="mt-5 text-white/85">
               Form yaklaşık 3 dakika sürer. Paylaştığınız bilgiler yalnızca
@@ -368,13 +368,13 @@ export default async function Page({
                 "Yayın öncesi son onay sizde",
               ].map((it) => (
                 <li key={it} className="flex items-center gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-accent-400" />
+                  <CheckCircle2 className="h-5 w-5 text-turkuaz-300" />
                   {it}
                 </li>
               ))}
             </ul>
             <div className="mt-10 flex items-center gap-3">
-              <Sparkles className="h-5 w-5 text-accent-400" />
+              <Sparkles className="h-5 w-5 text-turkuaz-300" />
               <p className="text-sm text-white/85">
                 Referansla gelen mülk sahipleri için özel koşullar
               </p>

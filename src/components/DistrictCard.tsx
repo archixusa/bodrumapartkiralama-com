@@ -13,7 +13,7 @@ export function DistrictCard({ district }: { district: District }) {
   return (
     <Link
       href={`/bodrum/${district.urlSlug}`}
-      className="group relative block aspect-[4/5] overflow-hidden rounded-xl shadow-card outline-none transition duration-300 hover:shadow-cardHover focus-visible:ring-2 focus-visible:ring-accent-400 focus-visible:ring-offset-2"
+      className="group relative block aspect-[4/5] overflow-hidden rounded-xl shadow-card outline-none transition duration-300 hover:shadow-cardHover focus-visible:ring-2 focus-visible:ring-turkuaz-500 focus-visible:ring-offset-2"
     >
       <Image
         src={district.heroImage}
@@ -36,7 +36,7 @@ export function DistrictCard({ district }: { district: District }) {
             ru: district.shortDescRu,
           })}
         </p>
-        <span className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-accent-400 transition group-hover:gap-2">
+        <span className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-turkuaz-300 transition group-hover:gap-2">
           {isTr ? "Bölgeyi gör" : "View district"}
           <ArrowRight className="h-3 w-3" />
         </span>

@@ -140,7 +140,7 @@ export function Footer() {
                 href={`mailto:${c("email")}`}
                 className="inline-flex items-center gap-2 text-navy-100/85 transition hover:text-turkuaz-300"
               >
-                <Mail className="h-4 w-4 text-accent-400" />
+                <Mail className="h-4 w-4 text-turkuaz-300" />
                 {c("email")}
               </a>
             </li>
@@ -149,12 +149,12 @@ export function Footer() {
                 href={`tel:${c("phone").replace(/\s/g, "")}`}
                 className="inline-flex items-center gap-2 text-navy-100/85 transition hover:text-turkuaz-300"
               >
-                <Phone className="h-4 w-4 text-accent-400" />
+                <Phone className="h-4 w-4 text-turkuaz-300" />
                 {c("phoneDisplay")}
               </a>
             </li>
             <li className="inline-flex items-center gap-2 text-navy-100/85">
-              <MapPin className="h-4 w-4 text-accent-400" />
+              <MapPin className="h-4 w-4 text-turkuaz-300" />
               Bodrum, Muğla / Türkiye
             </li>
             <li className="flex items-center gap-4">
@@ -165,7 +165,7 @@ export function Footer() {
                 aria-label="Facebook"
                 className="inline-flex items-center gap-2 text-navy-100/85 transition hover:text-turkuaz-300"
               >
-                <Facebook className="h-4 w-4 text-accent-400" />
+                <Facebook className="h-4 w-4 text-turkuaz-300" />
                 Facebook
               </a>
               <a
@@ -175,7 +175,7 @@ export function Footer() {
                 aria-label="Instagram"
                 className="inline-flex items-center gap-2 text-navy-100/85 transition hover:text-turkuaz-300"
               >
-                <Instagram className="h-4 w-4 text-accent-400" />
+                <Instagram className="h-4 w-4 text-turkuaz-300" />
                 Instagram
               </a>
             </li>
