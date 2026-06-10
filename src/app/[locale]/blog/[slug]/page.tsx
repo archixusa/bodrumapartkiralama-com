@@ -239,7 +239,7 @@ export default async function Page({
         name: "Bodrumapartkiralama.com",
         logo: { "@type": "ImageObject", url: `${SITE_URL}/brand/apart-logo-512.png` },
       },
-      mainEntityOfPage: `${SITE_URL}/blog/${post.slug}`,
+      mainEntityOfPage: buildLocaleUrl(locale, `/blog/${post.slug}`),
       description: loc(locale, { tr: post.metaDescTr, en: post.metaDescEn, de: post.metaDescDe, ru: post.metaDescRu }),
     },
     {
@@ -452,7 +452,7 @@ function renderMdxPost(
       name: "Bodrumapartkiralama.com",
       logo: { "@type": "ImageObject", url: `${SITE_URL}/brand/apart-logo-512.png` },
     },
-    mainEntityOfPage: `${SITE_URL}/blog/${mdx.slug}`,
+    mainEntityOfPage: buildLocaleUrl(locale, `/blog/${mdx.slug}`),
     keywords: mdx.keywords.join(", "),
     // Speakable (AEO / voice): point assistants at the answer-first intro
     // headline + summary and the FAQ questions for spoken snippets.
@@ -462,7 +462,7 @@ function renderMdxPost(
     },
   };
 
-  const pageUrl = `${SITE_URL}/blog/${mdx.slug}`;
+  const pageUrl = buildLocaleUrl(locale, `/blog/${mdx.slug}`);
   const howToSchema = buildHowToSchema(mdx.slug, pageUrl);
 
   const breadcrumbSchema = {

@@ -52,7 +52,7 @@ export default function NotFound() {
             href={`https://wa.me/${WHATSAPP}?text=${waText}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 rounded-md bg-navy-900 px-5 py-3 text-sm font-semibold text-white shadow-card transition hover:bg-navy-800 focus:outline-none focus:ring-2 focus:ring-navy-200 focus:ring-offset-2"
+            className="inline-flex items-center justify-center gap-2 rounded-md bg-navy-900 px-5 py-3 text-sm font-semibold text-white shadow-card transition hover:bg-navy-800 focus:outline-none focus:ring-2 focus:ring-turkuaz-600 focus:ring-offset-2"
           >
             <MessageCircle className="h-4 w-4" />
             {t("whatsapp")}

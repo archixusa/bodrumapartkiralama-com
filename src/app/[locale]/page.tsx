@@ -891,11 +891,11 @@ function PreviewBanner({ locale }: { locale: string }) {
   return (
     <div
       role="status"
-      // Spec token'ları: gunes-300 zemin + spec'in gunes-üstü koyu metni
-      // #3A2400 (9.79:1, AA) — Tailwind varsayılan amber paleti token
-      // tablosunda yoktu. (Not: warning #C2750E beyazla 3.59:1 kaldığından
-      // 14px banner metni için kullanılmadı — hesap doğrulandı.)
-      className="fixed inset-x-0 top-0 z-[100] flex items-center justify-center gap-2 bg-gunes-300 px-4 py-1.5 text-center text-sm font-medium text-[#3A2400] shadow-card"
+      // Sistem/önizleme bandı mürekkep yüzey + beyaz metin (AAA kontrast).
+      // Spec v2 kuralı 'gunes YALNIZ yıldız puanı ikonlarında' olduğundan
+      // gunes-300 yüzey zemini olarak kullanılmaz — bant nötr murekkep-900'a
+      // çekildi.
+      className="fixed inset-x-0 top-0 z-[100] flex items-center justify-center gap-2 bg-murekkep-900 px-4 py-1.5 text-center text-sm font-medium text-white shadow-card"
     >
       <span>
         Önizleme modu — bu taslak, henüz yayında değil.

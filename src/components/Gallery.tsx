@@ -35,11 +35,13 @@ function pick(map: Record<string, string>, locale: string): string {
 export function Gallery({
   images,
   alt,
-  locale = "tr", // sitenin varsayılan dili; çağıran sayfa locale'i geçirir
+  locale,
 }: {
   images: string[];
   alt: string;
-  locale?: string;
+  // Zorunlu: çağıran sayfa locale'i AÇIKÇA geçirmeli. Varsayılan "tr"
+  // kaldırıldı — aksi halde en/de/ru lightbox'ı sessizce Türkçe'ye düşerdi.
+  locale: string;
 }) {
   const [open, setOpen] = useState(false);
   const [idx, setIdx] = useState(0);
@@ -100,7 +102,7 @@ export function Gallery({
             setIdx(0);
             setOpen(true);
           }}
-          className="group relative col-span-4 aspect-[4/3] overflow-hidden rounded-xl md:col-span-2 md:row-span-2 md:aspect-auto"
+          className="group relative col-span-4 aspect-[4/3] overflow-hidden rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-turkuaz-600 md:col-span-2 md:row-span-2 md:aspect-auto"
         >
           <Image
             src={main}
@@ -121,7 +123,7 @@ export function Gallery({
               setIdx(i + 1);
               setOpen(true);
             }}
-            className="group relative col-span-2 aspect-[4/3] overflow-hidden rounded-xl md:col-span-1"
+            className="group relative col-span-2 aspect-[4/3] overflow-hidden rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-turkuaz-600 md:col-span-1"
           >
             <Image
               src={src}
@@ -133,7 +135,7 @@ export function Gallery({
               className="object-cover transition group-hover:scale-105"
             />
             {i === 3 && images.length > 5 && (
-              <span className="absolute inset-0 flex items-center justify-center bg-navy-900/60 text-sm font-semibold text-white">
+              <span className="absolute inset-0 flex items-center justify-center bg-navy-900/75 text-sm font-semibold text-white">
                 <ImageIcon className="mr-2 h-4 w-4" /> +{images.length - 5}
               </span>
             )}

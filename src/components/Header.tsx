@@ -128,7 +128,9 @@ export function Header() {
               ref={langBtnRef}
               onClick={() => setLangOpen((v) => !v)}
               className="btn-ghost"
-              aria-label={t("language")}
+              // Görünür 'TR' etiketi erişilebilir ada dahil edilir (WCAG 2.5.3
+              // Label in Name) — sesle kontrol kullanıcısı 'TR'ye tıklayabilir.
+              aria-label={`${t("language")}: ${LOCALE_LABEL[locale]}`}
               aria-controls={langOpen ? "lang-switcher" : undefined}
               aria-expanded={langOpen}
             >
@@ -146,6 +148,7 @@ export function Header() {
                     href={pathname}
                     locale={l}
                     onClick={() => setLangOpen(false)}
+                    aria-current={locale === l ? "true" : undefined}
                     className={clsx(
                       "flex min-h-11 items-center px-3 py-2 text-sm hover:bg-navy-50",
                       locale === l && "bg-navy-50 font-semibold"
@@ -215,6 +218,7 @@ export function Header() {
                   href={pathname}
                   locale={l}
                   onClick={() => setOpen(false)}
+                  aria-current={locale === l ? "true" : undefined}
                   className={clsx(
                     "inline-flex min-h-11 min-w-11 items-center justify-center rounded-md border px-3 py-1.5 text-xs font-semibold",
                     locale === l

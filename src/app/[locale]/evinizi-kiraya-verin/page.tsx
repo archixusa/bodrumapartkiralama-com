@@ -74,6 +74,15 @@ const OWNER_META: ByLocale<{ title: string; desc: string; ogDesc: string }> = {
   },
 };
 
+// Service JSON-LD adı 4 dilde — FAQPage/metadata zaten locale taşırken Service
+// düğümü TR-sabit kalıyordu (SEO + İ18N bütünlüğü bulgusu).
+const SERVICE_NAME: ByLocale<string> = {
+  tr: "Bodrum Mülk Kira Yönetimi",
+  en: "Bodrum Property Rental Management",
+  de: "Mietverwaltung für Immobilien in Bodrum",
+  ru: "Управление арендой недвижимости в Бодруме",
+};
+
 export async function generateMetadata({
   params,
 }: {
@@ -565,12 +574,15 @@ export default async function Page({
     {
       "@context": "https://schema.org",
       "@type": "Service",
-      name: "Bodrum Mülk Kira Yönetimi",
-      provider: { "@type": "LodgingBusiness", name: "Bodrumapartkiralama.com" },
+      name: SERVICE_NAME[locale as keyof typeof SERVICE_NAME] ?? SERVICE_NAME.en,
+      // İkinci bir işletme varlığı açmak yerine layout'taki tekil Organization
+      // düğümüne referans veriyoruz (tekilleştirme deseni).
+      provider: { "@id": `${SITE_URL}/#organization` },
       areaServed: "Bodrum, Muğla, TR",
+      inLanguage: locale,
       description:
-        "Bodrum yarımadasındaki apart ve daireler için kira yönetimi, misafir iletişimi ve pazarlama.",
-      url: `${SITE_URL}/evinizi-kiraya-verin`,
+        (OWNER_META[locale as keyof typeof OWNER_META] ?? OWNER_META.en).desc,
+      url: buildLocaleUrl(locale, "/evinizi-kiraya-verin"),
     },
     {
       "@context": "https://schema.org",
