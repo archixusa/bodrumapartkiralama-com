@@ -70,7 +70,7 @@ export default async function OpengraphImage({
             <path d="M26 14c-7 7-10 15-9.5 23H26z" fill="#34C8C4" />
             <path
               d="M8 45c5-3.6 10-3.6 15 0s10 3.6 15 0 7-2.7 10-1.2"
-              stroke="#34C8C4"
+              stroke="#0B7E80"
               strokeWidth="3"
               fill="none"
               strokeLinecap="round"

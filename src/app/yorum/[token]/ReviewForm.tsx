@@ -73,7 +73,7 @@ export function ReviewForm({ token, brand }: Props) {
           padding: 32,
           borderRadius: 12,
           maxWidth: 500,
-          boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
+          boxShadow: "0 8px 24px -16px rgba(6,52,59,.35)",
           textAlign: "center",
         }}
       >
@@ -93,7 +93,7 @@ export function ReviewForm({ token, brand }: Props) {
         borderRadius: 12,
         maxWidth: 560,
         width: "100%",
-        boxShadow: "0 4px 16px rgba(0,0,0,0.08)",
+        boxShadow: "0 8px 24px -16px rgba(6,52,59,.35)",
       }}
     >
       <p style={{ fontSize: 11, color: ACCENT, textTransform: "uppercase", letterSpacing: 1, margin: 0 }}>
@@ -120,16 +120,22 @@ export function ReviewForm({ token, brand }: Props) {
               onMouseEnter={() => setHoverRating(n)}
               onMouseLeave={() => setHoverRating(0)}
               style={{
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
                 background: "none",
                 border: "none",
                 cursor: "pointer",
                 fontSize: 36,
                 lineHeight: 1,
                 color: n <= (hoverRating || rating) ? REVIEW_STAR_COLOR : BORDER,
-                padding: 0,
+                padding: 4,
+                minWidth: 44,
+                minHeight: 44,
                 transition: "color 0.15s",
               }}
               aria-label={`${n} yıldız`}
+              aria-pressed={n <= rating}
             >
               ★
             </button>
@@ -157,7 +163,7 @@ export function ReviewForm({ token, brand }: Props) {
             width: "100%",
             padding: "10px 12px",
             border: `1px solid ${BORDER}`,
-            borderRadius: 8,
+            borderRadius: 12, // spec §3: input 12px
             fontSize: 16, // <16px input fontu iOS'ta zoom tetikler
             boxSizing: "border-box",
           }}
@@ -181,7 +187,7 @@ export function ReviewForm({ token, brand }: Props) {
             width: "100%",
             padding: "10px 12px",
             border: `1px solid ${BORDER}`,
-            borderRadius: 8,
+            borderRadius: 12, // spec §3: textarea 12px
             fontSize: 16, // <16px input fontu iOS'ta zoom tetikler
             fontFamily: "inherit",
             resize: "vertical",
@@ -222,7 +228,7 @@ export function ReviewForm({ token, brand }: Props) {
               width: "100%",
               padding: "10px 12px",
               border: `1px solid ${BORDER}`,
-              borderRadius: 8,
+              borderRadius: 12, // spec §3: input 12px
               fontSize: 16, // <16px input fontu iOS'ta zoom tetikler
               boxSizing: "border-box",
             }}
@@ -258,7 +264,7 @@ export function ReviewForm({ token, brand }: Props) {
           background: submitting || rating < 1 || body.trim().length < 10 ? MUTED : ACCENT,
           color: "#fff",
           border: "none",
-          borderRadius: 10,
+          borderRadius: 999, // spec §3: buton pill (999px)
           fontSize: 15,
           fontWeight: 600,
           cursor: submitting || rating < 1 || body.trim().length < 10 ? "not-allowed" : "pointer",

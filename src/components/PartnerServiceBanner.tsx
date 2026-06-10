@@ -56,7 +56,7 @@ export function PartnerServiceBanner({
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 rounded-md bg-whatsapp px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-whatsapp-dark"
+            className="btn-whatsapp"
           >
             <MessageCircle className="h-4 w-4" />
             {whatsappCtaLabel}

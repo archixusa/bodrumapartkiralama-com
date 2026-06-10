@@ -96,7 +96,7 @@ const card: React.CSSProperties = {
   background: "#fff",
   borderRadius: 20,
   padding: 32,
-  boxShadow: "0 12px 40px -20px rgba(5,60,74,.25)",
+  boxShadow: "0 12px 40px -20px rgba(6,52,59,.25)",
   fontFamily: "-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif",
 };
 const h1: React.CSSProperties = { margin: "0 0 8px", fontSize: 24, color: INK };
@@ -115,7 +115,7 @@ const input: React.CSSProperties = {
   width: "100%",
   padding: "11px 13px",
   border: `1px solid ${BORDER}`, // kum-cizgi
-  borderRadius: 10,
+  borderRadius: 12, // spec §3: input/buton 12px
   fontSize: 16, // <16px input fontu iOS'ta odaklanınca zoom tetikler
   fontFamily: "inherit",
   boxSizing: "border-box",
