@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { ImageIcon, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { BLUR_KUM } from "@/lib/blur";
 
 export function Gallery({ images, alt }: { images: string[]; alt: string }) {
   const [open, setOpen] = useState(false);
@@ -28,6 +29,8 @@ export function Gallery({ images, alt }: { images: string[]; alt: string }) {
             priority
             fetchPriority="high"
             sizes="(min-width: 768px) 50vw, 100vw"
+            placeholder="blur"
+            blurDataURL={BLUR_KUM}
             className="object-cover transition group-hover:scale-105"
           />
         </button>
@@ -45,6 +48,8 @@ export function Gallery({ images, alt }: { images: string[]; alt: string }) {
               alt={`${alt} ${i + 2}`}
               fill
               sizes="(min-width: 768px) 25vw, 50vw"
+              placeholder="blur"
+              blurDataURL={BLUR_KUM}
               className="object-cover transition group-hover:scale-105"
             />
             {i === 3 && images.length > 5 && (

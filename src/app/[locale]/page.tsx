@@ -27,6 +27,7 @@ import { posts } from "@/data/posts";
 import { loc } from "@/lib/i18n-data";
 import { getSiteContent } from "@/lib/content";
 import { buildAlternates, defaultOgImages } from "@/lib/seo";
+import { BLUR_KUM } from "@/lib/blur";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.bodrumapartkiralama.com";
@@ -598,6 +599,8 @@ export default async function HomePage({
                   fill
                   loading="lazy"
                   sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                  placeholder="blur"
+                  blurDataURL={BLUR_KUM}
                   className="object-cover transition duration-500 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-navy-900/95 via-navy-900/35 to-transparent" />
@@ -808,6 +811,8 @@ export default async function HomePage({
                     fill
                     loading="lazy"
                     sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    placeholder="blur"
+                    blurDataURL={BLUR_KUM}
                     className="object-cover transition group-hover:scale-105"
                   />
                   <span className="absolute left-3 top-3 chip-accent">
@@ -854,6 +859,8 @@ function LifestyleTile({
         fill
         loading="lazy"
         sizes="(min-width: 1024px) 25vw, 50vw"
+        placeholder="blur"
+        blurDataURL={BLUR_KUM}
         className="object-cover transition duration-500 group-hover:scale-105"
       />
     </div>

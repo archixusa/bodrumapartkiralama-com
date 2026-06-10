@@ -11,6 +11,7 @@ import { districts, getDistrict } from "@/data/districts";
 import { posts } from "@/data/posts";
 import { getSiteContent } from "@/lib/content";
 import { buildAlternates, buildLocaleUrl } from "@/lib/seo";
+import { BLUR_KUM } from "@/lib/blur";
 import { loc, locArr } from "@/lib/i18n-data";
 import { districtGuides } from "@/data/districtGuides";
 import { DistrictGuide } from "@/components/DistrictGuide";
@@ -303,6 +304,8 @@ export default async function DistrictPage({
           priority
           fetchPriority="high"
           sizes="100vw"
+          placeholder="blur"
+          blurDataURL={BLUR_KUM}
           className="object-cover opacity-40"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-navy-900/80 via-navy-900/55 to-navy-900/85" />

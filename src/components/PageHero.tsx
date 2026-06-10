@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import { ChevronRight } from "lucide-react";
+import { BLUR_KUM } from "@/lib/blur";
 
 interface Crumb {
   href?: string;
@@ -34,6 +35,8 @@ export function PageHero({
           priority
           fetchPriority="high"
           sizes="100vw"
+          placeholder="blur"
+          blurDataURL={BLUR_KUM}
           className="object-cover opacity-40"
         />
       )}

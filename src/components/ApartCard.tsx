@@ -4,6 +4,7 @@ import { Users, BedDouble, Bath, MapPin, Star, ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import type { Apartment } from "@/data/apartments";
 import { districts } from "@/data/districts";
+import { BLUR_KUM } from "@/lib/blur";
 
 export function ApartCard({ apt }: { apt: Apartment }) {
   const t = useTranslations("common");
@@ -22,6 +23,8 @@ export function ApartCard({ apt }: { apt: Apartment }) {
           alt={title}
           fill
           sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+          placeholder="blur"
+          blurDataURL={BLUR_KUM}
           className="object-cover transition duration-500 group-hover:scale-105"
         />
         {/* Sol üst: kum zemin bölge pill'i + varsa etiketler (spec §4 kart) */}

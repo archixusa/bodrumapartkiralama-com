@@ -11,6 +11,7 @@ import { ServiceRelatedLinks } from "@/components/ServiceRelatedLinks";
 import { RelatedGuides, type RelatedLink } from "@/components/RelatedGuides";
 import { getSiteContent } from "@/lib/content";
 import { buildAlternates, defaultOgImages } from "@/lib/seo";
+import { BLUR_KUM } from "@/lib/blur";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.bodrumapartkiralama.com";
@@ -464,6 +465,8 @@ export default async function Page({
                       alt={tour.title}
                       fill
                       sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                      placeholder="blur"
+                      blurDataURL={BLUR_KUM}
                       className="object-cover"
                     />
                     <span className="absolute left-3 top-3 inline-flex h-9 w-9 items-center justify-center rounded-md bg-white/95 text-navy-900">

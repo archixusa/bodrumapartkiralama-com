@@ -15,6 +15,7 @@ import { districts } from "@/data/districts";
 import { getMdxPosts, getMdxPost } from "@/lib/mdx-blog";
 import { loc } from "@/lib/i18n-data";
 import { buildAlternates, buildLocaleUrl } from "@/lib/seo";
+import { BLUR_KUM } from "@/lib/blur";
 import { buildHowToSchema } from "@/lib/blog-howto";
 
 const SITE_URL =
@@ -233,6 +234,8 @@ export default async function Page({
             priority
             fetchPriority="high"
             sizes="100vw"
+            placeholder="blur"
+            blurDataURL={BLUR_KUM}
             className="object-cover opacity-40"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-navy-900/80 via-navy-900/60 to-navy-900/90" />
@@ -345,6 +348,8 @@ export default async function Page({
                       alt={loc(locale, { tr: p.titleTr, en: p.titleEn, de: p.titleDe, ru: p.titleRu })}
                       fill
                       sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                      placeholder="blur"
+                      blurDataURL={BLUR_KUM}
                       className="object-cover transition group-hover:scale-105"
                     />
                   </div>
@@ -462,6 +467,8 @@ function renderMdxPost(
             priority
             fetchPriority="high"
             sizes="100vw"
+            placeholder="blur"
+            blurDataURL={BLUR_KUM}
             className="object-cover opacity-40"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-navy-900/80 via-navy-900/60 to-navy-900/90" />

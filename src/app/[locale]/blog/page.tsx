@@ -8,6 +8,7 @@ import { posts } from "@/data/posts";
 import { getMdxPosts } from "@/lib/mdx-blog";
 import { loc } from "@/lib/i18n-data";
 import { buildAlternates, defaultOgImages } from "@/lib/seo";
+import { BLUR_KUM } from "@/lib/blur";
 import { JsonLd } from "@/components/JsonLd";
 
 const SITE_URL =
@@ -155,6 +156,8 @@ export default async function Page({
                     alt={loc(locale, { tr: p.titleTr, en: p.titleEn, de: p.titleDe, ru: p.titleRu })}
                     fill
                     sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    placeholder="blur"
+                    blurDataURL={BLUR_KUM}
                     className="object-cover transition duration-500 group-hover:scale-105"
                   />
                   <span className="absolute left-3 top-3 chip-accent">
