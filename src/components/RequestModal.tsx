@@ -245,6 +245,7 @@ export function RequestModal({ open, onClose, prefilled, locale }: RequestModalP
   const [errorMsg, setErrorMsg] = useState("");
   const dialogRef = useRef<HTMLDivElement>(null);
   const closeBtnRef = useRef<HTMLButtonElement>(null);
+  const successHeadingRef = useRef<HTMLHeadingElement>(null);
 
   // Editable prefill state
   const [region, setRegion] = useState(prefilled?.region ?? "");
@@ -307,6 +308,15 @@ export function RequestModal({ open, onClose, prefilled, locale }: RequestModalP
       previouslyFocused?.focus?.();
     };
   }, [open, onClose]);
+
+  // Submit başarıyla bitince form DOM'dan sökülür; odağı başarı başlığına
+  // taşıyoruz ki ekran okuyucu/klavye kullanıcısı duyuruyu alsın, odak body'ye
+  // düşmesin (WCAG 2.4.3 + 4.1.3 — başlık ayrıca role="status").
+  useEffect(() => {
+    if (status === "success") {
+      successHeadingRef.current?.focus();
+    }
+  }, [status]);
 
   if (!open) return null;
 
@@ -414,11 +424,20 @@ export function RequestModal({ open, onClose, prefilled, locale }: RequestModalP
         </button>
 
         {status === "success" ? (
-          <div className="flex flex-col items-center gap-3 p-8 text-center">
+          <div
+            role="status"
+            className="flex flex-col items-center gap-3 p-8 text-center"
+          >
             <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-success/10 text-success">
               <Check className="h-6 w-6" />
             </span>
-            <h2 className="text-xl font-bold text-navy-900">{t.successTitle}</h2>
+            <h2
+              ref={successHeadingRef}
+              tabIndex={-1}
+              className="text-xl font-bold text-navy-900 outline-none"
+            >
+              {t.successTitle}
+            </h2>
             <p className="text-sm text-muted">{t.successBody}</p>
           </div>
         ) : (
@@ -581,7 +600,10 @@ export function RequestModal({ open, onClose, prefilled, locale }: RequestModalP
               </label>
 
               {status === "error" && errorMsg && (
-                <div className="flex items-start gap-2 rounded-md border border-danger/30 bg-danger/5 p-3 text-xs text-danger">
+                <div
+                  role="alert"
+                  className="flex items-start gap-2 rounded-md border border-danger/30 bg-danger/5 p-3 text-xs text-danger"
+                >
                   <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
                   <span>{errorMsg}</span>
                 </div>

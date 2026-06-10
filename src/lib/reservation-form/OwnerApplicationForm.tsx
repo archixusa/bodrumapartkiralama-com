@@ -6,6 +6,7 @@ import { getReservationClient } from "./supabaseClient";
 import { isValidTrPhone, getUtmFromUrl } from "./utils";
 import type { SiteName } from "./types";
 import { getPhone } from "@/lib/contact";
+import { pickOwnerFormCopy } from "./ownerFormCopy";
 
 export interface OwnerApplicationFormProps {
   /** "bodrumapartkiralama" or "bodrumapartvilla" */
@@ -73,6 +74,7 @@ export function OwnerApplicationForm({
   tone = "family",
 }: OwnerApplicationFormProps) {
   const locale = useLocale();
+  const copy = pickOwnerFormCopy(locale);
   // Locale-aware: TR gets the new line; other locales keep the existing one.
   // An explicit prop still wins if a caller passes one.
   const waNumber = whatsappNumber ?? getPhone(locale).wa;
@@ -126,9 +128,9 @@ export function OwnerApplicationForm({
 
   function onSubmit(e: FormEvent) {
     e.preventDefault();
-    if (!name.trim() || !phone.trim()) return showError("Lütfen ad ve telefonu doldurun.");
-    if (!isValidTrPhone(phone)) return showError("Lütfen geçerli bir telefon numarası girin.");
-    if (!kvkk) return showError("Devam etmek için KVKK onayı vermelisiniz.");
+    if (!name.trim() || !phone.trim()) return showError(copy.errRequired);
+    if (!isValidTrPhone(phone)) return showError(copy.errPhone);
+    if (!kvkk) return showError(copy.errKvkk);
 
     const payload: Payload = {
       source_site: siteName,
@@ -164,25 +166,20 @@ export function OwnerApplicationForm({
         onSuccess?.();
       } catch (err) {
         console.error("[OwnerApplicationForm]", err);
-        showError("Bir sorun oluştu, lütfen tekrar deneyin.");
+        showError(copy.errSend);
       }
     });
   }
 
   if (state.status === "success") {
-    const waText = encodeURIComponent(
-      `Merhaba, ${siteName} sitesinden mülk sahibi başvurusu yaptım. Adım ${name || "—"}.`
-    );
+    const waText = encodeURIComponent(copy.waMessage(siteName, name || "—"));
     return (
       <div className={`oaf-card oaf-success ${className}`}>
         <div className="oaf-success-icon" aria-hidden>
           ✓
         </div>
-        <h3>Teşekkürler!</h3>
-        <p>
-          Başvurunuz alındı. Ekibimiz 1-2 saat içinde size dönüş yapacak; mülkünüzü
-          değerlendirmek için randevu ayarlayacağız.
-        </p>
+        <h3>{copy.successTitle}</h3>
+        <p>{copy.successBody}</p>
         {waNumber && (
           <a
             href={`https://wa.me/${waNumber}?text=${waText}`}
@@ -190,7 +187,7 @@ export function OwnerApplicationForm({
             rel="noopener noreferrer"
             className="oaf-btn oaf-btn-secondary"
           >
-            WhatsApp'tan da yazın
+            {copy.waButton}
           </a>
         )}
         <OwnerFormStyles />
@@ -198,20 +195,17 @@ export function OwnerApplicationForm({
     );
   }
 
-  const submitLabel =
-    tone === "luxury" ? "Mülkümü değerlendirin" : "Başvurumu gönder";
+  const submitLabel = tone === "luxury" ? copy.submitLuxury : copy.submit;
 
   return (
     <form onSubmit={onSubmit} noValidate className={`oaf-card ${className}`}>
       <h3 className="oaf-title">
-        {tone === "luxury" ? "Mülkünüzü Değerlendirelim" : "Başvuru Formu"}
+        {tone === "luxury" ? copy.titleLuxury : copy.title}
       </h3>
-      <p className="oaf-sub">
-        Bilgileriniz size özel. 1-2 saat içinde sizi arayacağız.
-      </p>
+      <p className="oaf-sub">{copy.sub}</p>
 
       <div className="oaf-row">
-        <label className="oaf-label">Ad Soyad *</label>
+        <label className="oaf-label">{copy.name}</label>
         <input
           type="text"
           required
@@ -224,7 +218,7 @@ export function OwnerApplicationForm({
 
       <div className="oaf-grid-2">
         <div className="oaf-row">
-          <label className="oaf-label">Telefon *</label>
+          <label className="oaf-label">{copy.phone}</label>
           <input
             type="tel"
             required
@@ -236,7 +230,7 @@ export function OwnerApplicationForm({
           />
         </div>
         <div className="oaf-row">
-          <label className="oaf-label">E-posta</label>
+          <label className="oaf-label">{copy.email}</label>
           <input
             type="email"
             autoComplete="email"
@@ -249,40 +243,40 @@ export function OwnerApplicationForm({
 
       <div className="oaf-grid-2">
         <div className="oaf-row">
-          <label className="oaf-label">Bölge</label>
+          <label className="oaf-label">{copy.region}</label>
           <select
             value={region}
             onChange={(e) => setRegion(e.target.value)}
             className="oaf-input"
           >
-            <option value="">Seçin</option>
+            <option value="">{copy.select}</option>
             {REGIONS.map((r) => (
               <option key={r} value={r}>
-                {r}
+                {r === "Diğer" ? copy.regionOther : r}
               </option>
             ))}
           </select>
         </div>
         <div className="oaf-row">
-          <label className="oaf-label">Mülk tipi</label>
+          <label className="oaf-label">{copy.propertyType}</label>
           <select
             value={propertyType}
             onChange={(e) => setPropertyType(e.target.value)}
             className="oaf-input"
           >
-            <option value="">Seçin</option>
-            <option value="villa">Villa</option>
-            <option value="apart">Apart</option>
-            <option value="daire">Daire</option>
-            <option value="apart_otel">Apart otel</option>
-            <option value="karma">Birden fazla farklı</option>
+            <option value="">{copy.select}</option>
+            <option value="villa">{copy.propertyTypes.villa}</option>
+            <option value="apart">{copy.propertyTypes.apart}</option>
+            <option value="daire">{copy.propertyTypes.daire}</option>
+            <option value="apart_otel">{copy.propertyTypes.apart_otel}</option>
+            <option value="karma">{copy.propertyTypes.karma}</option>
           </select>
         </div>
       </div>
 
       <div className="oaf-grid-2">
         <div className="oaf-row">
-          <label className="oaf-label">Mülk sayısı</label>
+          <label className="oaf-label">{copy.propertyCount}</label>
           <input
             type="number"
             min={1}
@@ -293,38 +287,34 @@ export function OwnerApplicationForm({
           />
         </div>
         <div className="oaf-row">
-          <label className="oaf-label">Ne kadar süredir size ait?</label>
+          <label className="oaf-label">{copy.ownershipDuration}</label>
           <select
             value={ownershipDuration}
             onChange={(e) => setOwnershipDuration(e.target.value)}
             className="oaf-input"
           >
-            <option value="">Seçin</option>
-            <option value="yeni">Yeni aldım</option>
-            <option value="0-1">1 yıldan az</option>
-            <option value="1-3">1-3 yıl</option>
-            <option value="3+">3 yıldan fazla</option>
+            <option value="">{copy.select}</option>
+            <option value="yeni">{copy.durations.yeni}</option>
+            <option value="0-1">{copy.durations["0-1"]}</option>
+            <option value="1-3">{copy.durations["1-3"]}</option>
+            <option value="3+">{copy.durations["3+"]}</option>
           </select>
         </div>
       </div>
 
       <fieldset className="oaf-row">
-        <legend className="oaf-label">Şu an kiralıyor musunuz?</legend>
+        <legend className="oaf-label">{copy.rentingLegend}</legend>
         <div className="oaf-radio-group">
-          {[
-            { v: "yes" as const, l: "Evet" },
-            { v: "no" as const, l: "Hayır" },
-            { v: "planning" as const, l: "Planlıyorum" },
-          ].map((o) => (
-            <label key={o.v} className="oaf-radio">
+          {(["yes", "no", "planning"] as const).map((v) => (
+            <label key={v} className="oaf-radio">
               <input
                 type="radio"
                 name="currently_renting"
-                value={o.v}
-                checked={currentlyRenting === o.v}
-                onChange={() => setCurrentlyRenting(o.v)}
+                value={v}
+                checked={currentlyRenting === v}
+                onChange={() => setCurrentlyRenting(v)}
               />
-              <span>{o.l}</span>
+              <span>{copy.renting[v]}</span>
             </label>
           ))}
         </div>
@@ -332,7 +322,7 @@ export function OwnerApplicationForm({
 
       {currentlyRenting === "yes" && (
         <fieldset className="oaf-row">
-          <legend className="oaf-label">Hangi kanallarda?</legend>
+          <legend className="oaf-label">{copy.channelsLegend}</legend>
           <div className="oaf-checks">
             {CHANNELS.map((c) => (
               <label key={c} className="oaf-check">
@@ -341,7 +331,7 @@ export function OwnerApplicationForm({
                   checked={channels.includes(c)}
                   onChange={() => toggleChannel(c)}
                 />
-                <span>{c}</span>
+                <span>{copy.channelLabels[c] ?? c}</span>
               </label>
             ))}
           </div>
@@ -349,19 +339,19 @@ export function OwnerApplicationForm({
       )}
 
       <div className="oaf-row">
-        <label className="oaf-label">Mesaj / Sorularınız</label>
+        <label className="oaf-label">{copy.message}</label>
         <textarea
           rows={3}
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           className="oaf-input"
-          placeholder="Mülkünüz hakkında bilmemizi istediğiniz detaylar…"
+          placeholder={copy.messagePlaceholder}
         />
       </div>
 
       {referralCode && (
         <p className="oaf-ref">
-          🎉 Referans kodunuz var: <strong>{referralCode}</strong>
+          🎉 {copy.referral} <strong>{referralCode}</strong>
         </p>
       )}
 
@@ -373,11 +363,11 @@ export function OwnerApplicationForm({
           onChange={(e) => setKvkk(e.target.checked)}
         />
         <span>
-          Kişisel verilerimin{" "}
+          {copy.kvkkPrefix}
           <a href={kvkkUrl} target="_blank" rel="noopener noreferrer">
-            KVKK Aydınlatma Metni
+            {copy.kvkkLink}
           </a>
-          'ne uygun şekilde işlenmesini onaylıyorum.
+          {copy.kvkkSuffix}
         </span>
       </label>
 
@@ -403,7 +393,7 @@ export function OwnerApplicationForm({
         disabled={pending || state.status === "submitting"}
         className="oaf-btn"
       >
-        {pending || state.status === "submitting" ? "Gönderiliyor…" : submitLabel}
+        {pending || state.status === "submitting" ? copy.submitting : submitLabel}
       </button>
 
       <OwnerFormStyles />
