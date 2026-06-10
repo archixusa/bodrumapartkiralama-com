@@ -37,9 +37,15 @@ export function ApartCard({ apt }: { apt: Apartment }) {
             <span key={tag} className="chip-accent">{tag}</span>
           ))}
         </div>
-        {/* Sağ alt: mürekkep zemin + güneş yıldızlı rating rozeti */}
-        <div className="chip-rating absolute bottom-3 right-3">
-          <Star className="h-3 w-3 fill-gunes-400 text-gunes-400" />
+        {/* Sağ alt: mürekkep zemin + güneş yıldızlı rating rozeti.
+            role="img" + aria-label: SR aksi halde bağlamsız "4.8" okuyordu —
+            GuestReviews'taki Stars deseniyle aynı (WCAG 1.1.1). */}
+        <div
+          className="chip-rating absolute bottom-3 right-3"
+          role="img"
+          aria-label={`${apt.rating.toFixed(1)} / 5`}
+        >
+          <Star aria-hidden="true" className="h-3 w-3 fill-gunes-400 text-gunes-400" />
           {apt.rating.toFixed(1)}
         </div>
       </Link>

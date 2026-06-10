@@ -582,7 +582,7 @@ export default async function HomePage({
               <Link
                 key={d.slug}
                 href={`/bodrum/${d.urlSlug}`}
-                className="group relative block aspect-[3/2] overflow-hidden rounded-xl shadow-card outline-none transition duration-300 hover:shadow-cardHover focus-visible:ring-2 focus-visible:ring-turkuaz-500 focus-visible:ring-offset-2"
+                className="group relative block aspect-[3/2] overflow-hidden rounded-xl shadow-card outline-none transition duration-300 hover:shadow-cardHover focus-visible:ring-2 focus-visible:ring-turkuaz-600 focus-visible:ring-offset-2"
               >
                 <Image
                   src={`/images/regions/${d.slug}.webp`}
@@ -891,7 +891,11 @@ function PreviewBanner({ locale }: { locale: string }) {
   return (
     <div
       role="status"
-      className="fixed inset-x-0 top-0 z-[100] flex items-center justify-center gap-2 bg-amber-500 px-4 py-1.5 text-center text-sm font-medium text-amber-950 shadow-md"
+      // Spec token'ları: gunes-300 zemin + spec'in gunes-üstü koyu metni
+      // #3A2400 (9.79:1, AA) — Tailwind varsayılan amber paleti token
+      // tablosunda yoktu. (Not: warning #C2750E beyazla 3.59:1 kaldığından
+      // 14px banner metni için kullanılmadı — hesap doğrulandı.)
+      className="fixed inset-x-0 top-0 z-[100] flex items-center justify-center gap-2 bg-gunes-300 px-4 py-1.5 text-center text-sm font-medium text-[#3A2400] shadow-card"
     >
       <span>
         Önizleme modu — bu taslak, henüz yayında değil.

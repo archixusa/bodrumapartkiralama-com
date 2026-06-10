@@ -46,7 +46,7 @@ export function ScrollToTop({ locale }: { locale: string }) {
       onClick={scrollTop}
       aria-label={LABELS[lang]}
       title={LABELS[lang]}
-      className="fixed bottom-[88px] right-4 z-40 flex h-11 w-11 items-center justify-center rounded-full border border-kum-200 bg-kum-50/90 text-murekkep-900 shadow-card backdrop-blur-sm transition duration-200 hover:-translate-y-0.5 hover:border-turkuaz-500 hover:text-turkuaz-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-turkuaz-500 focus-visible:ring-offset-2 md:bottom-24 md:right-6"
+      className="fixed bottom-[88px] right-4 z-40 flex h-11 w-11 items-center justify-center rounded-full border border-kum-200 bg-kum-50/90 text-murekkep-900 shadow-card backdrop-blur-sm transition duration-200 hover:-translate-y-0.5 hover:border-turkuaz-500 hover:text-turkuaz-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-turkuaz-600 focus-visible:ring-offset-2 md:bottom-24 md:right-6"
     >
       <ArrowUp className="h-5 w-5" />
     </button>

@@ -94,7 +94,7 @@ body {
   }
   /* Kart: radius 26px, kum-cizgi kenarlık, hover'da -6px lift + gölge artışı. */
   .card {
-    @apply overflow-hidden rounded-xl border border-kum-200 bg-white shadow-card outline-none transition duration-[250ms] ease-akdeniz hover:-translate-y-1.5 hover:shadow-cardHover focus-visible:ring-2 focus-visible:ring-turkuaz-500 focus-visible:ring-offset-2;
+    @apply overflow-hidden rounded-xl border border-kum-200 bg-white shadow-card outline-none transition duration-[250ms] ease-akdeniz hover:-translate-y-1.5 hover:shadow-cardHover focus-visible:ring-2 focus-visible:ring-turkuaz-600 focus-visible:ring-offset-2;
   }
   .chip {
     @apply inline-flex items-center gap-1 rounded-full bg-turkuaz-50 px-3 py-1 text-xs font-semibold text-turkuaz-600;
@@ -147,10 +147,14 @@ body {
     @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-white/40 px-6 py-3 text-sm font-bold text-white transition duration-200 hover:-translate-y-0.5 hover:border-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/70;
   }
   /* Form alanları: kum zemin + kum-cizgi kenarlık, focus'ta turkuaz ring 2px.
+     Ring/kenarlık turkuaz-600 — eski turkuaz-500/60 ring kum-50 üzerinde
+     ~1.89:1 kalıyordu; tek odak göstergesi olduğundan ≥3:1 şart (WCAG
+     1.4.11). turkuaz-600 kum-50'de 4.63:1, beyazda 4.87:1 — spec'in
+     "metin/link için turkuaz-600" kuralıyla tutarlı.
      min-h 44px (dokunma hedefi) + mobilde 16px yazı — iOS, 16px altındaki
      inputlara odaklanınca sayfayı zoom'lar (spec v3 mobil kuralı). */
   .input-base {
-    @apply min-h-11 w-full rounded-md border border-kum-200 bg-kum-50 px-3 py-2.5 text-base text-ink placeholder:text-muted focus:border-turkuaz-500 focus:outline-none focus:ring-2 focus:ring-turkuaz-500/60 md:text-sm;
+    @apply min-h-11 w-full rounded-md border border-kum-200 bg-kum-50 px-3 py-2.5 text-base text-ink placeholder:text-muted focus:border-turkuaz-600 focus:outline-none focus:ring-2 focus:ring-turkuaz-600 md:text-sm;
   }
   .label-base {
     @apply mb-1 block text-xs font-semibold uppercase tracking-wide text-muted;

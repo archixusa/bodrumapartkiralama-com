@@ -65,7 +65,7 @@ export function RelatedGuides({
           <li key={l.href}>
             <Link
               href={l.href}
-              className="group flex items-center justify-between gap-2 rounded-lg border border-kum-200 bg-white px-4 py-3 text-sm font-semibold text-murekkep-900 shadow-card transition duration-200 ease-akdeniz hover:-translate-y-0.5 hover:border-turkuaz-500 hover:text-turkuaz-600 hover:shadow-cardHover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-turkuaz-500 focus-visible:ring-offset-2"
+              className="group flex items-center justify-between gap-2 rounded-lg border border-kum-200 bg-white px-4 py-3 text-sm font-semibold text-murekkep-900 shadow-card transition duration-200 ease-akdeniz hover:-translate-y-0.5 hover:border-turkuaz-500 hover:text-turkuaz-600 hover:shadow-cardHover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-turkuaz-600 focus-visible:ring-offset-2"
             >
               {l.labels[pick]}
               <ArrowRight className="h-4 w-4 shrink-0 text-turkuaz-600 transition group-hover:translate-x-0.5" />

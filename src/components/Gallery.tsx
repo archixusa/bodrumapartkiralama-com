@@ -1,13 +1,93 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { ImageIcon, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { BLUR_KUM } from "@/lib/blur";
 
-export function Gallery({ images, alt }: { images: string[]; alt: string }) {
+// Lightbox buton etiketleri 4 dilde — sabit İngilizce "close/previous/next"
+// tr/de/ru sayfalarında yanlış dilde seslendiriliyordu (WCAG 3.1.2 + İ18N).
+const CLOSE_LABEL: Record<string, string> = {
+  tr: "Kapat",
+  en: "Close",
+  de: "Schließen",
+  ru: "Закрыть",
+};
+
+const PREV_LABEL: Record<string, string> = {
+  tr: "Önceki",
+  en: "Previous",
+  de: "Zurück",
+  ru: "Назад",
+};
+
+const NEXT_LABEL: Record<string, string> = {
+  tr: "Sonraki",
+  en: "Next",
+  de: "Weiter",
+  ru: "Вперёд",
+};
+
+function pick(map: Record<string, string>, locale: string): string {
+  return map[locale] ?? map.en;
+}
+
+export function Gallery({
+  images,
+  alt,
+  locale = "tr", // sitenin varsayılan dili; çağıran sayfa locale'i geçirir
+}: {
+  images: string[];
+  alt: string;
+  locale?: string;
+}) {
   const [open, setOpen] = useState(false);
   const [idx, setIdx] = useState(0);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeBtnRef = useRef<HTMLButtonElement>(null);
+
+  // Odak yönetimi (RequestModal'daki desenin aynısı — WCAG 2.4.3/2.1.2):
+  // açılışta odak kapat butonuna gider, Tab/Shift+Tab diyalog içinde
+  // hapsedilir, Escape kapatır, kapanışta odak tetikleyiciye iade edilir.
+  useEffect(() => {
+    if (!open) return;
+    const previouslyFocused = document.activeElement as HTMLElement | null;
+    closeBtnRef.current?.focus();
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setOpen(false);
+        return;
+      }
+      if (e.key !== "Tab") return;
+      const node = dialogRef.current;
+      if (!node) return;
+      const focusables = Array.from(
+        node.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        ),
+      ).filter((el) => el.offsetParent !== null);
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      const active = document.activeElement as HTMLElement | null;
+      if (e.shiftKey && (active === first || !node.contains(active))) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && (active === last || !node.contains(active))) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+      previouslyFocused?.focus?.();
+    };
+  }, [open]);
 
   const main = images[0];
   const thumbs = images.slice(1, 5);
@@ -63,18 +143,21 @@ export function Gallery({ images, alt }: { images: string[]; alt: string }) {
 
       {open && (
         <div
+          ref={dialogRef}
           role="dialog"
           aria-modal="true"
+          aria-label={alt}
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4"
           onClick={() => setOpen(false)}
         >
           <button
+            ref={closeBtnRef}
             onClick={(e) => {
               e.stopPropagation();
               setOpen(false);
             }}
             className="absolute right-4 top-4 rounded-full bg-white/10 p-3 text-white hover:bg-white/20"
-            aria-label="close"
+            aria-label={pick(CLOSE_LABEL, locale)}
           >
             <X className="h-5 w-5" />
           </button>
@@ -84,7 +167,7 @@ export function Gallery({ images, alt }: { images: string[]; alt: string }) {
               setIdx((idx - 1 + images.length) % images.length);
             }}
             className="absolute left-4 rounded-full bg-white/10 p-2.5 text-white hover:bg-white/20"
-            aria-label="previous"
+            aria-label={pick(PREV_LABEL, locale)}
           >
             <ChevronLeft className="h-6 w-6" />
           </button>
@@ -94,7 +177,7 @@ export function Gallery({ images, alt }: { images: string[]; alt: string }) {
               setIdx((idx + 1) % images.length);
             }}
             className="absolute right-4 rounded-full bg-white/10 p-2.5 text-white hover:bg-white/20 md:right-16"
-            aria-label="next"
+            aria-label={pick(NEXT_LABEL, locale)}
           >
             <ChevronRight className="h-6 w-6" />
           </button>

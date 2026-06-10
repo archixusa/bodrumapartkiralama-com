@@ -20,7 +20,7 @@ export function DistrictCard({ district }: { district: District }) {
   return (
     <Link
       href={`/bodrum/${district.urlSlug}`}
-      className="group relative block aspect-[4/5] overflow-hidden rounded-xl shadow-card outline-none transition duration-300 hover:shadow-cardHover focus-visible:ring-2 focus-visible:ring-turkuaz-500 focus-visible:ring-offset-2"
+      className="group relative block aspect-[4/5] overflow-hidden rounded-xl shadow-card outline-none transition duration-300 hover:shadow-cardHover focus-visible:ring-2 focus-visible:ring-turkuaz-600 focus-visible:ring-offset-2"
     >
       <Image
         src={district.heroImage}

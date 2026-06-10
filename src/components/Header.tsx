@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Menu, X, Phone, MessageCircle, Globe } from "lucide-react";
 import { Link, usePathname } from "@/i18n/routing";
@@ -31,6 +31,22 @@ const OWNER_LABEL: Record<string, string> = {
   ru: "Сдать недвижимость",
 };
 
+// Hamburger aç/kapat etiketi — sabit İngilizce aria-label tr/de/ru
+// sayfalarında yanlış dilde seslendiriliyordu (WCAG 3.1.2).
+const MENU_OPEN_LABEL: Record<string, string> = {
+  tr: "Menüyü aç",
+  en: "Open menu",
+  de: "Menü öffnen",
+  ru: "Открыть меню",
+};
+
+const MENU_CLOSE_LABEL: Record<string, string> = {
+  tr: "Menüyü kapat",
+  en: "Close menu",
+  de: "Menü schließen",
+  ru: "Закрыть меню",
+};
+
 export function Header() {
   const t = useTranslations("nav");
   const c = useTranslations("common");
@@ -38,6 +54,7 @@ export function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
+  const langBtnRef = useRef<HTMLButtonElement>(null);
 
   const guideLabel =
     locale === "tr"
@@ -83,17 +100,36 @@ export function Header() {
         </nav>
 
         <div className="hidden items-center gap-2 lg:flex">
-          <div className="relative">
+          <div
+            className="relative"
+            // Kapanma kapsayıcının focusout'unda: odak liste İÇİNDE kaldıkça
+            // kapanmaz — buton üzerindeki onBlur+setTimeout(150) deseni Tab
+            // ile ilk dil linkine geçildiği anda listeyi söküyordu ve dil
+            // linkleri klavyeyle fiilen erişilemiyordu (WCAG 2.1.1).
+            onBlur={(e) => {
+              if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+                setLangOpen(false);
+              }
+            }}
+            // Escape listeyi kapatır ve odağı tetikleyici butona iade eder.
+            onKeyDown={(e) => {
+              if (e.key === "Escape" && langOpen) {
+                setLangOpen(false);
+                langBtnRef.current?.focus();
+              }
+            }}
+          >
             {/* Açılır liste düz linklerden oluşuyor — role="menu"/menuitem
                 deseni yerine aria-expanded + aria-controls'lu disclosure
                 kullanılır (menuitem'sız role="menu" SR'lerde bozuk anons
-                ediliyordu). */}
+                ediliyordu). aria-controls yalnız liste DOM'dayken verilir —
+                kapalı durumda var olmayan id'ye işaret etmesin. */}
             <button
+              ref={langBtnRef}
               onClick={() => setLangOpen((v) => !v)}
-              onBlur={() => setTimeout(() => setLangOpen(false), 150)}
               className="btn-ghost"
               aria-label={t("language")}
-              aria-controls="lang-switcher"
+              aria-controls={langOpen ? "lang-switcher" : undefined}
               aria-expanded={langOpen}
             >
               <Globe className="h-4 w-4" />
@@ -141,7 +177,11 @@ export function Header() {
         <button
           onClick={() => setOpen((v) => !v)}
           className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md p-2 text-navy-900 lg:hidden"
-          aria-label={open ? "Close menu" : "Open menu"}
+          aria-label={
+            open
+              ? (MENU_CLOSE_LABEL[locale] ?? MENU_CLOSE_LABEL.en)
+              : (MENU_OPEN_LABEL[locale] ?? MENU_OPEN_LABEL.en)
+          }
           aria-expanded={open}
         >
           {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
