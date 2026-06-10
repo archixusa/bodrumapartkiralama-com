@@ -67,6 +67,8 @@ export function UnsubscribeClient() {
         <input
           type="email"
           required
+          autoComplete="email"
+          inputMode="email"
           value={emailInput}
           onChange={(e) => setEmailInput(e.target.value)}
           style={input}
@@ -111,7 +113,7 @@ const input: React.CSSProperties = {
   padding: "11px 13px",
   border: "1px solid #C8D8DC",
   borderRadius: 10,
-  fontSize: 14,
+  fontSize: 16, // <16px input fontu iOS'ta odaklanınca zoom tetikler
   fontFamily: "inherit",
   boxSizing: "border-box",
 };
@@ -121,7 +123,7 @@ const btn: React.CSSProperties = {
   padding: "12px 16px",
   border: 0,
   borderRadius: 999,
-  background: "#F26A1E",
+  background: "#0B7E80", // turkuaz-600 — eski turuncu palet kalıntısıydı
   color: "#fff",
   fontWeight: 700,
   fontSize: 14,

@@ -149,7 +149,7 @@ export async function GuestReviews({
                 </span>
               </div>
               {r.title && <h3 className="text-base">{r.title}</h3>}
-              <blockquote className="line-clamp-5 flex-1 whitespace-pre-wrap text-[15px] leading-relaxed text-ink/90">
+              <blockquote className="line-clamp-5 flex-1 whitespace-pre-wrap text-base md:text-[15px] leading-relaxed text-ink/90">
                 {r.body}
               </blockquote>
               <figcaption className="mt-auto text-sm font-semibold text-navy-900">

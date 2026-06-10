@@ -86,7 +86,7 @@ export function ReviewForm({ token, brand }: Props) {
         boxShadow: "0 4px 16px rgba(0,0,0,0.08)",
       }}
     >
-      <p style={{ fontSize: 11, color: "#0EA5E9", textTransform: "uppercase", letterSpacing: 1, margin: 0 }}>
+      <p style={{ fontSize: 11, color: "#0B7E80", textTransform: "uppercase", letterSpacing: 1, margin: 0 }}>
         {brand}
       </p>
       <h1 style={{ fontSize: 24, margin: "4px 0 8px", color: "#0F172A" }}>
@@ -148,7 +148,7 @@ export function ReviewForm({ token, brand }: Props) {
             padding: "10px 12px",
             border: "1px solid #CBD5E1",
             borderRadius: 8,
-            fontSize: 14,
+            fontSize: 16, // <16px input fontu iOS'ta zoom tetikler
             boxSizing: "border-box",
           }}
         />
@@ -172,7 +172,7 @@ export function ReviewForm({ token, brand }: Props) {
             padding: "10px 12px",
             border: "1px solid #CBD5E1",
             borderRadius: 8,
-            fontSize: 14,
+            fontSize: 16, // <16px input fontu iOS'ta zoom tetikler
             fontFamily: "inherit",
             resize: "vertical",
             boxSizing: "border-box",
@@ -213,7 +213,7 @@ export function ReviewForm({ token, brand }: Props) {
               padding: "10px 12px",
               border: "1px solid #CBD5E1",
               borderRadius: 8,
-              fontSize: 14,
+              fontSize: 16, // <16px input fontu iOS'ta zoom tetikler
               boxSizing: "border-box",
             }}
           />

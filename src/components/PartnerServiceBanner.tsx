@@ -48,7 +48,7 @@ export function PartnerServiceBanner({
               <Handshake className="h-3.5 w-3.5" />
               {serviceLabel}
             </span>
-            <p className="mt-3 text-[15px] leading-relaxed text-ink/85">
+            <p className="mt-3 text-base md:text-[15px] leading-relaxed text-ink/85">
               {description}
             </p>
           </div>

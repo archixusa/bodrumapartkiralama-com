@@ -49,7 +49,7 @@ export function ApartCard({ apt }: { apt: Apartment }) {
           </h3>
           <Link
             href={`/bodrum/${districtUrl}`}
-            className="mt-1 inline-flex items-center gap-1 text-xs font-semibold text-turkuaz-600 hover:underline"
+            className="mt-1 inline-flex min-h-8 items-center gap-1 text-xs font-semibold text-turkuaz-600 hover:underline"
           >
             <MapPin className="h-3 w-3" /> {districtName}
           </Link>
@@ -77,7 +77,7 @@ export function ApartCard({ apt }: { apt: Apartment }) {
           </p>
           <Link
             href={`/apartlar/${apt.slug}`}
-            className="inline-flex items-center gap-1 text-sm font-bold text-turkuaz-600 transition hover:text-turkuaz-700"
+            className="inline-flex min-h-11 items-center gap-1 text-sm font-bold text-turkuaz-600 transition hover:text-turkuaz-700"
           >
             {t("details")} <ArrowRight className="h-4 w-4" />
           </Link>

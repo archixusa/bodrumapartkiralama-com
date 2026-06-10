@@ -68,7 +68,7 @@ export function Gallery({ images, alt }: { images: string[]; alt: string }) {
               e.stopPropagation();
               setOpen(false);
             }}
-            className="absolute right-4 top-4 rounded-full bg-white/10 p-2 text-white hover:bg-white/20"
+            className="absolute right-4 top-4 rounded-full bg-white/10 p-3 text-white hover:bg-white/20"
             aria-label="close"
           >
             <X className="h-5 w-5" />
@@ -78,7 +78,7 @@ export function Gallery({ images, alt }: { images: string[]; alt: string }) {
               e.stopPropagation();
               setIdx((idx - 1 + images.length) % images.length);
             }}
-            className="absolute left-4 rounded-full bg-white/10 p-2 text-white hover:bg-white/20"
+            className="absolute left-4 rounded-full bg-white/10 p-2.5 text-white hover:bg-white/20"
             aria-label="previous"
           >
             <ChevronLeft className="h-6 w-6" />
@@ -88,7 +88,7 @@ export function Gallery({ images, alt }: { images: string[]; alt: string }) {
               e.stopPropagation();
               setIdx((idx + 1) % images.length);
             }}
-            className="absolute right-4 rounded-full bg-white/10 p-2 text-white hover:bg-white/20 md:right-16"
+            className="absolute right-4 rounded-full bg-white/10 p-2.5 text-white hover:bg-white/20 md:right-16"
             aria-label="next"
           >
             <ChevronRight className="h-6 w-6" />

@@ -37,7 +37,7 @@ export function SearchBar({ compact = false }: { compact?: boolean }) {
         <select
           value={district}
           onChange={(e) => setDistrict(e.target.value)}
-          className="input-base border-none p-0 text-base font-medium focus:ring-0"
+          className="input-base min-h-0 border-none p-0 text-base font-medium focus:ring-0"
         >
           <option value="">{t("searchDistrictAny")}</option>
           {districts.map((d) => (
@@ -53,7 +53,7 @@ export function SearchBar({ compact = false }: { compact?: boolean }) {
           min={today}
           value={checkin}
           onChange={(e) => setCheckin(e.target.value)}
-          className="input-base border-none p-0 text-base font-medium focus:ring-0"
+          className="input-base min-h-0 border-none p-0 text-base font-medium focus:ring-0"
         />
       </Field>
       <Field icon={<Calendar className="h-4 w-4" />} label={t("searchCheckout")}>
@@ -62,14 +62,14 @@ export function SearchBar({ compact = false }: { compact?: boolean }) {
           min={checkin || today}
           value={checkout}
           onChange={(e) => setCheckout(e.target.value)}
-          className="input-base border-none p-0 text-base font-medium focus:ring-0"
+          className="input-base min-h-0 border-none p-0 text-base font-medium focus:ring-0"
         />
       </Field>
       <Field icon={<Users className="h-4 w-4" />} label={t("searchGuests")}>
         <select
           value={guests}
           onChange={(e) => setGuests(Number(e.target.value))}
-          className="input-base border-none p-0 text-base font-medium focus:ring-0"
+          className="input-base min-h-0 border-none p-0 text-base font-medium focus:ring-0"
         >
           {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
             <option key={n} value={n}>

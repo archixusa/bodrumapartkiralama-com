@@ -74,23 +74,23 @@ body {
   /* Birincil CTA (v2): turkuaz-600 zemin + beyaz metin, hover turkuaz-700,
      -2px lift (spec §4/§5 + "v2 DEĞİŞİKLİĞİ"). */
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full bg-turkuaz-600 px-6 py-3 text-sm font-bold text-white shadow-btn transition duration-200 hover:-translate-y-0.5 hover:bg-turkuaz-700 focus:outline-none focus:ring-2 focus:ring-turkuaz-600 focus:ring-offset-2;
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-turkuaz-600 px-6 py-3 text-sm font-bold text-white shadow-btn transition duration-200 hover:-translate-y-0.5 hover:bg-turkuaz-700 focus:outline-none focus:ring-2 focus:ring-turkuaz-600 focus:ring-offset-2;
   }
   /* İkincil: outline pill — beyaz zemin + turkuaz-700 metin (beyazda 6.65:1,
      AA). turkuaz-500 zemin + beyaz metin 3.02:1 verdiği için kullanılmaz
      (spec §1 kontrast kuralı); dolgulu birincil butondan kenarlıkla ayrışır. */
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border border-turkuaz-600 bg-white px-6 py-3 text-sm font-bold text-turkuaz-700 shadow-btnTurkuaz transition duration-200 hover:-translate-y-0.5 hover:bg-turkuaz-50 focus:outline-none focus:ring-2 focus:ring-turkuaz-600 focus:ring-offset-2;
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-turkuaz-600 bg-white px-6 py-3 text-sm font-bold text-turkuaz-700 shadow-btnTurkuaz transition duration-200 hover:-translate-y-0.5 hover:bg-turkuaz-50 focus:outline-none focus:ring-2 focus:ring-turkuaz-600 focus:ring-offset-2;
   }
   /* Ghost: yarı saydam beyaz + kum-cizgi kenarlık. */
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border border-kum-200 bg-white/70 px-5 py-2.5 text-sm font-semibold text-murekkep-900 transition duration-200 hover:border-turkuaz-500;
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-kum-200 bg-white/70 px-5 py-2.5 text-sm font-semibold text-murekkep-900 transition duration-200 hover:border-turkuaz-500;
   }
   /* WhatsApp pill — her zaman yeşil, her zaman görünür (spec §4 header).
      Zemin koyu platform yeşili (beyaz metinle 5.02:1, AA); açık #1FAE54
      beyazla 2.90:1 verdiği için yalnız ikon/dekorda (whatsapp-brand). */
   .btn-whatsapp {
-    @apply inline-flex items-center justify-center gap-2 rounded-full bg-whatsapp px-5 py-2.5 text-sm font-bold text-white shadow-btnWa transition duration-200 hover:-translate-y-0.5 hover:bg-whatsapp-dark focus:outline-none focus:ring-2 focus:ring-whatsapp focus:ring-offset-2;
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-whatsapp px-5 py-2.5 text-sm font-bold text-white shadow-btnWa transition duration-200 hover:-translate-y-0.5 hover:bg-whatsapp-dark focus:outline-none focus:ring-2 focus:ring-whatsapp focus:ring-offset-2;
   }
   /* Kart: radius 26px, kum-cizgi kenarlık, hover'da -6px lift + gölge artışı. */
   .card {
@@ -144,11 +144,13 @@ body {
   }
   /* Koyu zemin üzerinde outline buton (hero ikincil aksiyonu). */
   .btn-outline-light {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border border-white/40 px-6 py-3 text-sm font-bold text-white transition duration-200 hover:-translate-y-0.5 hover:border-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/70;
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-white/40 px-6 py-3 text-sm font-bold text-white transition duration-200 hover:-translate-y-0.5 hover:border-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/70;
   }
-  /* Form alanları: kum zemin + kum-cizgi kenarlık, focus'ta turkuaz ring 2px. */
+  /* Form alanları: kum zemin + kum-cizgi kenarlık, focus'ta turkuaz ring 2px.
+     min-h 44px (dokunma hedefi) + mobilde 16px yazı — iOS, 16px altındaki
+     inputlara odaklanınca sayfayı zoom'lar (spec v3 mobil kuralı). */
   .input-base {
-    @apply w-full rounded-md border border-kum-200 bg-kum-50 px-3 py-2.5 text-sm text-ink placeholder:text-muted focus:border-turkuaz-500 focus:outline-none focus:ring-2 focus:ring-turkuaz-500/60;
+    @apply min-h-11 w-full rounded-md border border-kum-200 bg-kum-50 px-3 py-2.5 text-base text-ink placeholder:text-muted focus:border-turkuaz-500 focus:outline-none focus:ring-2 focus:ring-turkuaz-500/60 md:text-sm;
   }
   .label-base {
     @apply mb-1 block text-xs font-semibold uppercase tracking-wide text-muted;

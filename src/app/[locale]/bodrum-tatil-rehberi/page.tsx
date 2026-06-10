@@ -172,7 +172,7 @@ export default async function Page({
         <div className="container-page grid gap-10 lg:grid-cols-[1fr_280px]">
           <div className="min-w-0">
             {/* Answer-first opening */}
-            <div className="space-y-4 text-[15px] leading-relaxed text-ink/90">
+            <div className="space-y-4 text-base md:text-[15px] leading-relaxed text-ink/90">
               {g.intro.map((p, i) => (
                 <p key={i} data-speakable={i === 0 ? "intro" : undefined}>
                   {p}
@@ -186,7 +186,7 @@ export default async function Page({
               return (
                 <div key={s.id} id={s.id} className="mt-12 scroll-mt-24">
                   <h2>{s.heading}</h2>
-                  <div className="mt-4 space-y-4 text-[15px] leading-relaxed text-ink/90">
+                  <div className="mt-4 space-y-4 text-base md:text-[15px] leading-relaxed text-ink/90">
                     {s.body.map((p, i) => (
                       <p key={i}>{p}</p>
                     ))}

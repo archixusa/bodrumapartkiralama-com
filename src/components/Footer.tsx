@@ -166,7 +166,7 @@ export function Footer() {
                 href={`https://wa.me/${c("whatsappNumber")}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-navy-100/85 transition hover:text-turkuaz-300"
+                className="inline-flex min-h-11 items-center gap-2 text-navy-100/85 transition hover:text-turkuaz-300 md:min-h-0"
               >
                 <MessageCircle className="h-4 w-4 text-whatsapp-brand" />
                 {colLabels.whatsapp}
@@ -175,7 +175,7 @@ export function Footer() {
             <li>
               <a
                 href={`mailto:${c("email")}`}
-                className="inline-flex items-center gap-2 text-navy-100/85 transition hover:text-turkuaz-300"
+                className="inline-flex min-h-11 items-center gap-2 text-navy-100/85 transition hover:text-turkuaz-300 md:min-h-0"
               >
                 <Mail className="h-4 w-4 text-turkuaz-300" />
                 {c("email")}
@@ -184,7 +184,7 @@ export function Footer() {
             <li>
               <a
                 href={`tel:${c("phone").replace(/\s/g, "")}`}
-                className="inline-flex items-center gap-2 text-navy-100/85 transition hover:text-turkuaz-300"
+                className="inline-flex min-h-11 items-center gap-2 text-navy-100/85 transition hover:text-turkuaz-300 md:min-h-0"
               >
                 <Phone className="h-4 w-4 text-turkuaz-300" />
                 {c("phoneDisplay")}
@@ -200,7 +200,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook"
-                className="inline-flex items-center gap-2 text-navy-100/85 transition hover:text-turkuaz-300"
+                className="inline-flex min-h-11 items-center gap-2 text-navy-100/85 transition hover:text-turkuaz-300 md:min-h-0"
               >
                 <Facebook className="h-4 w-4 text-turkuaz-300" />
                 Facebook
@@ -210,7 +210,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
-                className="inline-flex items-center gap-2 text-navy-100/85 transition hover:text-turkuaz-300"
+                className="inline-flex min-h-11 items-center gap-2 text-navy-100/85 transition hover:text-turkuaz-300 md:min-h-0"
               >
                 <Instagram className="h-4 w-4 text-turkuaz-300" />
                 Instagram
@@ -259,7 +259,11 @@ function FooterLink({
 }) {
   return (
     <li>
-      <Link href={href} className="text-navy-100/85 transition hover:text-turkuaz-300">
+      {/* Mobilde ≥44px dokunma hedefi (spec v3); md+ sıkı liste korunur. */}
+      <Link
+        href={href}
+        className="inline-flex min-h-11 items-center text-navy-100/85 transition hover:text-turkuaz-300 md:min-h-0"
+      >
         {children}
       </Link>
     </li>

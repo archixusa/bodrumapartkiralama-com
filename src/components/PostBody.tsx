@@ -2,7 +2,7 @@ import type { PostSection } from "@/data/posts";
 
 export function PostBody({ sections }: { sections: PostSection[] }) {
   return (
-    <div className="space-y-4 text-[15px] leading-relaxed text-ink/90">
+    <div className="space-y-4 text-base md:text-[15px] leading-relaxed text-ink/90">
       {sections.map((s, i) => {
         switch (s.type) {
           case "p":

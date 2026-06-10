@@ -87,8 +87,8 @@ export function EmptyStateOfferBased({ locale, whatsappNumber }: Props) {
 
           <div className="flex flex-col gap-3">
             <h2 className="text-balance text-2xl md:text-3xl">{t.heading}</h2>
-            <p className="text-[15px] leading-relaxed text-muted">{t.p1}</p>
-            <p className="text-[15px] leading-relaxed text-muted">{t.p2}</p>
+            <p className="text-base md:text-[15px] leading-relaxed text-muted">{t.p1}</p>
+            <p className="text-base md:text-[15px] leading-relaxed text-muted">{t.p2}</p>
           </div>
 
           <div className="flex w-full flex-col items-center gap-3 sm:flex-row sm:justify-center">

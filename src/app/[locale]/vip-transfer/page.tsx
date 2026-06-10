@@ -404,7 +404,7 @@ export default async function Page({
 
       <section className="section">
         <div className="container-page grid gap-10 lg:grid-cols-[1fr_380px]">
-          <div className="space-y-4 text-[15px] leading-relaxed text-ink/90">
+          <div className="space-y-4 text-base md:text-[15px] leading-relaxed text-ink/90">
             <p>{t("intro1")}</p>
             <p>{t("intro2")}</p>
             <p>{t("intro3")}</p>

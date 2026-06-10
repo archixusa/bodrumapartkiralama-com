@@ -333,7 +333,7 @@ export default async function DistrictPage({
         <div className="container-page grid gap-10 lg:grid-cols-[1fr_320px]">
           <div>
             <h2>{t("aboutTitle", { district: districtName })}</h2>
-            <p className="mt-4 text-[15px] leading-relaxed text-ink/90">{longDesc}</p>
+            <p className="mt-4 text-base md:text-[15px] leading-relaxed text-ink/90">{longDesc}</p>
             <ul className="mt-6 grid gap-3 sm:grid-cols-2">
               {highlights.map((h, i) => (
                 <li key={i} className="flex items-start gap-2 rounded-md border border-[var(--color-border)] bg-white p-3 text-sm">
