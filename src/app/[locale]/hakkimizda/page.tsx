@@ -591,7 +591,7 @@ export default async function Page({
               rel="noopener noreferrer"
               className="card flex flex-col items-center gap-2 p-5"
             >
-              <MessageCircle className="h-6 w-6 text-[#25D366]" />
+              <MessageCircle className="h-6 w-6 text-whatsapp-brand" />
               <span className="text-sm font-semibold">{copy.whatsappCta}</span>
               <span className="text-xs text-muted">{c("phoneDisplay")}</span>
             </a>

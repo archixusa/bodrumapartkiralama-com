@@ -359,7 +359,7 @@ export default async function ApartlarPage({
       <section className="section">
         <div className="container-page">
           <div className="mx-auto flex max-w-3xl flex-col items-center gap-4 rounded-xl border border-[var(--color-border)] bg-white p-6 text-center md:flex-row md:text-left">
-            <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#25D366]/10 text-[#25D366]">
+            <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-whatsapp-brand/10 text-whatsapp">
               <MessageCircle className="h-6 w-6" />
             </span>
             <div className="flex-1">

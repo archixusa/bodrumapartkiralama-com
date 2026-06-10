@@ -77,7 +77,7 @@ export function ApartCard({ apt }: { apt: Apartment }) {
           </p>
           <Link
             href={`/apartlar/${apt.slug}`}
-            className="inline-flex items-center gap-1 text-sm font-bold text-turkuaz-600 transition hover:text-turkuaz-500"
+            className="inline-flex items-center gap-1 text-sm font-bold text-turkuaz-600 transition hover:text-turkuaz-700"
           >
             {t("details")} <ArrowRight className="h-4 w-4" />
           </Link>
