@@ -13,11 +13,11 @@ const RequestModal = dynamic(
 
 type L = "tr" | "en" | "de" | "ru";
 
-const LABELS: Record<L, { offer: string }> = {
-  tr: { offer: "Teklif al" },
-  en: { offer: "Get a quote" },
-  de: { offer: "Angebot erhalten" },
-  ru: { offer: "Получить предложение" },
+const LABELS: Record<L, { offer: string; wa: string }> = {
+  tr: { offer: "Teklif al", wa: "WhatsApp ile iletişime geçin" },
+  en: { offer: "Get a quote", wa: "Contact us on WhatsApp" },
+  de: { offer: "Angebot erhalten", wa: "Per WhatsApp kontaktieren" },
+  ru: { offer: "Получить предложение", wa: "Связаться в WhatsApp" },
 };
 
 /**
@@ -39,7 +39,7 @@ export function MobileStickyCta({ locale }: { locale: string }) {
             target="_blank"
             rel="noopener noreferrer"
             data-lead="sticky-bar-whatsapp"
-            aria-label="WhatsApp ile iletişime geçin"
+            aria-label={t.wa}
             className="btn-whatsapp flex-1"
             style={{ minHeight: 48 }}
           >

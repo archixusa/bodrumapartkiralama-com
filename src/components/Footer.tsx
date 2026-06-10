@@ -21,37 +21,80 @@ export function Footer() {
         ? "РАЙОНЫ"
         : "REGIONS";
 
-  const colLabels = isTr
-    ? {
-        corporate: "KURUMSAL",
-        services: "HİZMETLER",
-        help: "YARDIM",
-        contact: "İLETİŞİM",
-        ownerCta: "Evinizi Kiraya Verin",
-        cookies: "Çerez Politikası",
-        terms: "Kullanım Şartları",
-        cancel: "İptal & İade",
-        reservation: "Rezervasyon",
-        whatsapp: "WhatsApp",
-        addressLabel: "Adres",
-        emailLabel: "E-posta",
-        phoneLabel: "Telefon",
-      }
-    : {
-        corporate: "COMPANY",
-        services: "SERVICES",
-        help: "HELP",
-        contact: "CONTACT",
-        ownerCta: "List Your Property",
-        cookies: "Cookie Policy",
-        terms: "Terms of Use",
-        cancel: "Cancellation & Refund",
-        reservation: "Reservation",
-        whatsapp: "WhatsApp",
-        addressLabel: "Address",
-        emailLabel: "Email",
-        phoneLabel: "Phone",
-      };
+  // 4 dilli sözlük — eski tr/en ikili ternary de/ru'yu İngilizceye
+  // düşürüyordu (İ18N bütünlüğü; regionsLabel kalıbıyla tutarlı).
+  const COL_LABELS = {
+    tr: {
+      corporate: "KURUMSAL",
+      services: "HİZMETLER",
+      help: "YARDIM",
+      contact: "İLETİŞİM",
+      ownerCta: "Evinizi Kiraya Verin",
+      cookies: "Çerez Politikası",
+      terms: "Kullanım Şartları",
+      cancel: "İptal & İade",
+      reservation: "Rezervasyon",
+      whatsapp: "WhatsApp",
+      addressLabel: "Adres",
+      emailLabel: "E-posta",
+      phoneLabel: "Telefon",
+      faq: "Sıkça Sorulanlar",
+      tours: "Bodrum Turları",
+    },
+    en: {
+      corporate: "COMPANY",
+      services: "SERVICES",
+      help: "HELP",
+      contact: "CONTACT",
+      ownerCta: "List Your Property",
+      cookies: "Cookie Policy",
+      terms: "Terms of Use",
+      cancel: "Cancellation & Refund",
+      reservation: "Reservation",
+      whatsapp: "WhatsApp",
+      addressLabel: "Address",
+      emailLabel: "Email",
+      phoneLabel: "Phone",
+      faq: "FAQ",
+      tours: "Bodrum Tours",
+    },
+    de: {
+      corporate: "UNTERNEHMEN",
+      services: "LEISTUNGEN",
+      help: "HILFE",
+      contact: "KONTAKT",
+      ownerCta: "Immobilie vermieten",
+      cookies: "Cookie-Richtlinie",
+      terms: "Nutzungsbedingungen",
+      cancel: "Stornierung & Rückerstattung",
+      reservation: "Reservierung",
+      whatsapp: "WhatsApp",
+      addressLabel: "Adresse",
+      emailLabel: "E-Mail",
+      phoneLabel: "Telefon",
+      faq: "Häufige Fragen",
+      tours: "Bodrum-Touren",
+    },
+    ru: {
+      corporate: "КОМПАНИЯ",
+      services: "УСЛУГИ",
+      help: "ПОМОЩЬ",
+      contact: "КОНТАКТЫ",
+      ownerCta: "Сдать недвижимость",
+      cookies: "Политика cookie",
+      terms: "Условия использования",
+      cancel: "Отмена и возврат",
+      reservation: "Бронирование",
+      whatsapp: "WhatsApp",
+      addressLabel: "Адрес",
+      emailLabel: "Эл. почта",
+      phoneLabel: "Телефон",
+      faq: "Частые вопросы",
+      tours: "Туры по Бодруму",
+    },
+  } as const;
+  const colLabels =
+    COL_LABELS[locale as keyof typeof COL_LABELS] ?? COL_LABELS.en;
 
   return (
     <footer className="bg-footer text-navy-100">
@@ -101,7 +144,7 @@ export function Footer() {
             <FooterLink href="/tekne-kiralama">{`${nav("boat")} (${isTr ? "Partner" : "Partner"})`}</FooterLink>
             <FooterLink href="/arac-kiralama">{`${nav("car")} (${isTr ? "Partner" : "Partner"})`}</FooterLink>
             <FooterLink href="/vip-transfer">{`${nav("transfer")} (${isTr ? "Partner" : "Partner"})`}</FooterLink>
-            <FooterLink href="/turlar">{`${isTr ? "Bodrum Turları" : "Bodrum Tours"} (Partner)`}</FooterLink>
+            <FooterLink href="/turlar">{`${colLabels.tours} (Partner)`}</FooterLink>
           </FooterColumn>
 
           {/* Bölge sayfalarına tam set iç link — SEO + keşfedilebilirlik. */}
@@ -114,7 +157,7 @@ export function Footer() {
           </FooterColumn>
 
           <FooterColumn title={colLabels.help}>
-            <FooterLink href="/sss">{isTr ? "Sıkça Sorulanlar" : "FAQ"}</FooterLink>
+            <FooterLink href="/sss">{colLabels.faq}</FooterLink>
             <FooterLink href="/kvkk">{t("kvkk")}</FooterLink>
             <FooterLink href="/cerez-politikasi">{colLabels.cookies}</FooterLink>
             <FooterLink href="/kullanim-sartlari">{colLabels.terms}</FooterLink>
@@ -131,7 +174,7 @@ export function Footer() {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-navy-100/85 transition hover:text-turkuaz-300"
               >
-                <MessageCircle className="h-4 w-4 text-[#25D366]" />
+                <MessageCircle className="h-4 w-4 text-whatsapp-brand" />
                 {colLabels.whatsapp}
               </a>
             </li>

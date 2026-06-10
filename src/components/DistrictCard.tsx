@@ -5,10 +5,16 @@ import { Link } from "@/i18n/routing";
 import type { District } from "@/data/districts";
 import { loc } from "@/lib/i18n-data";
 
+const VIEW_LABEL: Record<string, string> = {
+  tr: "Bölgeyi gör",
+  en: "View district",
+  de: "Region ansehen",
+  ru: "Смотреть район",
+};
+
 export function DistrictCard({ district }: { district: District }) {
   const dt = useTranslations("districts");
   const locale = useLocale();
-  const isTr = locale === "tr";
 
   return (
     <Link
@@ -37,7 +43,7 @@ export function DistrictCard({ district }: { district: District }) {
           })}
         </p>
         <span className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-turkuaz-300 transition group-hover:gap-2">
-          {isTr ? "Bölgeyi gör" : "View district"}
+          {VIEW_LABEL[locale] ?? VIEW_LABEL.en}
           <ArrowRight className="h-3 w-3" />
         </span>
       </div>
