@@ -36,17 +36,51 @@ const OWNER_HERO_DEFAULT: ByLocale<OwnerHeroCopy> = {
       "We work with property owners across the Bodrum peninsula. Commission and service scope in writing, communication direct, the process transparent. Let's assess your property together.",
   },
   de: {
-    kicker: "For Property Owners",
-    title: "Transparent Rental Management for Your Bodrum Property",
+    kicker: "Für Eigentümer",
+    title: "Transparente Mietverwaltung für Ihre Immobilie in Bodrum",
     intro:
-      "We work with property owners across the Bodrum peninsula. Commission and service scope in writing, communication direct, the process transparent. Let's assess your property together.",
+      "Wir arbeiten mit Eigentümern auf der gesamten Halbinsel Bodrum. Provision und Leistungsumfang schriftlich, die Kommunikation direkt, der Prozess transparent. Lassen Sie uns Ihre Immobilie gemeinsam bewerten.",
   },
   ru: {
-    kicker: "For Property Owners",
-    title: "Transparent Rental Management for Your Bodrum Property",
+    kicker: "Владельцам недвижимости",
+    title: "Прозрачное управление арендой вашей недвижимости в Бодруме",
     intro:
-      "We work with property owners across the Bodrum peninsula. Commission and service scope in writing, communication direct, the process transparent. Let's assess your property together.",
+      "Мы работаем с владельцами по всему полуострову Бодрум. Комиссия и объём услуг — письменно, общение — напрямую, процесс — прозрачный. Давайте вместе оценим вашу недвижимость.",
   },
+};
+
+// Sayfa metadata'sı 4 dilde (spec v3 SEO: benzersiz title+description —
+// eskiden tüm locale'lerde sabit Türkçeydi).
+const OWNER_META: ByLocale<{ title: string; desc: string; ogDesc: string }> = {
+  tr: {
+    title: "Evinizi Kiraya Verin — Bodrum Apart Yönetimi",
+    desc: "Bodrum'daki mülkünüz için yönetim, pazarlama ve misafir iletişimini birlikte planlayalım. Şeffaf çalışma yapısı, doğrudan mülk sahibi iletişimi.",
+    ogDesc: "Mülk sahipleri için kira yönetimi ve yazılı, şeffaf koşullar.",
+  },
+  en: {
+    title: "List Your Property — Bodrum Apartment Management",
+    desc: "Plan management, marketing and guest communication for your Bodrum property with us. Written terms, direct owner communication.",
+    ogDesc: "Rental management for owners with written, transparent terms.",
+  },
+  de: {
+    title: "Immobilie vermieten — Apartmentverwaltung in Bodrum",
+    desc: "Verwaltung, Vermarktung und Gästekommunikation für Ihre Immobilie in Bodrum. Schriftliche Konditionen, direkter Kontakt zum Eigentümer.",
+    ogDesc: "Mietverwaltung für Eigentümer mit schriftlichen, transparenten Konditionen.",
+  },
+  ru: {
+    title: "Сдайте свою недвижимость — управление апартаментами в Бодруме",
+    desc: "Управление, продвижение и общение с гостями для вашей недвижимости в Бодруме. Письменные условия, прямой контакт с владельцем.",
+    ogDesc: "Управление арендой для владельцев: письменные и прозрачные условия.",
+  },
+};
+
+// Service JSON-LD adı 4 dilde — FAQPage/metadata zaten locale taşırken Service
+// düğümü TR-sabit kalıyordu (SEO + İ18N bütünlüğü bulgusu).
+const SERVICE_NAME: ByLocale<string> = {
+  tr: "Bodrum Mülk Kira Yönetimi",
+  en: "Bodrum Property Rental Management",
+  de: "Mietverwaltung für Immobilien in Bodrum",
+  ru: "Управление арендой недвижимости в Бодруме",
 };
 
 export async function generateMetadata({
@@ -55,15 +89,14 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
+  const m = OWNER_META[locale as keyof typeof OWNER_META] ?? OWNER_META.en;
   return {
-    title: "Evinizi Kiraya Verin — Bodrum Apart Yönetimi",
-    description:
-      "Bodrum'daki mülkünüz için yönetim, pazarlama ve misafir iletişimini birlikte planlayalım. Şeffaf çalışma yapısı, doğrudan mülk sahibi iletişimi.",
+    title: m.title,
+    description: m.desc,
     alternates: buildAlternates(locale, "/evinizi-kiraya-verin"),
     openGraph: {
-      title: "Evinizi Kiraya Verin — Bodrumapartkiralama.com",
-      description:
-        "Mülk sahipleri için profesyonel kira yönetimi ve şeffaf iletişim.",
+      title: m.title,
+      description: m.ogDesc,
       url: buildLocaleUrl(locale, "/evinizi-kiraya-verin"),
       ...defaultOgImages(locale).openGraph,
     },
@@ -85,96 +118,478 @@ export default async function Page({
     OWNER_HERO_DEFAULT;
   const hero = heroData[locale as "tr" | "en" | "de" | "ru"] ?? heroData.en;
 
-  const benefits = [
-    {
-      icon: Shield,
-      title: "Düzenli iletişim",
-      desc: "Mülk sahibiyle takvim, rezervasyon ve ödeme akışını periyodik olarak paylaşıyoruz. Süreçle ilgili her aşamayı önceden konuşuyoruz.",
+  // ── Gövde içerikleri 4 dilde — metadata (OWNER_META) 4 dilde üretilirken
+  // gövde de/ru'da İngilizceye düşüyor ve SERP dili ile sayfa dili
+  // çelişiyordu (İ18N bütünlüğü bulgusu). Hero gibi DB'ye taşınana kadar
+  // kod içi sözlük.
+  const BODY_COPY = {
+    tr: {
+      applyCta: "Başvuru Yap",
+      howCta: "Nasıl çalışıyor?",
+      benefitsKicker: "Yaklaşımımız",
+      benefitsTitle: "Mülk Sahipleriyle Çalışma Şeklimiz",
+      howKicker: "Süreç",
+      howTitle: "Nasıl Çalışıyor?",
+      howNote:
+        "Mülkün durumuna göre değişmekle birlikte, sözleşme sonrası yayına çıkış genellikle birkaç iş günü içinde tamamlanır.",
+      transKicker: "Size Özel Koşullar",
+      transTitle: "Mülkünüze Göre, Yazılı",
+      transP1:
+        "Oranı ve koşulları her mülke özel belirliyoruz; standart bir tarifeyi peşinen ilan etmiyoruz. Hizmet kapsamı ve hesap kesim sıklığı yazılı olarak paylaşılır. Pazarlama, fotoğraf çekimi ve listeleme gibi kalemlerden hangileri sözleşme kapsamında, hangileri opsiyonel — hepsi önceden konuşulur.",
+      transP2:
+        "Yalnızca gerçekleşmiş rezervasyonlardan komisyon tahakkuk eder. Mülkünüze özel oranı, değerlendirme sonrası görüşmemizde paylaşıyoruz.",
+      transCardTitle: "Örnek tabloyu birlikte hazırlayalım",
+      transCardBody:
+        "Mülkün bölge ve tipine göre fiyat aralığı, hedef misafir profili ve sezonluk doluluk tahmini önemli ölçüde değişebiliyor. Görüşme sırasında size özel bir tahmini gelir tablosu hazırlıyor ve sözleşmeyle birlikte paylaşıyoruz.",
+      transList: [
+        "Yüksek/düşük sezon fiyat aralığı önerisi",
+        "Komisyon ve hizmet kalemlerinin yazılı dökümü",
+        "Aylık hesap kesim takvimi",
+      ],
+      faqKicker: "FAQ",
+      faqTitle: "Sıkça Sorulanlar",
+      applyKicker: "Başvuru",
+      applyTitlePre: "Başlamak için ",
+      applyTitleEm: "birkaç dakika",
+      applyTitlePost: " yeterli",
+      applyBody:
+        "Form yaklaşık 3 dakika sürer. Paylaştığınız bilgiler yalnızca başvurunuzu değerlendirmek için kullanılır. Ekibimiz uygun gördüğümüz takdirde size dönüş yapar.",
+      applyList: [
+        "Mülkünüzü görmek için randevu",
+        "Yazılı komisyon anlaşması",
+        "Profesyonel fotoğraf çekimi",
+        "Yayın öncesi son onay sizde",
+      ],
+      applyReferral: "Referansla gelen mülk sahipleri için özel koşullar",
+      benefits: [
+        {
+          title: "Düzenli iletişim",
+          desc: "Mülk sahibiyle takvim, rezervasyon ve ödeme akışını periyodik olarak paylaşıyoruz. Süreçle ilgili her aşamayı önceden konuşuyoruz.",
+        },
+        {
+          title: "Misafir karşılama ve temizlik",
+          desc: "Check-in, check-out, temizlik ve günlük misafir iletişimi anlaşmalı ekibimizle yürür. Standart bir karşılama protokolümüz vardır.",
+        },
+        {
+          title: "Size özel oran",
+          desc: "Oranı ve koşulları mülkünüze özel belirliyor, değerlendirme sonrası yazılı olarak sizinle paylaşıyoruz. Yalnızca gerçekleşen rezervasyonlardan komisyon tahakkuk eder; boş günler için ek ücret talep etmiyoruz.",
+        },
+      ],
+      howItWorks: [
+        {
+          step: "01",
+          title: "Form doldurun",
+          desc: "Mülkünüzü kısaca tanıtın. Yaklaşık 5 dakika sürer.",
+        },
+        {
+          step: "02",
+          title: "İlk görüşme",
+          desc: "Başvurunuzu değerlendiririz; uygun olduğunda WhatsApp veya telefondan dönüş yaparız.",
+        },
+        {
+          step: "03",
+          title: "Yerinde inceleme",
+          desc: "Mülkünüze gelip değerlendirme yaparız. Birlikte uygun model üzerinde anlaşırız.",
+        },
+        {
+          step: "04",
+          title: "Sözleşme ve yayın",
+          desc: "Sözleşme imzalanır, fotoğraf çekimi yapılır, mülk listeye eklenir ve rezervasyonlara açılır.",
+        },
+      ],
+      faqs: [
+        {
+          q: "Komisyon nasıl belirleniyor?",
+          a: "Oranı ve koşulları her mülke özel belirliyoruz; standart bir tarifemiz yok. Değerlendirme sonrası size özel oranı sözleşme öncesinde yazılı olarak iletip teyit alıyoruz. Yalnızca gerçekleşmiş rezervasyonlardan komisyon tahakkuk eder; boş kalan günler için ücret talep etmiyoruz.",
+        },
+        {
+          q: "Ödemeler nasıl yapılır?",
+          a: "Her ay başında bir önceki ayın hesap kesim raporu hazırlanır; kapora ve kalan ödemeler tahsil edilir, komisyon düşülerek kalan tutar belirlenen iş günü içinde IBAN'ınıza havale edilir.",
+        },
+        {
+          q: "Sözleşme süresi nedir?",
+          a: "Standart anlaşma 1 yıllıktır; sezon sonunda taraflar yenileyebilir. İlk dönemde memnuniyetsizlik halinde uygulanacak çıkış koşulları sözleşmede açıkça yer alır.",
+        },
+        {
+          q: "Kendim mülkü kullanabilir miyim?",
+          a: "Tabii. Sezon dışında veya rezervasyon olmayan haftalarda mülkünüzü kişisel kullanım için ayırabilirsiniz. Takvimde işaretler ve o tarihler için rezervasyon almayız.",
+        },
+        {
+          q: "Hasar veya kayıp olursa?",
+          a: "Misafirlerden alınan depozito ile küçük hasarları karşılarız; daha büyük durumlarda misafire fatura keseriz ve durumu sizinle paylaşırız. Talep ederseniz kira sigortası seçenekleri için de yönlendirme yapabiliriz.",
+        },
+        {
+          q: "Temizlik ve bakım kim halleder?",
+          a: "Anlaşmalı temizlik ekibimiz her check-in öncesi mülkü hazırlar; çarşaf-havlu rotasyonu, küçük bakımlar (ampul değişimi, ufak tadilat) günlük operasyon kapsamındadır. Beyaz eşya veya kombi gibi büyük onarımlar için sizinle iletişime geçeriz.",
+        },
+        {
+          q: "Hangi bölgelerde çalışıyorsunuz?",
+          a: "Bodrum yarımadasında Gümbet, Turgutreis, Yalıkavak, Bitez, Ortakent, Gündoğan, Torba, Türkbükü, Akyarlar ve Gümüşlük başta olmak üzere farklı bölgelerde mülk sahipleriyle çalışıyoruz. Bölgeye göre uygun misafir profili değişebiliyor.",
+        },
+        {
+          q: "Pazarlamayı nasıl yapıyorsunuz?",
+          a: "Mülk, kendi sitemizde listelenir. Talep doğrultusunda Booking ve Airbnb gibi platformlara senkronizasyon ve Google/Instagram reklam kampanyaları planlanabilir. Pazarlama stratejisini mülke göre birlikte belirleriz.",
+        },
+      ],
     },
-    {
-      icon: Users,
-      title: "Misafir karşılama ve temizlik",
-      desc: "Check-in, check-out, temizlik ve günlük misafir iletişimi anlaşmalı ekibimizle yürür. Standart bir karşılama protokolümüz vardır.",
+    en: {
+      applyCta: "Apply Now",
+      howCta: "How does it work?",
+      benefitsKicker: "Our Approach",
+      benefitsTitle: "How We Work with Property Owners",
+      howKicker: "Process",
+      howTitle: "How Does It Work?",
+      howNote:
+        "Depending on the property, going live after the contract is usually completed within a few business days.",
+      transKicker: "Terms Specific to You",
+      transTitle: "Tailored to Your Property, in Writing",
+      transP1:
+        "We set the rate and terms for each property individually; we don't publish a flat tariff up front. Service scope and statement frequency are shared in writing. Which items — marketing, photo shoot, listing — are covered by the contract and which are optional is all agreed in advance.",
+      transP2:
+        "Commission accrues only on realised bookings. We share your property's specific rate in our meeting after the assessment.",
+      transCardTitle: "Let's prepare a sample table together",
+      transCardBody:
+        "Price range, target guest profile and seasonal occupancy estimates vary considerably by area and property type. During the meeting we prepare an income estimate specific to your property and share it together with the contract.",
+      transList: [
+        "High/low season price range suggestion",
+        "Written breakdown of commission and service items",
+        "Monthly statement schedule",
+      ],
+      faqKicker: "FAQ",
+      faqTitle: "Frequently Asked Questions",
+      applyKicker: "Application",
+      applyTitlePre: "",
+      applyTitleEm: "A few minutes",
+      applyTitlePost: " is all it takes to get started",
+      applyBody:
+        "The form takes about 3 minutes. The details you share are used only to assess your application. Our team gets back to you when there's a good fit.",
+      applyList: [
+        "An appointment to view your property",
+        "Written commission agreement",
+        "Professional photo shoot",
+        "Final approval stays with you before going live",
+      ],
+      applyReferral: "Special terms for owners who come via referral",
+      benefits: [
+        {
+          title: "Regular communication",
+          desc: "We share the calendar, reservations and payment flow with you on a regular schedule, and talk through every stage of the process in advance.",
+        },
+        {
+          title: "Guest welcome and cleaning",
+          desc: "Check-in, check-out, cleaning and day-to-day guest communication are handled by our contracted team, following a standard welcome protocol.",
+        },
+        {
+          title: "A rate specific to you",
+          desc: "We set the rate and terms for your property individually and share them with you in writing after the assessment. Commission accrues only on realised bookings; we don't charge for vacant days.",
+        },
+      ],
+      howItWorks: [
+        {
+          step: "01",
+          title: "Fill in the form",
+          desc: "Briefly introduce your property. It takes about 5 minutes.",
+        },
+        {
+          step: "02",
+          title: "First call",
+          desc: "We review your application and get back to you on WhatsApp or by phone when it's a good fit.",
+        },
+        {
+          step: "03",
+          title: "On-site visit",
+          desc: "We visit and assess your property, and agree on the right model together.",
+        },
+        {
+          step: "04",
+          title: "Contract and listing",
+          desc: "The contract is signed, photos are taken, and your property is listed and opened to bookings.",
+        },
+      ],
+      faqs: [
+        {
+          q: "How is the commission set?",
+          a: "We set the rate and terms for each property individually; there is no flat tariff. After the assessment we send your specific rate in writing before the contract and confirm it with you. Commission accrues only on realised bookings; vacant days are never charged.",
+        },
+        {
+          q: "How are payments made?",
+          a: "At the start of each month we prepare the statement for the previous month; deposits and remaining payments are collected, commission is deducted and the balance is transferred to your IBAN within the agreed business days.",
+        },
+        {
+          q: "How long is the contract?",
+          a: "The standard agreement runs for 1 year and can be renewed at the end of the season. Exit terms for the initial period are stated clearly in the contract.",
+        },
+        {
+          q: "Can I use the property myself?",
+          a: "Of course. You can reserve your property for personal use off-season or in weeks without bookings. We mark the calendar and take no reservations for those dates.",
+        },
+        {
+          q: "What about damage or loss?",
+          a: "Minor damage is covered by the deposit collected from guests; for larger cases we invoice the guest and keep you informed. On request we can also point you to rental insurance options.",
+        },
+        {
+          q: "Who handles cleaning and maintenance?",
+          a: "Our contracted cleaning team prepares the property before every check-in; linen and towel rotation and small fixes (bulb changes, minor repairs) are part of daily operations. For major repairs such as appliances or the boiler we contact you first.",
+        },
+        {
+          q: "Which areas do you cover?",
+          a: "We work with owners across the Bodrum peninsula — Gümbet, Turgutreis, Yalıkavak, Bitez, Ortakent, Gündoğan, Torba, Türkbükü, Akyarlar and Gümüşlük among others. The right guest profile can vary by area.",
+        },
+        {
+          q: "How do you market the property?",
+          a: "Your property is listed on our own site. On request we can plan synchronisation with platforms like Booking and Airbnb, plus Google/Instagram ad campaigns. We shape the marketing strategy together, per property.",
+        },
+      ],
     },
-    {
-      icon: TrendingUp,
-      title: "Size özel oran",
-      desc: "Oranı ve koşulları mülkünüze özel belirliyor, değerlendirme sonrası yazılı olarak sizinle paylaşıyoruz. Yalnızca gerçekleşen rezervasyonlardan komisyon tahakkuk eder; boş günler için ek ücret talep etmiyoruz.",
+    de: {
+      applyCta: "Jetzt bewerben",
+      howCta: "Wie funktioniert es?",
+      benefitsKicker: "Unser Ansatz",
+      benefitsTitle: "So arbeiten wir mit Eigentümern",
+      howKicker: "Ablauf",
+      howTitle: "Wie funktioniert es?",
+      howNote:
+        "Je nach Objekt ist die Veröffentlichung nach Vertragsabschluss in der Regel innerhalb weniger Werktage abgeschlossen.",
+      transKicker: "Konditionen speziell für Sie",
+      transTitle: "Auf Ihre Immobilie zugeschnitten, schriftlich",
+      transP1:
+        "Provision und Konditionen legen wir für jede Immobilie individuell fest; einen pauschalen Tarif veröffentlichen wir nicht im Voraus. Leistungsumfang und Abrechnungsrhythmus werden schriftlich festgehalten. Welche Posten — Vermarktung, Fotoshooting, Inserat — im Vertrag enthalten und welche optional sind, wird vorab besprochen.",
+      transP2:
+        "Provision fällt nur für tatsächlich realisierte Buchungen an. Den konkreten Satz für Ihre Immobilie teilen wir Ihnen im Gespräch nach der Besichtigung mit.",
+      transCardTitle: "Erstellen wir gemeinsam eine Beispielrechnung",
+      transCardBody:
+        "Preisspanne, Gästeprofil und saisonale Auslastung variieren je nach Lage und Objekttyp erheblich. Im Gespräch erstellen wir eine Ertragsschätzung speziell für Ihre Immobilie und übergeben sie zusammen mit dem Vertrag.",
+      transList: [
+        "Preisvorschlag für Haupt- und Nebensaison",
+        "Schriftliche Aufstellung von Provision und Leistungen",
+        "Monatlicher Abrechnungskalender",
+      ],
+      faqKicker: "FAQ",
+      faqTitle: "Häufige Fragen",
+      applyKicker: "Bewerbung",
+      applyTitlePre: "",
+      applyTitleEm: "Wenige Minuten",
+      applyTitlePost: " genügen für den Start",
+      applyBody:
+        "Das Formular dauert etwa 3 Minuten. Ihre Angaben verwenden wir ausschließlich zur Prüfung Ihrer Bewerbung. Bei einer passenden Immobilie melden wir uns bei Ihnen.",
+      applyList: [
+        "Termin zur Besichtigung Ihrer Immobilie",
+        "Schriftliche Provisionsvereinbarung",
+        "Professionelles Fotoshooting",
+        "Die letzte Freigabe vor Veröffentlichung liegt bei Ihnen",
+      ],
+      applyReferral: "Sonderkonditionen für Eigentümer auf Empfehlung",
+      benefits: [
+        {
+          title: "Regelmäßige Kommunikation",
+          desc: "Kalender, Buchungen und Zahlungsflüsse teilen wir regelmäßig mit Ihnen und besprechen jeden Schritt des Prozesses im Voraus.",
+        },
+        {
+          title: "Gästeempfang und Reinigung",
+          desc: "Check-in, Check-out, Reinigung und die tägliche Gästekommunikation übernimmt unser Partnerteam nach einem festen Empfangsprotokoll.",
+        },
+        {
+          title: "Ihr individueller Satz",
+          desc: "Provision und Konditionen legen wir individuell für Ihre Immobilie fest und teilen sie Ihnen nach der Besichtigung schriftlich mit. Provision fällt nur für realisierte Buchungen an; für leerstehende Tage berechnen wir nichts.",
+        },
+      ],
+      howItWorks: [
+        {
+          step: "01",
+          title: "Formular ausfüllen",
+          desc: "Stellen Sie Ihre Immobilie kurz vor. Dauert etwa 5 Minuten.",
+        },
+        {
+          step: "02",
+          title: "Erstes Gespräch",
+          desc: "Wir prüfen Ihre Bewerbung und melden uns bei passender Gelegenheit per WhatsApp oder Telefon.",
+        },
+        {
+          step: "03",
+          title: "Besichtigung vor Ort",
+          desc: "Wir besuchen und bewerten Ihre Immobilie und einigen uns gemeinsam auf das passende Modell.",
+        },
+        {
+          step: "04",
+          title: "Vertrag und Veröffentlichung",
+          desc: "Der Vertrag wird unterzeichnet, Fotos werden gemacht, Ihre Immobilie wird gelistet und für Buchungen freigeschaltet.",
+        },
+      ],
+      faqs: [
+        {
+          q: "Wie wird die Provision festgelegt?",
+          a: "Provision und Konditionen legen wir für jede Immobilie individuell fest; einen Pauschaltarif gibt es nicht. Nach der Besichtigung erhalten Sie Ihren Satz vor Vertragsabschluss schriftlich zur Bestätigung. Provision fällt nur für realisierte Buchungen an; leerstehende Tage werden nicht berechnet.",
+        },
+        {
+          q: "Wie erfolgen die Zahlungen?",
+          a: "Zu Monatsbeginn erstellen wir die Abrechnung des Vormonats; Anzahlungen und Restzahlungen werden eingezogen, die Provision wird abgezogen und der Restbetrag innerhalb der vereinbarten Werktage auf Ihre IBAN überwiesen.",
+        },
+        {
+          q: "Wie lange läuft der Vertrag?",
+          a: "Die Standardvereinbarung läuft 1 Jahr und kann zum Saisonende verlängert werden. Die Ausstiegsbedingungen für die Anfangsphase sind im Vertrag klar geregelt.",
+        },
+        {
+          q: "Kann ich die Immobilie selbst nutzen?",
+          a: "Natürlich. Außerhalb der Saison oder in buchungsfreien Wochen können Sie Ihre Immobilie für den Eigenbedarf reservieren. Wir markieren den Kalender und nehmen für diese Termine keine Buchungen an.",
+        },
+        {
+          q: "Was passiert bei Schäden oder Verlust?",
+          a: "Kleinere Schäden decken wir über die Kaution der Gäste ab; in größeren Fällen stellen wir dem Gast die Kosten in Rechnung und informieren Sie. Auf Wunsch nennen wir Ihnen auch Optionen für eine Mietversicherung.",
+        },
+        {
+          q: "Wer übernimmt Reinigung und Wartung?",
+          a: "Unser Partnerteam bereitet die Immobilie vor jedem Check-in vor; Wäsche- und Handtuchrotation sowie kleine Reparaturen (Glühbirnen, Kleinigkeiten) gehören zum Tagesgeschäft. Bei größeren Reparaturen wie Haushaltsgeräten oder Heizung kontaktieren wir zuerst Sie.",
+        },
+        {
+          q: "In welchen Regionen sind Sie tätig?",
+          a: "Wir arbeiten mit Eigentümern auf der gesamten Halbinsel Bodrum — unter anderem in Gümbet, Turgutreis, Yalıkavak, Bitez, Ortakent, Gündoğan, Torba, Türkbükü, Akyarlar und Gümüşlük. Das passende Gästeprofil kann je nach Region variieren.",
+        },
+        {
+          q: "Wie vermarkten Sie die Immobilie?",
+          a: "Ihre Immobilie wird auf unserer eigenen Website gelistet. Auf Wunsch planen wir die Synchronisierung mit Plattformen wie Booking und Airbnb sowie Google-/Instagram-Kampagnen. Die Vermarktungsstrategie legen wir gemeinsam und objektbezogen fest.",
+        },
+      ],
     },
-  ];
-
-  const howItWorks = [
-    {
-      step: "01",
-      title: "Form doldurun",
-      desc: "Mülkünüzü kısaca tanıtın. Yaklaşık 5 dakika sürer.",
+    ru: {
+      applyCta: "Подать заявку",
+      howCta: "Как это работает?",
+      benefitsKicker: "Наш подход",
+      benefitsTitle: "Как мы работаем с владельцами",
+      howKicker: "Процесс",
+      howTitle: "Как это работает?",
+      howNote:
+        "В зависимости от объекта публикация после подписания договора обычно занимает несколько рабочих дней.",
+      transKicker: "Условия именно для вас",
+      transTitle: "Индивидуально для вашего объекта, письменно",
+      transP1:
+        "Ставку и условия мы определяем индивидуально для каждого объекта; единого тарифа заранее не публикуем. Объём услуг и периодичность отчётов фиксируются письменно. Какие позиции — маркетинг, фотосъёмка, размещение — входят в договор, а какие опциональны, обсуждается заранее.",
+      transP2:
+        "Комиссия начисляется только с состоявшихся бронирований. Конкретную ставку для вашего объекта мы озвучиваем на встрече после оценки.",
+      transCardTitle: "Подготовим примерный расчёт вместе",
+      transCardBody:
+        "Диапазон цен, профиль гостей и сезонная загрузка заметно различаются в зависимости от района и типа объекта. На встрече мы готовим прогноз дохода именно для вашего объекта и передаём его вместе с договором.",
+      transList: [
+        "Рекомендация цен на высокий и низкий сезон",
+        "Письменная расшифровка комиссии и услуг",
+        "График ежемесячных отчётов",
+      ],
+      faqKicker: "FAQ",
+      faqTitle: "Частые вопросы",
+      applyKicker: "Заявка",
+      applyTitlePre: "Чтобы начать, достаточно ",
+      applyTitleEm: "нескольких минут",
+      applyTitlePost: "",
+      applyBody:
+        "Заполнение формы занимает около 3 минут. Указанные данные используются только для рассмотрения заявки. Если объект нам подходит, мы свяжемся с вами.",
+      applyList: [
+        "Встреча для осмотра вашего объекта",
+        "Письменное соглашение о комиссии",
+        "Профессиональная фотосъёмка",
+        "Финальное одобрение перед публикацией — за вами",
+      ],
+      applyReferral: "Особые условия для владельцев по рекомендации",
+      benefits: [
+        {
+          title: "Регулярная связь",
+          desc: "Мы регулярно делимся с вами календарём, бронированиями и движением платежей и заранее обсуждаем каждый этап работы.",
+        },
+        {
+          title: "Встреча гостей и уборка",
+          desc: "Заезд, выезд, уборку и ежедневное общение с гостями ведёт наша партнёрская команда по единому протоколу приёма.",
+        },
+        {
+          title: "Индивидуальная ставка",
+          desc: "Ставку и условия мы определяем индивидуально для вашего объекта и после оценки передаём вам письменно. Комиссия начисляется только с состоявшихся бронирований; за свободные дни мы ничего не берём.",
+        },
+      ],
+      howItWorks: [
+        {
+          step: "01",
+          title: "Заполните форму",
+          desc: "Коротко расскажите о своём объекте. Это займёт около 5 минут.",
+        },
+        {
+          step: "02",
+          title: "Первый разговор",
+          desc: "Мы рассматриваем заявку и при подходящем варианте связываемся с вами в WhatsApp или по телефону.",
+        },
+        {
+          step: "03",
+          title: "Осмотр на месте",
+          desc: "Мы приезжаем, оцениваем объект и вместе согласуем подходящую модель работы.",
+        },
+        {
+          step: "04",
+          title: "Договор и публикация",
+          desc: "Подписывается договор, проводится фотосъёмка, объект добавляется в каталог и открывается для бронирований.",
+        },
+      ],
+      faqs: [
+        {
+          q: "Как определяется комиссия?",
+          a: "Ставку и условия мы определяем индивидуально для каждого объекта; единого тарифа нет. После оценки мы письменно сообщаем вашу ставку до подписания договора и подтверждаем её с вами. Комиссия начисляется только с состоявшихся бронирований; свободные дни не оплачиваются.",
+        },
+        {
+          q: "Как происходят выплаты?",
+          a: "В начале каждого месяца готовится отчёт за предыдущий месяц; предоплаты и остатки собираются, комиссия удерживается, а остаток в оговорённые рабочие дни переводится на ваш IBAN.",
+        },
+        {
+          q: "Каков срок договора?",
+          a: "Стандартное соглашение заключается на 1 год и может продлеваться по окончании сезона. Условия выхода в начальный период чётко прописаны в договоре.",
+        },
+        {
+          q: "Могу ли я сам пользоваться объектом?",
+          a: "Конечно. Вне сезона или в недели без бронирований вы можете зарезервировать объект для себя. Мы отмечаем это в календаре и не принимаем бронирования на эти даты.",
+        },
+        {
+          q: "Что делать при ущербе или пропаже?",
+          a: "Мелкий ущерб покрывается депозитом, который вносят гости; в более серьёзных случаях мы выставляем счёт гостю и держим вас в курсе. По запросу подскажем варианты страхования аренды.",
+        },
+        {
+          q: "Кто занимается уборкой и обслуживанием?",
+          a: "Наша партнёрская команда готовит объект перед каждым заездом; смена белья и полотенец и мелкий ремонт (замена лампочек и т. п.) входят в ежедневную работу. По крупному ремонту — бытовая техника, котёл — мы сначала связываемся с вами.",
+        },
+        {
+          q: "В каких районах вы работаете?",
+          a: "Мы работаем с владельцами по всему полуострову Бодрум — в том числе в Гюмбете, Тургутреисе, Ялыкаваке, Битезе, Ортакенте, Гюндогане, Торбе, Тюркбюкю, Акьярларе и Гюмюшлюке. Подходящий профиль гостей зависит от района.",
+        },
+        {
+          q: "Как вы продвигаете объект?",
+          a: "Объект размещается на нашем сайте. По запросу возможна синхронизация с платформами Booking и Airbnb, а также рекламные кампании в Google и Instagram. Маркетинговую стратегию мы определяем вместе, под конкретный объект.",
+        },
+      ],
     },
-    {
-      step: "02",
-      title: "İlk görüşme",
-      desc: "Başvurunuzu değerlendiririz; uygun olduğunda WhatsApp veya telefondan dönüş yaparız.",
-    },
-    {
-      step: "03",
-      title: "Yerinde inceleme",
-      desc: "Mülkünüze gelip değerlendirme yaparız. Birlikte uygun model üzerinde anlaşırız.",
-    },
-    {
-      step: "04",
-      title: "Sözleşme ve yayın",
-      desc: "Sözleşme imzalanır, fotoğraf çekimi yapılır, mülk listeye eklenir ve rezervasyonlara açılır.",
-    },
-  ];
-
-  const faqs = [
-    {
-      q: "Komisyon nasıl belirleniyor?",
-      a: "Oranı ve koşulları her mülke özel belirliyoruz; standart bir tarifemiz yok. Değerlendirme sonrası size özel oranı sözleşme öncesinde yazılı olarak iletip teyit alıyoruz. Yalnızca gerçekleşmiş rezervasyonlardan komisyon tahakkuk eder; boş kalan günler için ücret talep etmiyoruz.",
-    },
-    {
-      q: "Ödemeler nasıl yapılır?",
-      a: "Her ay başında bir önceki ayın hesap kesim raporu hazırlanır; kapora ve kalan ödemeler tahsil edilir, komisyon düşülerek kalan tutar belirlenen iş günü içinde IBAN'ınıza havale edilir.",
-    },
-    {
-      q: "Sözleşme süresi nedir?",
-      a: "Standart anlaşma 1 yıllıktır; sezon sonunda taraflar yenileyebilir. İlk dönemde memnuniyetsizlik halinde uygulanacak çıkış koşulları sözleşmede açıkça yer alır.",
-    },
-    {
-      q: "Kendim mülkü kullanabilir miyim?",
-      a: "Tabii. Sezon dışında veya rezervasyon olmayan haftalarda mülkünüzü kişisel kullanım için ayırabilirsiniz. Takvimde işaretler ve o tarihler için rezervasyon almayız.",
-    },
-    {
-      q: "Hasar veya kayıp olursa?",
-      a: "Misafirlerden alınan depozito ile küçük hasarları karşılarız; daha büyük durumlarda misafire fatura keseriz ve durumu sizinle paylaşırız. Talep ederseniz kira sigortası seçenekleri için de yönlendirme yapabiliriz.",
-    },
-    {
-      q: "Temizlik ve bakım kim halleder?",
-      a: "Anlaşmalı temizlik ekibimiz her check-in öncesi mülkü hazırlar; çarşaf-havlu rotasyonu, küçük bakımlar (ampul değişimi, ufak tadilat) günlük operasyon kapsamındadır. Beyaz eşya veya kombi gibi büyük onarımlar için sizinle iletişime geçeriz.",
-    },
-    {
-      q: "Hangi bölgelerde çalışıyorsunuz?",
-      a: "Bodrum yarımadasında Gümbet, Turgutreis, Yalıkavak, Bitez, Ortakent, Gündoğan, Torba, Türkbükü, Akyarlar ve Gümüşlük başta olmak üzere farklı bölgelerde mülk sahipleriyle çalışıyoruz. Bölgeye göre uygun misafir profili değişebiliyor.",
-    },
-    {
-      q: "Pazarlamayı nasıl yapıyorsunuz?",
-      a: "Mülk, kendi sitemizde listelenir. Talep doğrultusunda Booking ve Airbnb gibi platformlara senkronizasyon ve Google/Instagram reklam kampanyaları planlanabilir. Pazarlama stratejisini mülke göre birlikte belirleriz.",
-    },
-  ];
+  } as const;
+  const pc =
+    BODY_COPY[locale as keyof typeof BODY_COPY] ?? BODY_COPY.en;
+  const BENEFIT_ICONS = [Shield, Users, TrendingUp] as const;
+  const benefits = pc.benefits.map((b, i) => ({
+    ...b,
+    icon: BENEFIT_ICONS[i] ?? Shield,
+  }));
+  const howItWorks = pc.howItWorks;
+  const faqs = pc.faqs;
 
   const jsonLd = [
     {
       "@context": "https://schema.org",
       "@type": "Service",
-      name: "Bodrum Mülk Kira Yönetimi",
-      provider: { "@type": "LodgingBusiness", name: "Bodrumapartkiralama.com" },
+      name: SERVICE_NAME[locale as keyof typeof SERVICE_NAME] ?? SERVICE_NAME.en,
+      // İkinci bir işletme varlığı açmak yerine layout'taki tekil Organization
+      // düğümüne referans veriyoruz (tekilleştirme deseni).
+      provider: { "@id": `${SITE_URL}/#organization` },
       areaServed: "Bodrum, Muğla, TR",
+      inLanguage: locale,
       description:
-        "Bodrum yarımadasındaki apart ve daireler için kira yönetimi, misafir iletişimi ve pazarlama.",
-      url: `${SITE_URL}/evinizi-kiraya-verin`,
+        (OWNER_META[locale as keyof typeof OWNER_META] ?? OWNER_META.en).desc,
+      url: buildLocaleUrl(locale, "/evinizi-kiraya-verin"),
     },
     {
       "@context": "https://schema.org",
       "@type": "FAQPage",
+      // Soru-cevaplar sayfa dilinde üretiliyor — şemadaki dil beyanı da
+      // aynı locale'i taşır (SERP dili / sayfa dili tutarlılığı).
+      inLanguage: locale,
       mainEntity: faqs.map((f) => ({
         "@type": "Question",
         name: f.q,
@@ -193,28 +608,30 @@ export default async function Page({
       {/* HERO */}
       <section className="relative overflow-hidden bg-navy-900 text-white">
         <div className="absolute inset-0 bg-hero-gradient" />
+        {/* Dekor radyalleri — v2 paleti: turkuaz tonları (eski #3FB2C2/#FF8A3D
+            turuncu kalıntıları spec dışıydı). */}
         <div
           aria-hidden
           className="absolute inset-0 opacity-30"
           style={{
             backgroundImage:
-              "radial-gradient(circle at 20% 30%, #3FB2C2 0%, transparent 50%), radial-gradient(circle at 80% 70%, #FF8A3D 0%, transparent 45%)",
+              "radial-gradient(circle at 20% 30%, #34C8C4 0%, transparent 50%), radial-gradient(circle at 80% 70%, #0EA5A5 0%, transparent 45%)",
           }}
         />
         <div className="container-page relative py-20 md:py-28 lg:py-32">
           <div className="mx-auto max-w-3xl text-center">
             <span className="kicker-light">{hero.kicker}</span>
             <h1 className="mt-6 font-display text-white">{hero.title}</h1>
-            <span className="mx-auto mt-6 block h-px w-16 bg-accent-400" />
+            <span className="mx-auto mt-6 block h-px w-16 bg-turkuaz-300" />
             <p className="mt-6 text-base text-white/85 md:text-lg">
               {hero.intro}
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <a href="#basvur" className="btn-primary">
-                Başvuru Yap <ChevronRight className="h-4 w-4" />
+                {pc.applyCta} <ChevronRight className="h-4 w-4" />
               </a>
               <a href="#nasil-calisiyor" className="btn-outline-light">
-                Nasıl çalışıyor?
+                {pc.howCta}
               </a>
             </div>
           </div>
@@ -225,8 +642,8 @@ export default async function Page({
       <section className="section">
         <div className="container-page">
           <div className="mx-auto max-w-2xl text-center">
-            <span className="kicker">Yaklaşımımız</span>
-            <h2 className="mt-4">Mülk Sahipleriyle Çalışma Şeklimiz</h2>
+            <span className="kicker">{pc.benefitsKicker}</span>
+            <h2 className="mt-4">{pc.benefitsTitle}</h2>
             <span className="divider-accent mt-5 block" />
           </div>
           <div className="mt-14 grid gap-6 md:grid-cols-3">
@@ -250,13 +667,10 @@ export default async function Page({
       <section id="nasil-calisiyor" className="section section-soft">
         <div className="container-page">
           <div className="mx-auto max-w-2xl text-center">
-            <span className="kicker">Süreç</span>
-            <h2 className="mt-4">Nasıl Çalışıyor?</h2>
+            <span className="kicker">{pc.howKicker}</span>
+            <h2 className="mt-4">{pc.howTitle}</h2>
             <span className="divider-accent mt-5 block" />
-            <p className="mt-5 text-muted">
-              Mülkün durumuna göre değişmekle birlikte, sözleşme sonrası
-              yayına çıkış genellikle birkaç iş günü içinde tamamlanır.
-            </p>
+            <p className="mt-5 text-muted">{pc.howNote}</p>
           </div>
           <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {howItWorks.map((s) => (
@@ -276,42 +690,21 @@ export default async function Page({
       <section className="section">
         <div className="container-page grid gap-10 lg:grid-cols-2 lg:items-center">
           <div>
-            <span className="kicker">Size Özel Koşullar</span>
-            <h2 className="mt-4">Mülkünüze Göre, Yazılı</h2>
-            <p className="mt-5 text-muted">
-              Oranı ve koşulları her mülke özel belirliyoruz; standart bir
-              tarifeyi peşinen ilan etmiyoruz. Hizmet kapsamı ve hesap kesim
-              sıklığı yazılı olarak paylaşılır. Pazarlama, fotoğraf çekimi ve
-              listeleme gibi kalemlerden hangileri sözleşme kapsamında,
-              hangileri opsiyonel — hepsi önceden konuşulur.
-            </p>
-            <p className="mt-3 text-muted">
-              Yalnızca gerçekleşmiş rezervasyonlardan komisyon tahakkuk eder.
-              Mülkünüze özel oranı, değerlendirme sonrası görüşmemizde
-              paylaşıyoruz.
-            </p>
+            <span className="kicker">{pc.transKicker}</span>
+            <h2 className="mt-4">{pc.transTitle}</h2>
+            <p className="mt-5 text-muted">{pc.transP1}</p>
+            <p className="mt-3 text-muted">{pc.transP2}</p>
           </div>
           <div className="card p-7">
-            <h3 className="text-lg">Örnek tabloyu birlikte hazırlayalım</h3>
-            <p className="mt-3 text-sm text-muted">
-              Mülkün bölge ve tipine göre fiyat aralığı, hedef misafir profili
-              ve sezonluk doluluk tahmini önemli ölçüde değişebiliyor. Görüşme
-              sırasında size özel bir tahmini gelir tablosu hazırlıyor ve
-              sözleşmeyle birlikte paylaşıyoruz.
-            </p>
+            <h3 className="text-lg">{pc.transCardTitle}</h3>
+            <p className="mt-3 text-sm text-muted">{pc.transCardBody}</p>
             <ul className="mt-4 space-y-2 text-sm text-muted">
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-success" />
-                Yüksek/düşük sezon fiyat aralığı önerisi
-              </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-success" />
-                Komisyon ve hizmet kalemlerinin yazılı dökümü
-              </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-success" />
-                Aylık hesap kesim takvimi
-              </li>
+              {pc.transList.map((it) => (
+                <li key={it} className="flex items-start gap-2">
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-success" />
+                  {it}
+                </li>
+              ))}
             </ul>
           </div>
         </div>
@@ -321,8 +714,8 @@ export default async function Page({
       <section className="section section-soft">
         <div className="container-page max-w-3xl">
           <div className="text-center">
-            <span className="kicker">FAQ</span>
-            <h2 className="mt-4">Sıkça Sorulanlar</h2>
+            <span className="kicker">{pc.faqKicker}</span>
+            <h2 className="mt-4">{pc.faqTitle}</h2>
             <span className="divider-accent mt-5 block" />
           </div>
           <div className="mt-12 divide-y divide-[var(--color-border)] rounded-2xl border border-[var(--color-border)] bg-white">
@@ -339,45 +732,37 @@ export default async function Page({
         </div>
       </section>
 
-      {/* APPLICATION FORM */}
+      {/* APPLICATION FORM — koyu bant (.section-deep = footer-bg zemin;
+          eskiden sınıf tanımsızdı ve beyaz metin krem zeminde görünmezdi). */}
       <section id="basvur" className="section section-deep relative overflow-hidden">
         <div
           aria-hidden
           className="absolute inset-0 opacity-15"
           style={{
             backgroundImage:
-              "radial-gradient(circle at 70% 50%, #FF8A3D 0%, transparent 50%)",
+              "radial-gradient(circle at 70% 50%, #34C8C4 0%, transparent 50%)",
           }}
         />
         <div className="container-page relative grid gap-10 lg:grid-cols-2 lg:items-center">
           <div>
-            <span className="kicker-light">Başvuru</span>
+            <span className="kicker-light">{pc.applyKicker}</span>
             <h2 className="mt-4 text-white">
-              Başlamak için <span className="font-display italic text-accent-400">birkaç dakika</span> yeterli
+              {pc.applyTitlePre}
+              <span className="font-display text-turkuaz-300">{pc.applyTitleEm}</span>
+              {pc.applyTitlePost}
             </h2>
-            <p className="mt-5 text-white/85">
-              Form yaklaşık 3 dakika sürer. Paylaştığınız bilgiler yalnızca
-              başvurunuzu değerlendirmek için kullanılır. Ekibimiz uygun
-              gördüğümüz takdirde size dönüş yapar.
-            </p>
+            <p className="mt-5 text-white/85">{pc.applyBody}</p>
             <ul className="mt-8 space-y-3 text-sm text-white/85">
-              {[
-                "Mülkünüzü görmek için randevu",
-                "Yazılı komisyon anlaşması",
-                "Profesyonel fotoğraf çekimi",
-                "Yayın öncesi son onay sizde",
-              ].map((it) => (
+              {pc.applyList.map((it) => (
                 <li key={it} className="flex items-center gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-accent-400" />
+                  <CheckCircle2 className="h-5 w-5 text-turkuaz-300" />
                   {it}
                 </li>
               ))}
             </ul>
             <div className="mt-10 flex items-center gap-3">
-              <Sparkles className="h-5 w-5 text-accent-400" />
-              <p className="text-sm text-white/85">
-                Referansla gelen mülk sahipleri için özel koşullar
-              </p>
+              <Sparkles className="h-5 w-5 text-turkuaz-300" />
+              <p className="text-sm text-white/85">{pc.applyReferral}</p>
             </div>
           </div>
           <OwnerApplicationForm

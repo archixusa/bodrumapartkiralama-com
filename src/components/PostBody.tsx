@@ -2,7 +2,7 @@ import type { PostSection } from "@/data/posts";
 
 export function PostBody({ sections }: { sections: PostSection[] }) {
   return (
-    <div className="space-y-4 text-[15px] leading-relaxed text-ink/90">
+    <div className="space-y-4 text-base md:text-[15px] leading-relaxed text-ink/90">
       {sections.map((s, i) => {
         switch (s.type) {
           case "p":
@@ -39,7 +39,7 @@ export function PostBody({ sections }: { sections: PostSection[] }) {
             return (
               <blockquote
                 key={i}
-                className="my-6 rounded-md border-l-4 border-accent-400 bg-navy-50 px-5 py-4 text-base font-medium italic text-navy-900"
+                className="my-6 rounded-md border-l-4 border-turkuaz-500 bg-navy-50 px-5 py-4 text-base font-medium italic text-navy-900"
               >
                 {s.text}
               </blockquote>

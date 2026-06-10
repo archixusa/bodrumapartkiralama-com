@@ -63,6 +63,19 @@ export function MdxBody({ source }: { source: string }) {
             <strong className="font-semibold text-navy-900">{children}</strong>
           ),
           hr: () => <hr className="my-8 border-[var(--color-border)]" />,
+          // Markdown gövdesindeki görseller: ekran-altı oldukları için lazy +
+          // async decode; w-full + h-auto ile orantı korunur (spec v3 görsel
+          // performans — ham <img> kuralı).
+          img: ({ src, alt }) => (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={typeof src === "string" ? src : undefined}
+              alt={alt ?? ""}
+              loading="lazy"
+              decoding="async"
+              className="mt-4 h-auto w-full rounded-lg"
+            />
+          ),
         }}
       >
         {source}

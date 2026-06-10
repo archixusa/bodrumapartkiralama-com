@@ -53,20 +53,22 @@ export function RelatedGuides({
   });
 
   return (
-    <div className="mt-10 rounded-2xl border border-[var(--color-border)] bg-navy-50/40 p-5 sm:p-6">
+    <div className="mt-10 rounded-xl border border-kum-200 bg-turkuaz-50 p-5 sm:p-6">
       <p className="mb-4 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-muted">
-        <Compass className="h-4 w-4 text-navy-600" />
+        <Compass className="h-4 w-4 text-turkuaz-600" />
         {TITLE[pick]}
       </p>
-      <ul className="grid gap-2 sm:grid-cols-2">
+      {/* Rehber kartları — kum-cizgi kenarlıklı beyaz mini kartlar, hover'da
+          -2px lift + turkuaz kenarlık (spec §5 mikro etkileşim). */}
+      <ul className="grid gap-3 sm:grid-cols-2">
         {all.map((l) => (
           <li key={l.href}>
             <Link
               href={l.href}
-              className="group inline-flex items-center gap-1.5 text-sm font-medium text-navy-700 transition hover:text-navy-900"
+              className="group flex items-center justify-between gap-2 rounded-lg border border-kum-200 bg-white px-4 py-3 text-sm font-semibold text-murekkep-900 shadow-card transition duration-200 ease-akdeniz hover:-translate-y-0.5 hover:border-turkuaz-500 hover:text-turkuaz-600 hover:shadow-cardHover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-turkuaz-600 focus-visible:ring-offset-2"
             >
-              <ArrowRight className="h-3.5 w-3.5 text-navy-500 transition group-hover:translate-x-0.5" />
               {l.labels[pick]}
+              <ArrowRight className="h-4 w-4 shrink-0 text-turkuaz-600 transition group-hover:translate-x-0.5" />
             </Link>
           </li>
         ))}

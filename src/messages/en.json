@@ -295,7 +295,7 @@
     "metaTitle": "Bodrum Daily Tours 2026 | Blue Cruise, Diving, Jeep Safari",
     "metaDesc": "Daily tours in Bodrum: blue cruise, diving, jeep safari, ancient city tours. Local and international tour partners, transparent prices.",
     "h1": "Bodrum Daily Tours",
-    "subtitle": "Blue cruise, diving, jeep safari, ancient cities — the best ways to discover Bodrum.",
+    "subtitle": "Blue cruise, diving, jeep safari, ancient sites — pick a programme and we'll confirm date and price together.",
     "intro1": "Bodrum is more than its beaches. The peninsula is rich in both nature and history — ancient cities, coves, dive sites, and inland villages worth exploring. When we work with partner operators, we prefer those who use local, certified guides; tours typically include lunch, insurance and transport.",
     "intro2": "The classic blue cruise spends a day on the bays with 3-4 swimming stops and lunch on board. Diving tours suit all levels; no certification is needed for an intro dive. A jeep safari brings you to the peninsula's inland villages, old windmills and panoramic peaks. Ancient city tours cover Bodrum Castle, Mausoleum of Halicarnassus, Pedasa and Knidos.",
     "intro3": "Minimum group size per tour is 4-6; individual bookings are grouped with other guests. For a private experience, the entire vehicle or boat can be chartered.",
@@ -366,5 +366,14 @@
     "rights": "All rights reserved.",
     "follow": "Follow us",
     "madeWith": "Made with care in Bodrum"
+  },
+  "notFound": {
+    "title": "The page you're looking for may have moved",
+    "body": "We've refreshed our site and some addresses have changed. Don't worry — you can find the apartment or information you need in a few clicks, or reach our team directly. We're here for your Bodrum holiday.",
+    "home": "Home",
+    "apartments": "Apartments",
+    "districts": "Districts",
+    "whatsapp": "Message us on WhatsApp",
+    "waMessage": "Hello, I couldn't find the page I was looking for on bodrumapartkiralama.com. Could you help me?"
   }
 }

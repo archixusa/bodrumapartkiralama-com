@@ -1,7 +1,16 @@
 // Server component — fetches approved reviews for an apartment slug
 // directly from Supabase via REST (anon key, RLS allows public read of approved rows).
 
-import { REVIEW_STAR_COLOR } from "@/lib/brand";
+import { BORDER, INK, MUTED, REVIEW_STAR_COLOR } from "@/lib/brand";
+import {
+  ANON,
+  DATE_LOCALE,
+  GUEST,
+  HEADING,
+  LATEST_NOTE,
+  REVIEWS_WORD,
+  pick,
+} from "@/lib/review-i18n";
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
 const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
@@ -53,7 +62,7 @@ async function fetchReviews(propertySlug: string): Promise<{ reviews: Review[]; 
 }
 
 function formatDate(iso: string, locale: string): string {
-  return new Date(iso).toLocaleDateString(locale === "tr" ? "tr-TR" : "en-US", {
+  return new Date(iso).toLocaleDateString(pick(DATE_LOCALE, locale), {
     day: "numeric",
     month: "long",
     year: "numeric",
@@ -61,11 +70,15 @@ function formatDate(iso: string, locale: string): string {
 }
 
 function Stars({ value, size = 16 }: { value: number; size?: number }) {
+  // role="img": aria-label generic <span> üzerinde ARIA'da desteklenmez —
+  // rol verilmeden ekran okuyucular puanı seslendirmez (WCAG 1.1.1/4.1.2).
   return (
-    <span style={{ display: "inline-flex", gap: 2, color: REVIEW_STAR_COLOR }} aria-label={`${value} yıldız`}>
+    <span role="img" style={{ display: "inline-flex", gap: 2, color: REVIEW_STAR_COLOR }} aria-label={`${value} / 5`}>
       {[1, 2, 3, 4, 5].map((n) => (
         <svg
           key={n}
+          aria-hidden="true"
+          focusable="false"
           width={size}
           height={size}
           viewBox="0 0 24 24"
@@ -89,7 +102,6 @@ export async function ApartmentReviews({
   locale: string;
 }) {
   const { reviews, summary } = await fetchReviews(propertySlug);
-  const isTr = locale === "tr";
 
   if (!summary || summary.review_count === 0) {
     return null; // No reviews yet — render nothing
@@ -100,21 +112,21 @@ export async function ApartmentReviews({
       style={{
         marginTop: 48,
         paddingTop: 32,
-        borderTop: "1px solid rgba(0,0,0,0.08)",
+        borderTop: `1px solid ${BORDER}`,
       }}
-      aria-label={isTr ? "Misafir değerlendirmeleri" : "Guest reviews"}
+      aria-label={pick(HEADING, locale)}
     >
       <header style={{ marginBottom: 24 }}>
         <h2 style={{ fontSize: 28, marginBottom: 8 }}>
-          {isTr ? "Misafir Değerlendirmeleri" : "Guest Reviews"}
+          {pick(HEADING, locale)}
         </h2>
         <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
           <Stars value={Math.round(summary.average_rating)} size={20} />
           <span style={{ fontSize: 18, fontWeight: 600 }}>
             {Number(summary.average_rating).toFixed(1)} / 5
           </span>
-          <span style={{ color: "#64748B", fontSize: 14 }}>
-            ({summary.review_count} {isTr ? "değerlendirme" : "reviews"})
+          <span style={{ color: MUTED, fontSize: 14 }}>
+            ({summary.review_count} {pick(REVIEWS_WORD, locale)})
           </span>
         </div>
       </header>
@@ -125,7 +137,7 @@ export async function ApartmentReviews({
             key={r.id}
             style={{
               padding: 16,
-              border: "1px solid rgba(0,0,0,0.08)",
+              border: `1px solid ${BORDER}`,
               borderRadius: 12,
               background: "#fff",
             }}
@@ -137,21 +149,21 @@ export async function ApartmentReviews({
                   <h3 style={{ fontSize: 16, margin: "6px 0 0" }}>{r.title}</h3>
                 )}
               </div>
-              <span style={{ fontSize: 13, color: "#64748B" }}>{formatDate(r.created_at, locale)}</span>
+              <span style={{ fontSize: 13, color: MUTED }}>{formatDate(r.created_at, locale)}</span>
             </div>
-            <p style={{ margin: "0 0 8px", lineHeight: 1.6, fontSize: 15, color: "#1E293B", whiteSpace: "pre-wrap" }}>
+            <p style={{ margin: "0 0 8px", lineHeight: 1.6, fontSize: 15, color: INK, whiteSpace: "pre-wrap" }}>
               {r.body}
             </p>
-            <p style={{ margin: 0, fontSize: 13, color: "#475569", fontWeight: 500 }}>
-              — {r.display_mode === "anonymous" ? (isTr ? "Anonim Misafir" : "Anonymous Guest") : r.display_name ?? (isTr ? "Misafir" : "Guest")}
+            <p style={{ margin: 0, fontSize: 13, color: MUTED, fontWeight: 500 }}>
+              — {r.display_mode === "anonymous" ? pick(ANON, locale) : r.display_name ?? pick(GUEST, locale)}
             </p>
           </article>
         ))}
       </div>
 
       {summary.review_count > 20 && (
-        <p style={{ marginTop: 16, fontSize: 13, color: "#64748B", textAlign: "center" }}>
-          {isTr ? "Son 20 değerlendirme gösteriliyor." : "Showing latest 20 reviews."}
+        <p style={{ marginTop: 16, fontSize: 13, color: MUTED, textAlign: "center" }}>
+          {pick(LATEST_NOTE, locale)}
         </p>
       )}
     </section>

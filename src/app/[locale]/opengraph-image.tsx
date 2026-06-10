@@ -8,16 +8,35 @@ import { ImageResponse } from "next/og";
 // override the segment image). Routes that supply their own openGraph.images
 // (e.g. blog posts) simply emit an additional, more specific image.
 //
-// Branded: navy background (no gold), white wordmark + Turkish tagline.
+// Branded ("Canlı Akdeniz" + A3 Yelken işareti, DESIGN_SPEC.md §1 + "Logo
+// uygulaması"): murekkep→footer koyu degrade, inline yelken işareti (kaynak:
+// public/brand/apart-logo-mark.svg, renkler birebir), beyaz somut başlık.
 // Renders a real PNG via Satori/ImageResponse so it actually displays in social
 // cards (an SVG og:image does not render on Facebook / X / WhatsApp / LinkedIn).
 
 export const runtime = "nodejs";
-export const alt = "Bodrum Apart Kiralama — Doğrudan mülk sahibinden";
+// Statik alt nötr marka adıyla sınırlı — başlık locale'e göre değiştiği için
+// alt'a Türkçe slogan gömülmez (İ18N bütünlüğü bulgusu).
+export const alt = "Bodrum Apart Kiralama";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-export default function OpengraphImage() {
+// Başlık 4 dilde — [locale] segmentinin file-convention görseli her sayfaya
+// auto-inject edildiğinden /en, /de, /ru kartları da kendi dilinde çıkar.
+const OG_HEADLINE: Record<string, string> = {
+  tr: "Doğrudan mülk sahibinden",
+  en: "Directly from the owner",
+  de: "Direkt vom Eigentümer",
+  ru: "Напрямую от владельца",
+};
+
+export default async function OpengraphImage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const headline = OG_HEADLINE[locale] ?? OG_HEADLINE.en;
   return new ImageResponse(
     (
       <div
@@ -29,11 +48,11 @@ export default function OpengraphImage() {
           justifyContent: "center",
           padding: "80px",
           backgroundImage:
-            "linear-gradient(135deg, #042C53 0%, #0a1f44 45%, #185FA5 100%)",
+            "linear-gradient(135deg, #06343B 0%, #0A4A52 45%, #04252B 100%)",
           fontFamily: "sans-serif",
         }}
       >
-        {/* Wordmark eyebrow */}
+        {/* Wordmark eyebrow — A3 Yelken işareti + harf aralıklı kelime işareti */}
         <div
           style={{
             display: "flex",
@@ -41,27 +60,23 @@ export default function OpengraphImage() {
             gap: "20px",
             fontSize: 30,
             letterSpacing: 8,
-            color: "#9DC3EC",
+            color: "#34C8C4",
             fontWeight: 600,
             textTransform: "uppercase",
           }}
         >
-          <div
-            style={{
-              width: 56,
-              height: 56,
-              borderRadius: 14,
-              backgroundColor: "#185FA5",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              color: "#FFFFFF",
-              fontSize: 30,
-              fontWeight: 700,
-            }}
-          >
-            B
-          </div>
+          <svg width="72" height="72" viewBox="0 0 56 56">
+            <path d="M30 6c10 9 14 20 13 31H30z" fill="#0EA5A5" />
+            <path d="M26 14c-7 7-10 15-9.5 23H26z" fill="#34C8C4" />
+            <path
+              d="M8 45c5-3.6 10-3.6 15 0s10 3.6 15 0 7-2.7 10-1.2"
+              stroke="#0B7E80"
+              strokeWidth="3"
+              fill="none"
+              strokeLinecap="round"
+            />
+            <circle cx="45" cy="10" r="5.5" fill="#FFB23E" />
+          </svg>
           <span>Bodrum Apart Kiralama</span>
         </div>
 
@@ -76,7 +91,7 @@ export default function OpengraphImage() {
             maxWidth: 1000,
           }}
         >
-          Doğrudan mülk sahibinden
+          {headline}
         </div>
 
         {/* Domain */}

@@ -4,8 +4,8 @@
   "description": "Bodrum'da aile bütçesine uygun apart kiralama platformu.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#0EA5E9",
+  "background_color": "#FFF8F0",
+  "theme_color": "#0EA5A5",
   "icons": [
     {
       "src": "/icon.svg",
@@ -14,9 +14,14 @@
       "purpose": "any maskable"
     },
     {
-      "src": "/logo_kare.svg",
-      "sizes": "any",
-      "type": "image/svg+xml"
+      "src": "/brand/apart-logo-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
     }
   ]
 }

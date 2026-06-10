@@ -130,7 +130,7 @@ export default async function Page({
       publisher: {
         "@type": "Organization",
         name: "Bodrumapartkiralama.com",
-        logo: { "@type": "ImageObject", url: `${SITE_URL}/logo_kare.svg` },
+        logo: { "@type": "ImageObject", url: `${SITE_URL}/brand/apart-logo-512.png` },
       },
       mainEntityOfPage: pageUrl,
       speakable: {
@@ -172,7 +172,7 @@ export default async function Page({
         <div className="container-page grid gap-10 lg:grid-cols-[1fr_280px]">
           <div className="min-w-0">
             {/* Answer-first opening */}
-            <div className="space-y-4 text-[15px] leading-relaxed text-ink/90">
+            <div className="space-y-4 text-base md:text-[15px] leading-relaxed text-ink/90">
               {g.intro.map((p, i) => (
                 <p key={i} data-speakable={i === 0 ? "intro" : undefined}>
                   {p}
@@ -186,7 +186,7 @@ export default async function Page({
               return (
                 <div key={s.id} id={s.id} className="mt-12 scroll-mt-24">
                   <h2>{s.heading}</h2>
-                  <div className="mt-4 space-y-4 text-[15px] leading-relaxed text-ink/90">
+                  <div className="mt-4 space-y-4 text-base md:text-[15px] leading-relaxed text-ink/90">
                     {s.body.map((p, i) => (
                       <p key={i}>{p}</p>
                     ))}
@@ -224,7 +224,7 @@ export default async function Page({
             </div>
 
             {/* Planning CTA */}
-            <div className="mt-12 rounded-2xl border border-accent-400/40 bg-accent-400/5 p-6 sm:p-8">
+            <div className="mt-12 rounded-2xl border border-turkuaz-500/30 bg-turkuaz-500/5 p-6 sm:p-8">
               <h2 className="text-xl font-bold text-navy-900">{g.ctaHeading}</h2>
               <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted">{g.ctaBody}</p>
               <div className="mt-5 flex flex-wrap items-center gap-3">

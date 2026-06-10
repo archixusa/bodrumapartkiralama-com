@@ -48,7 +48,7 @@ export function PartnerServiceBanner({
               <Handshake className="h-3.5 w-3.5" />
               {serviceLabel}
             </span>
-            <p className="mt-3 text-[15px] leading-relaxed text-ink/85">
+            <p className="mt-3 text-base md:text-[15px] leading-relaxed text-ink/85">
               {description}
             </p>
           </div>
@@ -56,7 +56,7 @@ export function PartnerServiceBanner({
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 rounded-md bg-[#25D366] px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#1da851]"
+            className="btn-whatsapp"
           >
             <MessageCircle className="h-4 w-4" />
             {whatsappCtaLabel}

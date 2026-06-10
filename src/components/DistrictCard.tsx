@@ -4,23 +4,32 @@ import { ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import type { District } from "@/data/districts";
 import { loc } from "@/lib/i18n-data";
+import { BLUR_KUM } from "@/lib/blur";
+
+const VIEW_LABEL: Record<string, string> = {
+  tr: "Bölgeyi gör",
+  en: "View district",
+  de: "Region ansehen",
+  ru: "Смотреть район",
+};
 
 export function DistrictCard({ district }: { district: District }) {
   const dt = useTranslations("districts");
   const locale = useLocale();
-  const isTr = locale === "tr";
 
   return (
     <Link
       href={`/bodrum/${district.urlSlug}`}
-      className="group relative block aspect-[4/5] overflow-hidden rounded-xl shadow-card outline-none transition duration-300 hover:shadow-cardHover focus-visible:ring-2 focus-visible:ring-accent-400 focus-visible:ring-offset-2"
+      className="group relative block aspect-[4/5] overflow-hidden rounded-xl shadow-card outline-none transition duration-300 hover:shadow-cardHover focus-visible:ring-2 focus-visible:ring-turkuaz-600 focus-visible:ring-offset-2"
     >
       <Image
         src={district.heroImage}
-        alt={district.name}
+        alt={`${district.name}, Bodrum`}
         fill
         loading="lazy"
         sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
+        placeholder="blur"
+        blurDataURL={BLUR_KUM}
         className="object-cover transition duration-500 group-hover:scale-110"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-navy-900/95 via-navy-900/30 to-transparent" />
@@ -36,8 +45,8 @@ export function DistrictCard({ district }: { district: District }) {
             ru: district.shortDescRu,
           })}
         </p>
-        <span className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-accent-400 transition group-hover:gap-2">
-          {isTr ? "Bölgeyi gör" : "View district"}
+        <span className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-turkuaz-300 transition group-hover:gap-2">
+          {VIEW_LABEL[locale] ?? VIEW_LABEL.en}
           <ArrowRight className="h-3 w-3" />
         </span>
       </div>

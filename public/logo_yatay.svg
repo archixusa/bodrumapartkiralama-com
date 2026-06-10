@@ -1,9 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 48" width="240" height="48" role="img" aria-label="Bodrum Apart Kiralama">
-  <g transform="translate(4, 8)">
-    <path d="M0 24 Q 8 18, 16 24 T 32 24" stroke="#EF9F27" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-    <path d="M6 14 L 16 4 L 26 14 L 26 22 L 6 22 Z" fill="#042C53"/>
-    <rect x="14" y="14" width="4" height="6" fill="#E6F1FB"/>
+  <g transform="translate(2, 2) scale(0.7857)">
+    <path d="M30 6c10 9 14 20 13 31H30z" fill="#0EA5A5"/>
+    <path d="M26 14c-7 7-10 15-9.5 23H26z" fill="#34C8C4"/>
+    <path d="M8 45c5-3.6 10-3.6 15 0s10 3.6 15 0 7-2.7 10-1.2" stroke="#0B7E80" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <circle cx="45" cy="10" r="5.5" fill="#FFB23E"/>
   </g>
-  <text x="46" y="22" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="17" font-weight="700" fill="#042C53" letter-spacing="-0.3">Bodrum<tspan fill="#185FA5">Apart</tspan></text>
-  <text x="46" y="37" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="9" font-weight="500" fill="#185FA5" letter-spacing="2">KIRALAMA</text>
+  <text x="52" y="24" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="18" font-weight="800" fill="#06343B" letter-spacing="-0.3">Bodrum<tspan fill="#0B7E80">Apart</tspan></text>
+  <text x="52" y="39" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="10" font-weight="600" fill="#546E70" letter-spacing="3.4">KİRALAMA</text>
 </svg>

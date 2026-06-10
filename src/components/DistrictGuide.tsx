@@ -23,7 +23,7 @@ export function DistrictGuide({ guide, districtName }: Props) {
     <section className="section">
       <div className="container-page max-w-4xl">
         <h2 className="text-balance">{guide.subHeading}</h2>
-        <p className="mt-5 text-[15px] leading-relaxed text-ink/90">
+        <p className="mt-5 text-base md:text-[15px] leading-relaxed text-ink/90">
           {guide.lead}
         </p>
 
@@ -64,7 +64,7 @@ export function DistrictGuide({ guide, districtName }: Props) {
           {guide.sections.map((s) => (
             <div key={s.h2}>
               <h2 className="text-2xl">{s.h2}</h2>
-              <div className="mt-4 space-y-4 text-[15px] leading-relaxed text-ink/90">
+              <div className="mt-4 space-y-4 text-base md:text-[15px] leading-relaxed text-ink/90">
                 {s.body.map((p, i) => (
                   <p key={i}>{p}</p>
                 ))}

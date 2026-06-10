@@ -359,7 +359,7 @@ export default async function ApartlarPage({
       <section className="section">
         <div className="container-page">
           <div className="mx-auto flex max-w-3xl flex-col items-center gap-4 rounded-xl border border-[var(--color-border)] bg-white p-6 text-center md:flex-row md:text-left">
-            <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#25D366]/10 text-[#25D366]">
+            <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-whatsapp-brand/10 text-whatsapp">
               <MessageCircle className="h-6 w-6" />
             </span>
             <div className="flex-1">
@@ -433,7 +433,7 @@ function ApartlarGuideTr() {
         <h2 className="text-balance">
           Bodrum'da Apart Kiralama Hakkında Bilmeniz Gerekenler
         </h2>
-        <p className="mt-5 text-[15px] leading-relaxed text-ink/90">
+        <p className="mt-5 text-base md:text-[15px] leading-relaxed text-ink/90">
           Apart kiralama Bodrum tatilinin son 10 yılda en hızlı büyüyen
           konaklama biçimi. Ailelerin kendi mutfaklarını kullanabilmesi,
           gruplarla seyahat edenlerin maliyeti paylaşması ve uzun konaklamada
@@ -443,7 +443,7 @@ function ApartlarGuideTr() {
         </p>
 
         <h3 className="mt-10 text-xl">Apart vs Otel — Karar Verirken</h3>
-        <p className="mt-3 text-[15px] leading-relaxed text-ink/90">
+        <p className="mt-3 text-base md:text-[15px] leading-relaxed text-ink/90">
           Apart, otele göre üç temel farklılık taşır: özel bir yaşam alanı,
           mutfak imkânı ve kendi temponuza göre planlanan günler. Otelin
           sunduğu günlük temizlik, oda servisi ve resepsiyon hizmetlerinden
@@ -452,7 +452,7 @@ function ApartlarGuideTr() {
           fiyatına kıyasla %30-50 daha avantajlıdır. 1-2 kişilik kısa
           konaklamada bu fark daralır; otel rahatlığı ön plana çıkabilir.
         </p>
-        <p className="mt-3 text-[15px] leading-relaxed text-ink/90">
+        <p className="mt-3 text-base md:text-[15px] leading-relaxed text-ink/90">
           Yemek alışkanlıkları da kararı etkiler. Sabah kahvaltısı ve öğle
           yemeğini evde hazırlayıp akşam dışarıda yiyen aileler için apart son
           derece elverişlidir. Her öğünü dışarıda yemek isteyenler için otelin
@@ -461,11 +461,11 @@ function ApartlarGuideTr() {
         </p>
 
         <h3 className="mt-10 text-xl">Hangi Bölge Size Uygun?</h3>
-        <p className="mt-3 text-[15px] leading-relaxed text-ink/90">
+        <p className="mt-3 text-base md:text-[15px] leading-relaxed text-ink/90">
           Bodrum yarımadasının her bölgesi farklı bir karaktere sahip ve
           farklı tatilci profillerine hitap eder. Genel hatlarıyla:
         </p>
-        <ul className="mt-4 space-y-2 text-[15px] text-ink/90">
+        <ul className="mt-4 space-y-2 text-base md:text-[15px] text-ink/90">
           <li>
             <strong>Gümbet:</strong> Genç gruplar, gece hayatı, yoğun sosyal
             atmosfer. Aile için ağustosta zorlayıcı olabilir.
@@ -497,7 +497,7 @@ function ApartlarGuideTr() {
         </ul>
 
         <h3 className="mt-10 text-xl">Sezon ve Fiyat Dalgalanması</h3>
-        <p className="mt-3 text-[15px] leading-relaxed text-ink/90">
+        <p className="mt-3 text-base md:text-[15px] leading-relaxed text-ink/90">
           Bodrum'da apart fiyatları üç ana sezona göre şekillenir. Yüksek
           sezon haziran sonundan ağustos sonuna kadar uzanır; bayram günleri
           ve okul tatili pikiyle birlikte fiyatlar en yüksek seviyeye çıkar.
@@ -507,7 +507,7 @@ function ApartlarGuideTr() {
           %50'ye varan indirim sunar; çoğu apart yıl boyu açık olduğu için
           sezon dışı konaklama da mümkündür.
         </p>
-        <p className="mt-3 text-[15px] leading-relaxed text-ink/90">
+        <p className="mt-3 text-base md:text-[15px] leading-relaxed text-ink/90">
           Bayram dönemleri (Ramazan ve Kurban Bayramı) ayrı bir prim sezonu
           oluşturur. Bu dönemlerde minimum gecelik 5-7 olabilir ve fiyatlar
           yüksek sezondan bile yüksek seyredebilir. Ekonomik tatil planlayanlar
@@ -516,7 +516,7 @@ function ApartlarGuideTr() {
         </p>
 
         <h3 className="mt-10 text-xl">Apart Seçerken Nelere Dikkat Etmeli?</h3>
-        <p className="mt-3 text-[15px] leading-relaxed text-ink/90">
+        <p className="mt-3 text-base md:text-[15px] leading-relaxed text-ink/90">
           İlk olarak fotoğrafların güncelliğini kontrol edin. 5 yıl önce
           çekilmiş fotoğraflar aparta vardığınızda hayal kırıklığı
           yaratabilir. Aktif olarak yönetilen platformlarda fotoğrafların
@@ -524,7 +524,7 @@ function ApartlarGuideTr() {
           tarihte çekilmiş ek görüntü isteyebilirsiniz. Kat bilgisi (1. kat,
           5. kat) ve manzara açısı önemli bir kalite göstergesidir.
         </p>
-        <p className="mt-3 text-[15px] leading-relaxed text-ink/90">
+        <p className="mt-3 text-base md:text-[15px] leading-relaxed text-ink/90">
           Klima tipi kontrol edilmesi gereken bir başka detay. Bodrum'da
           temmuz-ağustos sıcaklığı 35-40°C bandına çıkabilir; tüm odalarda
           split klima olması ideal. Sadece salonda klima olan apartlar yaz
@@ -534,7 +534,7 @@ function ApartlarGuideTr() {
         </p>
 
         <h3 className="mt-10 text-xl">Rezervasyon Süreci</h3>
-        <p className="mt-3 text-[15px] leading-relaxed text-ink/90">
+        <p className="mt-3 text-base md:text-[15px] leading-relaxed text-ink/90">
           Rezervasyon süreci kabaca şu adımlardan oluşur: tarih ve kişi
           sayısı paylaşımı; uygun mülk seçeneklerinin sunulması; mülk sahibiyle
           iletişim ve detay teyidi; ödeme planı ve sözleşme; rezervasyon
@@ -543,7 +543,7 @@ function ApartlarGuideTr() {
           ödeme yöntemidir; mülk sahibine göre kredi kartı veya başka
           yöntemler de olabilir.
         </p>
-        <p className="mt-3 text-[15px] leading-relaxed text-ink/90">
+        <p className="mt-3 text-base md:text-[15px] leading-relaxed text-ink/90">
           Sözleşme, mülk sahibi ile misafir arasında düzenlenir. Süre, kişi
           sayısı, ödeme planı, depozito miktarı, iptal kuralları sözleşmede
           yer alır. Biz bu süreçte aracılık ediyoruz; tarafsız bir gözle her

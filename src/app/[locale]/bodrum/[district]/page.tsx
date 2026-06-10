@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { MapPin, Check, ArrowRight, MessageCircle } from "lucide-react";
+import { MapPin, Check, ArrowRight, ChevronRight, MessageCircle } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import { ApartCard } from "@/components/ApartCard";
 import { FAQ } from "@/components/FAQ";
@@ -10,12 +10,13 @@ import { JsonLd } from "@/components/JsonLd";
 import { districts, getDistrict } from "@/data/districts";
 import { posts } from "@/data/posts";
 import { getSiteContent } from "@/lib/content";
-import { buildAlternates } from "@/lib/seo";
+import { buildAlternates, buildLocaleUrl } from "@/lib/seo";
+import { BLUR_KUM } from "@/lib/blur";
 import { loc, locArr } from "@/lib/i18n-data";
 import { districtGuides } from "@/data/districtGuides";
 import { DistrictGuide } from "@/components/DistrictGuide";
 import { getApartmentsByDistrict } from "@/data/apartments";
-import { Testimonials } from "@/components/Testimonials";
+import { GuestReviews } from "@/components/GuestReviews";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.bodrumapartkiralama.com";
@@ -69,6 +70,13 @@ export default async function DistrictPage({
   const c = await getTranslations({ locale, namespace: "common" });
   const isTr = locale === "tr";
   const districtName = dt(d.slug);
+  // Breadcrumb ilk halkası — 4 dilli (tr/en ikilisi de/ru'yu İngilizceye
+  // düşürüyordu); UI ve JSON-LD aynı etiketi paylaşır.
+  const homeLabel =
+    ({ tr: "Ana Sayfa", en: "Home", de: "Startseite", ru: "Главная" } as Record<
+      string,
+      string
+    >)[locale] ?? "Home";
 
   // DB overlay (panel-editable). Keyed by BASE slug (e.g. "gumbet"), matching
   // districts.content.json keys. section_key is `district.<baseSlug>` (dash-free,
@@ -238,7 +246,9 @@ export default async function DistrictPage({
       name: `${districtName}, Bodrum`,
       description: longDesc,
       image: d.heroImage,
-      url: `${SITE_URL}/bodrum/${d.urlSlug}`,
+      // Breadcrumb ile aynı locale-duyarlı URL — aynı sayfada aynı varlık
+      // için iki farklı URL beyanı tutarsız sinyaldi (SEO bulgusu).
+      url: buildLocaleUrl(locale, `/bodrum/${d.urlSlug}`),
       geo: {
         "@type": "GeoCoordinates",
         latitude: d.lat,
@@ -250,7 +260,7 @@ export default async function DistrictPage({
       "@type": "Place",
       name: `${districtName}, Bodrum`,
       description: guide?.lead ?? longDesc,
-      url: `${SITE_URL}/bodrum/${d.urlSlug}`,
+      url: buildLocaleUrl(locale, `/bodrum/${d.urlSlug}`),
       containedInPlace: {
         "@type": "AdministrativeArea",
         name: "Bodrum, Muğla, TR",
@@ -265,10 +275,12 @@ export default async function DistrictPage({
     {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
+      // Locale-duyarlı: item URL'leri UI'daki i18n Link'lerle aynı prefix'i
+      // taşır (tr kökte, en/de/ru /{locale} altında) ve ilk halka 4 dilde.
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: isTr ? "Ana Sayfa" : "Home", item: SITE_URL },
-        { "@type": "ListItem", position: 2, name: fl("title"), item: `${SITE_URL}/apartlar` },
-        { "@type": "ListItem", position: 3, name: districtName, item: `${SITE_URL}/bodrum/${d.urlSlug}` },
+        { "@type": "ListItem", position: 1, name: homeLabel, item: buildLocaleUrl(locale, "") },
+        { "@type": "ListItem", position: 2, name: fl("title"), item: buildLocaleUrl(locale, "/apartlar") },
+        { "@type": "ListItem", position: 3, name: districtName, item: buildLocaleUrl(locale, `/bodrum/${d.urlSlug}`) },
       ],
     },
     {
@@ -289,18 +301,25 @@ export default async function DistrictPage({
       <section className="relative overflow-hidden bg-navy-900 text-white">
         <Image
           src={d.heroImage}
-          alt={districtName}
+          alt={`${districtName}, Bodrum`}
           fill
           priority
+          fetchPriority="high"
           sizes="100vw"
+          placeholder="blur"
+          blurDataURL={BLUR_KUM}
           className="object-cover opacity-40"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-navy-900/80 via-navy-900/55 to-navy-900/85" />
         <div className="container-page relative py-14 md:py-20">
-          <nav aria-label="breadcrumb" className="mb-3 text-xs text-white/80">
-            <Link href="/" className="hover:underline">{isTr ? "Ana Sayfa" : "Home"}</Link>
-            <span className="px-2">/</span>
+          {/* Breadcrumb UI — JSON-LD'deki BreadcrumbList ile aynı zincir
+              (etiketler VE locale-prefix'li URL'ler birebir eşleşir). */}
+          <nav aria-label="breadcrumb" className="mb-3 flex flex-wrap items-center gap-1 text-xs text-white/80">
+            <Link href="/" className="hover:underline">{homeLabel}</Link>
+            <ChevronRight className="h-3 w-3 opacity-60" />
             <Link href="/apartlar" className="hover:underline">{fl("title")}</Link>
+            <ChevronRight className="h-3 w-3 opacity-60" />
+            <span aria-current="page" className="font-semibold text-white">{districtName}</span>
           </nav>
           <h1 className="text-white">{t("h1", { district: districtName })}</h1>
           <p className="mt-3 max-w-2xl text-base text-white/85 md:text-lg">
@@ -319,7 +338,7 @@ export default async function DistrictPage({
         <div className="container-page grid gap-10 lg:grid-cols-[1fr_320px]">
           <div>
             <h2>{t("aboutTitle", { district: districtName })}</h2>
-            <p className="mt-4 text-[15px] leading-relaxed text-ink/90">{longDesc}</p>
+            <p className="mt-4 text-base md:text-[15px] leading-relaxed text-ink/90">{longDesc}</p>
             <ul className="mt-6 grid gap-3 sm:grid-cols-2">
               {highlights.map((h, i) => (
                 <li key={i} className="flex items-start gap-2 rounded-md border border-[var(--color-border)] bg-white p-3 text-sm">
@@ -353,7 +372,7 @@ export default async function DistrictPage({
           </div>
           {apts.length === 0 ? (
             <div className="mt-6 flex flex-col items-start gap-5 rounded-xl border border-[var(--color-border)] bg-white p-6 md:flex-row md:items-center md:gap-8 md:p-8">
-              <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-md bg-accent-400/15 text-accent-500">
+              <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-md bg-turkuaz-500/10 text-turkuaz-600">
                 <MessageCircle className="h-6 w-6" />
               </span>
               <div className="flex-1">
@@ -392,7 +411,9 @@ export default async function DistrictPage({
         </div>
       </section>
 
-      <Testimonials district={d.name} max={3} />
+      {/* Gerçek onaylı misafir yorumları (site geneli, empty-safe) —
+          v2 sahte yorum yasağı: uydurma Testimonials kaldırıldı. */}
+      <GuestReviews locale={locale} max={3} />
 
       <section className="section">
         <div className="container-page max-w-4xl">

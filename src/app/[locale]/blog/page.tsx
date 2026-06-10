@@ -7,13 +7,32 @@ import { Link } from "@/i18n/routing";
 import { posts } from "@/data/posts";
 import { getMdxPosts } from "@/lib/mdx-blog";
 import { loc } from "@/lib/i18n-data";
-import { buildAlternates, defaultOgImages } from "@/lib/seo";
+import { buildAlternates, buildLocaleUrl, defaultOgImages } from "@/lib/seo";
+import { BLUR_KUM } from "@/lib/blur";
 import { JsonLd } from "@/components/JsonLd";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.bodrumapartkiralama.com";
 
 const FALLBACK_HERO = "/blog/bodrum-tatil-rehberi/hero.webp";
+
+// Breadcrumb ilk halkası 4 dilde — tr/en ikilisi de/ru'yu İngilizceye
+// düşürüyordu (district sayfasındaki desenle aynı); UI ve JSON-LD aynı
+// etiketi paylaşır.
+const HOME_LABEL: Record<string, string> = {
+  tr: "Ana Sayfa",
+  en: "Home",
+  de: "Startseite",
+  ru: "Главная",
+};
+
+// Tarih biçimi sayfa dilinde (de/ru eskiden İngilizce ay adları görüyordu).
+const DATE_LOCALE: Record<string, string> = {
+  tr: "tr-TR",
+  en: "en-GB",
+  de: "de-DE",
+  ru: "ru-RU",
+};
 
 interface UnifiedPost {
   source: "legacy" | "mdx";
@@ -90,8 +109,8 @@ export default async function Page({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "blog" });
-  const isTr = locale === "tr";
   const sorted = unifyAll(locale);
+  const homeLabel = HOME_LABEL[locale] ?? HOME_LABEL.en;
 
   const blogUrl = locale === "tr" ? `${SITE_URL}/blog` : `${SITE_URL}/${locale}/blog`;
   const postUrl = (slug: string) =>
@@ -99,35 +118,49 @@ export default async function Page({
   const breadcrumbLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
+    // İlk halka 4 dilli ve locale-prefix'li — 2. halka ile aynı URL düzeni
+    // (eskiden name tr/en ikiliydi ve item locale'siz SITE_URL'di).
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: isTr ? "Ana Sayfa" : "Home", item: SITE_URL },
+      { "@type": "ListItem", position: 1, name: homeLabel, item: buildLocaleUrl(locale, "") },
       { "@type": "ListItem", position: 2, name: t("h1"), item: blogUrl },
     ],
   };
 
-  // ItemList of the rendered posts (newest-first, position-ordered) for AEO —
-  // helps search/AI engines understand the blog index as an ordered collection.
-  const itemListLd = {
+  // CollectionPage + içindeki ItemList (newest-first, position-ordered) —
+  // blog dizinini arama/AI motorlarına sıralı bir koleksiyon sayfası olarak
+  // tanıtır (DESIGN_SPEC.md §7). ItemList alanları aynen korunup mainEntity
+  // olarak iç içe verildi.
+  const collectionLd = {
     "@context": "https://schema.org",
-    "@type": "ItemList",
-    name: t("h1"),
+    "@type": "CollectionPage",
+    "@id": `${blogUrl}#collection`,
     url: blogUrl,
-    numberOfItems: sorted.length,
-    itemListElement: sorted.map((p, i) => ({
-      "@type": "ListItem",
-      position: i + 1,
-      url: postUrl(p.slug),
-      name: loc(locale, { tr: p.titleTr, en: p.titleEn, de: p.titleDe, ru: p.titleRu }),
-    })),
+    name: t("h1"),
+    description: t("metaDesc"),
+    inLanguage: locale,
+    // Layout'taki tekil WebSite düğümüne referans (kopya düğüm açılmaz).
+    isPartOf: { "@id": `${SITE_URL}/#website` },
+    mainEntity: {
+      "@type": "ItemList",
+      name: t("h1"),
+      url: blogUrl,
+      numberOfItems: sorted.length,
+      itemListElement: sorted.map((p, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        url: postUrl(p.slug),
+        name: loc(locale, { tr: p.titleTr, en: p.titleEn, de: p.titleDe, ru: p.titleRu }),
+      })),
+    },
   };
 
   return (
     <>
-      <JsonLd data={[breadcrumbLd, itemListLd]} />
+      <JsonLd data={[breadcrumbLd, collectionLd]} />
       <PageHero
         title={t("h1")}
         subtitle={t("subtitle")}
-        crumbs={[{ href: "/", label: isTr ? "Ana Sayfa" : "Home" }, { label: t("h1") }]}
+        crumbs={[{ href: "/", label: homeLabel }, { label: t("h1") }]}
       />
       <section className="section">
         <div className="container-page">
@@ -140,6 +173,8 @@ export default async function Page({
                     alt={loc(locale, { tr: p.titleTr, en: p.titleEn, de: p.titleDe, ru: p.titleRu })}
                     fill
                     sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    placeholder="blur"
+                    blurDataURL={BLUR_KUM}
                     className="object-cover transition duration-500 group-hover:scale-105"
                   />
                   <span className="absolute left-3 top-3 chip-accent">
@@ -148,7 +183,7 @@ export default async function Page({
                 </Link>
                 <div className="flex flex-1 flex-col gap-3 p-5">
                   <div className="flex items-center gap-3 text-xs text-muted">
-                    <span>{new Date(p.date).toLocaleDateString(isTr ? "tr-TR" : "en-GB", { day: "2-digit", month: "short", year: "numeric" })}</span>
+                    <span>{new Date(p.date).toLocaleDateString(DATE_LOCALE[locale] ?? DATE_LOCALE.en, { day: "2-digit", month: "short", year: "numeric" })}</span>
                     <span className="inline-flex items-center gap-1">
                       <Clock className="h-3 w-3" /> {t("readingTime", { min: p.readingTime })}
                     </span>

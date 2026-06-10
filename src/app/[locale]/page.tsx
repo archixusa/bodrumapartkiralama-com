@@ -18,7 +18,7 @@ import {
 import { Link } from "@/i18n/routing";
 import { FAQ } from "@/components/FAQ";
 import { JsonLd } from "@/components/JsonLd";
-import { Testimonials } from "@/components/Testimonials";
+import { GuestReviews } from "@/components/GuestReviews";
 import { HeroSearch } from "@/components/HeroSearch";
 import { OfferCtaButton } from "@/components/OfferCtaButton";
 import { districts } from "@/data/districts";
@@ -26,8 +26,8 @@ import { services } from "@/data/services";
 import { posts } from "@/data/posts";
 import { loc } from "@/lib/i18n-data";
 import { getSiteContent } from "@/lib/content";
-import { getPhone } from "@/lib/contact";
 import { buildAlternates, defaultOgImages } from "@/lib/seo";
+import { BLUR_KUM } from "@/lib/blur";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.bodrumapartkiralama.com";
@@ -434,50 +434,13 @@ export default async function HomePage({
     HOME_OWNER_DEFAULT;
   const ownerCopy = owner[pick] ?? owner.en;
 
+  // NOT: LocalBusiness/LodgingBusiness düğümü BURADA TEKRARLANMAZ — layout.tsx
+  // her sayfada aynı @id (`#organization`) ile tam düğümü (aggregateRating
+  // dahil, gerçek veriden) basıyor; ikinci bir kopya çelişen alanlarla aynı
+  // varlığı ikiye bölüyordu. Bu dizi yalnız sayfaya özgü şemaları içerir.
+  // WebSite düğümü de layout'a taşındı (#website, SearchAction dahil) —
+  // burada tekrarlanmaz (aynı varlığın iki kopyası).
   const jsonLd = [
-    {
-      "@context": "https://schema.org",
-      "@type": ["LocalBusiness", "LodgingBusiness"],
-      "@id": `${SITE_URL}/#organization`,
-      name: "Bodrumapartkiralama.com",
-      url: SITE_URL,
-      logo: `${SITE_URL}/logo_kare.svg`,
-      image: `${SITE_URL}/og-default.svg`,
-      description: t("metaDesc"),
-      sameAs: [
-        "https://www.facebook.com/BodrumApartKiralama",
-        "https://www.instagram.com/bodrumapartkiralama",
-      ],
-      address: {
-        "@type": "PostalAddress",
-        addressLocality: "Bodrum",
-        addressRegion: "Muğla",
-        addressCountry: "TR",
-      },
-      geo: { "@type": "GeoCoordinates", latitude: 37.0344, longitude: 27.4305 },
-      areaServed: ["Bodrum", ...districts.map((d) => d.name)],
-      telephone: getPhone(locale).tel,
-      email: "info@bodrumapartkiralama.com",
-      openingHoursSpecification: [
-        {
-          "@type": "OpeningHoursSpecification",
-          dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-          opens: "09:00",
-          closes: "19:00",
-        },
-      ],
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      url: SITE_URL,
-      name: "Bodrumapartkiralama.com",
-      potentialAction: {
-        "@type": "SearchAction",
-        target: `${SITE_URL}/apartlar?district={search_term_string}`,
-        "query-input": "required name=search_term_string",
-      },
-    },
     {
       "@context": "https://schema.org",
       "@type": "WebPage",
@@ -509,57 +472,71 @@ export default async function HomePage({
 
       {isDraft && <PreviewBanner locale={locale} />}
 
-      {/* 1 — HERO + SEARCH */}
+      {/* 1 — HERO + SEARCH — "Canlı Akdeniz" degrade gökyüzü/deniz (salt CSS).
+          v2 palet: kum-bg → açık turkuaz deniz; dekor radyalleri kum + turkuaz
+          (begonvil tamamen kaldırıldı, gunes yalnız yıldız/puanda). */}
       <section
         aria-labelledby="hero-heading"
-        className="relative overflow-hidden bg-navy-900 text-white"
+        className="relative overflow-hidden"
       >
-        <Image
-          src="/images/hero/bodrum-hero.webp"
-          alt="Bodrum"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover opacity-45"
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-[radial-gradient(120%_80%_at_78%_8%,rgba(251,238,221,.9),transparent_42%),radial-gradient(90%_70%_at_18%_22%,rgba(52,200,196,.16),transparent_55%),linear-gradient(180deg,theme(colors.kum.50)_0%,theme(colors.turkuaz.50)_46%,theme(colors.turkuaz.100)_72%,theme(colors.turkuaz.200)_100%)]"
         />
-        {/* Darker gradient floor so white body copy clears AA (≥4.5:1) over the photo. */}
-        <div className="absolute inset-0 bg-gradient-to-b from-navy-900/85 via-navy-900/75 to-navy-900/95" />
-        <div className="container-page relative py-16 md:py-24 lg:py-28">
+        {/* Yumuşak ışık halesi — kum tonlu nötr dekor (v2: gunes dekorda kullanılmaz) */}
+        <div
+          aria-hidden="true"
+          className="absolute right-[10%] top-12 hidden h-24 w-24 rounded-full bg-[radial-gradient(circle_at_50%_50%,#FFF8F0,#FBEEDD_65%)] shadow-[0_0_80px_12px_rgba(240,226,207,.7)] md:block"
+        />
+        {/* Dalgalar — turkuaz skalası */}
+        <svg
+          aria-hidden="true"
+          className="absolute inset-x-0 bottom-0 h-20 w-full md:h-32"
+          viewBox="0 0 1200 170"
+          preserveAspectRatio="none"
+        >
+          <path d="M0 70 Q150 40 300 70 T600 70 T900 70 T1200 70 V170 H0 Z" className="fill-turkuaz-200" opacity=".55" />
+          <path d="M0 100 Q150 70 300 100 T600 100 T900 100 T1200 100 V170 H0 Z" className="fill-turkuaz-300" opacity=".6" />
+          <path d="M0 130 Q150 105 300 130 T600 130 T900 130 T1200 130 V170 H0 Z" className="fill-turkuaz-500" />
+        </svg>
+        <div className="container-page relative z-10 py-16 pb-32 md:py-24 md:pb-40 lg:py-28 lg:pb-44">
           <div className="mx-auto max-w-3xl text-center">
             <h1
               id="hero-heading"
-              className="text-balance leading-tight text-white md:text-6xl lg:text-7xl"
+              className="fade-up fade-d1 text-balance leading-tight text-murekkep-900 md:text-5xl lg:text-6xl"
             >
               {heroCopy.h1}
             </h1>
             <p
               data-speakable="intro"
-              className="mx-auto mt-4 max-w-2xl text-base text-white md:text-lg"
+              className="fade-up fade-d2 mx-auto mt-4 max-w-2xl text-base text-murekkep-700 md:text-lg"
             >
               {heroCopy.sub}
             </p>
 
-            <HeroSearch
-              locale={locale}
-              labels={searchLabels}
-              regions={regionOptions}
-            />
+            <div className="fade-up fade-d3">
+              <HeroSearch
+                locale={locale}
+                labels={searchLabels}
+                regions={regionOptions}
+              />
+            </div>
 
             {/* Trust micro-signals */}
-            <div className="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm text-white/85">
+            <div className="fade-up fade-d4 mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm font-medium text-murekkep-700">
               {heroCopy.trust.map((tr) => (
                 <span key={tr} className="inline-flex items-center gap-1.5">
-                  <ShieldCheck className="h-4 w-4 text-accent-400" />
+                  <ShieldCheck className="h-4 w-4 text-turkuaz-600" />
                   {tr}
                 </span>
               ))}
             </div>
 
             {/* Activity signal (generic, honest — no fake numbers) */}
-            <div className="mt-4 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-sm font-medium text-white/90">
+            <div className="fade-up fade-d4 mt-4 inline-flex items-center gap-2 rounded-full border border-white/80 bg-white/70 px-4 py-1.5 text-sm font-semibold text-murekkep-700 backdrop-blur-sm">
               <span className="relative flex h-2.5 w-2.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400" />
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-75" />
+                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-success" />
               </span>
               {heroCopy.activity}
             </div>
@@ -605,20 +582,22 @@ export default async function HomePage({
               <Link
                 key={d.slug}
                 href={`/bodrum/${d.urlSlug}`}
-                className="group relative block aspect-[3/2] overflow-hidden rounded-xl shadow-card outline-none transition duration-300 hover:shadow-cardHover focus-visible:ring-2 focus-visible:ring-accent-400 focus-visible:ring-offset-2"
+                className="group relative block aspect-[3/2] overflow-hidden rounded-xl shadow-card outline-none transition duration-300 hover:shadow-cardHover focus-visible:ring-2 focus-visible:ring-turkuaz-600 focus-visible:ring-offset-2"
               >
                 <Image
                   src={`/images/regions/${d.slug}.webp`}
-                  alt={d.name}
+                  alt={`${d.name}, Bodrum`}
                   fill
                   loading="lazy"
                   sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                  placeholder="blur"
+                  blurDataURL={BLUR_KUM}
                   className="object-cover transition duration-500 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-navy-900/95 via-navy-900/35 to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 p-5 text-white">
                   <h3 className="flex items-center gap-1.5 text-xl font-bold text-white drop-shadow">
-                    <MapPin className="h-4 w-4 text-accent-400" />
+                    <MapPin className="h-4 w-4 text-turkuaz-300" />
                     {d.name}
                   </h3>
                   <p className="mt-1 line-clamp-2 text-sm text-white/85">
@@ -656,7 +635,7 @@ export default async function HomePage({
                     <span className="inline-flex h-11 w-11 items-center justify-center rounded-md bg-navy-50 text-navy-900">
                       <Icon className="h-5 w-5" />
                     </span>
-                    <span className="font-display text-2xl font-semibold text-accent-500/70">
+                    <span className="font-display text-2xl font-semibold text-accent-500">
                       0{i + 1}
                     </span>
                   </div>
@@ -679,7 +658,7 @@ export default async function HomePage({
           <div className="grid items-start gap-10 lg:grid-cols-12 lg:gap-12">
             {/* Editorial text column — left-aligned, anchored by an accent rule */}
             <div className="lg:col-span-4 lg:sticky lg:top-28">
-              <div className="border-l-2 border-accent-400 pl-5">
+              <div className="border-l-2 border-turkuaz-500 pl-5">
                 <h2 id="lifestyle-heading" className="text-balance">
                   {lifestyleCopy.title}
                 </h2>
@@ -715,7 +694,7 @@ export default async function HomePage({
               const Icon = WHY_ICONS[i] ?? WHY_ICONS[0];
               return (
                 <div key={item.title} className="card flex flex-col gap-3 p-6">
-                  <span className="inline-flex h-12 w-12 items-center justify-center rounded-md bg-accent-400/15 text-accent-500">
+                  <span className="inline-flex h-12 w-12 items-center justify-center rounded-md bg-turkuaz-500/10 text-turkuaz-600">
                     <Icon className="h-6 w-6" />
                   </span>
                   <h3 className="text-lg">{item.title}</h3>
@@ -731,7 +710,7 @@ export default async function HomePage({
       <section aria-labelledby="owner-heading" className="section section-soft py-10 md:py-14 lg:py-16">
         <div className="container-page">
           <div className="mx-auto flex max-w-4xl flex-col items-start gap-5 rounded-xl border border-[var(--color-border)] bg-white p-6 md:flex-row md:items-center md:gap-8 md:p-8">
-            <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-md bg-accent-400/15 text-accent-500">
+            <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-md bg-turkuaz-500/10 text-turkuaz-600">
               <HomeIcon className="h-6 w-6" />
             </span>
             <div className="flex-1">
@@ -775,8 +754,9 @@ export default async function HomePage({
         </div>
       </section>
 
-      {/* 9 — TESTIMONIALS */}
-      <Testimonials max={3} />
+      {/* 9 — GERÇEK MİSAFİR YORUMLARI (Supabase, onaylı; veri yoksa hiç
+          render edilmez — v2 sahte yorum yasağı) */}
+      <GuestReviews locale={locale} max={3} />
 
       {/* 10 — BLOG */}
       <section aria-labelledby="blog-heading" className="section section-soft">
@@ -822,6 +802,8 @@ export default async function HomePage({
                     fill
                     loading="lazy"
                     sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    placeholder="blur"
+                    blurDataURL={BLUR_KUM}
                     className="object-cover transition group-hover:scale-105"
                   />
                   <span className="absolute left-3 top-3 chip-accent">
@@ -868,6 +850,8 @@ function LifestyleTile({
         fill
         loading="lazy"
         sizes="(min-width: 1024px) 25vw, 50vw"
+        placeholder="blur"
+        blurDataURL={BLUR_KUM}
         className="object-cover transition duration-500 group-hover:scale-105"
       />
     </div>
@@ -907,7 +891,11 @@ function PreviewBanner({ locale }: { locale: string }) {
   return (
     <div
       role="status"
-      className="fixed inset-x-0 top-0 z-[100] flex items-center justify-center gap-2 bg-amber-500 px-4 py-1.5 text-center text-sm font-medium text-amber-950 shadow-md"
+      // Sistem/önizleme bandı mürekkep yüzey + beyaz metin (AAA kontrast).
+      // Spec v2 kuralı 'gunes YALNIZ yıldız puanı ikonlarında' olduğundan
+      // gunes-300 yüzey zemini olarak kullanılmaz — bant nötr murekkep-900'a
+      // çekildi.
+      className="fixed inset-x-0 top-0 z-[100] flex items-center justify-center gap-2 bg-murekkep-900 px-4 py-1.5 text-center text-sm font-medium text-white shadow-card"
     >
       <span>
         Önizleme modu — bu taslak, henüz yayında değil.

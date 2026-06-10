@@ -1,7 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { REVIEW_STAR_COLOR } from "@/lib/brand";
+// Renkler spec token sabitlerinden (DESIGN_SPEC.md §1) — eski slate/lacivert
+// inline hex'ler (#0F172A/#334155/#64748B/#CBD5E1/#0C4A6E/#EF4444) yeni
+// turkuaz vurguyla yarım palet karışımı yaratıyordu.
+import {
+  ACCENT,
+  BORDER,
+  DANGER,
+  INK,
+  MUTED,
+  REVIEW_STAR_COLOR,
+} from "@/lib/brand";
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
 const SUPABASE_ANON = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
@@ -63,13 +73,13 @@ export function ReviewForm({ token, brand }: Props) {
           padding: 32,
           borderRadius: 12,
           maxWidth: 500,
-          boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
+          boxShadow: "0 8px 24px -16px rgba(6,52,59,.35)",
           textAlign: "center",
         }}
       >
         <div style={{ fontSize: 48, marginBottom: 16 }}>✨</div>
-        <h1 style={{ fontSize: 22, marginBottom: 12, color: "#0F172A" }}>Teşekkürler!</h1>
-        <p style={{ color: "#475569", lineHeight: 1.6 }}>{result.message}</p>
+        <h1 style={{ fontSize: 22, marginBottom: 12, color: INK }}>Teşekkürler!</h1>
+        <p style={{ color: MUTED, lineHeight: 1.6 }}>{result.message}</p>
       </div>
     );
   }
@@ -83,22 +93,22 @@ export function ReviewForm({ token, brand }: Props) {
         borderRadius: 12,
         maxWidth: 560,
         width: "100%",
-        boxShadow: "0 4px 16px rgba(0,0,0,0.08)",
+        boxShadow: "0 8px 24px -16px rgba(6,52,59,.35)",
       }}
     >
-      <p style={{ fontSize: 11, color: "#0EA5E9", textTransform: "uppercase", letterSpacing: 1, margin: 0 }}>
+      <p style={{ fontSize: 11, color: ACCENT, textTransform: "uppercase", letterSpacing: 1, margin: 0 }}>
         {brand}
       </p>
-      <h1 style={{ fontSize: 24, margin: "4px 0 8px", color: "#0F172A" }}>
+      <h1 style={{ fontSize: 24, margin: "4px 0 8px", color: INK }}>
         Konaklamanızı değerlendirin
       </h1>
-      <p style={{ fontSize: 14, color: "#64748B", marginBottom: 24, lineHeight: 1.6 }}>
+      <p style={{ fontSize: 14, color: MUTED, marginBottom: 24, lineHeight: 1.6 }}>
         2 dakika sürer. Dilerseniz isminizle, dilerseniz anonim olarak paylaşabilirsiniz.
       </p>
 
       {/* Star rating */}
       <div style={{ marginBottom: 20 }}>
-        <label style={{ fontSize: 13, fontWeight: 600, color: "#334155", display: "block", marginBottom: 8 }}>
+        <label style={{ fontSize: 13, fontWeight: 600, color: INK, display: "block", marginBottom: 8 }}>
           Puanınız
         </label>
         <div style={{ display: "flex", gap: 4 }}>
@@ -110,23 +120,29 @@ export function ReviewForm({ token, brand }: Props) {
               onMouseEnter={() => setHoverRating(n)}
               onMouseLeave={() => setHoverRating(0)}
               style={{
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
                 background: "none",
                 border: "none",
                 cursor: "pointer",
                 fontSize: 36,
                 lineHeight: 1,
-                color: n <= (hoverRating || rating) ? REVIEW_STAR_COLOR : "#CBD5E1",
-                padding: 0,
+                color: n <= (hoverRating || rating) ? REVIEW_STAR_COLOR : BORDER,
+                padding: 4,
+                minWidth: 44,
+                minHeight: 44,
                 transition: "color 0.15s",
               }}
               aria-label={`${n} yıldız`}
+              aria-pressed={n <= rating}
             >
               ★
             </button>
           ))}
         </div>
         {rating > 0 && (
-          <p style={{ fontSize: 12, color: "#64748B", margin: "6px 0 0" }}>
+          <p style={{ fontSize: 12, color: MUTED, margin: "6px 0 0" }}>
             {["", "Çok kötü", "Kötü", "Orta", "İyi", "Mükemmel"][rating]}
           </p>
         )}
@@ -134,7 +150,7 @@ export function ReviewForm({ token, brand }: Props) {
 
       {/* Title (optional) */}
       <div style={{ marginBottom: 16 }}>
-        <label style={{ fontSize: 13, fontWeight: 600, color: "#334155", display: "block", marginBottom: 6 }}>
+        <label style={{ fontSize: 13, fontWeight: 600, color: INK, display: "block", marginBottom: 6 }}>
           Başlık (opsiyonel)
         </label>
         <input
@@ -146,9 +162,9 @@ export function ReviewForm({ token, brand }: Props) {
           style={{
             width: "100%",
             padding: "10px 12px",
-            border: "1px solid #CBD5E1",
-            borderRadius: 8,
-            fontSize: 14,
+            border: `1px solid ${BORDER}`,
+            borderRadius: 12, // spec §3: input 12px
+            fontSize: 16, // <16px input fontu iOS'ta zoom tetikler
             boxSizing: "border-box",
           }}
         />
@@ -156,8 +172,8 @@ export function ReviewForm({ token, brand }: Props) {
 
       {/* Body */}
       <div style={{ marginBottom: 16 }}>
-        <label style={{ fontSize: 13, fontWeight: 600, color: "#334155", display: "block", marginBottom: 6 }}>
-          Değerlendirmeniz <span style={{ color: "#EF4444" }}>*</span>
+        <label style={{ fontSize: 13, fontWeight: 600, color: INK, display: "block", marginBottom: 6 }}>
+          Değerlendirmeniz <span style={{ color: DANGER }}>*</span>
         </label>
         <textarea
           value={body}
@@ -170,22 +186,22 @@ export function ReviewForm({ token, brand }: Props) {
           style={{
             width: "100%",
             padding: "10px 12px",
-            border: "1px solid #CBD5E1",
-            borderRadius: 8,
-            fontSize: 14,
+            border: `1px solid ${BORDER}`,
+            borderRadius: 12, // spec §3: textarea 12px
+            fontSize: 16, // <16px input fontu iOS'ta zoom tetikler
             fontFamily: "inherit",
             resize: "vertical",
             boxSizing: "border-box",
           }}
         />
-        <p style={{ fontSize: 11, color: "#94A3B8", margin: "4px 0 0" }}>
+        <p style={{ fontSize: 11, color: MUTED, margin: "4px 0 0" }}>
           {body.length}/2000 karakter (en az 10)
         </p>
       </div>
 
       {/* Anonymous toggle */}
       <div style={{ marginBottom: 16 }}>
-        <label style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer", fontSize: 14, color: "#334155" }}>
+        <label style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer", fontSize: 14, color: INK }}>
           <input
             type="checkbox"
             checked={anonymous}
@@ -199,7 +215,7 @@ export function ReviewForm({ token, brand }: Props) {
       {/* Display name (only if NOT anonymous) */}
       {!anonymous && (
         <div style={{ marginBottom: 20 }}>
-          <label style={{ fontSize: 13, fontWeight: 600, color: "#334155", display: "block", marginBottom: 6 }}>
+          <label style={{ fontSize: 13, fontWeight: 600, color: INK, display: "block", marginBottom: 6 }}>
             Görünmesini istediğiniz isim (opsiyonel)
           </label>
           <input
@@ -211,9 +227,9 @@ export function ReviewForm({ token, brand }: Props) {
             style={{
               width: "100%",
               padding: "10px 12px",
-              border: "1px solid #CBD5E1",
-              borderRadius: 8,
-              fontSize: 14,
+              border: `1px solid ${BORDER}`,
+              borderRadius: 12, // spec §3: input 12px
+              fontSize: 16, // <16px input fontu iOS'ta zoom tetikler
               boxSizing: "border-box",
             }}
           />
@@ -224,9 +240,10 @@ export function ReviewForm({ token, brand }: Props) {
       {result && !result.ok && (
         <div
           style={{
-            background: "#FEF2F2",
-            border: "1px solid #FECACA",
-            color: "#B91C1C",
+            // Danger token tabanlı zemin/kenarlık tonları (rastgele hex değil).
+            background: "rgba(163,45,45,0.08)",
+            border: "1px solid rgba(163,45,45,0.35)",
+            color: DANGER,
             padding: "10px 12px",
             borderRadius: 8,
             fontSize: 13,
@@ -244,10 +261,10 @@ export function ReviewForm({ token, brand }: Props) {
         style={{
           width: "100%",
           padding: "14px 20px",
-          background: submitting || rating < 1 || body.trim().length < 10 ? "#94A3B8" : "#0C4A6E",
+          background: submitting || rating < 1 || body.trim().length < 10 ? MUTED : ACCENT,
           color: "#fff",
           border: "none",
-          borderRadius: 10,
+          borderRadius: 999, // spec §3: buton pill (999px)
           fontSize: 15,
           fontWeight: 600,
           cursor: submitting || rating < 1 || body.trim().length < 10 ? "not-allowed" : "pointer",
@@ -256,7 +273,7 @@ export function ReviewForm({ token, brand }: Props) {
         {submitting ? "Gönderiliyor..." : "Değerlendirmeyi gönder"}
       </button>
 
-      <p style={{ fontSize: 11, color: "#94A3B8", marginTop: 16, textAlign: "center", lineHeight: 1.5 }}>
+      <p style={{ fontSize: 11, color: MUTED, marginTop: 16, textAlign: "center", lineHeight: 1.5 }}>
         Değerlendirmeniz manuel onaydan sonra siteye yansıyacaktır.
         Spam, hakaret veya konuyla ilgisiz içerikler yayınlanmaz.
       </p>

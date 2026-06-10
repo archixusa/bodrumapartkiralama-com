@@ -295,7 +295,7 @@
     "metaTitle": "Bodrum Günlük Turlar 2026 | Mavi Tur, Dalış, Jeep Safari",
     "metaDesc": "Bodrum'da günlük turlar: mavi tur, dalış, jeep safari, antik kent. Yerli + uluslararası tur ortaklarıyla şeffaf fiyat ve doğrulanmış rota.",
     "h1": "Bodrum Günlük Turlar",
-    "subtitle": "Mavi tur, dalış, jeep safari, antik kent — Bodrum'u keşfetmenin en güzel yolları.",
+    "subtitle": "Mavi tur, dalış, jeep safari, antik kent — programı seçin, tarihi ve fiyatı birlikte netleştirelim.",
     "intro1": "Bodrum sadece plaj demek değil. Yarımada doğa ve tarih bakımından zengin; antik kentler, koylar, dalış noktaları ve iç köyler keşfedilmeyi bekliyor. Anlaşmalı tur operatörlerimizle çalışırken yerel ve sertifikalı rehberleri tercih ediyoruz; turlarda yemek, sigorta ve ulaşım çoğunlukla pakete dahil olur.",
     "intro2": "Mavi tur klasiktir: 1 gün boyunca tekne ile Bodrum koylarını dolaşır, 3-4 koyda yüzme molası verir, öğle yemeğini güvertede yersiniz. Dalış turları tüm seviyelere uygundur; başlangıç dalışı için sertifika gerekmez. Jeep safari ile yarımadanın iç köylerine, eski yel değirmenlerine ve panoramik tepelere ulaşırsınız. Antik kent turlarımız Bodrum Kalesi, Halikarnas Mozolesi, Pedasa antik kenti ve Knidos'u kapsar.",
     "intro3": "Her tur için minimum katılımcı sayısı 4-6 kişidir; bireysel rezervasyonlarınız diğer misafirlerle birleştirilir. Özel tur isteyenler için bütün araç/tekne özel kiralanabilir.",
@@ -366,5 +366,14 @@
     "rights": "Tüm hakları saklıdır.",
     "follow": "Bizi takip edin",
     "madeWith": "Bodrum'da özenle hazırlandı"
+  },
+  "notFound": {
+    "title": "Aradığınız sayfa taşınmış olabilir",
+    "body": "Sitemizi yeniledik ve bazı sayfaların adresleri değişti. Endişe etmeyin — aradığınız apartı veya bilgiyi birkaç tıkla bulabilir, ya da ekibimize doğrudan ulaşabilirsiniz. Bodrum tatiliniz için buradayız.",
+    "home": "Anasayfa",
+    "apartments": "Apartlar",
+    "districts": "Bölgeler",
+    "whatsapp": "WhatsApp ile yazın",
+    "waMessage": "Merhaba, bodrumapartkiralama.com sitesinde aradığım sayfayı bulamadım. Yardımcı olabilir misiniz?"
   }
 }

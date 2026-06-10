@@ -11,6 +11,7 @@ import { ServiceRelatedLinks } from "@/components/ServiceRelatedLinks";
 import { RelatedGuides, type RelatedLink } from "@/components/RelatedGuides";
 import { getSiteContent } from "@/lib/content";
 import { buildAlternates, defaultOgImages } from "@/lib/seo";
+import { BLUR_KUM } from "@/lib/blur";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.bodrumapartkiralama.com";
@@ -36,22 +37,22 @@ const TURLAR_HERO_DEFAULT: ByLocale<TurlarHeroCopy> = {
   tr: {
     kicker: "Partner Hizmet · Bodrum 2026",
     title: "Bodrum Günlük Turlar",
-    sub: "Mavi tur, dalış, jeep safari, antik kent — Bodrum'u keşfetmenin en güzel yolları.",
+    sub: "Mavi tur, dalış, jeep safari, antik kent — programı seçin, tarihi ve fiyatı birlikte netleştirelim.",
   },
   en: {
     kicker: "Partner Service · Bodrum 2026",
     title: "Bodrum Daily Tours",
-    sub: "Blue cruise, diving, jeep safari, ancient cities — the best ways to discover Bodrum.",
+    sub: "Blue cruise, diving, jeep safari, ancient sites — pick a programme and we'll confirm date and price together.",
   },
   de: {
     kicker: "Partnerservice · Bodrum 2026",
     title: "Bodrum Tagestouren",
-    sub: "Blaue Reise, Tauchen, Jeep-Safari, antike Städte – die schönsten Wege, Bodrum zu entdecken.",
+    sub: "Blaue Reise, Tauchen, Jeep-Safari, antike Stätten – Programm wählen, Termin und Preis klären wir gemeinsam.",
   },
   ru: {
     kicker: "Партнёрская услуга · Бодрум 2026",
     title: "Дневные экскурсии по Бодруму",
-    sub: "Морской круиз, дайвинг, джип-сафари, античные города — лучшие способы открыть для себя Бодрум.",
+    sub: "Морской круиз, дайвинг, джип-сафари, античные города — выберите программу, дату и цену согласуем вместе.",
   },
 };
 
@@ -426,7 +427,7 @@ export default async function Page({
 
       <section className="section">
         <div className="container-page grid gap-10 lg:grid-cols-[1fr_380px]">
-          <div className="space-y-4 text-[15px] leading-relaxed text-ink/90">
+          <div className="space-y-4 text-base md:text-[15px] leading-relaxed text-ink/90">
             <p>{t("intro1")}</p>
             <p>{t("intro2")}</p>
             <p>{t("intro3")}</p>
@@ -464,6 +465,8 @@ export default async function Page({
                       alt={tour.title}
                       fill
                       sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                      placeholder="blur"
+                      blurDataURL={BLUR_KUM}
                       className="object-cover"
                     />
                     <span className="absolute left-3 top-3 inline-flex h-9 w-9 items-center justify-center rounded-md bg-white/95 text-navy-900">

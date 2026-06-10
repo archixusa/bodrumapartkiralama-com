@@ -430,7 +430,7 @@ export default async function Page({
       "@id": `${SITE_URL}/#organization`,
       name: "Bodrumapartkiralama.com",
       url: SITE_URL,
-      logo: { "@type": "ImageObject", url: `${SITE_URL}/logo_kare.svg` },
+      logo: { "@type": "ImageObject", url: `${SITE_URL}/brand/apart-logo-512.png` },
       foundingDate: "2013",
       areaServed: "Bodrum, Muğla, TR",
       knowsAbout: [
@@ -591,7 +591,7 @@ export default async function Page({
               rel="noopener noreferrer"
               className="card flex flex-col items-center gap-2 p-5"
             >
-              <MessageCircle className="h-6 w-6 text-[#25D366]" />
+              <MessageCircle className="h-6 w-6 text-whatsapp-brand" />
               <span className="text-sm font-semibold">{copy.whatsappCta}</span>
               <span className="text-xs text-muted">{c("phoneDisplay")}</span>
             </a>

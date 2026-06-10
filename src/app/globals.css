@@ -2,21 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── "Canlı Akdeniz" değişkenleri (DESIGN_SPEC.md §1) ───────────────────── */
 :root {
-  --color-primary: #042c53;
-  --color-primary-light: #185fa5;
-  --color-primary-lighter: #378add;
-  --color-accent: #ef9f27;
-  --color-accent-dark: #ba7517;
-  --color-bg: #ffffff;
-  --color-bg-soft: #f1efe8;
-  --color-bg-blue: #e6f1fb;
-  --color-text: #1a2434;
-  --color-text-muted: #5f6b7a;
-  --color-border: #e2e8f0;
+  --color-primary: #0ea5a5; /* turkuaz-500 */
+  --color-primary-light: #34c8c4; /* turkuaz-300 */
+  --color-primary-lighter: #e6faf8; /* turkuaz-50 */
+  --color-accent: #0b7e80; /* turkuaz-600 (v2: begonvil/pembe kaldırıldı) */
+  --color-accent-dark: #06676a; /* turkuaz-700 (hover) */
+  --color-sun: #ffb23e; /* gunes-400 */
+  --color-bg: #fff8f0; /* kum-bg */
+  --color-bg-soft: #fbeedd; /* kum-koyu */
+  --color-bg-blue: #e6faf8; /* turkuaz-50 */
+  --color-text: #06343b; /* murekkep-900 */
+  --color-text-muted: #546e70; /* kum-100 üzerinde de ≥4.5:1 (AA, spec §1) */
+  --color-border: #f0e2cf; /* kum-cizgi */
+  --color-footer: #04252b;
   --color-success: #0f6e56;
-  --color-warning: #ba7517;
+  --color-warning: #c2750e;
   --color-danger: #a32d2d;
+  --shadow-card: 0 8px 24px -16px rgba(6, 52, 59, 0.35);
+  --shadow-card-hover: 0 18px 40px -22px rgba(6, 52, 59, 0.45);
 }
 
 html,
@@ -31,23 +36,34 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+/* <md ekranlarda alttaki yapışkan CTA çubuğu (MobileStickyCta) içerikle
+   çakışmasın diye gövdeye nefes payı. Çubuğun formülüne bağlı:
+   1px kenarlık + 10px üst boşluk + 48px buton + max(safe-area, 10px) —
+   home-indicator'lı cihazlarda (inset ≈ 34px) çubuk ~93px'e çıkar. */
+@media (max-width: 767px) {
+  body {
+    padding-bottom: calc(69px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
 @layer base {
-  /* h1/h2 carry the serif display voice (Cormorant Garamond → --font-display). */
+  /* h1/h2 carry the display voice (Fraunces → --font-display), 600 ağırlık,
+     spec §2: letter-spacing -0.015em. */
   h1, h2 {
-    @apply font-display tracking-tight text-navy-900;
+    @apply font-display font-semibold text-murekkep-900;
+    letter-spacing: -0.015em;
+    line-height: 1.08;
     text-wrap: balance;
   }
-  /* h3/h4 stay on the sans body for legibility at small sizes. */
+  /* h3/h4 stay on the sans body (Plus Jakarta 700) for legibility. */
   h3, h4 {
-    @apply font-sans tracking-tight text-navy-900;
+    @apply font-sans font-bold tracking-tight text-murekkep-900;
     text-wrap: balance;
   }
-  /* Cormorant renders smaller/lighter than a sans at the same px, so display
-     headings get a touch more size + weight to keep visual hierarchy. */
-  h1 { @apply text-5xl md:text-6xl font-bold; }
-  h2 { @apply text-3xl md:text-4xl font-bold; }
-  h3 { @apply text-xl md:text-2xl font-semibold; }
-  h4 { @apply text-lg md:text-xl font-semibold; }
+  h1 { @apply text-4xl md:text-5xl; }
+  h2 { @apply text-3xl md:text-4xl; }
+  h3 { @apply text-xl md:text-2xl; }
+  h4 { @apply text-lg md:text-xl; }
   p  { @apply leading-relaxed; }
 }
 
@@ -55,44 +71,153 @@ body {
   .container-page {
     @apply mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8;
   }
+  /* Birincil CTA (v2): turkuaz-600 zemin + beyaz metin, hover turkuaz-700,
+     -2px lift (spec §4/§5 + "v2 DEĞİŞİKLİĞİ"). */
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-md bg-accent-400 px-5 py-3 text-sm font-semibold text-navy-900 shadow-card transition hover:bg-accent-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-accent-400 focus:ring-offset-2;
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-turkuaz-600 px-6 py-3 text-sm font-bold text-white shadow-btn transition duration-200 hover:-translate-y-0.5 hover:bg-turkuaz-700 focus:outline-none focus:ring-2 focus:ring-turkuaz-600 focus:ring-offset-2;
   }
+  /* İkincil: outline pill — beyaz zemin + turkuaz-700 metin (beyazda 6.65:1,
+     AA). turkuaz-500 zemin + beyaz metin 3.02:1 verdiği için kullanılmaz
+     (spec §1 kontrast kuralı); dolgulu birincil butondan kenarlıkla ayrışır. */
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 rounded-md border border-navy-900 bg-white px-5 py-3 text-sm font-semibold text-navy-900 transition hover:bg-navy-50;
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-turkuaz-600 bg-white px-6 py-3 text-sm font-bold text-turkuaz-700 shadow-btnTurkuaz transition duration-200 hover:-translate-y-0.5 hover:bg-turkuaz-50 focus:outline-none focus:ring-2 focus:ring-turkuaz-600 focus:ring-offset-2;
   }
+  /* Ghost: yarı saydam beyaz + kum-cizgi kenarlık. */
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium text-navy-900 transition hover:bg-navy-50;
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-kum-200 bg-white/70 px-5 py-2.5 text-sm font-semibold text-murekkep-900 transition duration-200 hover:border-turkuaz-500;
   }
+  /* WhatsApp pill — her zaman yeşil, her zaman görünür (spec §4 header).
+     Zemin koyu platform yeşili (beyaz metinle 5.02:1, AA); açık #1FAE54
+     beyazla 2.90:1 verdiği için yalnız ikon/dekorda (whatsapp-brand). */
+  .btn-whatsapp {
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-whatsapp px-5 py-2.5 text-sm font-bold text-white shadow-btnWa transition duration-200 hover:-translate-y-0.5 hover:bg-whatsapp-dark focus:outline-none focus:ring-2 focus:ring-whatsapp focus:ring-offset-2;
+  }
+  /* Kart: radius 26px, kum-cizgi kenarlık, hover'da -6px lift + gölge artışı. */
   .card {
-    @apply overflow-hidden rounded-xl border border-[var(--color-border)] bg-white shadow-card outline-none transition hover:shadow-cardHover focus-visible:ring-2 focus-visible:ring-accent-400 focus-visible:ring-offset-2;
+    @apply overflow-hidden rounded-xl border border-kum-200 bg-white shadow-card outline-none transition duration-[250ms] ease-akdeniz hover:-translate-y-1.5 hover:shadow-cardHover focus-visible:ring-2 focus-visible:ring-turkuaz-600 focus-visible:ring-offset-2;
   }
   .chip {
-    @apply inline-flex items-center gap-1 rounded-full bg-navy-50 px-3 py-1 text-xs font-medium text-navy-900;
+    @apply inline-flex items-center gap-1 rounded-full bg-turkuaz-50 px-3 py-1 text-xs font-semibold text-turkuaz-600;
   }
+  /* Vurgu rozeti (v2): gunes yalnız yıldız/puanda kaldığı için rozet
+     turkuaz zemine alındı — beyaz metinle AA kontrast. */
   .chip-accent {
-    @apply inline-flex items-center gap-1 rounded-full bg-accent-400 px-3 py-1 text-xs font-semibold text-navy-900;
+    @apply inline-flex items-center gap-1 rounded-full bg-turkuaz-600 px-3 py-1 text-xs font-bold text-white;
+  }
+  /* Bölge etiketi: kum zemin pill (kart görseli sol-üst köşesi). Zemin OPAK
+     ve metin turkuaz-700 (kum-50'de 6.32:1) — yarı saydam zeminde koyu foto
+     sızıntısı kontrastı 4.5:1 altına düşürebiliyordu. */
+  .chip-region {
+    @apply inline-flex items-center gap-1 rounded-full bg-kum-50 px-3 py-1 text-xs font-bold text-turkuaz-700 shadow-sm;
+  }
+  /* Rating rozeti: mürekkep zemin + güneş yıldız (kart görseli sağ-alt). */
+  .chip-rating {
+    @apply inline-flex items-center gap-1 rounded-full bg-murekkep-900 px-2.5 py-1 text-xs font-bold text-white;
   }
   .section {
     @apply py-12 md:py-16 lg:py-20;
   }
   .section-soft {
-    @apply bg-sand-50;
+    @apply bg-kum-100;
   }
   .section-blue {
-    @apply bg-navy-50;
+    @apply bg-turkuaz-50;
   }
+  /* Koyu bant (design-preview seti): footer-bg zemin + beyaz metin —
+     evinizi-kiraya-verin "Başvuru" bölümü gibi koyu kapanış bantları. */
+  .section-deep {
+    @apply bg-footer text-white;
+  }
+  /* Bölüm üstü küçük etiket (kicker) — açık zeminde turkuaz-700
+     (kum-100 üzerinde 5.82:1, AA). */
+  .kicker {
+    @apply text-xs font-bold uppercase tracking-[0.18em] text-turkuaz-700;
+  }
+  /* Koyu zemin (section-deep / navy-900) üzerinde kicker — turkuaz-300
+     footer-bg üzerinde 7.82:1. */
+  .kicker-light {
+    @apply text-xs font-bold uppercase tracking-[0.18em] text-turkuaz-300;
+  }
+  /* Başlık altı kısa vurgu çizgisi (salt dekor). */
+  .divider-accent {
+    @apply mx-auto h-1 w-16 rounded-full bg-turkuaz-500;
+  }
+  /* Koyu zemin üzerinde outline buton (hero ikincil aksiyonu). */
+  .btn-outline-light {
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-white/40 px-6 py-3 text-sm font-bold text-white transition duration-200 hover:-translate-y-0.5 hover:border-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/70;
+  }
+  /* Form alanları: kum zemin + kum-cizgi kenarlık, focus'ta turkuaz ring 2px.
+     Ring/kenarlık turkuaz-600 — eski turkuaz-500/60 ring kum-50 üzerinde
+     ~1.89:1 kalıyordu; tek odak göstergesi olduğundan ≥3:1 şart (WCAG
+     1.4.11). turkuaz-600 kum-50'de 4.63:1, beyazda 4.87:1 — spec'in
+     "metin/link için turkuaz-600" kuralıyla tutarlı.
+     min-h 44px (dokunma hedefi) + mobilde 16px yazı — iOS, 16px altındaki
+     inputlara odaklanınca sayfayı zoom'lar (spec v3 mobil kuralı). */
   .input-base {
-    @apply w-full rounded-md border border-[var(--color-border)] bg-white px-3 py-2.5 text-sm text-ink placeholder:text-muted focus:border-navy-600 focus:outline-none focus:ring-2 focus:ring-navy-200;
+    @apply min-h-11 w-full rounded-md border border-kum-200 bg-kum-50 px-3 py-2.5 text-base text-ink placeholder:text-muted focus:border-turkuaz-600 focus:outline-none focus:ring-2 focus:ring-turkuaz-600 md:text-sm;
   }
   .label-base {
     @apply mb-1 block text-xs font-semibold uppercase tracking-wide text-muted;
+  }
+  /* Hata durumu (spec §4 form kuralları): kullanıcı alanla etkileşip geçersiz
+     bıraktığında danger kenarlık + soluk kırmızı ring. Salt CSS — form
+     gönderim mantığına dokunmaz. (`:user-invalid` ve `[aria-invalid]`
+     kuralları bilinçli olarak AYRI yazıldı: tek listede desteklemeyen
+     tarayıcı tüm listeyi düşürürdü.) */
+  .input-base:user-invalid {
+    @apply border-danger ring-2 ring-danger/20;
+  }
+  .input-base:user-invalid:focus {
+    @apply border-danger ring-danger/40;
+  }
+  .input-base[aria-invalid="true"] {
+    @apply border-danger ring-2 ring-danger/20;
+  }
+  .input-base[aria-invalid="true"]:focus {
+    @apply border-danger ring-danger/40;
+  }
+  /* Alan altı / form geneli hata mesajı. */
+  .field-error {
+    @apply flex items-start gap-1.5 text-xs font-medium text-danger;
   }
 }
 
 @layer utilities {
   .text-balance { text-wrap: balance; }
   .text-pretty  { text-wrap: pretty; }
+  /* Sayfa girişi stagger fade-up (spec §5). */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(22px);
+    animation: fade-up 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+  }
+  .fade-d1 { animation-delay: 0.05s; }
+  .fade-d2 { animation-delay: 0.15s; }
+  .fade-d3 { animation-delay: 0.25s; }
+  .fade-d4 { animation-delay: 0.35s; }
+}
+
+@keyframes fade-up {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Spec §5: reduced-motion MUTLAKA desteklenir — tüm animasyonlar kapanır. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .fade-up {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .prose-legal h2 {
@@ -108,5 +233,5 @@ body {
   @apply ml-5 list-decimal space-y-1;
 }
 .prose-legal a {
-  @apply text-navy-600 underline-offset-2 hover:underline;
+  @apply text-turkuaz-600 underline-offset-2 hover:underline;
 }

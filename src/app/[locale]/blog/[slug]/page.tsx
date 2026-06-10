@@ -15,12 +15,55 @@ import { districts } from "@/data/districts";
 import { getMdxPosts, getMdxPost } from "@/lib/mdx-blog";
 import { loc } from "@/lib/i18n-data";
 import { buildAlternates, buildLocaleUrl } from "@/lib/seo";
+import { BLUR_KUM } from "@/lib/blur";
 import { buildHowToSchema } from "@/lib/blog-howto";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.bodrumapartkiralama.com";
 
 const FALLBACK_HERO = "/blog/bodrum-tatil-rehberi/hero.webp";
+
+// 4 dilli sabitler — tr/en ikili ternary'ler de/ru'yu İngilizceye düşürüyordu
+// (district sayfasındaki homeLabel deseniyle aynı çözüm). Görünür breadcrumb
+// ve JSON-LD name aynı kaynaktan beslenir.
+const HOME_LABEL: Record<string, string> = {
+  tr: "Ana Sayfa",
+  en: "Home",
+  de: "Startseite",
+  ru: "Главная",
+};
+
+const DATE_LOCALE: Record<string, string> = {
+  tr: "tr-TR",
+  en: "en-GB",
+  de: "de-DE",
+  ru: "ru-RU",
+};
+
+const FAQ_TITLE: Record<string, string> = {
+  tr: "Sıkça Sorulanlar",
+  en: "Frequently Asked Questions",
+  de: "Häufige Fragen",
+  ru: "Частые вопросы",
+};
+
+const RELATED_DISTRICTS_TITLE: Record<string, string> = {
+  tr: "İlgili Bölgeler",
+  en: "Related districts",
+  de: "Verwandte Regionen",
+  ru: "Связанные районы",
+};
+
+const EDITOR_TEAM: Record<string, string> = {
+  tr: "Bodrumapartkiralama Editör Ekibi",
+  en: "Bodrumapartkiralama Editor Team",
+  de: "Bodrumapartkiralama-Redaktionsteam",
+  ru: "Редакция Bodrumapartkiralama",
+};
+
+function pickLabel(map: Record<string, string>, locale: string): string {
+  return map[locale] ?? map.en;
+}
 
 // Spoke→hub: contextual links surfaced from every blog post (in addition to the
 // Bodrum Tatil Rehberi pillar, which RelatedGuides always adds first). Kept
@@ -139,7 +182,7 @@ export default async function Page({
   if (!post) notFound();
 
   const dt = await getTranslations({ locale, namespace: "districts" });
-  const isTr = locale === "tr";
+  const homeLabel = pickLabel(HOME_LABEL, locale);
   const title = loc(locale, { tr: post.titleTr, en: post.titleEn, de: post.titleDe, ru: post.titleRu });
   const sections =
     locale === "de"
@@ -194,18 +237,20 @@ export default async function Page({
       publisher: {
         "@type": "Organization",
         name: "Bodrumapartkiralama.com",
-        logo: { "@type": "ImageObject", url: `${SITE_URL}/logo_kare.svg` },
+        logo: { "@type": "ImageObject", url: `${SITE_URL}/brand/apart-logo-512.png` },
       },
-      mainEntityOfPage: `${SITE_URL}/blog/${post.slug}`,
+      mainEntityOfPage: buildLocaleUrl(locale, `/blog/${post.slug}`),
       description: loc(locale, { tr: post.metaDescTr, en: post.metaDescEn, de: post.metaDescDe, ru: post.metaDescRu }),
     },
     {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
+      // Locale-duyarlı: item URL'leri canonical ile aynı prefix'i taşır,
+      // ilk halka 4 dilde (district sayfasındaki desen).
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: isTr ? "Ana Sayfa" : "Home", item: SITE_URL },
-        { "@type": "ListItem", position: 2, name: t("h1"), item: `${SITE_URL}/blog` },
-        { "@type": "ListItem", position: 3, name: title, item: `${SITE_URL}/blog/${post.slug}` },
+        { "@type": "ListItem", position: 1, name: homeLabel, item: buildLocaleUrl(locale, "") },
+        { "@type": "ListItem", position: 2, name: t("h1"), item: buildLocaleUrl(locale, "/blog") },
+        { "@type": "ListItem", position: 3, name: title, item: buildLocaleUrl(locale, `/blog/${post.slug}`) },
       ],
     },
     faqItems.length > 0
@@ -231,13 +276,16 @@ export default async function Page({
             alt={title}
             fill
             priority
+            fetchPriority="high"
             sizes="100vw"
+            placeholder="blur"
+            blurDataURL={BLUR_KUM}
             className="object-cover opacity-40"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-navy-900/80 via-navy-900/60 to-navy-900/90" />
           <div className="container-page relative py-14 md:py-20">
             <nav aria-label="breadcrumb" className="mb-3 flex items-center gap-1 text-xs text-white/80">
-              <Link href="/" className="hover:underline">{isTr ? "Ana Sayfa" : "Home"}</Link>
+              <Link href="/" className="hover:underline">{homeLabel}</Link>
               <ChevronRight className="h-3 w-3" />
               <Link href="/blog" className="hover:underline">{t("h1")}</Link>
             </nav>
@@ -246,7 +294,7 @@ export default async function Page({
             <div className="mt-4 flex flex-wrap items-center gap-4 text-sm text-white/85">
               <span className="inline-flex items-center gap-1">
                 <Calendar className="h-4 w-4" />
-                {new Date(post.date).toLocaleDateString(isTr ? "tr-TR" : "en-GB", {
+                {new Date(post.date).toLocaleDateString(pickLabel(DATE_LOCALE, locale), {
                   day: "2-digit",
                   month: "long",
                   year: "numeric",
@@ -260,7 +308,7 @@ export default async function Page({
                 className="inline-flex items-center gap-1 underline-offset-2 hover:underline"
               >
                 <User className="h-4 w-4" />
-                {isTr ? "Bodrumapartkiralama Editör Ekibi" : "Bodrumapartkiralama Editor Team"}
+                {pickLabel(EDITOR_TEAM, locale)}
               </Link>
             </div>
           </div>
@@ -272,7 +320,7 @@ export default async function Page({
               <PostBody sections={sections} />
               {faqItems.length > 0 && (
                 <>
-                  <h2 className="mt-12 text-2xl">{isTr ? "Sıkça Sorulanlar" : "Frequently Asked Questions"}</h2>
+                  <h2 className="mt-12 text-2xl">{pickLabel(FAQ_TITLE, locale)}</h2>
                   <div className="mt-4">
                     <FAQ items={faqItems} />
                   </div>
@@ -304,7 +352,7 @@ export default async function Page({
               {post.relatedDistricts && post.relatedDistricts.length > 0 && (
                 <div className="mt-6 rounded-xl border border-[var(--color-border)] bg-white p-4 text-sm">
                   <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-muted">
-                    {isTr ? "İlgili Bölgeler" : "Related districts"}
+                    {pickLabel(RELATED_DISTRICTS_TITLE, locale)}
                   </p>
                   <ul className="space-y-2">
                     {post.relatedDistricts.map((slug) => {
@@ -344,6 +392,8 @@ export default async function Page({
                       alt={loc(locale, { tr: p.titleTr, en: p.titleEn, de: p.titleDe, ru: p.titleRu })}
                       fill
                       sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                      placeholder="blur"
+                      blurDataURL={BLUR_KUM}
                       className="object-cover transition group-hover:scale-105"
                     />
                   </div>
@@ -371,7 +421,7 @@ function renderMdxPost(
   locale: string,
   t: Awaited<ReturnType<typeof getTranslations<"blog">>>,
 ) {
-  const isTr = locale === "tr";
+  const homeLabel = pickLabel(HOME_LABEL, locale);
   const heroUrl = mdx.hero_image ?? FALLBACK_HERO;
   // Locale-aware URL of the editorial-team author profile (E-E-A-T byline link).
   const authorUrl = buildLocaleUrl(locale, "/yazar/editor");
@@ -400,9 +450,9 @@ function renderMdxPost(
     publisher: {
       "@type": "Organization",
       name: "Bodrumapartkiralama.com",
-      logo: { "@type": "ImageObject", url: `${SITE_URL}/logo_kare.svg` },
+      logo: { "@type": "ImageObject", url: `${SITE_URL}/brand/apart-logo-512.png` },
     },
-    mainEntityOfPage: `${SITE_URL}/blog/${mdx.slug}`,
+    mainEntityOfPage: buildLocaleUrl(locale, `/blog/${mdx.slug}`),
     keywords: mdx.keywords.join(", "),
     // Speakable (AEO / voice): point assistants at the answer-first intro
     // headline + summary and the FAQ questions for spoken snippets.
@@ -412,16 +462,17 @@ function renderMdxPost(
     },
   };
 
-  const pageUrl = `${SITE_URL}/blog/${mdx.slug}`;
+  const pageUrl = buildLocaleUrl(locale, `/blog/${mdx.slug}`);
   const howToSchema = buildHowToSchema(mdx.slug, pageUrl);
 
   const breadcrumbSchema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
+    // Locale-duyarlı item URL'leri + 4 dilli ilk halka (district deseni).
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: isTr ? "Ana Sayfa" : "Home", item: SITE_URL },
-      { "@type": "ListItem", position: 2, name: "Blog", item: `${SITE_URL}/blog` },
-      { "@type": "ListItem", position: 3, name: mdx.title, item: `${SITE_URL}/blog/${mdx.slug}` },
+      { "@type": "ListItem", position: 1, name: homeLabel, item: buildLocaleUrl(locale, "") },
+      { "@type": "ListItem", position: 2, name: "Blog", item: buildLocaleUrl(locale, "/blog") },
+      { "@type": "ListItem", position: 3, name: mdx.title, item: buildLocaleUrl(locale, `/blog/${mdx.slug}`) },
     ],
   };
 
@@ -459,13 +510,16 @@ function renderMdxPost(
             alt={mdx.hero_image_alt || mdx.title}
             fill
             priority
+            fetchPriority="high"
             sizes="100vw"
+            placeholder="blur"
+            blurDataURL={BLUR_KUM}
             className="object-cover opacity-40"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-navy-900/80 via-navy-900/60 to-navy-900/90" />
           <div className="container-page relative py-14 md:py-20">
             <nav aria-label="breadcrumb" className="mb-3 flex items-center gap-1 text-xs text-white/80">
-              <Link href="/" className="hover:underline">{isTr ? "Ana Sayfa" : "Home"}</Link>
+              <Link href="/" className="hover:underline">{homeLabel}</Link>
               <ChevronRight className="h-3 w-3" />
               <Link href="/blog" className="hover:underline">{t("h1")}</Link>
             </nav>
@@ -474,7 +528,7 @@ function renderMdxPost(
             <div className="mt-4 flex flex-wrap items-center gap-4 text-sm text-white/85">
               <span className="inline-flex items-center gap-1">
                 <Calendar className="h-4 w-4" />
-                {new Date(mdx.published_at).toLocaleDateString(isTr ? "tr-TR" : "en-GB", {
+                {new Date(mdx.published_at).toLocaleDateString(pickLabel(DATE_LOCALE, locale), {
                   day: "2-digit",
                   month: "long",
                   year: "numeric",
