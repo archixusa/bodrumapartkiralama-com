@@ -74,12 +74,22 @@ gtag('config', '${GA_ID}', { anonymize_ip: true });`}
           </Script>
         </>
       )}
-      {/* Pazarlama pikseli etkileşim öncesi gerekmez — lazyOnload ana thread'i
-          rahat bırakır (spec v3: 3. parti scriptler afterInteractive/lazyOnload). */}
+      {/* Pazarlama pikseli iki parça (regresyon bulgusu düzeltmesi):
+          1) fbq KUYRUK STUB'ı afterInteractive ile erken tanımlanır — ucuz,
+             ağ isteği yok. Böylece hydration→lazyOnload penceresindeki
+             erken Lead tıklamaları (window.fbq?.('track','Lead') çağrıları,
+             src/lib/analytics.ts) kuyruğa girer, sessizce DÜŞMEZ.
+          2) Ağır fbevents.js + init/PageView lazyOnload'da kalır — ana
+             thread etkileşimden önce bloklanmaz (spec v3 script kuralı). */}
       {allowMarketing && META_PIXEL_ID && (
-        <Script id="meta-pixel-init" strategy="lazyOnload">
-          {`!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init', '${META_PIXEL_ID}');fbq('track', 'PageView');`}
-        </Script>
+        <>
+          <Script id="meta-pixel-stub" strategy="afterInteractive">
+            {`!function(f){if(f.fbq)return;var n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];}(window);`}
+          </Script>
+          <Script id="meta-pixel-init" strategy="lazyOnload">
+            {`(function(b,e,v){var t=b.createElement(e);t.async=!0;t.src=v;var s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s);})(document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init', '${META_PIXEL_ID}');fbq('track', 'PageView');`}
+          </Script>
+        </>
       )}
     </>
   );

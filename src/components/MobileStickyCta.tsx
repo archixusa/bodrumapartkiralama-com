@@ -6,6 +6,9 @@ import { MessageCircle, ArrowRight } from "lucide-react";
 import { getPhone } from "@/lib/contact";
 
 // Lazy-load the heavy client-only modal so it stays out of the initial bundle.
+// Chunk yalnız ilk "Teklif al" tıklamasında iner (aşağıdaki `mounted` kapısı) —
+// koşulsuz render edilince next/dynamic chunk'ı hydration sonrası HER sayfada
+// hemen indiriyordu (regresyon bulgusu).
 const RequestModal = dynamic(
   () => import("@/components/RequestModal").then((m) => m.RequestModal),
   { ssr: false },
@@ -27,6 +30,8 @@ const LABELS: Record<L, { offer: string; wa: string }> = {
  */
 export function MobileStickyCta({ locale }: { locale: string }) {
   const [open, setOpen] = useState(false);
+  // Modal ilk açılışa kadar hiç mount edilmez → dynamic chunk da inmez.
+  const [mounted, setMounted] = useState(false);
   const lang: L = (locale as L) in LABELS ? (locale as L) : "en";
   const t = LABELS[lang];
 
@@ -48,7 +53,10 @@ export function MobileStickyCta({ locale }: { locale: string }) {
           </a>
           <button
             type="button"
-            onClick={() => setOpen(true)}
+            onClick={() => {
+              setMounted(true);
+              setOpen(true);
+            }}
             data-lead="sticky-bar-quote"
             className="btn-primary flex-1"
             style={{ minHeight: 48 }}
@@ -59,12 +67,14 @@ export function MobileStickyCta({ locale }: { locale: string }) {
         </div>
       </div>
 
-      <RequestModal
-        open={open}
-        onClose={() => setOpen(false)}
-        locale={locale}
-        prefilled={{}}
-      />
+      {mounted && (
+        <RequestModal
+          open={open}
+          onClose={() => setOpen(false)}
+          locale={locale}
+          prefilled={{}}
+        />
+      )}
     </>
   );
 }

@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import { createClient } from "@supabase/supabase-js";
+// Renkler spec token sabitlerinden (DESIGN_SPEC.md §1) — eski #053C4A/#5C6B73/
+// #C8D8DC inline hex'leri yeni turkuaz butonla yarım palet karışımı yaratıyordu.
+import { ACCENT, BORDER, DANGER, INK, MUTED } from "@/lib/brand";
 
 export function UnsubscribeClient() {
   // SECURITY: we intentionally do NOT auto-load the email from a ?t= target id.
@@ -75,7 +78,7 @@ export function UnsubscribeClient() {
           placeholder="ornek@sirket.com"
         />
       </label>
-      {error && <p style={{ color: "#A32D2D", fontSize: 13, marginTop: 8 }}>{error}</p>}
+      {error && <p style={{ color: DANGER, fontSize: 13, marginTop: 8 }}>{error}</p>}
       <button type="submit" disabled={status === "saving"} style={btn}>
         {status === "saving" ? "Kaydediliyor..." : "Çıkışı Onayla"}
       </button>
@@ -96,22 +99,22 @@ const card: React.CSSProperties = {
   boxShadow: "0 12px 40px -20px rgba(5,60,74,.25)",
   fontFamily: "-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif",
 };
-const h1: React.CSSProperties = { margin: "0 0 8px", fontSize: 24, color: "#053C4A" };
-const p: React.CSSProperties = { margin: 0, fontSize: 14, color: "#5C6B73", lineHeight: 1.5 };
-const small: React.CSSProperties = { marginTop: 14, fontSize: 12, color: "#5C6B73" };
+const h1: React.CSSProperties = { margin: "0 0 8px", fontSize: 24, color: INK };
+const p: React.CSSProperties = { margin: 0, fontSize: 14, color: MUTED, lineHeight: 1.5 };
+const small: React.CSSProperties = { marginTop: 14, fontSize: 12, color: MUTED };
 const label: React.CSSProperties = {
   fontSize: 11,
   fontWeight: 600,
   textTransform: "uppercase",
   letterSpacing: "0.08em",
-  color: "#5C6B73",
+  color: MUTED,
   display: "block",
   marginBottom: 6,
 };
 const input: React.CSSProperties = {
   width: "100%",
   padding: "11px 13px",
-  border: "1px solid #C8D8DC",
+  border: `1px solid ${BORDER}`, // kum-cizgi
   borderRadius: 10,
   fontSize: 16, // <16px input fontu iOS'ta odaklanınca zoom tetikler
   fontFamily: "inherit",
@@ -123,7 +126,7 @@ const btn: React.CSSProperties = {
   padding: "12px 16px",
   border: 0,
   borderRadius: 999,
-  background: "#0B7E80", // turkuaz-600 — eski turuncu palet kalıntısıydı
+  background: ACCENT, // turkuaz-600 — eski turuncu palet kalıntısıydı
   color: "#fff",
   fontWeight: 700,
   fontSize: 14,
