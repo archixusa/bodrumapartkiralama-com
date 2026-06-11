@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { Search, Calendar, Users, MapPin } from "lucide-react";
 import { useRouter } from "@/i18n/routing";
 import { districts } from "@/data/districts";
+import { openDatePicker } from "@/lib/date-picker";
 
 export function SearchBar({ compact = false }: { compact?: boolean }) {
   const t = useTranslations("home");
@@ -53,6 +54,8 @@ export function SearchBar({ compact = false }: { compact?: boolean }) {
           min={today}
           value={checkin}
           onChange={(e) => setCheckin(e.target.value)}
+          onFocus={openDatePicker}
+          onClick={openDatePicker}
           className="input-base min-h-0 border-none p-0 text-base font-medium focus:ring-0"
         />
       </Field>
@@ -62,6 +65,8 @@ export function SearchBar({ compact = false }: { compact?: boolean }) {
           min={checkin || today}
           value={checkout}
           onChange={(e) => setCheckout(e.target.value)}
+          onFocus={openDatePicker}
+          onClick={openDatePicker}
           className="input-base min-h-0 border-none p-0 text-base font-medium focus:ring-0"
         />
       </Field>

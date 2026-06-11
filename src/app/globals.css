@@ -65,6 +65,18 @@ body {
   h3 { @apply text-xl md:text-2xl; }
   h4 { @apply text-lg md:text-xl; }
   p  { @apply leading-relaxed; }
+
+  /* Mobil tarih seçici (DESIGN_SPEC.md v4 EK — MOBİL TARİH SEÇİCİ):
+     date alanı tıklanabilir görünür + native takvim ikonu her zaman görünür/
+     tıklanabilir. JS tarafında openDatePicker helper'ı tek dokunuşta takvimi
+     açar; bu kurallar ikon görünürlüğünü ve imleci garanti eder. */
+  input[type="date"] {
+    cursor: pointer;
+  }
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 1;
+    cursor: pointer;
+  }
 }
 
 @layer components {

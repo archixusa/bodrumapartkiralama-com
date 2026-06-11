@@ -3,6 +3,7 @@
 import { useState, useEffect, useTransition, FormEvent } from "react";
 import { getReservationClient } from "./supabaseClient";
 import { isValidTrPhone, todayISO, getUtmFromUrl } from "./utils";
+import { openDatePicker } from "@/lib/date-picker";
 import type { SiteName, ReservationRequestPayload } from "./types";
 
 export interface ReservationFormProps {
@@ -207,6 +208,8 @@ export function ReservationForm({
             min={minCheckin}
             value={checkin}
             onChange={(e) => setCheckin(e.target.value)}
+            onFocus={openDatePicker}
+            onClick={openDatePicker}
             className="rf-input"
           />
         </div>
@@ -218,6 +221,8 @@ export function ReservationForm({
             min={minCheckout}
             value={checkout}
             onChange={(e) => setCheckout(e.target.value)}
+            onFocus={openDatePicker}
+            onClick={openDatePicker}
             className="rf-input"
           />
         </div>

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import dynamic from "next/dynamic";
 import { MessageCircle, MapPin, Calendar, Users } from "lucide-react";
+import { openDatePicker } from "@/lib/date-picker";
 
 // Lazy-load the heavy client-only modal so it stays out of the initial
 // homepage bundle — it only renders after the search button is clicked.
@@ -72,6 +73,8 @@ export function HeroSearch({ locale, labels, regions }: HeroSearchProps) {
               type="date"
               value={checkIn}
               onChange={(e) => setCheckIn(e.target.value)}
+              onFocus={openDatePicker}
+              onClick={openDatePicker}
               className="input-base"
               style={{ fontSize: 16 }}
             />
@@ -87,6 +90,8 @@ export function HeroSearch({ locale, labels, regions }: HeroSearchProps) {
               type="date"
               value={checkOut}
               onChange={(e) => setCheckOut(e.target.value)}
+              onFocus={openDatePicker}
+              onClick={openDatePicker}
               className="input-base"
               style={{ fontSize: 16 }}
             />
