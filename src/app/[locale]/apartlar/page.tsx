@@ -8,6 +8,7 @@ import { ApartlarFilterBar } from "@/components/ApartlarFilterBar";
 import { PropertyCard } from "@/components/PropertyCard";
 import { getPublishedProperties } from "@/lib/properties";
 import { getSiteContent } from "@/lib/content";
+import { buildWaHref } from "@/lib/contact";
 import { buildAlternates, buildLocaleUrl, defaultOgImages } from "@/lib/seo";
 import { districts } from "@/data/districts";
 
@@ -370,7 +371,7 @@ export default async function ApartlarPage({
               <p className="text-sm text-muted">{copy.whatsappDesc}</p>
             </div>
             <a
-              href={`https://wa.me/${c("whatsappNumber")}`}
+              href={buildWaHref(locale, "apartlar")}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary"
@@ -391,7 +392,7 @@ function ApartlarGuideTr() {
   const faqs = [
     {
       q: "Bodrum'da apart kiralamak otelden ne kadar uygun?",
-      a: "4 ve üzeri kişiyle seyahat eden aileler için apart, otel oda fiyatına göre çoğu zaman %30-50 daha avantajlı. Kahvaltı/öğle yemeğini apartta hazırlamak günlük yeme-içme harcamasını da düşürür. 1-2 kişilik konaklamada otel ile apart fiyat farkı daha az olur; apart avantajı düşük sezonda artar.",
+      a: "4 ve üzeri kişiyle seyahat eden aileler için apart, ayrı otel odaları tutmaya göre çoğu zaman belirgin şekilde daha avantajlı olur. Kahvaltı/öğle yemeğini apartta hazırlamak günlük yeme-içme harcamasını da düşürür. 1-2 kişilik konaklamada otel ile apart fiyat farkı daha az olur; apart avantajı düşük sezonda artar.",
     },
     {
       q: "Hangi bölgeyi seçmeliyim?",
@@ -399,7 +400,7 @@ function ApartlarGuideTr() {
     },
     {
       q: "Sezona göre fiyatlar nasıl değişir?",
-      a: "Bodrum apart fiyatları üç sezonda toplanır: yüksek sezon (haziran sonu – ağustos sonu) en yüksek; orta sezon (haziran başı, eylül, ekim ilk yarısı) yaklaşık %25-35 indirim; düşük sezon (kasım-nisan) %50'ye varan indirim. Bayram dönemleri (Ramazan Bayramı, Kurban Bayramı) bağımsız bir prim sezonu oluşturur.",
+      a: "Bodrum apart fiyatları üç sezonda toplanır: yüksek sezon (haziran sonu – ağustos sonu) en yüksek; orta sezonda (haziran başı, eylül, ekim ilk yarısı) fiyatlar belirgin şekilde düşer; düşük sezonda (kasım-nisan) ciddi indirim olur. Bayram dönemleri (Ramazan Bayramı, Kurban Bayramı) bağımsız bir prim sezonu oluşturur.",
     },
     {
       q: "Apart seçerken nelere dikkat etmeliyim?",
@@ -426,7 +427,7 @@ function ApartlarGuideTr() {
       a: "Çocuklu aileler için havuzlu site apartları çoğu zaman daha pratiktir — havuz, oyun alanı, güvenlik gibi olanakları içerir. Romantik kaçamak veya manzara odaklı tatil için deniz manzaralı yamaç apartları daha cazip. Yalıkavak ve Gündoğan deniz manzaralı stoku ağırlıklı; Turgutreis ve Ortakent site apart stoku ağırlıklı.",
     },
     {
-      q: "Çek-up out saatleri standart mı?",
+      q: "Check-in/check-out saatleri standart mı?",
       a: "Tipik check-in 16:00, check-out 11:00 olur. Sezon dışında ve mülke göre erken check-in/geç check-out talep edilebilir; mülk sahibiyle önceden konuşmamız gerekir. Aynı gün arka arkaya rezervasyon olduğu durumlarda esneklik daralabilir.",
     },
   ];
@@ -437,10 +438,10 @@ function ApartlarGuideTr() {
           Bodrum'da Apart Kiralama Hakkında Bilmeniz Gerekenler
         </h2>
         <p className="mt-5 text-base md:text-[15px] leading-relaxed text-ink/90">
-          Apart kiralama Bodrum tatilinin son 10 yılda en hızlı büyüyen
+          Apart kiralama, Bodrum'da son yıllarda giderek yaygınlaşan bir
           konaklama biçimi. Ailelerin kendi mutfaklarını kullanabilmesi,
           gruplarla seyahat edenlerin maliyeti paylaşması ve uzun konaklamada
-          otele kıyasla ciddi tasarruf sunması bu trendi besledi. Aşağıdaki
+          otele kıyasla ciddi tasarruf sunması bu eğilimi besledi. Aşağıdaki
           rehber, Bodrum'da apart kiralarken bilinmesi gereken pratik
           bilgilerin özetidir.
         </p>
@@ -451,9 +452,10 @@ function ApartlarGuideTr() {
           mutfak imkânı ve kendi temponuza göre planlanan günler. Otelin
           sunduğu günlük temizlik, oda servisi ve resepsiyon hizmetlerinden
           feragat edilir; karşılığında alan genişliği, mahremiyet ve maliyet
-          avantajı kazanılır. 4 kişi ve üzeri gruplarda genelde apart, otel
-          fiyatına kıyasla %30-50 daha avantajlıdır. 1-2 kişilik kısa
-          konaklamada bu fark daralır; otel rahatlığı ön plana çıkabilir.
+          avantajı kazanılır. 4 kişi ve üzeri gruplarda apart, ayrı otel
+          odaları tutmaya kıyasla çoğu zaman belirgin şekilde avantajlıdır.
+          1-2 kişilik kısa konaklamada bu fark daralır; otel rahatlığı ön
+          plana çıkabilir.
         </p>
         <p className="mt-3 text-base md:text-[15px] leading-relaxed text-ink/90">
           Yemek alışkanlıkları da kararı etkiler. Sabah kahvaltısı ve öğle
@@ -504,11 +506,11 @@ function ApartlarGuideTr() {
           Bodrum'da apart fiyatları üç ana sezona göre şekillenir. Yüksek
           sezon haziran sonundan ağustos sonuna kadar uzanır; bayram günleri
           ve okul tatili pikiyle birlikte fiyatlar en yüksek seviyeye çıkar.
-          Orta sezon (haziran ilk yarısı ve eylül) yaklaşık %25-35 indirimle
-          gelir ama hava ve deniz koşulları hâlâ mükemmeldir; deneyimli
-          tatilcilerin tercih ettiği bir dönemdir. Düşük sezon (kasım-nisan)
-          %50'ye varan indirim sunar; çoğu apart yıl boyu açık olduğu için
-          sezon dışı konaklama da mümkündür.
+          Orta sezonda (haziran ilk yarısı ve eylül) fiyatlar belirgin
+          şekilde düşer ama hava ve deniz koşulları hâlâ çok iyidir;
+          deneyimli tatilcilerin tercih ettiği bir dönemdir. Düşük sezonda
+          (kasım-nisan) ciddi indirim olur; çoğu apart yıl boyu açık olduğu
+          için sezon dışı konaklama da mümkündür.
         </p>
         <p className="mt-3 text-base md:text-[15px] leading-relaxed text-ink/90">
           Bayram dönemleri (Ramazan ve Kurban Bayramı) ayrı bir prim sezonu
@@ -541,8 +543,9 @@ function ApartlarGuideTr() {
           Rezervasyon süreci kabaca şu adımlardan oluşur: tarih ve kişi
           sayısı paylaşımı; uygun mülk seçeneklerinin sunulması; mülk sahibiyle
           iletişim ve detay teyidi; ödeme planı ve sözleşme; rezervasyon
-          onayı. Ödeme genelde iki taksitlidir: rezervasyonu kesinleştiren
-          kapora (%25-50) ve giriş öncesi kalan tutar. Banka havalesi en yaygın
+          onayı. Ödeme genelde iki adımlıdır: rezervasyonu kesinleştiren
+          kapora (oranı mülke göre değişir) ve giriş öncesi kalan tutar.
+          Banka havalesi en yaygın
           ödeme yöntemidir; mülk sahibine göre kredi kartı veya başka
           yöntemler de olabilir.
         </p>

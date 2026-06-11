@@ -12,9 +12,11 @@ import {
   User,
   Mail,
   MessageSquare,
+  MessageCircle,
   MapPin,
 } from "lucide-react";
 import { trackLead } from "@/lib/analytics";
+import { buildWaHref } from "@/lib/contact";
 import { openDatePicker } from "@/lib/date-picker";
 
 type Status = "idle" | "submitting" | "success" | "error";
@@ -77,6 +79,7 @@ const copy: Record<
     submitting: string;
     successTitle: string;
     successBody: string;
+    successWhatsapp: string;
     errConsent: string;
     errSend: string;
     close: string;
@@ -86,7 +89,7 @@ const copy: Record<
     titleSearch: "Müsaitlik & teklif talebi",
     titleProperty: (type) => `Teklif al: ${type}`,
     intro:
-      "Tarihlerinizi ve iletişim bilginizi bırakın; size uygun seçenekleri ileteceğiz.",
+      "Tarihlerinizi ve iletişim bilginizi bırakın; size uygun seçenekleri ileteceğiz. Teklif istemek ücretsizdir; rezervasyon zorunluluğu yoktur.",
     region: "Bölge",
     checkIn: "Giriş tarihi",
     checkOut: "Çıkış tarihi",
@@ -115,8 +118,11 @@ const copy: Record<
     submit: "Talep Oluştur",
     submitting: "Gönderiliyor...",
     successTitle: "Talebiniz alındı",
+    // "24 saat" vaadi ContactForm/ReservationForm'daki mevcut operasyon
+    // vaadiyle hizalı — uydurma süre değil, sitenin yerleşik taahhüdü.
     successBody:
-      "Talebinizi aldık. En kısa sürede size uygun seçeneklerle dönüş yapacağız.",
+      "Talebinizi aldık. En geç 24 saat içinde size uygun seçeneklerle dönüş yapacağız.",
+    successWhatsapp: "Daha hızlı yanıt için WhatsApp'tan devam edin",
     errConsent: "Devam etmek için KVKK onayı vermelisiniz.",
     errSend: "Şu an gönderemedik. Lütfen WhatsApp'tan deneyin.",
     close: "Kapat",
@@ -125,7 +131,7 @@ const copy: Record<
     titleSearch: "Availability & quote request",
     titleProperty: (type) => `Get a quote: ${type}`,
     intro:
-      "Leave your dates and contact details and we'll send you suitable options.",
+      "Leave your dates and contact details and we'll send you suitable options. Requesting an offer is free and doesn't oblige you to book.",
     region: "Region",
     checkIn: "Check-in date",
     checkOut: "Check-out date",
@@ -155,7 +161,8 @@ const copy: Record<
     submitting: "Sending...",
     successTitle: "Request received",
     successBody:
-      "We have your request. We'll get back to you shortly with suitable options.",
+      "We have your request. We'll get back to you with suitable options within 24 hours.",
+    successWhatsapp: "Continue on WhatsApp for a faster reply",
     errConsent: "Please confirm the KVKK consent to continue.",
     errSend: "Couldn't send right now. Please try via WhatsApp.",
     close: "Close",
@@ -164,7 +171,7 @@ const copy: Record<
     titleSearch: "Verfügbarkeits- & Angebotsanfrage",
     titleProperty: (type) => `Angebot anfordern: ${type}`,
     intro:
-      "Hinterlassen Sie Ihre Reisedaten und Kontaktangaben — wir senden Ihnen passende Optionen.",
+      "Hinterlassen Sie Ihre Reisedaten und Kontaktangaben — wir senden Ihnen passende Optionen. Ein Angebot anzufordern ist kostenlos und unverbindlich.",
     region: "Region",
     checkIn: "Anreisedatum",
     checkOut: "Abreisedatum",
@@ -194,7 +201,8 @@ const copy: Record<
     submitting: "Wird gesendet...",
     successTitle: "Anfrage erhalten",
     successBody:
-      "Wir haben Ihre Anfrage erhalten und melden uns in Kürze mit passenden Optionen.",
+      "Wir haben Ihre Anfrage erhalten und melden uns innerhalb von 24 Stunden mit passenden Optionen.",
+    successWhatsapp: "Für eine schnellere Antwort über WhatsApp fortfahren",
     errConsent: "Bitte bestätigen Sie die KVKK-Einwilligung, um fortzufahren.",
     errSend: "Senden gerade nicht möglich. Bitte über WhatsApp versuchen.",
     close: "Schließen",
@@ -203,7 +211,7 @@ const copy: Record<
     titleSearch: "Запрос доступности и предложения",
     titleProperty: (type) => `Запросить предложение: ${type}`,
     intro:
-      "Оставьте ваши даты и контактные данные — мы пришлём подходящие варианты.",
+      "Оставьте ваши даты и контактные данные — мы пришлём подходящие варианты. Запрос предложения бесплатен и ни к чему вас не обязывает.",
     region: "Район",
     checkIn: "Дата заезда",
     checkOut: "Дата выезда",
@@ -233,7 +241,8 @@ const copy: Record<
     submitting: "Отправка...",
     successTitle: "Запрос получен",
     successBody:
-      "Мы получили ваш запрос и свяжемся с вами в ближайшее время с подходящими вариантами.",
+      "Мы получили ваш запрос и свяжемся с вами с подходящими вариантами в течение 24 часов.",
+    successWhatsapp: "Для более быстрого ответа продолжите в WhatsApp",
     errConsent: "Пожалуйста, подтвердите согласие KVKK, чтобы продолжить.",
     errSend: "Сейчас не удалось отправить. Попробуйте, пожалуйста, через WhatsApp.",
     close: "Закрыть",
@@ -242,6 +251,9 @@ const copy: Record<
 
 export function RequestModal({ open, onClose, prefilled, locale }: RequestModalProps) {
   const t = copy[(locale as L) in copy ? (locale as L) : "en"];
+  // Hata önleme (CRO): geçmiş tarihli ve çıkış<giriş talepler hem misafiri
+  // bozuyor hem operasyona çöp kayıt düşürüyordu — InquiryForm'daki min deseni.
+  const today = new Date().toISOString().slice(0, 10);
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState("");
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -440,6 +452,19 @@ export function RequestModal({ open, onClose, prefilled, locale }: RequestModalP
               {t.successTitle}
             </h2>
             <p className="text-sm text-muted">{t.successBody}</p>
+            {/* Sıcak lead'i en sıcak anında ikinci, daha hızlı kanala taşı —
+                InquiryForm'un başarı ekranındaki yerleşik desen (CRO). */}
+            <a
+              href={buildWaHref(locale, "talep-sonrasi")}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-lead="request-modal-success-whatsapp"
+              className="btn-whatsapp mt-2 justify-center"
+              style={{ minHeight: 44 }}
+            >
+              <MessageCircle className="h-4 w-4" />
+              {t.successWhatsapp}
+            </a>
           </div>
         ) : (
           <>
@@ -475,7 +500,13 @@ export function RequestModal({ open, onClose, prefilled, locale }: RequestModalP
                   <input
                     type="date"
                     value={checkIn}
-                    onChange={(e) => setCheckIn(e.target.value)}
+                    min={today}
+                    onChange={(e) => {
+                      const next = e.target.value;
+                      setCheckIn(next);
+                      // Çıkış girişten önce kalamaz — geçersizleşen çıkışı sıfırla.
+                      if (checkOut && next && checkOut < next) setCheckOut("");
+                    }}
                     onFocus={openDatePicker}
                     onClick={openDatePicker}
                     className="input-base"
@@ -490,6 +521,7 @@ export function RequestModal({ open, onClose, prefilled, locale }: RequestModalP
                   <input
                     type="date"
                     value={checkOut}
+                    min={checkIn || today}
                     onChange={(e) => setCheckOut(e.target.value)}
                     onFocus={openDatePicker}
                     onClick={openDatePicker}

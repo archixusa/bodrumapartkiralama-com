@@ -107,28 +107,28 @@ const HOME_HERO_DEFAULT: ByLocale<HeroLocaleCopy> = {
 const HOME_OFFER_DEFAULT: ByLocale<OfferLocaleCopy> = {
   tr: {
     title: "Size özel apart seçenekleri sunuyoruz",
-    desc: "Sabit katalog yerine tarihinize göre uygun apartları sizin için seçiyoruz. Tarihinizi ve kişi sayınızı paylaşın; doğrudan mülk sahipleriyle çalıştığımız apartlar arasından size en uygun seçenekleri kısa sürede iletelim.",
+    desc: "Sabit katalog yerine tarihinize göre uygun apartları sizin için seçiyoruz. Tarihinizi ve kişi sayınızı paylaşın; doğrudan mülk sahipleriyle çalıştığımız apartlar arasından size en uygun seçenekleri kısa sürede iletelim. Teklif istemek ücretsizdir; rezervasyon zorunluluğu yoktur.",
     offerCta: "Hemen Teklif Alın",
     waCta: "WhatsApp ile Yazın",
     waText: "Merhaba, Bodrum'da uygun apart arıyorum.",
   },
   en: {
     title: "We hand-pick apartments for you",
-    desc: "Instead of a fixed catalogue, we select the apartments that fit your dates. Share your dates and group size and we'll quickly send you the best options from the apartments we work with — directly with the owners.",
+    desc: "Instead of a fixed catalogue, we select the apartments that fit your dates. Share your dates and group size and we'll quickly send you the best options from the apartments we work with — directly with the owners. Requesting an offer is free and doesn't oblige you to book.",
     offerCta: "Get an Offer Now",
     waCta: "Message us on WhatsApp",
     waText: "Hello, I'm looking for a suitable apartment in Bodrum.",
   },
   de: {
     title: "Wir wählen Apartments für Sie aus",
-    desc: "Statt eines festen Katalogs suchen wir die Apartments aus, die zu Ihren Reisedaten passen. Teilen Sie uns Ihre Reisedaten und Personenzahl mit — wir senden Ihnen rasch die passendsten Optionen aus den Apartments, mit denen wir direkt bei den Eigentümern arbeiten.",
+    desc: "Statt eines festen Katalogs suchen wir die Apartments aus, die zu Ihren Reisedaten passen. Teilen Sie uns Ihre Reisedaten und Personenzahl mit — wir senden Ihnen rasch die passendsten Optionen aus den Apartments, mit denen wir direkt bei den Eigentümern arbeiten. Ein Angebot anzufordern ist kostenlos und unverbindlich.",
     offerCta: "Jetzt Angebot erhalten",
     waCta: "Per WhatsApp schreiben",
     waText: "Hallo, ich suche eine passende Ferienwohnung in Bodrum.",
   },
   ru: {
     title: "Мы подбираем апартаменты лично для вас",
-    desc: "Вместо фиксированного каталога мы выбираем апартаменты, подходящие под ваши даты. Назовите ваши даты и число гостей — мы быстро пришлём лучшие варианты из апартаментов, с которыми работаем напрямую у владельцев.",
+    desc: "Вместо фиксированного каталога мы выбираем апартаменты, подходящие под ваши даты. Назовите ваши даты и число гостей — мы быстро пришлём лучшие варианты из апартаментов, с которыми работаем напрямую у владельцев. Запрос предложения бесплатен и ни к чему вас не обязывает.",
     offerCta: "Получить предложение",
     waCta: "Написать в WhatsApp",
     waText: "Здравствуйте, ищу подходящие апартаменты в Бодруме.",
@@ -434,6 +434,17 @@ export default async function HomePage({
     (await getSiteContent<ByLocale<OwnerLocaleCopy>>("home.owner")) ??
     HOME_OWNER_DEFAULT;
   const ownerCopy = owner[pick] ?? owner.en;
+
+  // ── CLOSING CTA (CRO): SSS itirazları çözdükten sonra sayfa ölü uçla
+  // bitmesin — mevcut OfferCtaButton ikilisi kısa, somut bir başlıkla
+  // yeniden kullanılır. ─────────────────────────────────────────────────────
+  const closingByLocale = {
+    tr: "Sorunuz kaldıysa yazın, tarihiniz netse teklif isteyin.",
+    en: "Still have a question? Write to us — or ask for an offer if your dates are set.",
+    de: "Noch Fragen? Schreiben Sie uns — oder fordern Sie ein Angebot an, wenn Ihre Daten feststehen.",
+    ru: "Остались вопросы — напишите нам; если даты определены, запросите предложение.",
+  } as const;
+  const closingHeading = closingByLocale[pick] ?? closingByLocale.en;
 
   // NOT: LocalBusiness/LodgingBusiness düğümü BURADA TEKRARLANMAZ — layout.tsx
   // her sayfada aynı @id (`#organization`) ile tam düğümü (aggregateRating
@@ -851,6 +862,28 @@ export default async function HomePage({
           <SectionHeader id="faq-heading" title={t("faqTitle")} />
           <div className="mt-8">
             <FAQ items={faqItems} />
+          </div>
+        </div>
+      </section>
+
+      {/* 12 — CLOSING CTA: karar olgunluğunun en yüksek olduğu noktada
+          (SSS sonrası) birincil aksiyon — mevcut bileşen yeniden kullanılır. */}
+      <section
+        aria-labelledby="closing-cta-heading"
+        className="section section-soft py-12 md:py-16"
+      >
+        <div className="container-page max-w-3xl text-center">
+          <h2 id="closing-cta-heading" className="text-balance text-2xl md:text-3xl">
+            {closingHeading}
+          </h2>
+          <div className="mt-7">
+            <OfferCtaButton
+              locale={locale}
+              offerLabel={offerCopy.offerCta}
+              whatsappLabel={offerCopy.waCta}
+              whatsappNumber={c("whatsappNumber")}
+              whatsappText={offerCopy.waText}
+            />
           </div>
         </div>
       </section>

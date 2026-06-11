@@ -37,6 +37,9 @@ export function HeroSearch({ locale, labels, regions }: HeroSearchProps) {
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [guests, setGuests] = useState("");
+  // Hata önleme (CRO): geçmiş tarih ve çıkış<giriş seçilemesin — InquiryForm
+  // ile aynı min deseni.
+  const today = new Date().toISOString().slice(0, 10);
 
   return (
     <>
@@ -72,7 +75,13 @@ export function HeroSearch({ locale, labels, regions }: HeroSearchProps) {
             <input
               type="date"
               value={checkIn}
-              onChange={(e) => setCheckIn(e.target.value)}
+              min={today}
+              onChange={(e) => {
+                const next = e.target.value;
+                setCheckIn(next);
+                // Çıkış girişten önce kalamaz — geçersizleşen çıkışı sıfırla.
+                if (checkOut && next && checkOut < next) setCheckOut("");
+              }}
               onFocus={openDatePicker}
               onClick={openDatePicker}
               className="input-base"
@@ -89,6 +98,7 @@ export function HeroSearch({ locale, labels, regions }: HeroSearchProps) {
             <input
               type="date"
               value={checkOut}
+              min={checkIn || today}
               onChange={(e) => setCheckOut(e.target.value)}
               onFocus={openDatePicker}
               onClick={openDatePicker}
