@@ -34,3 +34,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# ruflo local artifacts
+.claude-flow/
+.swarm/
+ruvector.db
+*.pre-ruflo.bak
+memory.db
