@@ -8,7 +8,7 @@ import { ApartlarFilterBar } from "@/components/ApartlarFilterBar";
 import { PropertyCard } from "@/components/PropertyCard";
 import { getPublishedProperties } from "@/lib/properties";
 import { getSiteContent } from "@/lib/content";
-import { buildAlternates, defaultOgImages } from "@/lib/seo";
+import { buildAlternates, buildLocaleUrl, defaultOgImages } from "@/lib/seo";
 import { districts } from "@/data/districts";
 
 const SITE_URL =
@@ -229,18 +229,21 @@ export default async function ApartlarPage({
   const breadcrumb = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
+    // Locale-duyarlı item URL'leri: en/de/ru sayfalarında breadcrumb URL'leri
+    // sayfanın gerçek (locale-prefix'li) canonical'i ile eşleşir — district/blog
+    // deseni. Eskiden locale-kör SITE_URL idi (TR köküne işaret ediyordu).
     itemListElement: [
       {
         "@type": "ListItem",
         position: 1,
         name: pick({ tr: "Ana Sayfa", en: "Home", de: "Startseite", ru: "Главная" }),
-        item: SITE_URL,
+        item: buildLocaleUrl(locale, ""),
       },
       {
         "@type": "ListItem",
         position: 2,
         name: copy.h1,
-        item: `${SITE_URL}/apartlar`,
+        item: buildLocaleUrl(locale, "/apartlar"),
       },
     ],
   };
@@ -428,7 +431,7 @@ function ApartlarGuideTr() {
     },
   ];
   return (
-    <section className="section section-soft">
+    <section className="section section-soft cv-auto">
       <div className="container-page max-w-4xl">
         <h2 className="text-balance">
           Bodrum'da Apart Kiralama Hakkında Bilmeniz Gerekenler

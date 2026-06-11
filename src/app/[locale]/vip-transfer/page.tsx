@@ -10,7 +10,7 @@ import { PartnerServiceBanner } from "@/components/PartnerServiceBanner";
 import { ServiceRelatedLinks } from "@/components/ServiceRelatedLinks";
 import { RelatedGuides, type RelatedLink } from "@/components/RelatedGuides";
 import { getSiteContent } from "@/lib/content";
-import { buildAlternates, defaultOgImages } from "@/lib/seo";
+import { buildAlternates, buildLocaleUrl, defaultOgImages } from "@/lib/seo";
 import { BLUR_KUM } from "@/lib/blur";
 
 const SITE_URL =
@@ -225,18 +225,21 @@ export default async function Page({
     {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
+      // Locale-duyarlı item URL'leri (district/blog deseni): breadcrumb halkaları
+      // sayfanın gerçek locale-prefix'li canonical'iyle eşleşir; eskiden
+      // locale-kör SITE_URL idi.
       itemListElement: [
         {
           "@type": "ListItem",
           position: 1,
           name: tx({ tr: "Ana Sayfa", en: "Home", de: "Startseite", ru: "Главная" }),
-          item: SITE_URL,
+          item: buildLocaleUrl(locale, ""),
         },
         {
           "@type": "ListItem",
           position: 2,
           name: heroCopy.title,
-          item: `${SITE_URL}/vip-transfer`,
+          item: buildLocaleUrl(locale, "/vip-transfer"),
         },
       ],
     },

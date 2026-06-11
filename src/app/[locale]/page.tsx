@@ -18,6 +18,7 @@ import {
 import { Link } from "@/i18n/routing";
 import { FAQ } from "@/components/FAQ";
 import { JsonLd } from "@/components/JsonLd";
+import { ScrollReveal } from "@/components/ScrollReveal";
 import { GuestReviews } from "@/components/GuestReviews";
 import { HeroSearch } from "@/components/HeroSearch";
 import { OfferCtaButton } from "@/components/OfferCtaButton";
@@ -483,21 +484,26 @@ export default async function HomePage({
           aria-hidden="true"
           className="absolute inset-0 bg-[radial-gradient(120%_80%_at_78%_8%,rgba(251,238,221,.9),transparent_42%),radial-gradient(90%_70%_at_18%_22%,rgba(52,200,196,.16),transparent_55%),linear-gradient(180deg,theme(colors.kum.50)_0%,theme(colors.turkuaz.50)_46%,theme(colors.turkuaz.100)_72%,theme(colors.turkuaz.200)_100%)]"
         />
-        {/* Yumuşak ışık halesi — kum tonlu nötr dekor (v2: gunes dekorda kullanılmaz) */}
+        {/* Yumuşak ışık halesi — kum tonlu nötr dekor (v2: gunes dekorda
+            kullanılmaz). v4 (b): çok yavaş, alçak genlikli nazik salınım —
+            ışık akışı hissi (transform-only, reduced-motion'da durur). */}
         <div
           aria-hidden="true"
-          className="absolute right-[10%] top-12 hidden h-24 w-24 rounded-full bg-[radial-gradient(circle_at_50%_50%,#FFF8F0,#FBEEDD_65%)] shadow-[0_0_80px_12px_rgba(240,226,207,.7)] md:block"
+          className="hero-float absolute right-[10%] top-12 hidden h-24 w-24 rounded-full bg-[radial-gradient(circle_at_50%_50%,#FFF8F0,#FBEEDD_65%)] shadow-[0_0_80px_12px_rgba(240,226,207,.7)] md:block"
         />
-        {/* Dalgalar — turkuaz skalası */}
+        {/* Dalgalar — turkuaz skalası. v4 (b): arka iki katman farklı hızlarda
+            çok yavaş yatay sürüklenir (paralaks deniz hissi); ön katman sabit
+            kalır ki kompozisyon çapalı dursun. Salt transform (compositor);
+            reduced-motion'da tüm sürüklenme durur. */}
         <svg
           aria-hidden="true"
           className="absolute inset-x-0 bottom-0 h-20 w-full md:h-32"
           viewBox="0 0 1200 170"
           preserveAspectRatio="none"
         >
-          <path d="M0 70 Q150 40 300 70 T600 70 T900 70 T1200 70 V170 H0 Z" className="fill-turkuaz-200" opacity=".55" />
-          <path d="M0 100 Q150 70 300 100 T600 100 T900 100 T1200 100 V170 H0 Z" className="fill-turkuaz-300" opacity=".6" />
-          <path d="M0 130 Q150 105 300 130 T600 130 T900 130 T1200 130 V170 H0 Z" className="fill-turkuaz-500" />
+          <path className="hero-wave-back fill-turkuaz-200" opacity=".55" d="M0 70 Q150 40 300 70 T600 70 T900 70 T1200 70 T1500 70 T1800 70 V170 H0 Z" />
+          <path className="hero-wave-mid fill-turkuaz-300" opacity=".6" d="M0 100 Q150 70 300 100 T600 100 T900 100 T1200 100 T1500 100 T1800 100 V170 H0 Z" />
+          <path className="fill-turkuaz-500" d="M0 130 Q150 105 300 130 T600 130 T900 130 T1200 130 V170 H0 Z" />
         </svg>
         <div className="container-page relative z-10 py-16 pb-32 md:py-24 md:pb-40 lg:py-28 lg:pb-44">
           <div className="mx-auto max-w-3xl text-center">
@@ -534,8 +540,11 @@ export default async function HomePage({
 
             {/* Activity signal (generic, honest — no fake numbers) */}
             <div className="fade-up fade-d4 mt-4 inline-flex items-center gap-2 rounded-full border border-white/80 bg-white/70 px-4 py-1.5 text-sm font-semibold text-murekkep-700 backdrop-blur-sm">
+              {/* Activity dot: one gentle ~2.4s ring instead of an infinite
+                  ping (spec v4 'AI-slop motion YASAK' — no perpetual attention
+                  grab). reduced-motion drops the ring to a static dot. */}
               <span className="relative flex h-2.5 w-2.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-75" />
+                <span aria-hidden="true" className="activity-ring absolute inline-flex h-full w-full rounded-full bg-success" />
                 <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-success" />
               </span>
               {heroCopy.activity}
@@ -577,10 +586,11 @@ export default async function HomePage({
             </h2>
             <p className="mt-3 text-muted">{regionsCopy.sub}</p>
           </div>
-          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <ScrollReveal className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {regionCards.map((d) => (
               <Link
                 key={d.slug}
+                data-reveal-child
                 href={`/bodrum/${d.urlSlug}`}
                 className="group relative block aspect-[3/2] overflow-hidden rounded-xl shadow-card outline-none transition duration-300 hover:shadow-cardHover focus-visible:ring-2 focus-visible:ring-turkuaz-600 focus-visible:ring-offset-2"
               >
@@ -595,6 +605,11 @@ export default async function HomePage({
                   className="object-cover transition duration-500 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-navy-900/95 via-navy-900/35 to-transparent" />
+                {/* Hover: ince mürekkep koyulaşması (opacity geçişi, compositor) */}
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 bg-murekkep-900/25 opacity-0 transition-opacity duration-300 ease-akdeniz group-hover:opacity-100"
+                />
                 <div className="absolute inset-x-0 bottom-0 p-5 text-white">
                   <h3 className="flex items-center gap-1.5 text-xl font-bold text-white drop-shadow">
                     <MapPin className="h-4 w-4 text-turkuaz-300" />
@@ -611,7 +626,7 @@ export default async function HomePage({
                 </div>
               </Link>
             ))}
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -626,11 +641,11 @@ export default async function HomePage({
               {howCopy.title}
             </h2>
           </div>
-          <div className="mt-10 grid gap-5 sm:grid-cols-3">
+          <ScrollReveal className="mt-10 grid gap-5 sm:grid-cols-3">
             {howCopy.steps.map((s, i) => {
               const Icon = HOW_ICONS[i] ?? HOW_ICONS[0];
               return (
-                <div key={s.title} className="card flex flex-col gap-3 p-6">
+                <div key={s.title} data-reveal-child className="card flex flex-col gap-3 p-6">
                   <div className="flex items-center justify-between">
                     <span className="inline-flex h-11 w-11 items-center justify-center rounded-md bg-navy-50 text-navy-900">
                       <Icon className="h-5 w-5" />
@@ -644,7 +659,7 @@ export default async function HomePage({
                 </div>
               );
             })}
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -668,14 +683,14 @@ export default async function HomePage({
 
             {/* Asymmetric image mosaic */}
             <div className="lg:col-span-8">
-              <div className="grid auto-rows-[160px] grid-cols-2 gap-3 sm:auto-rows-[200px] lg:auto-rows-[180px] lg:grid-cols-3">
+              <ScrollReveal className="grid auto-rows-[160px] grid-cols-2 gap-3 sm:auto-rows-[200px] lg:auto-rows-[180px] lg:grid-cols-3">
                 <LifestyleTile src="/images/lifestyle/beach.webp" alt={lifestyleCopy.alts.beach} className="col-span-2 row-span-2 lg:col-span-2" />
                 <LifestyleTile src="/images/lifestyle/sunset.webp" alt={lifestyleCopy.alts.sunset} />
                 <LifestyleTile src="/images/lifestyle/marina.webp" alt={lifestyleCopy.alts.marina} />
                 <LifestyleTile src="/images/lifestyle/dinner.webp" alt={lifestyleCopy.alts.dinner} className="col-span-2 lg:col-span-1" />
                 <LifestyleTile src="/images/lifestyle/boat.webp" alt={lifestyleCopy.alts.boat} />
                 <LifestyleTile src="/images/lifestyle/pool.webp" alt={lifestyleCopy.alts.pool} className="col-span-2 lg:col-span-3" />
-              </div>
+              </ScrollReveal>
             </div>
           </div>
         </div>
@@ -689,11 +704,11 @@ export default async function HomePage({
               {whyCopy.title}
             </h2>
           </div>
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <ScrollReveal className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {whyCopy.items.map((item, i) => {
               const Icon = WHY_ICONS[i] ?? WHY_ICONS[0];
               return (
-                <div key={item.title} className="card flex flex-col gap-3 p-6">
+                <div key={item.title} data-reveal-child className="card flex flex-col gap-3 p-6">
                   <span className="inline-flex h-12 w-12 items-center justify-center rounded-md bg-turkuaz-500/10 text-turkuaz-600">
                     <Icon className="h-6 w-6" />
                   </span>
@@ -702,7 +717,7 @@ export default async function HomePage({
                 </div>
               );
             })}
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -792,9 +807,9 @@ export default async function HomePage({
               {c("viewAll")} <ArrowRight className="ml-1 inline h-4 w-4" />
             </Link>
           </div>
-          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <ScrollReveal className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {posts.slice(0, 3).map((p) => (
-              <Link key={p.slug} href={`/blog/${p.slug}`} className="card group flex flex-col overflow-hidden">
+              <Link key={p.slug} data-reveal-child href={`/blog/${p.slug}`} className="card group flex flex-col overflow-hidden">
                 <div className="relative aspect-[16/10] overflow-hidden">
                   <Image
                     src={p.hero}
@@ -816,7 +831,7 @@ export default async function HomePage({
                 </div>
               </Link>
             ))}
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -843,7 +858,7 @@ function LifestyleTile({
   className?: string;
 }) {
   return (
-    <div className={`group relative overflow-hidden rounded-xl shadow-card ${className}`}>
+    <div data-reveal-child className={`group relative overflow-hidden rounded-xl shadow-card ${className}`}>
       <Image
         src={src}
         alt={alt}

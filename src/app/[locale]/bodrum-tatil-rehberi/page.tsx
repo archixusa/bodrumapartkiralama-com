@@ -7,7 +7,7 @@ import { FAQ } from "@/components/FAQ";
 import { JsonLd } from "@/components/JsonLd";
 import { districts } from "@/data/districts";
 import { GUIDE, GUIDE_FAQ, type Locale } from "@/data/tatilRehberi";
-import { buildAlternates, defaultOgImages } from "@/lib/seo";
+import { buildAlternates, buildLocaleUrl, defaultOgImages } from "@/lib/seo";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.bodrumapartkiralama.com";
@@ -141,8 +141,11 @@ export default async function Page({
     {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
+      // Home halkası locale-duyarlı (district/blog deseni): en/de/ru'da
+      // sayfanın gerçek locale-prefix'li kökünü gösterir; pageUrl zaten
+      // locale-duyarlı.
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: homeLabel, item: SITE_URL },
+        { "@type": "ListItem", position: 1, name: homeLabel, item: buildLocaleUrl(locale, "") },
         { "@type": "ListItem", position: 2, name: g.h1, item: pageUrl },
       ],
     },

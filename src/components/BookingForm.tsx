@@ -9,6 +9,7 @@ import {
 } from "@/app/actions/bookingAction";
 import { Link } from "@/i18n/routing";
 import { trackLead } from "@/lib/analytics";
+import { openDatePicker } from "@/lib/date-picker";
 
 interface Props {
   apartmentSlug: string;
@@ -115,6 +116,8 @@ export function BookingForm({
             min={today}
             value={checkin}
             onChange={(e) => setCheckin(e.target.value)}
+            onFocus={openDatePicker}
+            onClick={openDatePicker}
             className="input-base"
           />
         </label>
@@ -126,6 +129,8 @@ export function BookingForm({
             min={checkin || today}
             value={checkout}
             onChange={(e) => setCheckout(e.target.value)}
+            onFocus={openDatePicker}
+            onClick={openDatePicker}
             className="input-base"
           />
         </label>

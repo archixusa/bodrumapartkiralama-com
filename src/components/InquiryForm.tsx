@@ -10,6 +10,7 @@ import {
 } from "@/app/actions/inquiryAction";
 import { Link } from "@/i18n/routing";
 import { trackLead } from "@/lib/analytics";
+import { openDatePicker } from "@/lib/date-picker";
 
 export interface InquiryFormProps {
   service: ServiceType;
@@ -122,6 +123,8 @@ export function InquiryForm({
                 min={today}
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
+                onFocus={openDatePicker}
+                onClick={openDatePicker}
                 className="input-base"
               />
             </label>

@@ -149,7 +149,11 @@ export default async function LocaleLayout({
     image: `${SITE_URL}/og-default.svg`,
     description:
       "Bodrum yarımadasında apart kiralama hizmeti veren yerel platform.",
-    telephone: getPhone(locale).tel,
+    // Yapısal veri TEK kanonik telefonla beyan edilir: aynı @id varlığı tüm
+    // dillerde yayımlandığından locale'e göre değişen numara Google için tek
+    // varlığı iki farklı telefonla tanımlardı (NAP çelişkisi). UI'da görünen
+    // numara locale'e göre değişebilir; şemadaki NAP sabit kalır.
+    telephone: getPhone("tr").tel,
     email: "info@bodrumapartkiralama.com",
     priceRange: "₺₺",
     sameAs: [

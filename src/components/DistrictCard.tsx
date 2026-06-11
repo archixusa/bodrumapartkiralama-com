@@ -33,6 +33,12 @@ export function DistrictCard({ district }: { district: District }) {
         className="object-cover transition duration-500 group-hover:scale-110"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-navy-900/95 via-navy-900/30 to-transparent" />
+      {/* Hover: deniz-mürekkebi tonlu ince koyulaşma — derinlik kazandırır,
+          başlık/metin kontrastını da güçlendirir. opacity geçişi (compositor). */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 bg-murekkep-900/25 opacity-0 transition-opacity duration-300 ease-akdeniz group-hover:opacity-100"
+      />
       <div className="absolute inset-x-0 bottom-0 p-4 text-white">
         <h3 className="text-xl font-bold text-white drop-shadow">
           {dt(district.slug)}

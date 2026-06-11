@@ -15,6 +15,7 @@ import {
   MapPin,
 } from "lucide-react";
 import { trackLead } from "@/lib/analytics";
+import { openDatePicker } from "@/lib/date-picker";
 
 type Status = "idle" | "submitting" | "success" | "error";
 type L = "tr" | "en" | "de" | "ru";
@@ -475,6 +476,8 @@ export function RequestModal({ open, onClose, prefilled, locale }: RequestModalP
                     type="date"
                     value={checkIn}
                     onChange={(e) => setCheckIn(e.target.value)}
+                    onFocus={openDatePicker}
+                    onClick={openDatePicker}
                     className="input-base"
                     style={{ fontSize: 16 }}
                   />
@@ -488,6 +491,8 @@ export function RequestModal({ open, onClose, prefilled, locale }: RequestModalP
                     type="date"
                     value={checkOut}
                     onChange={(e) => setCheckOut(e.target.value)}
+                    onFocus={openDatePicker}
+                    onClick={openDatePicker}
                     className="input-base"
                     style={{ fontSize: 16 }}
                   />

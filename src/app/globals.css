@@ -65,6 +65,18 @@ body {
   h3 { @apply text-xl md:text-2xl; }
   h4 { @apply text-lg md:text-xl; }
   p  { @apply leading-relaxed; }
+
+  /* Mobil tarih seçici (DESIGN_SPEC.md v4 EK — MOBİL TARİH SEÇİCİ):
+     date alanı tıklanabilir görünür + native takvim ikonu her zaman görünür/
+     tıklanabilir. JS tarafında openDatePicker helper'ı tek dokunuşta takvimi
+     açar; bu kurallar ikon görünürlüğünü ve imleci garanti eder. */
+  input[type="date"] {
+    cursor: pointer;
+  }
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 1;
+    cursor: pointer;
+  }
 }
 
 @layer components {
@@ -72,25 +84,28 @@ body {
     @apply mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8;
   }
   /* Birincil CTA (v2): turkuaz-600 zemin + beyaz metin, hover turkuaz-700,
-     -2px lift (spec §4/§5 + "v2 DEĞİŞİKLİĞİ"). */
+     -2px lift (spec §4/§5 + "v2 DEĞİŞİKLİĞİ").
+     v4 (d) buton press: :active'te lift'i sıfırla + scale(.98) — dokunsal
+     "basıldı" geri bildirimi. transform-only; parıltı/shine YOK (AI-slop
+     yasağı). ease-akdeniz ile hover/press tutarlı. */
   .btn-primary {
-    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-turkuaz-600 px-6 py-3 text-sm font-bold text-white shadow-btn transition duration-200 hover:-translate-y-0.5 hover:bg-turkuaz-700 focus:outline-none focus:ring-2 focus:ring-turkuaz-600 focus:ring-offset-2;
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-turkuaz-600 px-6 py-3 text-sm font-bold text-white shadow-btn transition duration-200 ease-akdeniz hover:-translate-y-0.5 hover:bg-turkuaz-700 focus:outline-none focus:ring-2 focus:ring-turkuaz-600 focus:ring-offset-2 active:translate-y-0 active:scale-[.98];
   }
   /* İkincil: outline pill — beyaz zemin + turkuaz-700 metin (beyazda 6.65:1,
      AA). turkuaz-500 zemin + beyaz metin 3.02:1 verdiği için kullanılmaz
      (spec §1 kontrast kuralı); dolgulu birincil butondan kenarlıkla ayrışır. */
   .btn-secondary {
-    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-turkuaz-600 bg-white px-6 py-3 text-sm font-bold text-turkuaz-700 shadow-btnTurkuaz transition duration-200 hover:-translate-y-0.5 hover:bg-turkuaz-50 focus:outline-none focus:ring-2 focus:ring-turkuaz-600 focus:ring-offset-2;
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-turkuaz-600 bg-white px-6 py-3 text-sm font-bold text-turkuaz-700 shadow-btnTurkuaz transition duration-200 ease-akdeniz hover:-translate-y-0.5 hover:bg-turkuaz-50 focus:outline-none focus:ring-2 focus:ring-turkuaz-600 focus:ring-offset-2 active:translate-y-0 active:scale-[.98];
   }
   /* Ghost: yarı saydam beyaz + kum-cizgi kenarlık. */
   .btn-ghost {
-    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-kum-200 bg-white/70 px-5 py-2.5 text-sm font-semibold text-murekkep-900 transition duration-200 hover:border-turkuaz-500;
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-kum-200 bg-white/70 px-5 py-2.5 text-sm font-semibold text-murekkep-900 transition duration-200 ease-akdeniz hover:border-turkuaz-500 active:scale-[.98];
   }
   /* WhatsApp pill — her zaman yeşil, her zaman görünür (spec §4 header).
      Zemin koyu platform yeşili (beyaz metinle 5.02:1, AA); açık #1FAE54
      beyazla 2.90:1 verdiği için yalnız ikon/dekorda (whatsapp-brand). */
   .btn-whatsapp {
-    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-whatsapp px-5 py-2.5 text-sm font-bold text-white shadow-btnWa transition duration-200 hover:-translate-y-0.5 hover:bg-whatsapp-dark focus:outline-none focus:ring-2 focus:ring-whatsapp focus:ring-offset-2;
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-whatsapp px-5 py-2.5 text-sm font-bold text-white shadow-btnWa transition duration-200 ease-akdeniz hover:-translate-y-0.5 hover:bg-whatsapp-dark focus:outline-none focus:ring-2 focus:ring-whatsapp focus:ring-offset-2 active:translate-y-0 active:scale-[.98];
   }
   /* Kart: radius 26px, kum-cizgi kenarlık, hover'da -6px lift + gölge artışı. */
   .card {
@@ -144,7 +159,7 @@ body {
   }
   /* Koyu zemin üzerinde outline buton (hero ikincil aksiyonu). */
   .btn-outline-light {
-    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-white/40 px-6 py-3 text-sm font-bold text-white transition duration-200 hover:-translate-y-0.5 hover:border-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/70;
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-white/40 px-6 py-3 text-sm font-bold text-white transition duration-200 ease-akdeniz hover:-translate-y-0.5 hover:border-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/70 active:translate-y-0 active:scale-[.98];
   }
   /* Form alanları: kum zemin + kum-cizgi kenarlık, focus'ta turkuaz ring 2px.
      Ring/kenarlık turkuaz-600 — eski turkuaz-500/60 ring kum-50 üzerinde
@@ -185,6 +200,15 @@ body {
 @layer utilities {
   .text-balance { text-wrap: balance; }
   .text-pretty  { text-wrap: pretty; }
+  /* content-visibility (spec v3/v4: korunur/derinleştirilir) — ekran-altı uzun
+     bölümlerin (uzun rehber prose'u, blog gövdesi) render/layout işini görünür
+     olana kadar atlar. contain-intrinsic-size bir yükseklik tahmini verir, böyle­ce
+     kaydırma çubuğu zıplamaz (CLS 0). YALNIZ ekran-altı uzun bölümlere uygulanır;
+     LCP/hero'ya ASLA. */
+  .cv-auto {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 1200px;
+  }
   /* Sayfa girişi stagger fade-up (spec §5). */
   .fade-up {
     opacity: 0;
@@ -204,6 +228,104 @@ body {
   }
 }
 
+/* Hero activity dot — a single gentle ring that expands and fades, then rests
+   (spec v4: replaces the infinite animate-ping; purposeful "live" cue, not a
+   perpetual throb). Compositor-only (transform + opacity). The 2.8s cycle has
+   a built-in pause (ring is invisible 60→100%) so it breathes, not pulses. */
+@keyframes activity-ring {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  55% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+.activity-ring {
+  transform-origin: center;
+  animation: activity-ring 2.8s cubic-bezier(0.2, 0.7, 0.2, 1) infinite;
+}
+
+/* Hero decor drift (spec v4 §Animasyon (b)) — incelikli paralaks/degrade-akış.
+   Salt transform (compositor); çok yavaş + alçak genlikli, amaçsız değil:
+   ışık + deniz hissini derinleştirir. Dalganın tam görsel periyodu 600 viewBox
+   birimi (crest→trough→crest); arka dalgalar -600 kayar → kesintisiz döngü
+   (path'ler 1800'e kadar uzatıldı ki kayma sırasında sağ kenarda boşluk
+   oluşmasın). reduced-motion'da tümü durur (global kural + açık iptal). */
+@keyframes hero-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+@keyframes hero-wave-drift {
+  to {
+    transform: translateX(-600px);
+  }
+}
+.hero-float {
+  animation: hero-float 9s ease-in-out infinite;
+  will-change: transform;
+}
+.hero-wave-back {
+  animation: hero-wave-drift 22s linear infinite;
+  will-change: transform;
+}
+.hero-wave-mid {
+  animation: hero-wave-drift 15s linear infinite;
+  will-change: transform;
+}
+
+/* ── Scroll-reveal (spec v4 §Animasyon (a)) ─────────────────────────────────
+   EMPTY-SAFE: the hidden start-state is scoped to `.js-reveal` — a class JS
+   only adds when IntersectionObserver is available AND reduced-motion is off
+   (see ScrollReveal.tsx). Crawlers, no-JS, headless renders and reduced-motion
+   users never get `.js-reveal`, so every [data-reveal] block stays fully
+   visible and never ships blank. Compositor-only (transform+opacity) → CLS 0.
+   `data-reveal="in"` is set once when the block scrolls into view. */
+.js-reveal [data-reveal="armed"] {
+  opacity: 0;
+  transform: translateY(16px);
+}
+.js-reveal [data-reveal] {
+  transition:
+    opacity 0.6s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.js-reveal [data-reveal="armed"] [data-reveal-child] {
+  opacity: 0;
+  transform: translateY(16px);
+}
+.js-reveal [data-reveal] [data-reveal-child] {
+  transition:
+    opacity 0.55s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.55s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.js-reveal [data-reveal="in"],
+.js-reveal [data-reveal="in"] [data-reveal-child] {
+  opacity: 1;
+  transform: none;
+}
+/* A focusable element below the fold must never sit behind the reveal's
+   opacity:0 / translateY start-state — the focus ring would be invisible
+   (WCAG 2.4.7). When focus lands inside an armed block, snap it to its visible
+   end-state immediately (skip the transition) so the ring is always shown.
+   Mirrors the `.reveal-init:focus-within` guard used on the villa site. */
+.js-reveal [data-reveal]:focus-within,
+.js-reveal [data-reveal] [data-reveal-child]:focus-within {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
 /* Spec §5: reduced-motion MUTLAKA desteklenir — tüm animasyonlar kapanır. */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -217,6 +339,27 @@ body {
   .fade-up {
     opacity: 1;
     transform: none;
+  }
+  /* Belt-and-suspenders: even if `.js-reveal` was added before the user
+     toggled the OS setting, force every reveal block to its visible end-state
+     (the start-state class is otherwise never applied under reduced-motion). */
+  .js-reveal [data-reveal],
+  .js-reveal [data-reveal] [data-reveal-child] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  /* Hero activity ring fully stops — only the static dot remains. */
+  .activity-ring {
+    animation: none !important;
+    opacity: 0 !important;
+  }
+  /* Hero decor drift/float fully stops and rests at its base transform. */
+  .hero-float,
+  .hero-wave-back,
+  .hero-wave-mid {
+    animation: none !important;
+    transform: none !important;
+    will-change: auto !important;
   }
 }
 

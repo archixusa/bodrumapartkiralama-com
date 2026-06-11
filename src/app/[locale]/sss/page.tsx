@@ -3,7 +3,7 @@ import { setRequestLocale } from "next-intl/server";
 import { FAQ } from "@/components/FAQ";
 import { JsonLd } from "@/components/JsonLd";
 import { getSiteContent } from "@/lib/content";
-import { buildAlternates, defaultOgImages } from "@/lib/seo";
+import { buildAlternates, buildLocaleUrl, defaultOgImages } from "@/lib/seo";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.bodrumapartkiralama.com";
@@ -102,12 +102,15 @@ export default async function Page({
   const breadcrumb = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
+    // Locale-duyarlı item URL'leri (district/blog deseni): en/de/ru'da breadcrumb
+    // URL'leri sayfanın gerçek canonical'iyle eşleşir; eskiden Home halkası
+    // locale-kör SITE_URL idi.
     itemListElement: [
       {
         "@type": "ListItem",
         position: 1,
         name: pick({ tr: "Ana Sayfa", en: "Home", de: "Startseite", ru: "Главная" }),
-        item: SITE_URL,
+        item: buildLocaleUrl(locale, ""),
       },
       {
         "@type": "ListItem",
@@ -118,7 +121,7 @@ export default async function Page({
           de: "Häufige Fragen",
           ru: "Вопросы и ответы",
         }),
-        item: locale === "tr" ? `${SITE_URL}/sss` : `${SITE_URL}/${locale}/sss`,
+        item: buildLocaleUrl(locale, "/sss"),
       },
     ],
   };

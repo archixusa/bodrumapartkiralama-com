@@ -22,7 +22,7 @@ Bodrumapartkiralama.com, Bodrum yarımadasında apart kiralama hizmeti veren yer
 - 2013'ten beri Bodrum'da yerel ekip.
 - Apart havuzumuz tüm Bodrum yarımadasını kapsar: Gümbet, Bitez, Yalıkavak, Turgutreis, Ortakent, Gündoğan, Torba.
 - Çalışma biçimi: doğrudan mülk sahibi iletişimi, aracısız ve şeffaf süreç, 7/24 yerel misafir desteği.
-- İletişim: bilgi@bodrumapartkiralama.com  ·  WhatsApp +90 538 512 40 88
+- İletişim: info@bodrumapartkiralama.com  ·  WhatsApp +90 545 432 67 48
 
 ## Ana Sayfalar
 - Anasayfa (https://www.bodrumapartkiralama.com/): Site girişi ve teklif formu.

@@ -20,7 +20,7 @@ interface Props {
  */
 export function DistrictGuide({ guide, districtName }: Props) {
   return (
-    <section className="section">
+    <section className="section cv-auto">
       <div className="container-page max-w-4xl">
         <h2 className="text-balance">{guide.subHeading}</h2>
         <p className="mt-5 text-base md:text-[15px] leading-relaxed text-ink/90">
