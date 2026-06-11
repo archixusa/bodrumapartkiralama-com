@@ -284,13 +284,43 @@ body {
   will-change: transform;
 }
 
-/* ── Scroll-reveal (spec v4 §Animasyon (a)) ─────────────────────────────────
+/* ── v7: Hero scroll-sahneleme (DESIGN_SPEC.md §v7) ─────────────────────────
+   DÜRÜST KARAR: GSAP ScrollTrigger EKLENMEDİ. Tek sahnelik bir hero paralaksı
+   için ~35KB gz kütüphane + ana-thread scroll dinleyicisi değer katmıyor;
+   CSS scroll-driven animation aynı koreografiyi SIFIR JS ile compositor
+   thread'inde verir ve geri kaydırmada kendiliğinden tersine oynar.
+   Sahneleme: içerik katmanı (başlık+arama) kaydırmadan ~%13 daha yavaş çıkar
+   ve yumuşakça çözülür; dalga katmanı kendi yatay sürüklenmesiyle tam scroll
+   hızında çıkar → katmanlar arası hız farkı "uzak gökyüzü / yakın deniz"
+   derinliği kurar (güneşli-akıcı his). Salt transform+opacity → CLS 0.
+   Desteklemeyen tarayıcı (@supports dışı) bugünkü statik hero'yu aynen görür
+   (progressive enhancement); reduced-motion media gate'iyle hiç etkinleşmez. */
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-scroll-stage {
+      animation: hero-stage-drift linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0px 560px;
+    }
+    @keyframes hero-stage-drift {
+      to {
+        transform: translateY(72px);
+        opacity: 0.3;
+      }
+    }
+  }
+}
+
+/* ── Scroll-reveal (spec v4 §Animasyon (a) + v7 orkestrasyon incelmesi) ─────
    EMPTY-SAFE: the hidden start-state is scoped to `.js-reveal` — a class JS
    only adds when IntersectionObserver is available AND reduced-motion is off
    (see ScrollReveal.tsx). Crawlers, no-JS, headless renders and reduced-motion
    users never get `.js-reveal`, so every [data-reveal] block stays fully
    visible and never ships blank. Compositor-only (transform+opacity) → CLS 0.
-   `data-reveal="in"` is set once when the block scrolls into view. */
+   v7: children carry their OWN armed/in state (`data-reveal-child="armed|in"`)
+   instead of inheriting the container's — each card reveals as IT enters the
+   viewport and same-frame batches share one stagger ramp (ScrollReveal.tsx).
+   Server HTML renders the attribute valueless/"true" → always visible. */
 .js-reveal [data-reveal="armed"] {
   opacity: 0;
   transform: translateY(16px);
@@ -300,17 +330,17 @@ body {
     opacity 0.6s cubic-bezier(0.2, 0.7, 0.2, 1),
     transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
-.js-reveal [data-reveal="armed"] [data-reveal-child] {
+.js-reveal [data-reveal-child="armed"] {
   opacity: 0;
   transform: translateY(16px);
 }
-.js-reveal [data-reveal] [data-reveal-child] {
+.js-reveal [data-reveal-child] {
   transition:
     opacity 0.55s cubic-bezier(0.2, 0.7, 0.2, 1),
     transform 0.55s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 .js-reveal [data-reveal="in"],
-.js-reveal [data-reveal="in"] [data-reveal-child] {
+.js-reveal [data-reveal-child="in"] {
   opacity: 1;
   transform: none;
 }
@@ -320,7 +350,7 @@ body {
    end-state immediately (skip the transition) so the ring is always shown.
    Mirrors the `.reveal-init:focus-within` guard used on the villa site. */
 .js-reveal [data-reveal]:focus-within,
-.js-reveal [data-reveal] [data-reveal-child]:focus-within {
+.js-reveal [data-reveal-child]:focus-within {
   opacity: 1;
   transform: none;
   transition: none;
@@ -344,9 +374,16 @@ body {
      toggled the OS setting, force every reveal block to its visible end-state
      (the start-state class is otherwise never applied under reduced-motion). */
   .js-reveal [data-reveal],
-  .js-reveal [data-reveal] [data-reveal-child] {
+  .js-reveal [data-reveal-child] {
     opacity: 1 !important;
     transform: none !important;
+  }
+  /* v7 hero scroll-sahnelemesi zaten no-preference gate'i içinde tanımlı;
+     yine de açık iptal — içerik tam görünür, kaydırmayla hiç oynamaz. */
+  .hero-scroll-stage {
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
   }
   /* Hero activity ring fully stops — only the static dot remains. */
   .activity-ring {
