@@ -204,6 +204,29 @@ body {
   }
 }
 
+/* Hero activity dot — a single gentle ring that expands and fades, then rests
+   (spec v4: replaces the infinite animate-ping; purposeful "live" cue, not a
+   perpetual throb). Compositor-only (transform + opacity). The 2.8s cycle has
+   a built-in pause (ring is invisible 60→100%) so it breathes, not pulses. */
+@keyframes activity-ring {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  55% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+.activity-ring {
+  transform-origin: center;
+  animation: activity-ring 2.8s cubic-bezier(0.2, 0.7, 0.2, 1) infinite;
+}
+
 /* ── Scroll-reveal (spec v4 §Animasyon (a)) ─────────────────────────────────
    EMPTY-SAFE: the hidden start-state is scoped to `.js-reveal` — a class JS
    only adds when IntersectionObserver is available AND reduced-motion is off
@@ -256,6 +279,11 @@ body {
   .js-reveal [data-reveal] [data-reveal-child] {
     opacity: 1 !important;
     transform: none !important;
+  }
+  /* Hero activity ring fully stops — only the static dot remains. */
+  .activity-ring {
+    animation: none !important;
+    opacity: 0 !important;
   }
 }
 

@@ -535,8 +535,11 @@ export default async function HomePage({
 
             {/* Activity signal (generic, honest — no fake numbers) */}
             <div className="fade-up fade-d4 mt-4 inline-flex items-center gap-2 rounded-full border border-white/80 bg-white/70 px-4 py-1.5 text-sm font-semibold text-murekkep-700 backdrop-blur-sm">
+              {/* Activity dot: one gentle ~2.4s ring instead of an infinite
+                  ping (spec v4 'AI-slop motion YASAK' — no perpetual attention
+                  grab). reduced-motion drops the ring to a static dot. */}
               <span className="relative flex h-2.5 w-2.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-75" />
+                <span aria-hidden="true" className="activity-ring absolute inline-flex h-full w-full rounded-full bg-success" />
                 <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-success" />
               </span>
               {heroCopy.activity}
