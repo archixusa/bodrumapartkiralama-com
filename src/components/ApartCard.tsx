@@ -6,7 +6,14 @@ import type { Apartment } from "@/data/apartments";
 import { districts } from "@/data/districts";
 import { BLUR_KUM } from "@/lib/blur";
 
-export function ApartCard({ apt }: { apt: Apartment }) {
+export function ApartCard({
+  apt,
+  revealChild,
+}: {
+  apt: Apartment;
+  /** When inside a <ScrollReveal> grid, opt this card into the stagger. */
+  revealChild?: boolean;
+}) {
   const t = useTranslations("common");
   const dt = useTranslations("districts");
   const locale = useLocale();
@@ -16,7 +23,10 @@ export function ApartCard({ apt }: { apt: Apartment }) {
   const districtUrl = districts.find((d) => d.slug === apt.district)?.urlSlug ?? apt.district;
 
   return (
-    <article className="card group flex flex-col">
+    <article
+      {...(revealChild ? { "data-reveal-child": "" } : {})}
+      className="card group flex flex-col"
+    >
       <Link href={`/apartlar/${apt.slug}`} className="relative block aspect-[4/3] overflow-hidden">
         <Image
           src={apt.images[0]}

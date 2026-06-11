@@ -6,6 +6,7 @@ import { MapPin, Check, ArrowRight, ChevronRight, MessageCircle } from "lucide-r
 import { Link } from "@/i18n/routing";
 import { ApartCard } from "@/components/ApartCard";
 import { FAQ } from "@/components/FAQ";
+import { ScrollReveal } from "@/components/ScrollReveal";
 import { JsonLd } from "@/components/JsonLd";
 import { districts, getDistrict } from "@/data/districts";
 import { posts } from "@/data/posts";
@@ -402,11 +403,11 @@ export default async function DistrictPage({
               </div>
             </div>
           ) : (
-            <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <ScrollReveal className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {apts.map((apt) => (
-                <ApartCard key={apt.id} apt={apt} />
+                <ApartCard key={apt.id} apt={apt} revealChild />
               ))}
-            </div>
+            </ScrollReveal>
           )}
         </div>
       </section>

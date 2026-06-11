@@ -18,6 +18,7 @@ import {
 import { Link } from "@/i18n/routing";
 import { FAQ } from "@/components/FAQ";
 import { JsonLd } from "@/components/JsonLd";
+import { ScrollReveal } from "@/components/ScrollReveal";
 import { GuestReviews } from "@/components/GuestReviews";
 import { HeroSearch } from "@/components/HeroSearch";
 import { OfferCtaButton } from "@/components/OfferCtaButton";
@@ -577,10 +578,11 @@ export default async function HomePage({
             </h2>
             <p className="mt-3 text-muted">{regionsCopy.sub}</p>
           </div>
-          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <ScrollReveal className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {regionCards.map((d) => (
               <Link
                 key={d.slug}
+                data-reveal-child
                 href={`/bodrum/${d.urlSlug}`}
                 className="group relative block aspect-[3/2] overflow-hidden rounded-xl shadow-card outline-none transition duration-300 hover:shadow-cardHover focus-visible:ring-2 focus-visible:ring-turkuaz-600 focus-visible:ring-offset-2"
               >
@@ -611,7 +613,7 @@ export default async function HomePage({
                 </div>
               </Link>
             ))}
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -626,11 +628,11 @@ export default async function HomePage({
               {howCopy.title}
             </h2>
           </div>
-          <div className="mt-10 grid gap-5 sm:grid-cols-3">
+          <ScrollReveal className="mt-10 grid gap-5 sm:grid-cols-3">
             {howCopy.steps.map((s, i) => {
               const Icon = HOW_ICONS[i] ?? HOW_ICONS[0];
               return (
-                <div key={s.title} className="card flex flex-col gap-3 p-6">
+                <div key={s.title} data-reveal-child className="card flex flex-col gap-3 p-6">
                   <div className="flex items-center justify-between">
                     <span className="inline-flex h-11 w-11 items-center justify-center rounded-md bg-navy-50 text-navy-900">
                       <Icon className="h-5 w-5" />
@@ -644,7 +646,7 @@ export default async function HomePage({
                 </div>
               );
             })}
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -668,14 +670,14 @@ export default async function HomePage({
 
             {/* Asymmetric image mosaic */}
             <div className="lg:col-span-8">
-              <div className="grid auto-rows-[160px] grid-cols-2 gap-3 sm:auto-rows-[200px] lg:auto-rows-[180px] lg:grid-cols-3">
+              <ScrollReveal className="grid auto-rows-[160px] grid-cols-2 gap-3 sm:auto-rows-[200px] lg:auto-rows-[180px] lg:grid-cols-3">
                 <LifestyleTile src="/images/lifestyle/beach.webp" alt={lifestyleCopy.alts.beach} className="col-span-2 row-span-2 lg:col-span-2" />
                 <LifestyleTile src="/images/lifestyle/sunset.webp" alt={lifestyleCopy.alts.sunset} />
                 <LifestyleTile src="/images/lifestyle/marina.webp" alt={lifestyleCopy.alts.marina} />
                 <LifestyleTile src="/images/lifestyle/dinner.webp" alt={lifestyleCopy.alts.dinner} className="col-span-2 lg:col-span-1" />
                 <LifestyleTile src="/images/lifestyle/boat.webp" alt={lifestyleCopy.alts.boat} />
                 <LifestyleTile src="/images/lifestyle/pool.webp" alt={lifestyleCopy.alts.pool} className="col-span-2 lg:col-span-3" />
-              </div>
+              </ScrollReveal>
             </div>
           </div>
         </div>
@@ -689,11 +691,11 @@ export default async function HomePage({
               {whyCopy.title}
             </h2>
           </div>
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <ScrollReveal className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {whyCopy.items.map((item, i) => {
               const Icon = WHY_ICONS[i] ?? WHY_ICONS[0];
               return (
-                <div key={item.title} className="card flex flex-col gap-3 p-6">
+                <div key={item.title} data-reveal-child className="card flex flex-col gap-3 p-6">
                   <span className="inline-flex h-12 w-12 items-center justify-center rounded-md bg-turkuaz-500/10 text-turkuaz-600">
                     <Icon className="h-6 w-6" />
                   </span>
@@ -702,7 +704,7 @@ export default async function HomePage({
                 </div>
               );
             })}
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -792,9 +794,9 @@ export default async function HomePage({
               {c("viewAll")} <ArrowRight className="ml-1 inline h-4 w-4" />
             </Link>
           </div>
-          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <ScrollReveal className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {posts.slice(0, 3).map((p) => (
-              <Link key={p.slug} href={`/blog/${p.slug}`} className="card group flex flex-col overflow-hidden">
+              <Link key={p.slug} data-reveal-child href={`/blog/${p.slug}`} className="card group flex flex-col overflow-hidden">
                 <div className="relative aspect-[16/10] overflow-hidden">
                   <Image
                     src={p.hero}
@@ -816,7 +818,7 @@ export default async function HomePage({
                 </div>
               </Link>
             ))}
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -843,7 +845,7 @@ function LifestyleTile({
   className?: string;
 }) {
   return (
-    <div className={`group relative overflow-hidden rounded-xl shadow-card ${className}`}>
+    <div data-reveal-child className={`group relative overflow-hidden rounded-xl shadow-card ${className}`}>
       <Image
         src={src}
         alt={alt}

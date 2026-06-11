@@ -204,6 +204,37 @@ body {
   }
 }
 
+/* ── Scroll-reveal (spec v4 §Animasyon (a)) ─────────────────────────────────
+   EMPTY-SAFE: the hidden start-state is scoped to `.js-reveal` — a class JS
+   only adds when IntersectionObserver is available AND reduced-motion is off
+   (see ScrollReveal.tsx). Crawlers, no-JS, headless renders and reduced-motion
+   users never get `.js-reveal`, so every [data-reveal] block stays fully
+   visible and never ships blank. Compositor-only (transform+opacity) → CLS 0.
+   `data-reveal="in"` is set once when the block scrolls into view. */
+.js-reveal [data-reveal="armed"] {
+  opacity: 0;
+  transform: translateY(16px);
+}
+.js-reveal [data-reveal] {
+  transition:
+    opacity 0.6s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.js-reveal [data-reveal="armed"] [data-reveal-child] {
+  opacity: 0;
+  transform: translateY(16px);
+}
+.js-reveal [data-reveal] [data-reveal-child] {
+  transition:
+    opacity 0.55s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.55s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.js-reveal [data-reveal="in"],
+.js-reveal [data-reveal="in"] [data-reveal-child] {
+  opacity: 1;
+  transform: none;
+}
+
 /* Spec §5: reduced-motion MUTLAKA desteklenir — tüm animasyonlar kapanır. */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -217,6 +248,14 @@ body {
   .fade-up {
     opacity: 1;
     transform: none;
+  }
+  /* Belt-and-suspenders: even if `.js-reveal` was added before the user
+     toggled the OS setting, force every reveal block to its visible end-state
+     (the start-state class is otherwise never applied under reduced-motion). */
+  .js-reveal [data-reveal],
+  .js-reveal [data-reveal] [data-reveal-child] {
+    opacity: 1 !important;
+    transform: none !important;
   }
 }
 
