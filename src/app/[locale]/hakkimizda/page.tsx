@@ -19,6 +19,7 @@ import { PageHero } from "@/components/PageHero";
 import { JsonLd } from "@/components/JsonLd";
 import { Link } from "@/i18n/routing";
 import { getSiteContent } from "@/lib/content";
+import { buildWaHref } from "@/lib/contact";
 import { buildAlternates, defaultOgImages } from "@/lib/seo";
 
 const SITE_URL =
@@ -586,7 +587,7 @@ export default async function Page({
           <p className="mt-3 text-muted">{copy.contactLead}</p>
           <div className="mt-8 grid gap-3 sm:grid-cols-3">
             <a
-              href={`https://wa.me/${c("whatsappNumber")}`}
+              href={buildWaHref(locale, "hakkimizda")}
               target="_blank"
               rel="noopener noreferrer"
               className="card flex flex-col items-center gap-2 p-5"

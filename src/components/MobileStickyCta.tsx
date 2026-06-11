@@ -3,7 +3,7 @@
 import { useState } from "react";
 import dynamic from "next/dynamic";
 import { MessageCircle, ArrowRight } from "lucide-react";
-import { getPhone } from "@/lib/contact";
+import { buildWaHref } from "@/lib/contact";
 
 // Lazy-load the heavy client-only modal so it stays out of the initial bundle.
 // Chunk yalnız ilk "Teklif al" tıklamasında iner (aşağıdaki `mounted` kapısı) —
@@ -40,7 +40,7 @@ export function MobileStickyCta({ locale }: { locale: string }) {
       <div className="fixed inset-x-0 bottom-0 z-40 border-t border-kum-200 bg-kum-50/95 px-3 pb-[max(env(safe-area-inset-bottom),0.625rem)] pt-2.5 backdrop-blur-[14px] md:hidden">
         <div className="flex items-center gap-2">
           <a
-            href={`https://wa.me/${getPhone(locale).wa}`}
+            href={buildWaHref(locale)}
             target="_blank"
             rel="noopener noreferrer"
             data-lead="sticky-bar-whatsapp"

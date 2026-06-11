@@ -4,6 +4,7 @@ import { Phone, Mail, MessageCircle, MapPin, Clock } from "lucide-react";
 import { ContactForm } from "@/components/ContactForm";
 import { JsonLd } from "@/components/JsonLd";
 import { getSiteContent } from "@/lib/content";
+import { buildWaHref } from "@/lib/contact";
 import { buildAlternates, defaultOgImages } from "@/lib/seo";
 
 const SITE_URL =
@@ -200,7 +201,7 @@ export default async function Page({
 
               <div className="mt-4 flex flex-col gap-2">
                 <a
-                  href={`https://wa.me/${c("whatsappNumber")}`}
+                  href={buildWaHref(locale, "iletisim")}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-primary justify-center"

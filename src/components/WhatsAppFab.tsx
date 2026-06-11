@@ -1,6 +1,6 @@
 "use client";
 
-import { getPhone } from "@/lib/contact";
+import { buildWaHref } from "@/lib/contact";
 
 const WA_ARIA_LABEL: Record<string, string> = {
   tr: "WhatsApp ile iletişime geçin",
@@ -18,7 +18,7 @@ const WA_ARIA_LABEL: Record<string, string> = {
 export function WhatsAppFab({ locale }: { locale: string }) {
   return (
     <a
-      href={`https://wa.me/${getPhone(locale).wa}`}
+      href={buildWaHref(locale)}
       target="_blank"
       rel="noopener noreferrer"
       aria-label={WA_ARIA_LABEL[locale] ?? WA_ARIA_LABEL.en}

@@ -2,6 +2,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { Mail, Phone, MapPin, MessageCircle, Facebook, Instagram } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import { BrandLockup } from "@/components/BrandLockup";
+import { buildWaHref } from "@/lib/contact";
 import { districts } from "@/data/districts";
 
 export function Footer() {
@@ -163,7 +164,7 @@ export function Footer() {
           <FooterColumn title={colLabels.contact}>
             <li>
               <a
-                href={`https://wa.me/${c("whatsappNumber")}`}
+                href={buildWaHref(locale)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex min-h-11 items-center gap-2 text-navy-100/85 transition hover:text-turkuaz-300 md:min-h-0"

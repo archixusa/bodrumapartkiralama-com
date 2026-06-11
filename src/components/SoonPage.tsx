@@ -1,6 +1,7 @@
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { ArrowLeft, MessageCircle } from "lucide-react";
 import { Link } from "@/i18n/routing";
+import { buildWaHref } from "@/lib/contact";
 
 interface Props {
   title: string;
@@ -9,6 +10,7 @@ interface Props {
 
 export function SoonPage({ title, intro }: Props) {
   const c = useTranslations("common");
+  const locale = useLocale();
   return (
     <section className="section">
       <div className="container-page max-w-3xl text-center">
@@ -21,7 +23,7 @@ export function SoonPage({ title, intro }: Props) {
             {c("brand")}
           </Link>
           <a
-            href={`https://wa.me/${c("whatsappNumber")}`}
+            href={buildWaHref(locale)}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-primary"

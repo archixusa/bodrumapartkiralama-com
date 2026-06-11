@@ -6,6 +6,7 @@ import { Menu, X, Phone, MessageCircle, Globe } from "lucide-react";
 import { Link, usePathname } from "@/i18n/routing";
 import { routing } from "@/i18n/routing";
 import { BrandLockup } from "@/components/BrandLockup";
+import { buildWaHref } from "@/lib/contact";
 import clsx from "clsx";
 
 const LOCALE_LABEL: Record<string, string> = {
@@ -167,7 +168,7 @@ export function Header() {
             {OWNER_LABEL[locale] ?? OWNER_LABEL.en}
           </Link>
           <a
-            href={`https://wa.me/${c("whatsappNumber")}`}
+            href={buildWaHref(locale)}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-whatsapp"
@@ -236,7 +237,7 @@ export function Header() {
                 {c("call")}
               </a>
               <a
-                href={`https://wa.me/${c("whatsappNumber")}`}
+                href={buildWaHref(locale)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-whatsapp"

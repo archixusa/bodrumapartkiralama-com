@@ -30,6 +30,8 @@ type Status = "idle" | "submitting" | "success" | "error";
 export function ExitIntentModal() {
   const locale = useLocale();
   const isTr = locale === "tr";
+  // Hata önleme (CRO): geçmiş tarihli giriş seçilemesin.
+  const today = new Date().toISOString().slice(0, 10);
   const [open, setOpen] = useState(false);
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState("");
@@ -60,8 +62,29 @@ export function ExitIntentModal() {
       window.matchMedia("(max-width: 768px)").matches ||
       "ontouchstart" in window;
 
+    let retryTimer: number | undefined;
+
     const trigger = () => {
       if (shownRef.current) return;
+      // "Aktif niyeti asla kesme" (CRO): açık bir diyalog varken (örn.
+      // z-[70] RequestModal — bu modal z-[60] olduğundan ALTINDA açılır ve
+      // iki odak tuzağı çakışır) ya da kullanıcı bir form alanına yazarken
+      // gösterme; 7 günlük gösterim hakkı görünmeden yanmasın. Kısa bir
+      // ertelemeyle tekrar denenir.
+      const dialogOpen = document.querySelector(
+        '[role="dialog"][aria-modal="true"]',
+      );
+      const active = document.activeElement;
+      const isTyping =
+        active instanceof HTMLElement &&
+        (active.tagName === "INPUT" ||
+          active.tagName === "TEXTAREA" ||
+          active.tagName === "SELECT");
+      if (dialogOpen || isTyping) {
+        window.clearTimeout(retryTimer);
+        retryTimer = window.setTimeout(trigger, 30_000);
+        return;
+      }
       shownRef.current = true;
       try {
         window.localStorage.setItem(
@@ -79,7 +102,10 @@ export function ExitIntentModal() {
         if (e.clientY < 0) trigger();
       };
       document.addEventListener("mouseleave", onMouseLeave);
-      return () => document.removeEventListener("mouseleave", onMouseLeave);
+      return () => {
+        document.removeEventListener("mouseleave", onMouseLeave);
+        window.clearTimeout(retryTimer);
+      };
     }
 
     // Mobile: 50% scroll + back navigation OR 100s dwell
@@ -100,6 +126,7 @@ export function ExitIntentModal() {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("popstate", onPop);
       window.clearTimeout(dwellTimer);
+      window.clearTimeout(retryTimer);
     };
   }, []);
 
@@ -277,6 +304,7 @@ export function ExitIntentModal() {
                   type="date"
                   name="date"
                   required
+                  min={today}
                   onFocus={openDatePicker}
                   onClick={openDatePicker}
                   className="input-base"

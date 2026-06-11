@@ -37,7 +37,10 @@ export function CookieConsent() {
   const isTr = locale === "tr";
   const [visible, setVisible] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
-  const [analytics, setAnalytics] = useState(true);
+  // Önceden işaretli kutuyla alınan onay geçerli açık rıza sayılmaz (KVKK
+  // çerez rehberi pratiği) ve spec'in karanlık desen yasağıyla çelişir —
+  // analitik toggle'ı pazarlama gibi varsayılan KAPALI başlar (opt-in).
+  const [analytics, setAnalytics] = useState(false);
   const [marketing, setMarketing] = useState(false);
 
   useEffect(() => {
