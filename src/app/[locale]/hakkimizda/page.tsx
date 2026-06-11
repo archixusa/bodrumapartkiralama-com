@@ -17,6 +17,8 @@ import {
 } from "lucide-react";
 import { PageHero } from "@/components/PageHero";
 import { JsonLd } from "@/components/JsonLd";
+import { ScrollReveal } from "@/components/ScrollReveal";
+import { ProseBlock, PullQuote, PrincipleCards } from "@/components/editorial";
 import { Link } from "@/i18n/routing";
 import { getSiteContent } from "@/lib/content";
 import { buildWaHref } from "@/lib/contact";
@@ -465,82 +467,72 @@ export default async function Page({
         ]}
       />
 
+      {/* v8: giriş — ortalanmış okuma ölçüsü, kutusuz akan lead */}
       <section className="section">
-        <div className="container-page max-w-3xl">
-          <p className="text-base leading-relaxed text-ink/90 md:text-lg">
-            {copy.intro}
-          </p>
+        <div className="container-page">
+          <ProseBlock>
+            <p className="text-lg leading-relaxed text-ink/90 md:text-xl">
+              {copy.intro}
+            </p>
+          </ProseBlock>
         </div>
       </section>
 
+      {/* v8: ilkeler kartlanır (spec: "ilkeler/değerler → 2-3'lü kart grid'i") */}
       <section className="section section-soft">
         <div className="container-page">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-balance">{copy.approachTitle}</h2>
             <p className="mt-3 text-muted">{copy.approachLead}</p>
           </div>
-          <div className="mt-10 grid gap-5 sm:grid-cols-3">
-            {copy.principles.map((p) => {
-              const Icon = p.icon;
-              return (
-                <div key={p.title} className="card flex flex-col gap-3 p-6">
-                  <span className="inline-flex h-12 w-12 items-center justify-center rounded-md bg-navy-50 text-navy-900">
-                    <Icon className="h-6 w-6" />
-                  </span>
-                  <h3 className="text-lg">{p.title}</h3>
-                  <p className="text-sm leading-relaxed text-ink/85">{p.desc}</p>
-                </div>
-              );
-            })}
-          </div>
+          <ScrollReveal className="mt-10">
+            <PrincipleCards items={copy.principles} />
+          </ScrollReveal>
         </div>
       </section>
 
+      {/* v8: kuruluş hikâyesi — prose KUTUSUZ akar; yan-blok (2013 paneli)
+          görsel çapayı kurar ve eski tekrarlı founder bölümünü emer. */}
       <section className="section">
-        <div className="container-page max-w-3xl">
-          <div className="card flex flex-col gap-4 p-6 md:flex-row md:items-start md:p-8">
-            <span className="inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-navy-50 text-navy-900">
-              <CalendarClock className="h-6 w-6" />
-            </span>
-            <div>
-              <h2 className="text-2xl">{copy.founderTitle}</h2>
-              <p className="mt-1 text-sm font-medium text-navy-600">
-                {copy.founderRole}
-              </p>
-              <p className="mt-4 text-sm leading-relaxed text-ink/90">
-                {copy.founderDesc}
-              </p>
+        <div className="container-page grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-start">
+          <div className="mx-auto w-full max-w-[70ch] text-pretty lg:mx-0">
+            <h2 className="text-2xl md:text-3xl">{copy.storyTitle}</h2>
+            <div className="mt-5 space-y-4">
+              {copy.story.map((para, i) => (
+                <p key={i} className="text-base leading-relaxed text-ink/90">
+                  {para}
+                </p>
+              ))}
             </div>
           </div>
+          <aside className="card p-6 lg:sticky lg:top-24">
+            <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-navy-50 text-navy-900">
+              <CalendarClock className="h-6 w-6" />
+            </span>
+            <h3 className="mt-4 text-lg">{copy.founderTitle}</h3>
+            <p className="mt-1 text-sm font-medium text-navy-600">
+              {copy.founderRole}
+            </p>
+            <p className="mt-3 text-sm leading-relaxed text-ink/85">
+              {copy.founderDesc}
+            </p>
+          </aside>
         </div>
       </section>
 
-      {/* Founding story — E-E-A-T: real origin + 2013 history */}
+      {/* v8: tek güçlü cümle pull-quote olur (eski soluk bölüm lead'i),
+          ardından "neden aracısız" kartları */}
       <section className="section section-soft">
-        <div className="container-page max-w-3xl">
-          <h2 className="text-2xl">{copy.storyTitle}</h2>
-          <div className="mt-5 space-y-4">
-            {copy.story.map((para, i) => (
-              <p key={i} className="text-base leading-relaxed text-ink/90">
-                {para}
-              </p>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Why direct / no-middleman, local expertise, 24/7, Özel Transfer */}
-      <section className="section">
         <div className="container-page">
-          <div className="mx-auto max-w-2xl text-center">
+          <PullQuote>{copy.whyLead}</PullQuote>
+          <div className="mx-auto mt-14 max-w-2xl text-center">
             <h2 className="text-balance">{copy.whyTitle}</h2>
-            <p className="mt-3 text-muted">{copy.whyLead}</p>
           </div>
-          <div className="mt-10 grid gap-5 sm:grid-cols-2">
+          <ScrollReveal className="mt-10 grid gap-5 sm:grid-cols-2">
             {copy.whyItems.map((item) => {
               const Icon = item.icon;
               return (
-                <div key={item.title} className="card flex gap-4 p-6">
+                <div key={item.title} data-reveal-child className="card flex gap-4 p-6">
                   <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-md bg-navy-50 text-navy-900">
                     <Icon className="h-6 w-6" />
                   </span>
@@ -553,31 +545,33 @@ export default async function Page({
                 </div>
               );
             })}
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
-      {/* Trust elements + link to editorial team */}
-      <section className="section section-soft">
-        <div className="container-page max-w-3xl">
-          <h2 className="text-2xl">{copy.trustTitle}</h2>
-          <ul className="mt-6 space-y-3">
-            {copy.trust.map((item) => (
-              <li key={item} className="flex items-start gap-3">
-                <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-navy-600" />
-                <span className="text-sm leading-relaxed text-ink/90">
-                  {item}
-                </span>
-              </li>
-            ))}
-          </ul>
-          <Link
-            href="/yazar/editor"
-            className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-navy-600 underline-offset-2 hover:underline"
-          >
-            <Users className="h-4 w-4" />
-            {copy.editorialLink}
-          </Link>
+      {/* Trust elements + link to editorial team — ortalanmış ölçü, kutusuz */}
+      <section className="section">
+        <div className="container-page">
+          <ProseBlock>
+            <h2 className="text-2xl">{copy.trustTitle}</h2>
+            <ul className="mt-6 space-y-3">
+              {copy.trust.map((item) => (
+                <li key={item} className="flex items-start gap-3">
+                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-navy-600" />
+                  <span className="text-sm leading-relaxed text-ink/90">
+                    {item}
+                  </span>
+                </li>
+              ))}
+            </ul>
+            <Link
+              href="/yazar/editor"
+              className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-navy-600 underline-offset-2 hover:underline"
+            >
+              <Users className="h-4 w-4" />
+              {copy.editorialLink}
+            </Link>
+          </ProseBlock>
         </div>
       </section>
 

@@ -9,6 +9,8 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import { OwnerApplicationForm } from "@/lib/reservation-form";
+import { ScrollReveal } from "@/components/ScrollReveal";
+import { PrincipleCards, Timeline } from "@/components/editorial";
 import { getPhone } from "@/lib/contact";
 import { getSiteContent } from "@/lib/content";
 import { buildAlternates, buildLocaleUrl, defaultOgImages } from "@/lib/seo";
@@ -126,9 +128,7 @@ export default async function Page({
     tr: {
       applyCta: "Başvuru Yap",
       howCta: "Nasıl çalışıyor?",
-      benefitsKicker: "Yaklaşımımız",
       benefitsTitle: "Mülk Sahipleriyle Çalışma Şeklimiz",
-      howKicker: "Süreç",
       howTitle: "Nasıl Çalışıyor?",
       howNote:
         "Mülkün durumuna göre değişmekle birlikte, sözleşme sonrası yayına çıkış genellikle birkaç iş günü içinde tamamlanır.",
@@ -146,7 +146,6 @@ export default async function Page({
         "Komisyon ve hizmet kalemlerinin yazılı dökümü",
         "Aylık hesap kesim takvimi",
       ],
-      faqKicker: "FAQ",
       faqTitle: "Sıkça Sorulanlar",
       applyKicker: "Başvuru",
       applyTitlePre: "Başlamak için ",
@@ -235,9 +234,7 @@ export default async function Page({
     en: {
       applyCta: "Apply Now",
       howCta: "How does it work?",
-      benefitsKicker: "Our Approach",
       benefitsTitle: "How We Work with Property Owners",
-      howKicker: "Process",
       howTitle: "How Does It Work?",
       howNote:
         "Depending on the property, going live after the contract is usually completed within a few business days.",
@@ -255,7 +252,6 @@ export default async function Page({
         "Written breakdown of commission and service items",
         "Monthly statement schedule",
       ],
-      faqKicker: "FAQ",
       faqTitle: "Frequently Asked Questions",
       applyKicker: "Application",
       applyTitlePre: "",
@@ -344,9 +340,7 @@ export default async function Page({
     de: {
       applyCta: "Jetzt bewerben",
       howCta: "Wie funktioniert es?",
-      benefitsKicker: "Unser Ansatz",
       benefitsTitle: "So arbeiten wir mit Eigentümern",
-      howKicker: "Ablauf",
       howTitle: "Wie funktioniert es?",
       howNote:
         "Je nach Objekt ist die Veröffentlichung nach Vertragsabschluss in der Regel innerhalb weniger Werktage abgeschlossen.",
@@ -364,7 +358,6 @@ export default async function Page({
         "Schriftliche Aufstellung von Provision und Leistungen",
         "Monatlicher Abrechnungskalender",
       ],
-      faqKicker: "FAQ",
       faqTitle: "Häufige Fragen",
       applyKicker: "Bewerbung",
       applyTitlePre: "",
@@ -453,9 +446,7 @@ export default async function Page({
     ru: {
       applyCta: "Подать заявку",
       howCta: "Как это работает?",
-      benefitsKicker: "Наш подход",
       benefitsTitle: "Как мы работаем с владельцами",
-      howKicker: "Процесс",
       howTitle: "Как это работает?",
       howNote:
         "В зависимости от объекта публикация после подписания договора обычно занимает несколько рабочих дней.",
@@ -473,7 +464,6 @@ export default async function Page({
         "Письменная расшифровка комиссии и услуг",
         "График ежемесячных отчётов",
       ],
-      faqKicker: "FAQ",
       faqTitle: "Частые вопросы",
       applyKicker: "Заявка",
       applyTitlePre: "Чтобы начать, достаточно ",
@@ -638,51 +628,38 @@ export default async function Page({
         </div>
       </section>
 
-      {/* BENEFITS */}
+      {/* BENEFITS — v8: ilkeler ortak PrincipleCards diliyle kartlanır;
+          başlıkla aynı bilgiyi taşıyan "Yaklaşımımız" etiketi kaldırıldı. */}
       <section className="section">
         <div className="container-page">
           <div className="mx-auto max-w-2xl text-center">
-            <span className="kicker">{pc.benefitsKicker}</span>
-            <h2 className="mt-4">{pc.benefitsTitle}</h2>
+            <h2 className="text-balance">{pc.benefitsTitle}</h2>
             <span className="divider-accent mt-5 block" />
           </div>
-          <div className="mt-14 grid gap-6 md:grid-cols-3">
-            {benefits.map((b) => {
-              const Icon = b.icon;
-              return (
-                <div key={b.title} className="card flex flex-col gap-4 p-7">
-                  <span className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-accent-500/10 text-accent-500">
-                    <Icon className="h-6 w-6" />
-                  </span>
-                  <h3 className="text-xl">{b.title}</h3>
-                  <p className="text-sm leading-relaxed text-muted">{b.desc}</p>
-                </div>
-              );
-            })}
-          </div>
+          <ScrollReveal className="mt-12">
+            <PrincipleCards items={benefits} />
+          </ScrollReveal>
         </div>
       </section>
 
-      {/* HOW IT WORKS */}
+      {/* HOW IT WORKS — v8: gerçek 4 adımlık süreç zaman çizgisi olur
+          (tekdüze kart grid'i yerine); "Süreç" etiketi başlığın tekrarıydı. */}
       <section id="nasil-calisiyor" className="section section-soft">
         <div className="container-page">
           <div className="mx-auto max-w-2xl text-center">
-            <span className="kicker">{pc.howKicker}</span>
-            <h2 className="mt-4">{pc.howTitle}</h2>
+            <h2 className="text-balance">{pc.howTitle}</h2>
             <span className="divider-accent mt-5 block" />
             <p className="mt-5 text-muted">{pc.howNote}</p>
           </div>
-          <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {howItWorks.map((s) => (
-              <div key={s.step} className="card flex flex-col gap-3 p-6">
-                <span className="font-display text-4xl font-bold text-accent-500/80">
-                  {s.step}
-                </span>
-                <h3 className="text-lg">{s.title}</h3>
-                <p className="text-sm text-muted">{s.desc}</p>
-              </div>
-            ))}
-          </div>
+          <ScrollReveal className="mt-12">
+            <Timeline
+              items={howItWorks.map((s) => ({
+                marker: s.step,
+                title: s.title,
+                desc: s.desc,
+              }))}
+            />
+          </ScrollReveal>
         </div>
       </section>
 
@@ -713,9 +690,9 @@ export default async function Page({
       {/* FAQ */}
       <section className="section section-soft">
         <div className="container-page max-w-3xl">
+          {/* v8: "FAQ" etiketi başlığın birebir tekrarıydı — kaldırıldı. */}
           <div className="text-center">
-            <span className="kicker">{pc.faqKicker}</span>
-            <h2 className="mt-4">{pc.faqTitle}</h2>
+            <h2 className="text-balance">{pc.faqTitle}</h2>
             <span className="divider-accent mt-5 block" />
           </div>
           <div className="mt-12 divide-y divide-[var(--color-border)] rounded-2xl border border-[var(--color-border)] bg-white">

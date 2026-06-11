@@ -36,11 +36,15 @@ const jakarta = Plus_Jakarta_Sans({
 
 // "Canlı Akdeniz" display voice (DESIGN_SPEC.md §2): Fraunces — yalnız h1/h2
 // (600) ve tek tük 700 vurgu. latin-ext TR glyph'leri için kalır.
+// v8: italik yüz eklendi (PullQuote — büyük Fraunces italik alıntı). preload
+// kapalı + display:swap: italik dosya yalnız pull-quote içeren sayfalarda,
+// tarayıcının kendi lazy font yüklemesiyle iner — LCP'ye dokunmaz.
 const fraunces = Fraunces({
   subsets: ["latin", "latin-ext"],
   display: "swap",
   variable: "--font-display",
   weight: ["600", "700"],
+  style: ["normal", "italic"],
   preload: false,
 });
 

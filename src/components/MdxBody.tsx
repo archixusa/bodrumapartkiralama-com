@@ -54,10 +54,18 @@ export function MdxBody({ source }: { source: string }) {
               {children}
             </a>
           ),
+          // v8: gövde alıntısı pull-quote diline bağlandı — Fraunces italik +
+          // üstte turkuaz vurgu çizgisi (kutu/yan şerit yok; yalnız sunum).
           blockquote: ({ children }) => (
-            <blockquote className="mt-4 border-l-4 border-accent-500 bg-navy-50/40 px-4 py-2 italic">
-              {children}
-            </blockquote>
+            <figure className="my-8">
+              <span
+                aria-hidden
+                className="block h-1 w-12 rounded-full bg-turkuaz-500"
+              />
+              <blockquote className="font-display text-xl font-semibold italic leading-snug text-murekkep-900 [&>p]:mt-3">
+                {children}
+              </blockquote>
+            </figure>
           ),
           strong: ({ children }) => (
             <strong className="font-semibold text-navy-900">{children}</strong>

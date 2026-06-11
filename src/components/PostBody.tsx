@@ -36,13 +36,19 @@ export function PostBody({ sections }: { sections: PostSection[] }) {
               </ol>
             );
           case "quote":
+            // v8: gövde alıntısı pull-quote diline bağlandı — Fraunces italik
+            // + üstte turkuaz vurgu çizgisi; kutu ve yan şerit yok (yalnız
+            // sunum, metne dokunulmaz).
             return (
-              <blockquote
-                key={i}
-                className="my-6 rounded-md border-l-4 border-turkuaz-500 bg-navy-50 px-5 py-4 text-base font-medium italic text-navy-900"
-              >
-                {s.text}
-              </blockquote>
+              <figure key={i} className="my-8">
+                <span
+                  aria-hidden
+                  className="block h-1 w-12 rounded-full bg-turkuaz-500"
+                />
+                <blockquote className="mt-4 text-balance font-display text-xl font-semibold italic leading-snug text-murekkep-900 md:text-2xl">
+                  {s.text}
+                </blockquote>
+              </figure>
             );
           default:
             return null;

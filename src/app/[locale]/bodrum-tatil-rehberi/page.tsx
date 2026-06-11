@@ -172,10 +172,13 @@ export default async function Page({
       />
 
       <section className="section">
-        <div className="container-page grid gap-10 lg:grid-cols-[1fr_280px]">
+        {/* v8: kompozisyon ortalanır (max-w-5xl) + gövde ~70ch okuma ölçüsüne
+            sabitlenir — eski ~880px satırlar "Word belgesi" gibi uzuyordu.
+            TOC yan bloğu bilinçli asimetri olarak kalır. */}
+        <div className="container-page grid max-w-5xl gap-10 lg:grid-cols-[minmax(0,1fr)_280px]">
           <div className="min-w-0">
             {/* Answer-first opening */}
-            <div className="space-y-4 text-base md:text-[15px] leading-relaxed text-ink/90">
+            <div className="max-w-[70ch] space-y-4 text-pretty text-base md:text-[15px] leading-relaxed text-ink/90">
               {g.intro.map((p, i) => (
                 <p key={i} data-speakable={i === 0 ? "intro" : undefined}>
                   {p}
@@ -189,7 +192,7 @@ export default async function Page({
               return (
                 <div key={s.id} id={s.id} className="mt-12 scroll-mt-24">
                   <h2>{s.heading}</h2>
-                  <div className="mt-4 space-y-4 text-base md:text-[15px] leading-relaxed text-ink/90">
+                  <div className="mt-4 max-w-[70ch] space-y-4 text-pretty text-base md:text-[15px] leading-relaxed text-ink/90">
                     {s.body.map((p, i) => (
                       <p key={i}>{p}</p>
                     ))}

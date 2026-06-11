@@ -129,10 +129,14 @@ export default async function Page({
   return (
     <section className="section">
       <JsonLd data={[ld, breadcrumb]} />
-      <div className="container-page max-w-4xl">
-        <h1>{hero.title}</h1>
-        <p className="mt-2 text-muted">{hero.intro}</p>
-        <div className="mt-8">
+      {/* v8: ortalanmış editoryal ölçü — başlık + intro ~70ch bandında,
+          liste max-w-3xl; eski max-w-4xl sola yaslı şerit hissini bırakır. */}
+      <div className="container-page">
+        <div className="mx-auto max-w-[70ch] text-center">
+          <h1 className="text-balance">{hero.title}</h1>
+          <p className="mt-4 text-pretty text-muted">{hero.intro}</p>
+        </div>
+        <div className="mx-auto mt-10 max-w-3xl">
           <FAQ items={items} />
         </div>
       </div>
