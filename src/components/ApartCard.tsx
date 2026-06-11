@@ -35,7 +35,7 @@ export function ApartCard({
           sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
           placeholder="blur"
           blurDataURL={BLUR_KUM}
-          className="object-cover transition duration-500 group-hover:scale-105"
+          className="object-cover transition duration-500 ease-akdeniz group-hover:scale-105"
         />
         {/* Sol üst: kum zemin bölge pill'i + varsa etiketler (spec §4 kart) */}
         <div className="absolute left-3 top-3 flex flex-wrap items-center gap-1.5">
@@ -98,7 +98,10 @@ export function ApartCard({
             href={`/apartlar/${apt.slug}`}
             className="inline-flex min-h-11 items-center gap-1 text-sm font-bold text-turkuaz-600 transition hover:text-turkuaz-700"
           >
-            {t("details")} <ArrowRight className="h-4 w-4" />
+            {/* v7 mikro-etkileşim: kart hover'ında ok 2px sağa kayar —
+                "ileri gider" niyet sinyali (transform-only, ~200ms). */}
+            {t("details")}{" "}
+            <ArrowRight className="h-4 w-4 transition-transform duration-200 ease-akdeniz group-hover:translate-x-0.5" />
           </Link>
         </div>
       </div>

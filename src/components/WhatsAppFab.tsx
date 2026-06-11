@@ -22,7 +22,7 @@ export function WhatsAppFab({ locale }: { locale: string }) {
       target="_blank"
       rel="noopener noreferrer"
       aria-label={WA_ARIA_LABEL[locale] ?? WA_ARIA_LABEL.en}
-      className="fixed bottom-6 right-6 z-50 hidden h-14 w-14 items-center justify-center rounded-full bg-whatsapp text-white shadow-lg transition-transform hover:scale-110 hover:bg-whatsapp-dark md:flex"
+      className="fixed bottom-6 right-6 z-50 hidden h-14 w-14 items-center justify-center rounded-full bg-whatsapp text-white shadow-lg transition-transform duration-200 ease-akdeniz hover:scale-110 hover:bg-whatsapp-dark active:scale-95 md:flex"
       style={{ boxShadow: "0 4px 20px rgba(21,128,61,0.4)" }}
     >
       <svg viewBox="0 0 24 24" className="h-7 w-7" fill="currentColor">

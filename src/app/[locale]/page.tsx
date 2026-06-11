@@ -520,7 +520,11 @@ export default async function HomePage({
           <path className="hero-wave-mid fill-turkuaz-300" opacity=".6" d="M0 100 Q150 70 300 100 T600 100 T900 100 T1200 100 T1500 100 T1800 100 V170 H0 Z" />
           <path className="fill-turkuaz-500" d="M0 130 Q150 105 300 130 T600 130 T900 130 T1200 130 V170 H0 Z" />
         </svg>
-        <div className="container-page relative z-10 py-16 pb-32 md:py-24 md:pb-40 lg:py-28 lg:pb-44">
+        {/* v7: hero-scroll-stage — CSS scroll-driven sahneleme (globals.css).
+            İçerik kaydırmadan biraz daha yavaş çıkar + yumuşakça çözülür;
+            dalga katmanı tam hızda kalır → katman hızı farkı deniz derinliği
+            hissi verir. Sıfır JS, compositor-only, reduced-motion'da kapalı. */}
+        <div className="hero-scroll-stage container-page relative z-10 py-16 pb-32 md:py-24 md:pb-40 lg:py-28 lg:pb-44">
           <div className="mx-auto max-w-3xl text-center">
             <h1
               id="hero-heading"
@@ -574,7 +578,10 @@ export default async function HomePage({
         className="section pt-16 md:pt-24 lg:pt-28"
       >
         <div className="container-page">
-          <div className="mx-auto max-w-2xl text-center">
+          {/* v7: bölüm akışı — başlık bloğu da kartlarla aynı yumuşak dille
+              gelir (bölümler arası tutarlı geçiş; focus-within guard CTA'yı
+              klavye odakta anında görünür kılar). */}
+          <ScrollReveal className="mx-auto max-w-2xl text-center">
             <h2 id="offer-heading" className="text-balance">
               {offerCopy.title}
             </h2>
@@ -588,19 +595,19 @@ export default async function HomePage({
                 whatsappText={offerCopy.waText}
               />
             </div>
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
       {/* 3 — REGIONS (visual grid) */}
       <section aria-labelledby="regions-heading" className="section section-blue">
         <div className="container-page">
-          <div className="mx-auto max-w-2xl text-center">
+          <ScrollReveal className="mx-auto max-w-2xl text-center">
             <h2 id="regions-heading" className="text-balance">
               {regionsCopy.title}
             </h2>
             <p className="mt-3 text-muted">{regionsCopy.sub}</p>
-          </div>
+          </ScrollReveal>
           <ScrollReveal className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {regionCards.map((d, i) => (
               <Link
@@ -623,7 +630,7 @@ export default async function HomePage({
                   sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                   placeholder="blur"
                   blurDataURL={BLUR_KUM}
-                  className="object-cover transition duration-500 group-hover:scale-110"
+                  className="object-cover transition duration-500 ease-akdeniz group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-navy-900/95 via-navy-900/35 to-transparent" />
                 {/* Hover: ince mürekkep koyulaşması (opacity geçişi, compositor) */}
@@ -657,11 +664,11 @@ export default async function HomePage({
         className="section py-10 md:py-12 lg:py-14"
       >
         <div className="container-page">
-          <div className="mx-auto max-w-2xl text-center">
+          <ScrollReveal className="mx-auto max-w-2xl text-center">
             <h2 id="how-heading" className="text-balance">
               {howCopy.title}
             </h2>
-          </div>
+          </ScrollReveal>
           <ScrollReveal className="mt-10 grid gap-5 sm:grid-cols-3">
             {howCopy.steps.map((s, i) => {
               const Icon = HOW_ICONS[i] ?? HOW_ICONS[0];
@@ -694,12 +701,12 @@ export default async function HomePage({
           <div className="grid items-start gap-10 lg:grid-cols-12 lg:gap-12">
             {/* Editorial text column — left-aligned, anchored by an accent rule */}
             <div className="lg:col-span-4 lg:sticky lg:top-28">
-              <div className="border-l-2 border-turkuaz-500 pl-5">
+              <ScrollReveal className="border-l-2 border-turkuaz-500 pl-5">
                 <h2 id="lifestyle-heading" className="text-balance">
                   {lifestyleCopy.title}
                 </h2>
                 <p className="mt-4 max-w-sm text-muted">{lifestyleCopy.sub}</p>
-              </div>
+              </ScrollReveal>
             </div>
 
             {/* Asymmetric image mosaic */}
@@ -720,11 +727,11 @@ export default async function HomePage({
       {/* 6 — WHY US */}
       <section aria-labelledby="why-heading" className="section">
         <div className="container-page">
-          <div className="mx-auto max-w-2xl text-center">
+          <ScrollReveal className="mx-auto max-w-2xl text-center">
             <h2 id="why-heading" className="text-balance">
               {whyCopy.title}
             </h2>
-          </div>
+          </ScrollReveal>
           <ScrollReveal className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {whyCopy.items.map((item, i) => {
               const Icon = WHY_ICONS[i] ?? WHY_ICONS[0];
@@ -745,7 +752,7 @@ export default async function HomePage({
       {/* 7 — OWNER CTA */}
       <section aria-labelledby="owner-heading" className="section section-soft py-10 md:py-14 lg:py-16">
         <div className="container-page">
-          <div className="mx-auto flex max-w-4xl flex-col items-start gap-5 rounded-xl border border-[var(--color-border)] bg-white p-6 md:flex-row md:items-center md:gap-8 md:p-8">
+          <ScrollReveal className="mx-auto flex max-w-4xl flex-col items-start gap-5 rounded-xl border border-[var(--color-border)] bg-white p-6 md:flex-row md:items-center md:gap-8 md:p-8">
             <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-md bg-turkuaz-500/10 text-turkuaz-600">
               <HomeIcon className="h-6 w-6" />
             </span>
@@ -753,11 +760,11 @@ export default async function HomePage({
               <h2 id="owner-heading" className="text-2xl">{ownerCopy.title}</h2>
               <p className="mt-2 text-sm text-muted md:text-base">{ownerCopy.desc}</p>
             </div>
-            <Link href="/evinizi-kiraya-verin" className="btn-primary shrink-0">
+            <Link href="/evinizi-kiraya-verin" className="btn-primary group shrink-0">
               {ownerCopy.cta}
-              <ArrowRight className="h-4 w-4" />
+              <ArrowRight className="h-4 w-4 transition-transform duration-200 ease-akdeniz group-hover:translate-x-0.5" />
             </Link>
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -765,14 +772,17 @@ export default async function HomePage({
       <section aria-labelledby="services-heading" className="section py-10 md:py-14 lg:py-16">
         <div className="container-page">
           <SectionHeader id="services-heading" title={t("servicesTitle")} />
-          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+          {/* v7: diğer grid'lerle aynı reveal dili — bu grid tek başına
+              "pat diye" beliriyordu. */}
+          <ScrollReveal className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
             {services.map((s) => {
               const Icon = s.icon;
               return (
                 <Link
                   key={s.slug}
+                  data-reveal-child
                   href={s.href}
-                  className="card flex flex-col items-start gap-3 p-5"
+                  className="card group flex flex-col items-start gap-3 p-5"
                 >
                   <span className="inline-flex h-12 w-12 items-center justify-center rounded-md bg-navy-50 text-navy-900">
                     <Icon className="h-6 w-6" />
@@ -781,12 +791,13 @@ export default async function HomePage({
                     <ServiceTitle k={s.titleKey} />
                   </h3>
                   <span className="mt-auto inline-flex items-center gap-1 text-sm font-semibold text-navy-600">
-                    {c("details")} <ArrowRight className="h-4 w-4" />
+                    {c("details")}{" "}
+                    <ArrowRight className="h-4 w-4 transition-transform duration-200 ease-akdeniz group-hover:translate-x-0.5" />
                   </span>
                 </Link>
               );
             })}
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -797,7 +808,7 @@ export default async function HomePage({
       {/* 10 — BLOG */}
       <section aria-labelledby="blog-heading" className="section section-soft">
         <div className="container-page">
-          <div className="flex items-end justify-between">
+          <ScrollReveal className="flex items-end justify-between">
             <div>
               <h2 id="blog-heading">{t("blogTitle")}</h2>
               <p className="mt-2 text-muted">{t("blogDesc")}</p>
@@ -827,7 +838,7 @@ export default async function HomePage({
             <Link href="/blog" className="hidden text-sm font-semibold text-navy-600 hover:underline md:inline">
               {c("viewAll")} <ArrowRight className="ml-1 inline h-4 w-4" />
             </Link>
-          </div>
+          </ScrollReveal>
           <ScrollReveal className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {posts.slice(0, 3).map((p) => (
               <Link key={p.slug} data-reveal-child href={`/blog/${p.slug}`} className="card group flex flex-col overflow-hidden">
@@ -840,7 +851,7 @@ export default async function HomePage({
                     sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                     placeholder="blur"
                     blurDataURL={BLUR_KUM}
-                    className="object-cover transition group-hover:scale-105"
+                    className="object-cover transition duration-500 ease-akdeniz group-hover:scale-105"
                   />
                   <span className="absolute left-3 top-3 chip-accent">
                     {isTr ? p.category.tr : p.category.en}
@@ -910,7 +921,7 @@ function LifestyleTile({
         sizes="(min-width: 1024px) 25vw, 50vw"
         placeholder="blur"
         blurDataURL={BLUR_KUM}
-        className="object-cover transition duration-500 group-hover:scale-105"
+        className="object-cover transition duration-500 ease-akdeniz group-hover:scale-105"
       />
     </div>
   );
@@ -932,12 +943,14 @@ function SectionHeader({
   id?: string;
 }) {
   return (
-    <div className="mx-auto max-w-2xl text-center">
+    // v7: bölüm akışı — başlıklar da grid'lerle aynı yumuşak reveal diliyle
+    // gelir (empty-safe: ScrollReveal yalnız .js-reveal altında gizler).
+    <ScrollReveal className="mx-auto max-w-2xl text-center">
       <h2 id={id} className="text-balance">
         {title}
       </h2>
       {desc && <p className="mt-3 text-muted">{desc}</p>}
-    </div>
+    </ScrollReveal>
   );
 }
 
