@@ -386,8 +386,10 @@ export default async function DistrictPage({
       </section>
 
       <section className="section">
-        <div className="container-page grid gap-10 lg:grid-cols-[1fr_320px]">
-          <div>
+        {/* v8: yan-görsel (harita) düzeni bilinçli asimetri — metin ölçüsü
+            ~70ch'e sabitlenir, eski ~100ch satırlar kısalır. */}
+        <div className="container-page grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px]">
+          <div className="max-w-[70ch] text-pretty">
             <h2>{t("aboutTitle", { district: districtName })}</h2>
             <p className="mt-4 text-base md:text-[15px] leading-relaxed text-ink/90">{longDesc}</p>
             <ul className="mt-6 grid gap-3 sm:grid-cols-2">
@@ -413,7 +415,9 @@ export default async function DistrictPage({
 
       {guide && <DistrictGuide guide={guide} districtName={districtName} />}
 
-      <section className="section section-soft">
+      {/* v8 bant ritmi: rehber bloğu (TR) kum-koyu banda alındı — apart
+          listesi rehber varken açık zeminde kalır, yokken koyu bandı üstlenir. */}
+      <section className={guide ? "section" : "section section-soft"}>
         <div className="container-page">
           <div className="flex items-end justify-between">
             <h2>{t("apartsTitle", { district: districtName })}</h2>
@@ -467,7 +471,8 @@ export default async function DistrictPage({
       <GuestReviews locale={locale} max={3} />
 
       <section className="section">
-        <div className="container-page max-w-4xl">
+        {/* v8: SSS bloğu okuma ölçüsüne (max-w-3xl) ortalanır */}
+        <div className="container-page max-w-3xl">
           <h2>{isTr ? `${districtName} Hakkında Sıkça Sorulanlar` : `${districtName} FAQ`}</h2>
           <div className="mt-6">
             <FAQ items={districtFaq} />

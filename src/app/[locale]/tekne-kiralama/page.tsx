@@ -405,8 +405,9 @@ export default async function Page({
       />
 
       <section className="section">
-        <div className="container-page grid gap-10 lg:grid-cols-[1fr_380px]">
-          <div className="space-y-4 text-base md:text-[15px] leading-relaxed text-ink/90">
+        {/* v8: yan-form düzeni bilinçli asimetri — metin ölçüsü ~70ch */}
+        <div className="container-page grid gap-10 lg:grid-cols-[minmax(0,1fr)_380px]">
+          <div className="max-w-[70ch] space-y-4 text-pretty text-base md:text-[15px] leading-relaxed text-ink/90">
             <p>{t("intro1")}</p>
             <p>{t("intro2")}</p>
             <p>{t("intro3")}</p>
