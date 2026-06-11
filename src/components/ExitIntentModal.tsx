@@ -4,17 +4,23 @@ import { FormEvent, useEffect, useRef, useState } from "react";
 import { useLocale } from "next-intl";
 import { X, Loader2, Check, AlertCircle, Calendar, Users, Phone } from "lucide-react";
 import { trackLead } from "@/lib/analytics";
+import { openDatePicker } from "@/lib/date-picker";
 
-const SESSION_KEY = "bak-exit-intent-shown-v1";
+// Frekans sınırı (DESIGN_SPEC.md v4 EK — ÇIKIŞ-NİYETİ POP-UP'INI SEYREKLEŞTİR):
+// oturum başına 1 (sessionStorage) yerine localStorage + 7 GÜNLÜK son-gösterim
+// damgası. Gösterildiğinde {"t": <epoch-ms>} yazılır; açılışta okunur ve 7 gün
+// içinde tekrar gösterilmez. localStorage erişilemezse shownRef fallback'i kalır.
+const STORAGE_KEY = "bak-exit-intent-shown";
+const FREQUENCY_WINDOW_MS = 604_800_000; // 7 gün = 7 * 24 * 60 * 60 * 1000
 
 type Status = "idle" | "submitting" | "success" | "error";
 
 /**
- * Exit-intent capture modal — single shot per session.
+ * Exit-intent capture modal — at most once per 7-day window (localStorage).
  *
  * Triggers:
  *   - Desktop: mouseleave with clientY < 0 (cursor going to address/tab bar).
- *   - Mobile: either 50% scroll then a hashchange/popstate (back), or 60s
+ *   - Mobile: either 50% scroll then a hashchange/popstate (back), or 100s
  *     dwell time as a fallback.
  *
  * Submit posts to Supabase REST `contact_messages` with
@@ -29,15 +35,23 @@ export function ExitIntentModal() {
   const [errorMsg, setErrorMsg] = useState("");
   const shownRef = useRef(false);
 
-  // Show once per session, then never again until tab closes.
+  // Show at most once per 7-day window (localStorage timestamp), then never
+  // again until the window elapses.
   useEffect(() => {
     try {
-      if (window.sessionStorage.getItem(SESSION_KEY)) {
-        shownRef.current = true;
-        return;
+      const raw = window.localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const shownAt = Number(JSON.parse(raw)?.t);
+        if (
+          Number.isFinite(shownAt) &&
+          Date.now() - shownAt < FREQUENCY_WINDOW_MS
+        ) {
+          shownRef.current = true;
+          return;
+        }
       }
     } catch {
-      // sessionStorage unavailable; we'll still cap with shownRef
+      // localStorage unavailable / malformed; we'll still cap with shownRef
     }
 
     const isMobile =
@@ -48,7 +62,10 @@ export function ExitIntentModal() {
       if (shownRef.current) return;
       shownRef.current = true;
       try {
-        window.sessionStorage.setItem(SESSION_KEY, "1");
+        window.localStorage.setItem(
+          STORAGE_KEY,
+          JSON.stringify({ t: Date.now() }),
+        );
       } catch {
         // ignore
       }
@@ -63,7 +80,7 @@ export function ExitIntentModal() {
       return () => document.removeEventListener("mouseleave", onMouseLeave);
     }
 
-    // Mobile: 50% scroll + back navigation OR 60s dwell
+    // Mobile: 50% scroll + back navigation OR 100s dwell
     let scrolledHalf = false;
     const onScroll = () => {
       const ratio =
@@ -76,7 +93,7 @@ export function ExitIntentModal() {
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("popstate", onPop);
-    const dwellTimer = window.setTimeout(trigger, 60_000);
+    const dwellTimer = window.setTimeout(trigger, 100_000);
     return () => {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("popstate", onPop);
@@ -220,6 +237,8 @@ export function ExitIntentModal() {
                   type="date"
                   name="date"
                   required
+                  onFocus={openDatePicker}
+                  onClick={openDatePicker}
                   className="input-base"
                   style={{ fontSize: 16 }}
                 />
