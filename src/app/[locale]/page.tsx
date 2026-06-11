@@ -600,6 +600,11 @@ export default async function HomePage({
                   className="object-cover transition duration-500 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-navy-900/95 via-navy-900/35 to-transparent" />
+                {/* Hover: ince mürekkep koyulaşması (opacity geçişi, compositor) */}
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 bg-murekkep-900/25 opacity-0 transition-opacity duration-300 ease-akdeniz group-hover:opacity-100"
+                />
                 <div className="absolute inset-x-0 bottom-0 p-5 text-white">
                   <h3 className="flex items-center gap-1.5 text-xl font-bold text-white drop-shadow">
                     <MapPin className="h-4 w-4 text-turkuaz-300" />
