@@ -322,8 +322,11 @@ export default async function Page({
         </section>
 
         <section className="container-page py-10 lg:py-14">
-          <div className="grid gap-10 lg:grid-cols-[1fr_280px]">
-            <div className="min-w-0">
+          {/* v8: kompozisyon ortalanır + gövde ~70ch okuma ölçüsü (yalnız
+              yerleşim — gövde METNİNE dokunulmaz); TOC yan bloğu bilinçli
+              asimetri olarak kalır. */}
+          <div className="mx-auto grid max-w-5xl gap-10 lg:grid-cols-[minmax(0,1fr)_280px]">
+            <div className="min-w-0 max-w-[70ch]">
               <PostBody sections={sections} />
               {faqItems.length > 0 && (
                 <>
@@ -557,11 +560,13 @@ function renderMdxPost(
         </section>
 
         <section className="container-page py-10 lg:py-14">
-          <div className="mx-auto max-w-3xl">
+          {/* v8: ortalanmış ~70ch okuma ölçüsü; özet kutusuz editoryal lead
+              olarak akar (yan şerit kaldırıldı — prose kutusuz akar kuralı). */}
+          <div className="mx-auto max-w-[70ch]">
             {mdx.excerpt && (
               <p
                 data-speakable="intro"
-                className="mb-6 border-l-4 border-accent-500 bg-navy-50/40 px-4 py-3 text-base italic text-ink"
+                className="mb-8 text-pretty text-lg italic leading-relaxed text-ink/90"
               >
                 {mdx.excerpt}
               </p>
