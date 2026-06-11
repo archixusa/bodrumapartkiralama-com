@@ -376,7 +376,7 @@ export default async function Page({
           </div>
         </section>
 
-        <section className="section section-soft">
+        <section className="section section-soft cv-auto">
           <div className="container-page">
             <h2>{t("relatedTitle")}</h2>
             <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

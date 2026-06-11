@@ -428,7 +428,7 @@ function ApartlarGuideTr() {
     },
   ];
   return (
-    <section className="section section-soft">
+    <section className="section section-soft cv-auto">
       <div className="container-page max-w-4xl">
         <h2 className="text-balance">
           Bodrum'da Apart Kiralama Hakkında Bilmeniz Gerekenler

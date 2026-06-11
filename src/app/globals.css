@@ -188,6 +188,15 @@ body {
 @layer utilities {
   .text-balance { text-wrap: balance; }
   .text-pretty  { text-wrap: pretty; }
+  /* content-visibility (spec v3/v4: korunur/derinleştirilir) — ekran-altı uzun
+     bölümlerin (uzun rehber prose'u, blog gövdesi) render/layout işini görünür
+     olana kadar atlar. contain-intrinsic-size bir yükseklik tahmini verir, böyle­ce
+     kaydırma çubuğu zıplamaz (CLS 0). YALNIZ ekran-altı uzun bölümlere uygulanır;
+     LCP/hero'ya ASLA. */
+  .cv-auto {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 1200px;
+  }
   /* Sayfa girişi stagger fade-up (spec §5). */
   .fade-up {
     opacity: 0;
