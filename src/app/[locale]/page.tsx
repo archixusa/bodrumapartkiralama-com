@@ -484,21 +484,26 @@ export default async function HomePage({
           aria-hidden="true"
           className="absolute inset-0 bg-[radial-gradient(120%_80%_at_78%_8%,rgba(251,238,221,.9),transparent_42%),radial-gradient(90%_70%_at_18%_22%,rgba(52,200,196,.16),transparent_55%),linear-gradient(180deg,theme(colors.kum.50)_0%,theme(colors.turkuaz.50)_46%,theme(colors.turkuaz.100)_72%,theme(colors.turkuaz.200)_100%)]"
         />
-        {/* Yumuşak ışık halesi — kum tonlu nötr dekor (v2: gunes dekorda kullanılmaz) */}
+        {/* Yumuşak ışık halesi — kum tonlu nötr dekor (v2: gunes dekorda
+            kullanılmaz). v4 (b): çok yavaş, alçak genlikli nazik salınım —
+            ışık akışı hissi (transform-only, reduced-motion'da durur). */}
         <div
           aria-hidden="true"
-          className="absolute right-[10%] top-12 hidden h-24 w-24 rounded-full bg-[radial-gradient(circle_at_50%_50%,#FFF8F0,#FBEEDD_65%)] shadow-[0_0_80px_12px_rgba(240,226,207,.7)] md:block"
+          className="hero-float absolute right-[10%] top-12 hidden h-24 w-24 rounded-full bg-[radial-gradient(circle_at_50%_50%,#FFF8F0,#FBEEDD_65%)] shadow-[0_0_80px_12px_rgba(240,226,207,.7)] md:block"
         />
-        {/* Dalgalar — turkuaz skalası */}
+        {/* Dalgalar — turkuaz skalası. v4 (b): arka iki katman farklı hızlarda
+            çok yavaş yatay sürüklenir (paralaks deniz hissi); ön katman sabit
+            kalır ki kompozisyon çapalı dursun. Salt transform (compositor);
+            reduced-motion'da tüm sürüklenme durur. */}
         <svg
           aria-hidden="true"
           className="absolute inset-x-0 bottom-0 h-20 w-full md:h-32"
           viewBox="0 0 1200 170"
           preserveAspectRatio="none"
         >
-          <path d="M0 70 Q150 40 300 70 T600 70 T900 70 T1200 70 V170 H0 Z" className="fill-turkuaz-200" opacity=".55" />
-          <path d="M0 100 Q150 70 300 100 T600 100 T900 100 T1200 100 V170 H0 Z" className="fill-turkuaz-300" opacity=".6" />
-          <path d="M0 130 Q150 105 300 130 T600 130 T900 130 T1200 130 V170 H0 Z" className="fill-turkuaz-500" />
+          <path className="hero-wave-back fill-turkuaz-200" opacity=".55" d="M0 70 Q150 40 300 70 T600 70 T900 70 T1200 70 T1500 70 T1800 70 V170 H0 Z" />
+          <path className="hero-wave-mid fill-turkuaz-300" opacity=".6" d="M0 100 Q150 70 300 100 T600 100 T900 100 T1200 100 T1500 100 T1800 100 V170 H0 Z" />
+          <path className="fill-turkuaz-500" d="M0 130 Q150 105 300 130 T600 130 T900 130 T1200 130 V170 H0 Z" />
         </svg>
         <div className="container-page relative z-10 py-16 pb-32 md:py-24 md:pb-40 lg:py-28 lg:pb-44">
           <div className="mx-auto max-w-3xl text-center">

@@ -239,6 +239,39 @@ body {
   animation: activity-ring 2.8s cubic-bezier(0.2, 0.7, 0.2, 1) infinite;
 }
 
+/* Hero decor drift (spec v4 §Animasyon (b)) — incelikli paralaks/degrade-akış.
+   Salt transform (compositor); çok yavaş + alçak genlikli, amaçsız değil:
+   ışık + deniz hissini derinleştirir. Dalganın tam görsel periyodu 600 viewBox
+   birimi (crest→trough→crest); arka dalgalar -600 kayar → kesintisiz döngü
+   (path'ler 1800'e kadar uzatıldı ki kayma sırasında sağ kenarda boşluk
+   oluşmasın). reduced-motion'da tümü durur (global kural + açık iptal). */
+@keyframes hero-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+@keyframes hero-wave-drift {
+  to {
+    transform: translateX(-600px);
+  }
+}
+.hero-float {
+  animation: hero-float 9s ease-in-out infinite;
+  will-change: transform;
+}
+.hero-wave-back {
+  animation: hero-wave-drift 22s linear infinite;
+  will-change: transform;
+}
+.hero-wave-mid {
+  animation: hero-wave-drift 15s linear infinite;
+  will-change: transform;
+}
+
 /* ── Scroll-reveal (spec v4 §Animasyon (a)) ─────────────────────────────────
    EMPTY-SAFE: the hidden start-state is scoped to `.js-reveal` — a class JS
    only adds when IntersectionObserver is available AND reduced-motion is off
@@ -296,6 +329,14 @@ body {
   .activity-ring {
     animation: none !important;
     opacity: 0 !important;
+  }
+  /* Hero decor drift/float fully stops and rests at its base transform. */
+  .hero-float,
+  .hero-wave-back,
+  .hero-wave-mid {
+    animation: none !important;
+    transform: none !important;
+    will-change: auto !important;
   }
 }
 
