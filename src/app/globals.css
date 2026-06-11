@@ -314,6 +314,17 @@ body {
   opacity: 1;
   transform: none;
 }
+/* A focusable element below the fold must never sit behind the reveal's
+   opacity:0 / translateY start-state — the focus ring would be invisible
+   (WCAG 2.4.7). When focus lands inside an armed block, snap it to its visible
+   end-state immediately (skip the transition) so the ring is always shown.
+   Mirrors the `.reveal-init:focus-within` guard used on the villa site. */
+.js-reveal [data-reveal]:focus-within,
+.js-reveal [data-reveal] [data-reveal-child]:focus-within {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
 
 /* Spec §5: reduced-motion MUTLAKA desteklenir — tüm animasyonlar kapanır. */
 @media (prefers-reduced-motion: reduce) {

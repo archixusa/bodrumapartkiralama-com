@@ -34,6 +34,8 @@ export function ExitIntentModal() {
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState("");
   const shownRef = useRef(false);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeBtnRef = useRef<HTMLButtonElement>(null);
 
   // Show at most once per 7-day window (localStorage timestamp), then never
   // again until the window elapses.
@@ -101,14 +103,48 @@ export function ExitIntentModal() {
     };
   }, []);
 
-  // ESC to close
+  // ESC to close + body scroll lock + focus management while open (WCAG
+  // 2.4.3 / 2.1.2 / 4.1.2): açılışta odak kapat butonuna gider, Tab/Shift+Tab
+  // diyalog içinde hapsedilir, kapanışta odak tetikleyiciye iade edilir.
+  // RequestModal.tsx'teki yerleşik desenin birebir uyarlaması.
   useEffect(() => {
     if (!open) return;
+    const previouslyFocused = document.activeElement as HTMLElement | null;
+    closeBtnRef.current?.focus();
+
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
+      if (e.key === "Escape") {
+        setOpen(false);
+        return;
+      }
+      if (e.key !== "Tab") return;
+      const node = dialogRef.current;
+      if (!node) return;
+      const focusables = Array.from(
+        node.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), input:not([disabled]):not([tabindex="-1"]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        ),
+      ).filter((el) => el.offsetParent !== null);
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      const active = document.activeElement as HTMLElement | null;
+      if (e.shiftKey && (active === first || !node.contains(active))) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && (active === last || !node.contains(active))) {
+        e.preventDefault();
+        first.focus();
+      }
     };
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+      previouslyFocused?.focus?.();
+    };
   }, [open]);
 
   const submit = async (e: FormEvent<HTMLFormElement>) => {
@@ -191,8 +227,12 @@ export function ExitIntentModal() {
       aria-labelledby="exit-intent-title"
       className="fixed inset-0 z-[60] flex items-end justify-center bg-black/55 p-4 sm:items-center"
     >
-      <div className="relative w-full max-w-md overflow-hidden rounded-xl bg-white shadow-2xl">
+      <div
+        ref={dialogRef}
+        className="relative w-full max-w-md overflow-hidden rounded-xl bg-white shadow-2xl"
+      >
         <button
+          ref={closeBtnRef}
           type="button"
           onClick={() => setOpen(false)}
           aria-label={isTr ? "Kapat" : "Close"}
