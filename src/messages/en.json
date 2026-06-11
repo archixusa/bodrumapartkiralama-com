@@ -179,6 +179,15 @@
   "district": {
     "metaTitle": "{district} Apartment Rental | Daily Apartments",
     "metaDesc": "Daily apartment rentals in {district}. Verified photos, clear information, free cancellation.",
+    "metaDescBySlug": {
+      "gumbet": "Daily apartment rentals in Gümbet: walking distance to nightlife and Bodrum centre, a long sandy beach and watersports. Directly from the owner, transparent pricing.",
+      "turgutreis": "Daily apartment rentals in Turgutreis: famous sunsets, the marina and the Saturday market close by. Directly from the owner, transparent pricing.",
+      "yalikavak": "Daily apartment rentals in Yalıkavak: near the marina, beach clubs and quiet coves. Directly from the owner, transparent pricing.",
+      "bitez": "Daily apartment rentals in Bitez: shallow calm sea, mandarin groves and a family-friendly beach. Directly from the owner, transparent pricing.",
+      "ortakent": "Daily apartment rentals in Ortakent: central location near Yahşi, one of the peninsula's longest beaches. Directly from the owner, transparent pricing.",
+      "gundogan": "Daily apartment rentals in Gündoğan: a calm bay with village charm for a quiet holiday. Directly from the owner, transparent pricing.",
+      "torba": "Daily apartment rentals in Torba: the closest coast to the airport, a sheltered bay and a short hop to Bodrum centre. Directly from the owner."
+    },
     "h1": "{district} Apartment Rental",
     "aboutTitle": "About {district}",
     "apartsTitle": "Apartments in {district}",

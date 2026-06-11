@@ -14,7 +14,7 @@ import { posts, getPost } from "@/data/posts";
 import { districts } from "@/data/districts";
 import { getMdxPosts, getMdxPost } from "@/lib/mdx-blog";
 import { loc } from "@/lib/i18n-data";
-import { buildAlternates, buildLocaleUrl } from "@/lib/seo";
+import { buildAlternates, buildLocaleUrl, defaultOgImages } from "@/lib/seo";
 import { BLUR_KUM } from "@/lib/blur";
 import { buildHowToSchema } from "@/lib/blog-howto";
 
@@ -127,6 +127,9 @@ export async function generateMetadata({
         publishedTime: mdx.published_at,
         authors: [mdx.author],
         images: [{ url: heroUrl, width: 1600, height: 900, alt: mdx.hero_image_alt || mdx.title }],
+        // og:locale merkezi helper'dan (route-level openGraph layout'takini ezer).
+        locale: defaultOgImages(locale).openGraph.locale,
+        alternateLocale: defaultOgImages(locale).openGraph.alternateLocale,
       },
       twitter: {
         card: "summary_large_image",
@@ -154,6 +157,8 @@ export async function generateMetadata({
       url,
       type: "article",
       images: [{ url: post.hero, width: 1600, height: 900, alt: title }],
+      locale: defaultOgImages(locale).openGraph.locale,
+      alternateLocale: defaultOgImages(locale).openGraph.alternateLocale,
     },
     twitter: {
       card: "summary_large_image",
@@ -214,7 +219,9 @@ export default async function Page({
       "@context": "https://schema.org",
       "@type": "Article",
       headline: title,
-      image: [post.hero],
+      // Yapısal veride görsel MUTLAK URL zorunlu — göreli yol ("/blog/.../hero.webp")
+      // Article rich result'ta geçersiz kalıyordu (hakem bulgusu).
+      image: [post.hero.startsWith("http") ? post.hero : `${SITE_URL}${post.hero}`],
       datePublished: post.date,
       dateModified: post.date,
       author: {
@@ -430,7 +437,8 @@ function renderMdxPost(
     "@type": "Article",
     headline: mdx.title,
     description: mdx.meta_description,
-    image: [heroUrl],
+    // Mutlak URL zorunlu (yapısal veri) — bkz. legacy Article düğümündeki not.
+    image: [heroUrl.startsWith("http") ? heroUrl : `${SITE_URL}${heroUrl}`],
     datePublished: mdx.published_at,
     dateModified: mdx.published_at,
     author: {

@@ -71,13 +71,15 @@ type DistrictStructural = Omit<
 const content = contentJson as Record<string, DistrictContent>;
 
 // Insertion order here defines the order of `districts` (homepage uses slice(0,6)).
+// heroImage: YEREL ~1200px WebP (q≤70) — Unsplash hotlink 1600px kaynaklıydı ve
+// bölge sayfası LCP'sini ~7.5s'e taşıyordu (Lighthouse mobil teyitli). Blog hero
+// deseniyle aynı: public/images/regions/<slug>-hero.webp, next/image optimize eder.
 const structuralDistricts: DistrictStructural[] = [
   {
     slug: "gumbet",
     urlSlug: "gumbet-apart-kiralama",
     name: "Gümbet",
-    heroImage:
-      "https://images.unsplash.com/photo-1566084091852-0385135abadc?auto=format&fit=crop&w=1600&q=80",
+    heroImage: "/images/regions/gumbet-hero.webp",
     nearby: ["bitez", "ortakent"],
     lat: 37.0339,
     lng: 27.4002,
@@ -86,8 +88,7 @@ const structuralDistricts: DistrictStructural[] = [
     slug: "turgutreis",
     urlSlug: "turgutreis-apart-kiralama",
     name: "Turgutreis",
-    heroImage:
-      "https://images.unsplash.com/photo-1595880992139-8cf2ef915d78?auto=format&fit=crop&w=1600&q=80",
+    heroImage: "/images/regions/turgutreis-hero.webp",
     nearby: ["yalikavak", "ortakent"],
     lat: 37.0153,
     lng: 27.2657,
@@ -96,8 +97,7 @@ const structuralDistricts: DistrictStructural[] = [
     slug: "yalikavak",
     urlSlug: "yalikavak-apart-kiralama",
     name: "Yalıkavak",
-    heroImage:
-      "https://images.unsplash.com/photo-1598114570969-a4df3e85de9b?auto=format&fit=crop&w=1600&q=80",
+    heroImage: "/images/regions/yalikavak-hero.webp",
     nearby: ["gundogan", "turgutreis"],
     lat: 37.1093,
     lng: 27.2913,
@@ -106,8 +106,7 @@ const structuralDistricts: DistrictStructural[] = [
     slug: "bitez",
     urlSlug: "bitez-apart-kiralama",
     name: "Bitez",
-    heroImage:
-      "https://images.unsplash.com/photo-1591078314870-fe9b75a1665a?auto=format&fit=crop&w=1600&q=80",
+    heroImage: "/images/regions/bitez-hero.webp",
     nearby: ["gumbet", "ortakent"],
     lat: 37.034,
     lng: 27.367,
@@ -116,8 +115,7 @@ const structuralDistricts: DistrictStructural[] = [
     slug: "ortakent",
     urlSlug: "ortakent-apart-kiralama",
     name: "Ortakent",
-    heroImage:
-      "https://images.unsplash.com/photo-1727713682954-271a2135c375?auto=format&fit=crop&w=1600&q=80",
+    heroImage: "/images/regions/ortakent-hero.webp",
     nearby: ["bitez", "gumbet"],
     lat: 37.0517,
     lng: 27.3589,
@@ -126,8 +124,7 @@ const structuralDistricts: DistrictStructural[] = [
     slug: "gundogan",
     urlSlug: "gundogan-apart-kiralama",
     name: "Gündoğan",
-    heroImage:
-      "https://images.unsplash.com/photo-1591078314870-db74efd1d40a?auto=format&fit=crop&w=1600&q=80",
+    heroImage: "/images/regions/gundogan-hero.webp",
     nearby: ["yalikavak", "torba"],
     lat: 37.1311,
     lng: 27.3458,
@@ -136,8 +133,7 @@ const structuralDistricts: DistrictStructural[] = [
     slug: "torba",
     urlSlug: "torba-apart-kiralama",
     name: "Torba",
-    heroImage:
-      "https://images.unsplash.com/photo-1684858504602-677ac40eadfd?auto=format&fit=crop&w=1600&q=80",
+    heroImage: "/images/regions/torba-hero.webp",
     nearby: ["gundogan", "yalikavak"],
     lat: 37.0859,
     lng: 27.4406,
