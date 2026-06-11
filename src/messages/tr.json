@@ -179,6 +179,15 @@
   "district": {
     "metaTitle": "{district} Apart Kiralama | Günlük Kiralık Daire",
     "metaDesc": "{district} bölgesinde günlük kiralık apart daireler. Doğrulanmış fotoğraflar, şeffaf fiyatlar, ücretsiz iptal.",
+    "metaDescBySlug": {
+      "gumbet": "Gümbet'te günlük kiralık apartlar: gece hayatına ve Bodrum merkeze yürüme mesafesi, uzun kumsal ve su sporları. Doğrudan mülk sahibinden, şeffaf fiyatla.",
+      "turgutreis": "Turgutreis'te günlük kiralık apartlar: ünlü gün batımı, marina ve cumartesi pazarına yakın seçenekler. Doğrudan mülk sahibinden, şeffaf fiyatla.",
+      "yalikavak": "Yalıkavak'ta günlük kiralık apartlar: marina, plaj kulüpleri ve sakin koylara yakın konumlar. Doğrudan mülk sahibinden, şeffaf fiyatla.",
+      "bitez": "Bitez'de günlük kiralık apartlar: sığ ve sakin denizi, mandalina bahçeleri ve aile dostu plajı. Doğrudan mülk sahibinden, şeffaf fiyatla.",
+      "ortakent": "Ortakent'te günlük kiralık apartlar: yarımadanın en uzun kumsallarından Yahşi sahiline yakın, merkezi konum. Doğrudan mülk sahibinden, şeffaf fiyatla.",
+      "gundogan": "Gündoğan'da günlük kiralık apartlar: sakin koyu ve köy havasıyla huzurlu bir tatil. Doğrudan mülk sahibinden, şeffaf fiyatla.",
+      "torba": "Torba'da günlük kiralık apartlar: havalimanına en yakın sahil, korunaklı koy ve Bodrum merkeze kısa mesafe. Doğrudan mülk sahibinden."
+    },
     "h1": "{district} Apart Kiralama",
     "aboutTitle": "{district} Hakkında",
     "apartsTitle": "{district} Bölgesindeki Apartlar",

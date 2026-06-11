@@ -21,23 +21,27 @@ import { districts } from "@/data/districts";
 import { getPhone } from "@/lib/contact";
 import { getSiteReviewAggregate } from "@/lib/reviews";
 
+// Font diyeti (LCP bulgusu): 4 woff2 preload'u hero görseliyle bant genişliği
+// yarışıyordu. Jakarta'da kullanılmayan 800 elendi (BrandLockup font-bold'a
+// indirildi); Fraunces yalnız h1/h2'de 600/700 kullanır — 400/500 elendi ve
+// preload kapatıldı (display:swap ile fallback'ten geç takas, LCP'yi bloklamaz).
+// Böylece preload yalnız gövde fontunun 2 subset dosyasına iner.
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin", "latin-ext"],
   display: "swap",
   variable: "--font-sans",
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["400", "500", "600", "700"],
   preload: true,
 });
 
-// "Canlı Akdeniz" display voice (DESIGN_SPEC.md §2): Fraunces, opsz destekli
-// değişken eksen, ağırlık 400–700. Mapped to --font-display, used by h1/h2.
-// latin-ext kept for TR glyphs (ş/ğ/ı/İ live in latin-ext).
+// "Canlı Akdeniz" display voice (DESIGN_SPEC.md §2): Fraunces — yalnız h1/h2
+// (600) ve tek tük 700 vurgu. latin-ext TR glyph'leri için kalır.
 const fraunces = Fraunces({
   subsets: ["latin", "latin-ext"],
   display: "swap",
   variable: "--font-display",
-  weight: ["400", "500", "600", "700"],
-  preload: true,
+  weight: ["600", "700"],
+  preload: false,
 });
 
 const SITE_URL =
@@ -204,7 +208,10 @@ export default async function LocaleLayout({
     "@id": `${SITE_URL}/#website`,
     url: SITE_URL,
     name: "Bodrumapartkiralama.com",
-    inLanguage: locale,
+    // Tek #website varlığı 4 dilde aynı @id ile yayımlanır; inLanguage sayfadan
+    // sayfaya değişince aynı varlık çelişen dil beyanı taşıyordu. Site 4 dilde
+    // yayın yaptığından dizi olarak sabitlendi (hakem bulgusu).
+    inLanguage: ["tr", "en", "de", "ru"],
     publisher: { "@id": `${SITE_URL}/#organization` },
     potentialAction: {
       "@type": "SearchAction",

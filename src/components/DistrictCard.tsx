@@ -13,7 +13,14 @@ const VIEW_LABEL: Record<string, string> = {
   ru: "Смотреть район",
 };
 
-export function DistrictCard({ district }: { district: District }) {
+export function DistrictCard({
+  district,
+  index = 1,
+}: {
+  district: District;
+  /** Grid'deki sıra — 0 (ilk görünür kart) LCP adayıdır: eager + priority. */
+  index?: number;
+}) {
   const dt = useTranslations("districts");
   const locale = useLocale();
 
@@ -26,7 +33,9 @@ export function DistrictCard({ district }: { district: District }) {
         src={district.heroImage}
         alt={`${district.name}, Bodrum`}
         fill
-        loading="lazy"
+        {...(index === 0
+          ? { priority: true, fetchPriority: "high" as const }
+          : { loading: "lazy" as const })}
         sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
         placeholder="blur"
         blurDataURL={BLUR_KUM}

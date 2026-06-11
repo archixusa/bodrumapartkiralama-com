@@ -27,7 +27,7 @@ import { services } from "@/data/services";
 import { posts } from "@/data/posts";
 import { loc } from "@/lib/i18n-data";
 import { getSiteContent } from "@/lib/content";
-import { buildAlternates, defaultOgImages } from "@/lib/seo";
+import { buildAlternates, buildLocaleUrl, defaultOgImages } from "@/lib/seo";
 import { BLUR_KUM } from "@/lib/blur";
 
 const SITE_URL =
@@ -441,12 +441,16 @@ export default async function HomePage({
   // varlığı ikiye bölüyordu. Bu dizi yalnız sayfaya özgü şemaları içerir.
   // WebSite düğümü de layout'a taşındı (#website, SearchAction dahil) —
   // burada tekrarlanmaz (aynı varlığın iki kopyası).
+  // #webpage @id ve url locale-duyarlı: dört dildeki ana sayfa aynı @id'yi ve
+  // kök URL'yi beyan ediyordu — EN/DE/RU'da WebPage.url canonical'la (/en vb.)
+  // çelişiyordu (hakem bulgusu). url canonical ile birebir aynı kaynaktan gelir.
+  const homeUrl = buildLocaleUrl(locale, "");
   const jsonLd = [
     {
       "@context": "https://schema.org",
       "@type": "WebPage",
-      "@id": `${SITE_URL}/#webpage`,
-      url: SITE_URL,
+      "@id": `${homeUrl}/#webpage`,
+      url: homeUrl,
       name: t("metaTitle"),
       description: t("metaDesc"),
       inLanguage: locale,
@@ -587,18 +591,24 @@ export default async function HomePage({
             <p className="mt-3 text-muted">{regionsCopy.sub}</p>
           </div>
           <ScrollReveal className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {regionCards.map((d) => (
+            {regionCards.map((d, i) => (
               <Link
                 key={d.slug}
                 data-reveal-child
                 href={`/bodrum/${d.urlSlug}`}
                 className="group relative block aspect-[3/2] overflow-hidden rounded-xl shadow-card outline-none transition duration-300 hover:shadow-cardHover focus-visible:ring-2 focus-visible:ring-turkuaz-600 focus-visible:ring-offset-2"
               >
+                {/* LCP bulgusu: mobilde ilk görünür görsel bu gridin ilk kartı
+                    (hero salt CSS). 15 görselin tamamı lazy + sayfada hiç
+                    fetchpriority yoktu → LCP ~3.7s. İlk kart eager + priority
+                    (preload + fetchpriority=high), kalanlar lazy kalır. */}
                 <Image
                   src={`/images/regions/${d.slug}.webp`}
                   alt={`${d.name}, Bodrum`}
                   fill
-                  loading="lazy"
+                  {...(i === 0
+                    ? { priority: true, fetchPriority: "high" as const }
+                    : { loading: "lazy" as const })}
                   sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                   placeholder="blur"
                   blurDataURL={BLUR_KUM}

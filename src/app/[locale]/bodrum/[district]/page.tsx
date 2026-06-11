@@ -11,7 +11,7 @@ import { JsonLd } from "@/components/JsonLd";
 import { districts, getDistrict } from "@/data/districts";
 import { posts } from "@/data/posts";
 import { getSiteContent } from "@/lib/content";
-import { buildAlternates, buildLocaleUrl } from "@/lib/seo";
+import { buildAlternates, buildLocaleUrl, defaultOgImages } from "@/lib/seo";
 import { BLUR_KUM } from "@/lib/blur";
 import { loc, locArr } from "@/lib/i18n-data";
 import { districtGuides } from "@/data/districtGuides";
@@ -21,6 +21,57 @@ import { GuestReviews } from "@/components/GuestReviews";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.bodrumapartkiralama.com";
+
+// "Hangi plajlar var?" SSS yanıtları — eski yanıt "yukarıdaki bölüme bakın"
+// diyordu; kendi başına bilgi taşımıyordu (hakem bulgusu). Yanıtlar bölgeye
+// özgü, doğrulanabilir coğrafi bilgiler; 4 dilde kendi başına anlamlıdır.
+const BEACH_FAQ_ANSWER: Record<
+  string,
+  { tr: string; en: string; de: string; ru: string }
+> = {
+  gumbet: {
+    tr: "Gümbet'in merkezinde yarımadanın en uzun kumsal plajlarından Gümbet Plajı uzanır; su sporları seçenekleriyle bilinir ve beach club'ların çoğuna yürüyerek ulaşılır.",
+    en: "Gümbet's centre is lined by Gümbet Beach, one of the peninsula's longest sandy beaches, known for watersports and beach clubs within walking distance.",
+    de: "Im Zentrum von Gümbet liegt der Gümbet-Strand, einer der längsten Sandstrände der Halbinsel — bekannt für Wassersport und fußläufig erreichbare Beachclubs.",
+    ru: "В центре Гюмбета протянулся пляж Гюмбет — один из самых длинных песчаных пляжей полуострова, известный водными видами спорта и пляжными клубами в шаговой доступности.",
+  },
+  turgutreis: {
+    tr: "Turgutreis'te marina boyunca uzanan merkez plajın yanı sıra güneyde Akyarlar ve Kadıkalesi koyları vardır; bölge gün batımı manzarasıyla ünlüdür.",
+    en: "Besides the town beach stretching along the marina, Turgutreis has the Akyarlar and Kadıkalesi coves to the south; the area is famous for its sunsets.",
+    de: "Neben dem Stadtstrand entlang der Marina bietet Turgutreis im Süden die Buchten Akyarlar und Kadıkalesi; die Gegend ist für ihre Sonnenuntergänge berühmt.",
+    ru: "Помимо городского пляжа вдоль марины, к югу от Тургутрейса находятся бухты Акьярлар и Кадыкалеси; район славится закатами.",
+  },
+  yalikavak: {
+    tr: "Yalıkavak'ta marina çevresindeki plaj kulüpleri, Tilkicik Koyu ve Küdür Yarımadası kıyıları öne çıkar; koylar genellikle sakin ve berrak sulara sahiptir.",
+    en: "Yalıkavak is known for the beach clubs around the marina, Tilkicik Bay and the shores of the Küdür Peninsula; the coves are usually calm with clear water.",
+    de: "Yalıkavak ist bekannt für die Beachclubs rund um die Marina, die Tilkicik-Bucht und die Küste der Küdür-Halbinsel; die Buchten sind meist ruhig und klar.",
+    ru: "Ялыкавак известен пляжными клубами у марины, бухтой Тилькиджик (Tilkicik) и побережьем полуострова Кюдюр; бухты обычно спокойные, с прозрачной водой.",
+  },
+  bitez: {
+    tr: "Bitez Plajı sığ, dalgasız ve çocuklu aileler için elverişlidir; plajın hemen arkasında bölgeye karakterini veren mandalina bahçeleri yer alır.",
+    en: "Bitez Beach is shallow and calm, well suited to families with children; right behind the beach are the mandarin groves the area is known for.",
+    de: "Der Strand von Bitez ist flach und ruhig — ideal für Familien mit Kindern; direkt dahinter liegen die Mandarinengärten, für die die Gegend bekannt ist.",
+    ru: "Пляж Битез мелкий и спокойный, отлично подходит семьям с детьми; сразу за пляжем — мандариновые сады, которыми славится район.",
+  },
+  ortakent: {
+    tr: "Ortakent'in sahili Yahşi Plajı'dır — yarımadanın en uzun kumsallarından biridir; plaj boyunca işletmeler ve halka açık bölümler bir arada bulunur.",
+    en: "Ortakent's coast is Yahşi Beach, one of the longest sandy stretches on the peninsula, with beach venues and public sections side by side.",
+    de: "Die Küste von Ortakent ist der Yahşi-Strand — einer der längsten Sandstrände der Halbinsel, mit Strandlokalen und öffentlichen Abschnitten nebeneinander.",
+    ru: "Побережье Ортакента — пляж Яхши, один из самых длинных песчаных пляжей полуострова; пляжные заведения и общественные участки чередуются вдоль берега.",
+  },
+  gundogan: {
+    tr: "Gündoğan'ın merkezinde köy havasını koruyan sakin bir koy plajı vardır; kıyı şeridi aileler ve sessiz tatil arayanlar için uygundur.",
+    en: "Gündoğan's centre has a calm bay beach that keeps its village feel; the shoreline suits families and those after a quiet holiday.",
+    de: "Im Zentrum von Gündoğan liegt ein ruhiger Buchtstrand mit dörflichem Charakter; der Küstenstreifen eignet sich für Familien und Ruhesuchende.",
+    ru: "В центре Гюндогана — спокойный пляж в бухте, сохранившей деревенскую атмосферу; побережье подходит семьям и любителям тихого отдыха.",
+  },
+  torba: {
+    tr: "Torba, korunaklı ve genellikle dalgasız koyuyla bilinir; sahil Bodrum merkeze ve Milas-Bodrum Havalimanı'na en kısa mesafedeki kıyılardan biridir.",
+    en: "Torba is known for its sheltered, usually wave-free bay; the shore is among the closest to Bodrum centre and Milas-Bodrum Airport.",
+    de: "Torba ist für seine geschützte, meist wellenfreie Bucht bekannt; die Küste gehört zu den nächstgelegenen zum Zentrum von Bodrum und zum Flughafen Milas-Bodrum.",
+    ru: "Торба известна защищённой, обычно спокойной бухтой; этот берег — один из ближайших к центру Бодрума и аэропорту Милас-Бодрум.",
+  },
+};
 
 export function generateStaticParams() {
   return districts.map((d) => ({ district: d.urlSlug }));
@@ -41,17 +92,25 @@ export async function generateMetadata({
     locale === "tr"
       ? `${SITE_URL}/bodrum/${d.urlSlug}`
       : `${SITE_URL}/${locale}/bodrum/${d.urlSlug}`;
+  // Benzersiz, bölgeye özgü description (metaDescBySlug.<slug>); 7 sayfa şehir
+  // adı dışında birebir aynı şablonu paylaşıyordu (swap-test bulgusu).
+  const description = t(`metaDescBySlug.${d.slug}`);
   return {
     title: t("metaTitle", { district: districtName }),
-    description: t("metaDesc", { district: districtName }),
+    description,
     alternates: buildAlternates(locale, `/bodrum/${d.urlSlug}`),
     openGraph: {
       title: t("metaTitle", { district: districtName }),
-      description: t("metaDesc", { district: districtName }),
+      description,
       url,
       type: "website",
-      images: [{ url: d.heroImage, width: 1600, height: 900, alt: districtName }],
+      images: [{ url: d.heroImage, width: 1200, height: 800, alt: districtName }],
+      locale: defaultOgImages(locale).openGraph.locale,
+      alternateLocale: defaultOgImages(locale).openGraph.alternateLocale,
     },
+    // twitter:image yönlendirmesiz URL'den yayınlanır — alan tanımlanmayınca
+    // file-convention rotası TR'de 307 atan /tr/twitter-image'ı basıyordu.
+    twitter: defaultOgImages(locale).twitter,
   };
 }
 
@@ -209,14 +268,12 @@ export default async function DistrictPage({
             : locale === "ru"
               ? `Какие пляжи есть в ${districtName}?`
               : `Which beaches are in ${districtName}?`,
+      // Kendi başına bilgi taşıyan yanıt — "yukarıdaki bölüme bakın" tipi
+      // self-referans yanıt FAQ şemasında anlamsız kalıyordu (hakem bulgusu).
       a:
-        locale === "tr"
-          ? `${districtName} bölgesinin öne çıkan plaj ve koyları için sayfadaki "${districtName} Hakkında" bölümüne göz atabilirsiniz.`
-          : locale === "de"
-            ? `Die schönsten Strände und Buchten von ${districtName} finden Sie oben im Abschnitt „Über ${districtName}“.`
-            : locale === "ru"
-              ? `Лучшие пляжи и бухты района ${districtName} вы найдёте выше в разделе «О районе ${districtName}».`
-              : `For the highlighted beaches and coves of ${districtName}, see the "About ${districtName}" section above.`,
+        BEACH_FAQ_ANSWER[d.slug]?.[locale as "tr" | "en" | "de" | "ru"] ??
+        BEACH_FAQ_ANSWER[d.slug]?.en ??
+        longDesc.split(/(?<=\.)\s/)[0],
     },
     {
       q:
@@ -241,26 +298,20 @@ export default async function DistrictPage({
   const combinedFaq = [...districtFaq, ...(guide?.faqs ?? [])];
 
   const jsonLd = [
+    // TEK düğüm: TouristDestination zaten bir Place alt türüdür — aynı varlık
+    // (aynı name/url/geo) iki ayrı kopya olarak basılıyordu, @id bağlantısı da
+    // yoktu (hakem bulgusu). Place'e özgü alanlar (containedInPlace) bu düğüme
+    // taşındı; @id locale-duyarlı ve sayfa URL'sine çapalı.
     {
       "@context": "https://schema.org",
       "@type": "TouristDestination",
+      "@id": `${buildLocaleUrl(locale, `/bodrum/${d.urlSlug}`)}#place`,
       name: `${districtName}, Bodrum`,
       description: longDesc,
-      image: d.heroImage,
+      // Yapısal veride görsel MUTLAK URL olmalı — heroImage artık yerel yol.
+      image: `${SITE_URL}${d.heroImage}`,
       // Breadcrumb ile aynı locale-duyarlı URL — aynı sayfada aynı varlık
       // için iki farklı URL beyanı tutarsız sinyaldi (SEO bulgusu).
-      url: buildLocaleUrl(locale, `/bodrum/${d.urlSlug}`),
-      geo: {
-        "@type": "GeoCoordinates",
-        latitude: d.lat,
-        longitude: d.lng,
-      },
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "Place",
-      name: `${districtName}, Bodrum`,
-      description: guide?.lead ?? longDesc,
       url: buildLocaleUrl(locale, `/bodrum/${d.urlSlug}`),
       containedInPlace: {
         "@type": "AdministrativeArea",
@@ -271,7 +322,6 @@ export default async function DistrictPage({
         latitude: d.lat,
         longitude: d.lng,
       },
-      image: d.heroImage,
     },
     {
       "@context": "https://schema.org",

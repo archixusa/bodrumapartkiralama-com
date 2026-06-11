@@ -179,6 +179,15 @@
   "district": {
     "metaTitle": "{district} Ferienwohnung mieten | Tägliche Wohnungen",
     "metaDesc": "Tägliche Ferienwohnungen in {district}. Geprüfte Fotos, klare Angaben, kostenlose Stornierung.",
+    "metaDescBySlug": {
+      "gumbet": "Ferienwohnungen in Gümbet: Nachtleben und Bodrum-Zentrum zu Fuß erreichbar, langer Sandstrand und Wassersport. Direkt vom Eigentümer, transparente Preise.",
+      "turgutreis": "Ferienwohnungen in Turgutreis: berühmte Sonnenuntergänge, Marina und Samstagsmarkt in der Nähe. Direkt vom Eigentümer, transparente Preise.",
+      "yalikavak": "Ferienwohnungen in Yalıkavak: nahe Marina, Beachclubs und ruhigen Buchten. Direkt vom Eigentümer, transparente Preise.",
+      "bitez": "Ferienwohnungen in Bitez: flaches ruhiges Meer, Mandarinengärten und familienfreundlicher Strand. Direkt vom Eigentümer, transparente Preise.",
+      "ortakent": "Ferienwohnungen in Ortakent: zentrale Lage am Yahşi-Strand, einem der längsten Strände der Halbinsel. Direkt vom Eigentümer, transparente Preise.",
+      "gundogan": "Ferienwohnungen in Gündoğan: ruhige Bucht mit dörflichem Charme für einen erholsamen Urlaub. Direkt vom Eigentümer, transparente Preise.",
+      "torba": "Ferienwohnungen in Torba: die flughafennächste Küste, geschützte Bucht und kurze Strecke ins Zentrum von Bodrum. Direkt vom Eigentümer."
+    },
     "h1": "{district} Ferienwohnung mieten",
     "aboutTitle": "Über {district}",
     "apartsTitle": "Wohnungen in {district}",

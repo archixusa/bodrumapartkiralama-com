@@ -48,7 +48,9 @@ export function BrandLockup({
       <span className="flex flex-col">
         <span
           className={clsx(
-            "font-sans text-lg font-extrabold leading-none tracking-tight",
+            // font-bold (700): 800 ağırlığı font diyetinde elendi (tek kullanım
+            // burasıydı) — preload edilen woff2 sayısını azaltır, LCP bulgusu.
+            "font-sans text-lg font-bold leading-none tracking-tight",
             dark ? "text-white" : "text-murekkep-900"
           )}
         >
