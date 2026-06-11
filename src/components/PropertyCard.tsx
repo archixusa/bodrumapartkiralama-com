@@ -68,7 +68,7 @@ export function PropertyCard({ property, locale, labels }: Props) {
             sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
             placeholder="blur"
             blurDataURL={BLUR_KUM}
-            className="object-cover transition duration-500 group-hover:scale-105"
+            className="object-cover transition duration-500 ease-akdeniz group-hover:scale-105"
           />
           {/* Sol üst: kum zemin bölge pill'i (spec §4 kart) */}
           {property.region && (
